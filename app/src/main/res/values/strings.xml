@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">quickly</string>
+
+    <!--title-->
+    <string name="user_message">我</string>
+    <string name="user_pic">修改头像</string>
+    <string name="infoEmpty">手机号和密码不能为空！</string>
+    <string name="newNameEmpty">请输入新昵称</string>
+    <string name="modify_error">修改失败</string>
+    <string name="modify_succeed">信息修改成功！</string>
+    <string name="oldPwdErro">旧密码输入错误！</string>
+    <string name="newPwdEmpty">密码不能为空！</string>
+    <string name="surePwdErro">前后密码不正确！</string>
+    <string name="RegInfoNotFull">注册信息不完整！</string>
+
+    <string name="login_onUser">不存在该用户，请先注册！</string>
+    <string name="login_pwdError">密码错误！</string>
+    <string name="login_succeed">登录成功！</string>
+    <string name="login_un">尚未登录！</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="register">注册</string>
+    <string name="next_opr">下一步</string>
+    <string name="iphone_number">请输入手机号</string>
+    <string name="password">请输入密码</string>
+    <string name="login">登 录</string>
+    <string name="exit">退出账号</string>
+    <string name="forgive_pwd">忘记密码？</string>
+    <string name="logo_mind">念念不忘，必有回响</string>
+    <string name="user_card_pic">头像</string>
+    <string name="user_card_name">昵称</string>
+    <string name="user_card_pwd">密码</string>
+    <string name="user_card_pwd_back">修改</string>
+    <string name="user_name">Allison</string>
+    <string name="second_password">确认密码</string>
+    <string name="re_iphone_number">手机号</string>
+    <string name="resigter_user_name">用户昵称</string>
+    <string name="resigter_user_name_hint">请输入用户昵称</string>
+    <string name="re_toolbar_real_name">实名认证</string>
+    <string name="re_real_name">真实姓名</string>
+    <string name="re_real_idcard">身份证号码</string>
+    <string name="re_real_name_tip">请输入真实姓名</string>
+    <string name="re_real_idcard_tip">请输入身份证号码</string>
+
 </resources>
