@@ -1,10 +1,7 @@
 package com.echo.quick.quickly;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -63,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = null;
             @Override
             public void onClick(View view) {
-                intent = new Intent(MainActivity.this,WordsActivity.class);
+                intent = new Intent(MainActivity.this, WordsActivity.class);
                 startActivity(intent);
             }
         });
@@ -71,9 +68,11 @@ public class MainActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = null;
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+
             }
         });
 

@@ -25,15 +25,21 @@ import okhttp3.Response;
 **/
 
 public class OKhttpManager {
+
+
 //定义成员变量
     private OkHttpClient mClient;
     private  volatile  static OKhttpManager sManager;//防止多个线程同时访问
     private static Handler handler;//开启线程交互 这里的handler 是os包下面的
+
+
 //    使用构造方法，完成初始化
     public OKhttpManager() {
         mClient=new OkHttpClient();
         handler=new Handler();
     }
+
+
 //    使用单例模式，通过获取的方式拿到对象
     public static  OKhttpManager getInstance(){
         OKhttpManager instance=null;
@@ -47,16 +53,22 @@ public class OKhttpManager {
         }
         return  instance;
     }
+
+
 //    定义要调用的接口
     interface  Func1{
     void  onResponse(String result);
-}
+    }
+
     interface Func2{
         void onResponse(byte [] result);
     }
+
     interface Func3{
         void  onResponse(JSONObject jsonObject);
     }
+
+
 //    使编写的代码运行在主线程
 //    处理请求网络成功的方法，返回的结果是Json串
     private static void onSuccessJsonStringMethod(final String jsonValue, final Func1 callBack){
@@ -74,6 +86,7 @@ public class OKhttpManager {
             }
         });
     }
+
 
     /**
      * 返回响应的结果是Json对象
@@ -95,6 +108,7 @@ public class OKhttpManager {
         });
     }
 
+
     /**
      * 返回响应的结果是byte[]数组
      * @param data
@@ -110,6 +124,7 @@ public class OKhttpManager {
             }
         });
     }
+
 //    然后是调用方法
 
     /**
@@ -131,6 +146,7 @@ public class OKhttpManager {
             }
         });
     }
+
 
     /**
      * 请求返回的是json对象
@@ -154,6 +170,7 @@ public class OKhttpManager {
         });
     }
 
+
     /**
      * 请求返回的是byte字节数组
      */
@@ -172,6 +189,7 @@ public class OKhttpManager {
             }
         });
     }
+
 
 //    表单提交像一般的姓名和密码
     /**
