@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+        <ImageView
+            android:id="@+id/register_back"
+            android:layout_width="@dimen/toolbar_content"
+            android:layout_height="@dimen/toolbar_content"
+            android:layout_margin="@dimen/content_margin_hieght"
+            android:src="@drawable/ic_toolbar_back" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content_margin_hieght"
+            android:text="注册"
+            android:textSize="@dimen/toolbar_content_textsize"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="@string/re_iphone_number"
+                android:fontFamily="楷体"
+                android:textSize="@dimen/re_title_textsize" />
+
+            <EditText
+                android:id="@+id/register_iphone"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/re_margin"
+                android:background="@null"
+                android:hint="@string/iphone_number"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/content_textsize_small" />
+
+            <ImageView
+                android:id="@+id/register_tip1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="楷体"
+                android:text="@string/resigter_user_name"
+                android:textSize="@dimen/re_title_textsize" />
+
+            <EditText
+                android:id="@+id/register_uname"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/re_margin"
+                android:background="@null"
+                android:hint="@string/resigter_user_name_hint"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/content_textsize_small" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="@string/user_card_pwd"
+                android:fontFamily="楷体"
+                android:textSize="@dimen/re_title_textsize" />
+
+            <EditText
+                android:id="@+id/register_password"
+
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/re_margin"
+                android:background="@null"
+                android:hint="@string/password"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/content_textsize_small" />
+
+            <ImageView
+                android:id="@+id/isvisiable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="楷体"
+                android:text="@string/second_password"
+                android:textSize="@dimen/re_title_textsize" />
+
+            <EditText
+                android:id="@+id/register_repassword"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/re_margin"
+                android:background="@null"
+                android:hint="@string/second_password"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/content_textsize_small" />
+
+            <ImageView
+                android:id="@+id/register_tip2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal">
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/register_sex_nan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="男" />
+
+                <RadioButton
+                    android:id="@+id/register_sex_nv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="女" />
+            </RadioGroup>
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content_margin_hieght"
+            android:text="@string/re_toolbar_real_name"
+            android:textColor="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+               android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/re_real_name"
+                    android:textSize="@dimen/re_title_textsize" />
+
+                <EditText
+                    android:id="@+id/register_realname"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/re_margin"
+                    android:background="@null"
+                    android:hint="@string/re_real_name_tip"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/content_textsize_small" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/re_real_idcard"
+                    android:textSize="@dimen/re_title_textsize" />
+
+                <EditText
+                    android:id="@+id/register_idcard"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/re_margin"
+                    android:background="@null"
+                    android:hint="@string/re_real_idcard_tip"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/content_textsize_small" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/register_next_btn"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/login_button"
+                android:text="@string/register"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="170dp"
+                android:text="---  注册  ---"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="注册代表你同意"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最后一哩服务"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="和"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="隐私条款"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

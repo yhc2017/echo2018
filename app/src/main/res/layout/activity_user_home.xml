@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/font_black_6">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/user_back"
+            android:layout_width="@dimen/toolbar_content"
+            android:layout_height="@dimen/toolbar_content"
+            android:layout_margin="@dimen/content_margin_hieght"
+            android:src="@drawable/ic_toolbar_back" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+           <LinearLayout
+                android:id="@+id/ly_user"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/boy"/>
+
+               <TextView
+
+                   android:id="@+id/tv_name"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="小明"
+                   android:textColor="@color/white"
+                   android:textSize="@dimen/toolbar_content_textsize" />
+
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/mod_usermessage"
+                android:layout_toRightOf="@+id/ly_user"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/ic_action_more"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/tv_re"
+            android:layout_marginRight="55dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="接 单"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
+        <LinearLayout
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:background="@color/white" />
+        <TextView
+            android:id="@+id/tv_or"
+            android:layout_marginLeft="55dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发 单"
+            android:layout_marginTop="10dp"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/re_usernum"
+                android:gravity="right"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="98"
+                android:textColor="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_marginRight="10dp"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="right"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="分"
+                android:textColor="@color/font_black_5"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="11dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_star" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="接单信誉"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <LinearLayout
+            android:layout_margin="11dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_star"/>
+            <TextView
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="发单信誉"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/order_usernum"
+                android:gravity="right"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="98"
+                android:textColor="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_marginRight="10dp"
+                android:layout_gravity="right|center_vertical"
+                android:gravity="right"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:text="分"
+                android:textColor="@color/font_black_5"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/bt_exit"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:text="安 全 退 出"
+            android:layout_margin="20dp"
+            android:background="@drawable/button_bg1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>

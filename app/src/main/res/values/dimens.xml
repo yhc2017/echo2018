@@ -5,4 +5,25 @@
 
     <!--背单词界面-item_words.xml-->
     <dimen name="item_word_height">64dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <!--login.xml-->
+    <dimen name="toolbar_heigh">230dp</dimen>
+    <dimen name="toolbar_content">37dp</dimen>
+    <dimen name="toolbar_content_margin">5dp</dimen>
+    <dimen name="toolbar_content_textsize">18dp</dimen>
+
+    <dimen name="re_title_width">100dp</dimen>
+    <dimen name="re_title_textsize">19dp</dimen>
+    <dimen name="re_input_width">150dp</dimen>
+
+    <dimen name="order_title_width">100dp</dimen>
+    <dimen name="order_title_left">15dp</dimen>
+    <dimen name="order_title_textsize">18dp</dimen>
+    <dimen name="order_input_width">150dp</dimen>
+    <dimen name="re_margin">80dp</dimen>
+    <dimen name="content">37dp</dimen>
+    <dimen name="content_margin_hieght">10dp</dimen>
+    <dimen name="input_margin_hieght">37dp</dimen>
+
+    <dimen name="content_textsize_small">18dp</dimen>
 </resources>
