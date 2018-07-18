@@ -1,4 +1,4 @@
-package com.echo.quick.quickly;
+package com.echo.quick.activities;
 
 import org.junit.Test;
 

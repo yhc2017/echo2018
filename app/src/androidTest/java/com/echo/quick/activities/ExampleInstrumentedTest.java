@@ -1,4 +1,4 @@
-package com.echo.quick.quickly;
+package com.echo.quick.activities;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

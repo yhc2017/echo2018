@@ -1,4 +1,4 @@
-package com.echo.quick.quickly;
+package com.echo.quick.activities;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import com.echo.quick.adatper.SampleWordsAdapter;
+import com.echo.quick.adapter.SampleWordsAdapter;
 
 import java.util.ArrayList;
 /**
