@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.echo.quick.activities.R;
+import com.echo.quick.utils.Words;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class name: SampleWordsAdapter
@@ -22,7 +25,7 @@ import java.util.ArrayList;
 
 public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private LayoutInflater mLayoutInflater;
-    private ArrayList<String> mData;
+    private List<Words> mData;
 
     /**
      * Method name : 构造方法
@@ -30,7 +33,7 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      *@param   context Context
      *@param   data ArrayList<String>
      */
-    public SampleWordsAdapter(Context context, ArrayList<String> data) {
+    public SampleWordsAdapter(Context context, List<Words> data) {
         mLayoutInflater = LayoutInflater.from(context);
         mData = data;
     }
@@ -42,7 +45,7 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ItemViewHolder)holder).tvItem.setText(mData.get(position));
+        ((ItemViewHolder)holder).setData(mData.get(position));
     }
 
     @Override
@@ -54,6 +57,9 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public View vBackground; // 背景
         public View vItem;
         public TextView tvItem; // 滑动的view
+        public TextView tvSymbol;
+        public TextView tvExplain;
+//        public ImageView implay;
         public ImageView ivDone;
         public ImageView ivSchedule;
 
@@ -62,8 +68,18 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             vBackground = itemView.findViewById(R.id.rl_background);
             vItem = itemView.findViewById(R.id.ll_item);
             tvItem = (TextView) itemView.findViewById(R.id.tv_item);
+            tvSymbol = (TextView) itemView.findViewById(R.id.tv_symbol);
+            tvExplain = (TextView) itemView.findViewById(R.id.tv_explain);
+//            implay = (ImageView) itemView.findViewById(R.id.tv_item);
             ivDone = (ImageView) itemView.findViewById(R.id.iv_done);
             ivSchedule = (ImageView) itemView.findViewById(R.id.iv_schedule);
+        }
+
+        //绑定数据
+        public void setData(Words data){
+            tvItem.setText(data.getWord());
+            tvSymbol.setText(data.getSymbol());
+            tvExplain.setText(data.getExplain());
         }
     }
 }

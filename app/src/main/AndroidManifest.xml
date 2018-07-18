@@ -13,17 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.echo.quick.activities.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.echo.quick.activities.WordsActivity"></activity>
-        <activity android:name="com.echo.quick.activities.LoginActivity" />
-        <activity android:name="com.echo.quick.activities.RegisterActivity" />
-        <activity android:name="com.echo.quick.activities.UserMsgActivity"></activity>
+        <activity android:name=".WordsActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".UserMsgActivity" />
+        <activity
+            android:name=".Words2Activity"
+            android:label="@string/title_activity_words2"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

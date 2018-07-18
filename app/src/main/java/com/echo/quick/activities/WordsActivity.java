@@ -11,8 +11,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
+import com.echo.quick.utils.Words;
 
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class name: WordsActivity
  * Specific description :背单词的主界面
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 public class WordsActivity extends AppCompatActivity {
     private RecyclerView rvList;
     private SampleWordsAdapter mSampleWordsAdapter;
-    private ArrayList<String> mData = new ArrayList<>();
+    private List<Words> mData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +48,16 @@ public class WordsActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvList.setLayoutManager(linearLayoutManager);
 
+//        if (0==mSampleWordsAdapter.getItemCount()){
+//            for (int i = 0; i < 5; i++) {
+//                Words words = new Words("Quick","/kulk/","adj. 快的；adv. 迅速地");
+//                mData.add(words);
+//            }
+//        }
         //填充假数据
-        for (int i = 0; i < 20; i++) {
-            mData.add("RecyclerView" + i);
+        for (int i = 0; i < 5; i++) {
+            Words words = new Words("Quick","/kulk/","adj. 快的；adv. 迅速地");
+            mData.add(words);
         }
         mSampleWordsAdapter = new SampleWordsAdapter(this, mData);
         rvList.setAdapter(mSampleWordsAdapter);
@@ -66,18 +76,20 @@ public class WordsActivity extends AppCompatActivity {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 // 处理滑动事件回调
                 final int pos = viewHolder.getAdapterPosition();//页面中子项的位置
-                final String item = mData.get(pos);//数据子项的位置
+                final Words item = mData.get(pos);//数据子项的位置
 
 //                mData.remove(pos);
 //                mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                 String text;
                 // 判断方向，进行不同的操作
                 if (direction == ItemTouchHelper.RIGHT) {
-                    text = "删除一项";
+                    text = "已记住";
                     mData.remove(pos);
                     mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                 } else {
-                    text = "延迟一项";
+                    text = "还没记住";
+                    mData.remove(pos);
+                    mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                 }
                 /**
                  * 撤销上一个单词的操作
@@ -118,12 +130,12 @@ public class WordsActivity extends AppCompatActivity {
                 // 默认是操作ViewHolder的itemView，这里调用ItemTouchUIUtil的clearView方法传入指定的view
                 getDefaultUIUtil().onDraw(c, recyclerView, ((SampleWordsAdapter.ItemViewHolder) viewHolder).vItem, dX, dY, actionState, isCurrentlyActive);
                 if (dX > 0) { // 向左滑动是的提示
-                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundResource(R.color.colorDone);
+                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundResource(R.drawable.item_left);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivDone.setVisibility(View.VISIBLE);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivSchedule.setVisibility(View.GONE);
                 }
                 if (dX < 0) { // 向右滑动时的提示
-                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundResource(R.color.colorSchedule);
+                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundResource(R.drawable.item_right);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivSchedule.setVisibility(View.VISIBLE);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivDone.setVisibility(View.GONE);
                 }
@@ -138,4 +150,6 @@ public class WordsActivity extends AppCompatActivity {
         });
         itemTouchHelper.attachToRecyclerView(rvList);
     }
+
+
 }

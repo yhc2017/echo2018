@@ -18,7 +18,7 @@ import android.widget.Button;
 **/
 
 public class MainActivity extends AppCompatActivity {
-    Button mbt1;
+    Button mbt1,mbt2;
 
 
     /**
@@ -59,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent = new Intent(MainActivity.this, WordsActivity.class);
+                startActivity(intent);
+            }
+        });
+        mbt2 = (Button)findViewById(R.id.bt_words_two);
+        mbt2.setOnClickListener(new View.OnClickListener() {
+            Intent intent = null;
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(MainActivity.this, Words2Activity.class);
                 startActivity(intent);
             }
         });
