@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.echo.quick.utils.User;
+import com.echo.quick.pojo.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -89,6 +89,7 @@ public class UserMsgActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 finish();
+
             }
         });
     }

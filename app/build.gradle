@@ -40,5 +40,7 @@ dependencies {
     implementation 'com.yanzhenjie:recyclerview-swipe:1.1.3'
     //卡片布局
     implementation 'com.android.support:cardview-v7:26.1.0'
+    //第三方的表单验证框架
+    implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
 
 }

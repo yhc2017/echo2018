@@ -1,4 +1,4 @@
-package com.echo.quick.utils;
+package com.echo.quick.pojo;
 
 
 /**
@@ -16,16 +16,11 @@ public class User{
     private int userId;
     private String nickname;
     private String pwd;
-    private String send_grade;
-    private String receive_grade;
     private String sex;
     private String icon;
     private String introduce;
-    private String address;
-    private String other_address;
     private String tel;
     private int code;
-
 
     public int getUserId() {
         return userId;
@@ -49,22 +44,6 @@ public class User{
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
-    }
-
-    public String getSend_grade() {
-        return send_grade;
-    }
-
-    public void setSend_grade(String send_grade) {
-        this.send_grade = send_grade;
-    }
-
-    public String getReceive_grade() {
-        return receive_grade;
-    }
-
-    public void setReceive_grade(String receive_grade) {
-        this.receive_grade = receive_grade;
     }
 
     public String getSex() {
@@ -91,22 +70,6 @@ public class User{
         this.introduce = introduce;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getOther_address() {
-        return other_address;
-    }
-
-    public void setOther_address(String other_address) {
-        this.other_address = other_address;
-    }
-
     public String getTel() {
         return tel;
     }
@@ -122,4 +85,5 @@ public class User{
     public void setCode(int code) {
         this.code = code;
     }
+
 }
