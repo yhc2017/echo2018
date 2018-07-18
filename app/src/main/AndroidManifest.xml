@@ -3,6 +3,7 @@
     package="com.echo.quick.activities">
 
     <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -20,10 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.echo.quick.activities.WordsActivity"></activity>
+        <activity android:name="com.echo.quick.activities.WordsActivity" />
         <activity android:name="com.echo.quick.activities.LoginActivity" />
         <activity android:name="com.echo.quick.activities.RegisterActivity" />
-        <activity android:name="com.echo.quick.activities.UserMsgActivity"></activity>
+        <activity android:name="com.echo.quick.activities.UserMsgActivity" />
     </application>
 
 </manifest>

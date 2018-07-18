@@ -33,9 +33,12 @@
     <string name="user_card_pwd_back">修改</string>
     <string name="user_name">Allison</string>
     <string name="second_password">确认密码</string>
+    <string name="confirm_password">确认密码</string>
     <string name="re_iphone_number">手机号</string>
+    <string name="re_iphone_number_hint">请输入11位手机号</string>
     <string name="resigter_user_name">用户昵称</string>
     <string name="resigter_user_name_hint">请输入用户昵称</string>
+    <string name="resigter_user_name_length_hint">用户昵称长度不允许超过8</string>
     <string name="re_toolbar_real_name">实名认证</string>
     <string name="re_real_name">真实姓名</string>
     <string name="re_real_idcard">身份证号码</string>

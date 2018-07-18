@@ -54,6 +54,7 @@
                 android:layout_marginLeft="@dimen/re_margin"
                 android:background="@null"
                 android:hint="@string/iphone_number"
+                android:inputType="phone"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/content_textsize_small" />
 
@@ -112,6 +113,7 @@
                 android:layout_marginLeft="@dimen/re_margin"
                 android:background="@null"
                 android:hint="@string/password"
+                android:inputType="textPassword"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/content_textsize_small" />
 
@@ -145,6 +147,7 @@
                 android:layout_marginLeft="@dimen/re_margin"
                 android:background="@null"
                 android:hint="@string/second_password"
+                android:inputType="textPassword"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/content_textsize_small" />
 
@@ -160,8 +163,10 @@
             android:layout_height="50dp"
             android:layout_marginTop="1dp"
             android:orientation="horizontal">
+
             <RadioGroup
-                android:layout_width="match_parent"
+                android:id="@+id/register_sex_group"
+                android:layout_width="373dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:orientation="horizontal">
@@ -217,6 +222,7 @@
                     android:layout_marginLeft="@dimen/re_margin"
                     android:background="@null"
                     android:hint="@string/re_real_name_tip"
+                    android:inputType="textPersonName"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/content_textsize_small" />
             </LinearLayout>
