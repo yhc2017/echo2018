@@ -1,4 +1,4 @@
-package com.echo.quick.quickly.utils;
+package com.echo.quick.utils;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.echo.quick.quickly;
+package com.echo.quick.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.echo.quick.quickly.utils.User;
+import com.echo.quick.utils.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

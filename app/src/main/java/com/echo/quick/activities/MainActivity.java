@@ -1,12 +1,10 @@
-package com.echo.quick.quickly;
+package com.echo.quick.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-
-import com.echo.quick.quickly.utils.OKhttpManager;
 
 /**
  * 文件名：MainActivity
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     });
      *
      */
-    private OKhttpManager manager = OKhttpManager.getInstance();
+//    private OKhttpManager manager = OKhttpManager.getInstance();
 
     private Button btn_login;
 

@@ -1,4 +1,4 @@
-package com.echo.quick.adatper;
+package com.echo.quick.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.echo.quick.quickly.R;
+import com.echo.quick.activities.R;
 import java.util.ArrayList;
 
 /**
