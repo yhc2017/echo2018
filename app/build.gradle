@@ -38,5 +38,6 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.1.68.android'
     //第三方的表单验证框架
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 
 }
