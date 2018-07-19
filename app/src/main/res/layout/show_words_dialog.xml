@@ -25,7 +25,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="243dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/tv_item"
@@ -102,12 +102,14 @@ adv.  迅速地"/>
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_eg1"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:text="She gave him a quick glance."/>
             <TextView
+                android:id="@+id/tv_eg1_chinese"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="她迅速地扫了他一眼。"/>
@@ -124,6 +126,7 @@ adv.  迅速地"/>
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_eg2"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,6 +134,7 @@ adv.  迅速地"/>
                 android:text="She gave him a quick glance."/>
 
             <TextView
+                android:id="@+id/tv_eg2_chinese"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="她迅速地扫了他一眼。"/>
