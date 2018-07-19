@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.echo.quick.activities.R;
-import com.echo.quick.utils.Words;
+import com.echo.quick.pojo.Words;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

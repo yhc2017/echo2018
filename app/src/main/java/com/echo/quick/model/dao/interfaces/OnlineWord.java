@@ -1,6 +1,6 @@
 package com.echo.quick.model.dao.interfaces;
 
-import com.echo.quick.utils.Words;
+import com.echo.quick.pojo.Words;
 
 import java.util.HashMap;
 import java.util.List;

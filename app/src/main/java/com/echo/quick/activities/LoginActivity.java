@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.echo.quick.utils.L;
-import com.echo.quick.utils.T;
+import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Order;
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         String loginTel = ed_loginID.getText().toString();       //登录账号
         String loginPwd = ed_loginPwd.getText().toString();      //登录密码
 
-        T.showShort(LoginActivity.this, loginTel+loginPwd);
+        ToastUtils.showShort(LoginActivity.this, loginTel+loginPwd);
     }
 
     @Override
@@ -120,14 +120,14 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                 case R.id.iv_register:
                     intent = new Intent(LoginActivity.this, RegisterActivity.class);
                     startActivity(intent);
-                    L.d("登录页面", "跳转注册页面 ");
+                    LogUtils.d("登录页面", "跳转注册页面 ");
                     finish();
                     break;
 
                 case R.id.login_back:
                     intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
-                    L.d("登录页面", "返回主界面 ");
+                    LogUtils.d("登录页面", "返回主界面 ");
                     finish();
                     break;
 

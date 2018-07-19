@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
 import com.echo.quick.model.dao.interfaces.OnlineWord;
+import com.echo.quick.pojo.Words;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class App extends Application{
             map.put("classId", "11");
             setList(word.postToWord(map));
         }catch (Exception e){
-            
+
         }
     }
 

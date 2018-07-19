@@ -3,9 +3,9 @@ package com.echo.quick.model.dao.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.model.dao.interfaces.OnlineWord;
-import com.echo.quick.utils.L;
+import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.OKhttpManager;
-import com.echo.quick.utils.Words;
+import com.echo.quick.pojo.Words;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,13 +34,13 @@ public class OnlineWordImpl implements OnlineWord {
         manager.sendComplexForm(URLONLINEWORD, map, new OKhttpManager.Func1() {
             @Override
             public void onResponse(String result) {
-//                L.d(result);
+//                LogUtils.d(result);
                 JSONArray jsonArray = JSONObject.parseArray(result);
-//                L.d(jsonArray.toString());
+//                LogUtils.d(jsonArray.toString());
                 for (int i = 0; i < jsonArray.size(); i++){
                     JSONObject object = jsonArray.getJSONObject(i);
                     Words words = new Words(object.getString("word"), object.getString("phon"), object.getString("para"));
-                    L.d(object.getString("word")+"       "+object.getString("para"));
+                    LogUtils.d(object.getString("word")+"       "+object.getString("para"));
                     data.add(words);
                 }
             }

@@ -11,8 +11,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.echo.quick.utils.L;
-import com.echo.quick.utils.T;
+import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
@@ -178,7 +178,7 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
                 case R.id.register_back:
                     intent = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intent);
-                    L.d("注册页面跳转首页");
+                    LogUtils.d("注册页面跳转首页");
                     finish();
                     break;
 
@@ -192,10 +192,10 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
                         String name = ed_name.getText().toString();
 
                         if (tel.equals("") || pwd.equals("") || surePwd.equals("") || name.equals("")) {
-                            T.showShort(RegisterActivity.this, R.string.RegInfoNotFull);
+                            ToastUtils.showShort(RegisterActivity.this, R.string.RegInfoNotFull);
                         } else {
                             // 发起网络请求进行注册
-                            T.showShort(RegisterActivity.this, tel+pwd+surePwd+name+sex);
+                            ToastUtils.showShort(RegisterActivity.this, tel+pwd+surePwd+name+sex);
                         }
                     }
                     break;

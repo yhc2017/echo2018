@@ -3,7 +3,7 @@ package com.echo.quick.utils;
 import android.util.Log;
 
 /**
- * 文件名：L
+ * 文件名：LogUtils
  * 创建人：周少侠
  * 创建时间：2018/7/18 15:03
  * 类描述：一个简单的工具类
@@ -14,9 +14,9 @@ import android.util.Log;
  * 
 **/
 
-public class L{
+public class LogUtils {
  
-	private L() {
+	private LogUtils() {
 		/* 无法实例化 */
 		throw new UnsupportedOperationException("cannot be instantiated");
 	}

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * 文件名：T
+ * 文件名：ToastUtils
  * 创建人：周少侠
  * 创建时间：2018/7/18 15:08
  * 类描述：一个简单的Toast工具类
@@ -15,10 +15,10 @@ import android.widget.Toast;
  * 
 **/
 
-public class T
+public class ToastUtils
 {
  
-	private T() {
+	private ToastUtils() {
 		/* 无法实例化 */
 		throw new UnsupportedOperationException("cannot be instantiated");
 	}

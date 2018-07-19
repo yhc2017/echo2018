@@ -12,9 +12,9 @@ import android.view.View;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
 import com.echo.quick.utils.App;
-import com.echo.quick.utils.L;
-import com.echo.quick.utils.T;
-import com.echo.quick.utils.Words;
+import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.ToastUtils;
+import com.echo.quick.pojo.Words;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public class WordsActivity extends AppCompatActivity {
                 // 处理滑动事件回调
                 final int pos = viewHolder.getAdapterPosition();//页面中子项的位置
                 final Words item = mData.get(pos);//数据子项的位置
-                L.d(mSampleWordsAdapter.getItemCount()+"");
+                LogUtils.d(mSampleWordsAdapter.getItemCount()+"");
                 if(mSampleWordsAdapter.getItemCount() == 1){
                     start = start+5;
                     stop = stop + 5;
@@ -93,7 +93,7 @@ public class WordsActivity extends AppCompatActivity {
                             }
                         });
                     }catch (Exception e){
-                        T.showShort(WordsActivity.this, "一轮练习已完成");
+                        ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
                         mData.remove(pos);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     }

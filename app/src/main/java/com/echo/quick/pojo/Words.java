@@ -1,4 +1,4 @@
-package com.echo.quick.utils;
+package com.echo.quick.pojo;
 
 /**
  * Class name: Words
