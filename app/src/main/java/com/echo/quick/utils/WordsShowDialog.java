@@ -8,8 +8,7 @@ import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.echo.quick.activities.R;
-
-import java.util.List;
+import com.echo.quick.pojo.Words;
 
 /**
  * Created by HUAHUA on 2018/7/19.

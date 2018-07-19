@@ -8,13 +8,11 @@ import android.widget.Button;
 
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
 import com.echo.quick.model.dao.interfaces.OnlineWord;
+import com.echo.quick.pojo.Words;
 import com.echo.quick.utils.App;
+import com.echo.quick.utils.WordsShowDialog;
 
 import java.util.HashMap;
-
-import com.echo.quick.utils.CustomDialog;
-import com.echo.quick.utils.Words;
-import com.echo.quick.utils.WordsShowDialog;
 
 /**
  * 文件名：MainActivity
