@@ -2,15 +2,18 @@ package com.echo.quick.activities;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
+import com.echo.quick.utils.App;
+import com.echo.quick.utils.L;
+import com.echo.quick.utils.T;
 import com.echo.quick.utils.Words;
 
 import java.util.ArrayList;
@@ -29,11 +32,16 @@ public class WordsActivity extends AppCompatActivity {
     private RecyclerView rvList;
     private SampleWordsAdapter mSampleWordsAdapter;
     private List<Words> mData = new ArrayList<>();
+    private App app;
+    int start = 0;
+    int stop = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words);
+        app = (App)getApplication();
+
         initView();
     }
 
@@ -48,17 +56,8 @@ public class WordsActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvList.setLayoutManager(linearLayoutManager);
 
-//        if (0==mSampleWordsAdapter.getItemCount()){
-//            for (int i = 0; i < 5; i++) {
-//                Words words = new Words("Quick","/kulk/","adj. 快的；adv. 迅速地");
-//                mData.add(words);
-//            }
-//        }
-        //填充假数据
-        for (int i = 0; i < 5; i++) {
-            Words words = new Words("Quick","/kulk/","adj. 快的；adv. 迅速地");
-            mData.add(words);
-        }
+        mData = app.getList().subList(start, stop);
+
         mSampleWordsAdapter = new SampleWordsAdapter(this, mData);
         rvList.setAdapter(mSampleWordsAdapter);
 
@@ -77,32 +76,57 @@ public class WordsActivity extends AppCompatActivity {
                 // 处理滑动事件回调
                 final int pos = viewHolder.getAdapterPosition();//页面中子项的位置
                 final Words item = mData.get(pos);//数据子项的位置
+                L.d(mSampleWordsAdapter.getItemCount()+"");
+                if(mSampleWordsAdapter.getItemCount() == 1){
+                    start = start+5;
+                    stop = stop + 5;
+                    if(stop > app.getList().size()){
+                        stop = app.getList().size()-1;
+                    }
+                    try {
+                        mData = app.getList().subList(start, stop);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData);
+                                rvList.setAdapter(mSampleWordsAdapter);
+                            }
+                        });
+                    }catch (Exception e){
+                        T.showShort(WordsActivity.this, "一轮练习已完成");
+                        mData.remove(pos);
+                        mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    }
 
+
+                }
+                else {
 //                mData.remove(pos);
 //                mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                String text;
-                // 判断方向，进行不同的操作
-                if (direction == ItemTouchHelper.RIGHT) {
-                    text = "已记住";
-                    mData.remove(pos);
-                    mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                } else {
-                    text = "还没记住";
-                    mData.remove(pos);
-                    mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    String text;
+                    // 判断方向，进行不同的操作
+                    if (direction == ItemTouchHelper.RIGHT) {
+                        text = "已记住";
+                        mData.remove(pos);
+                        mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    } else {
+                        text = "还没记住";
+                        mData.remove(pos);
+                        mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    }
+                    /**
+                     * 撤销上一个单词的操作
+                     * @param  View 视图,  CharSequence 字符串, int 出现时间
+                     */
+                    Snackbar.make(viewHolder.itemView, text, Snackbar.LENGTH_LONG)
+                            .setAction("撤销", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mData.add(pos, item);
+                                    mSampleWordsAdapter.notifyItemInserted(pos);
+                                }
+                            }).show();
                 }
-                /**
-                 * 撤销上一个单词的操作
-                 * @param  View 视图,  CharSequence 字符串, int 出现时间
-                 */
-                Snackbar.make(viewHolder.itemView, text, Snackbar.LENGTH_LONG)
-                        .setAction("撤销", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mData.add(pos, item);
-                                mSampleWordsAdapter.notifyItemInserted(pos);
-                            }
-                        }).show();
             }
 
             @Override

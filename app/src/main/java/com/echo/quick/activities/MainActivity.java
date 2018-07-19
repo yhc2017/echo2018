@@ -6,6 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.echo.quick.model.dao.impl.OnlineWordImpl;
+import com.echo.quick.model.dao.interfaces.OnlineWord;
+import com.echo.quick.utils.App;
+
+import java.util.HashMap;
+
 /**
  * 文件名：MainActivity
  * 创建人：周少侠
@@ -38,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
      */
 //    private OKhttpManager manager = OKhttpManager.getInstance();
 
-    private Button btn_login;
+    private Button btn_login,btn_test;
+
+    public App app;
 
     /**
      * 方法名称：
@@ -52,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        app = (App)getApplication();
 
         mbt1 = (Button)findViewById(R.id.bt_words);
         mbt1.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +90,17 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
 
+            }
+        });
+        btn_test = (Button)findViewById(R.id.btn_test);
+        btn_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnlineWord word = new OnlineWordImpl();
+                final HashMap<String, String> map = new HashMap<>();
+                map.put("userId", "444");
+                map.put("classId", "11");
+                word.postToWord(map);
             }
         });
 
