@@ -13,4 +13,7 @@ import com.echo.quick.contracts.RegisterContract;
  */
 
 public class RegisterPresenterImpl implements RegisterContract.IRegister {
+
+
+
 }

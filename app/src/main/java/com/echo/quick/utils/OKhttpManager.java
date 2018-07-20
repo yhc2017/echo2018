@@ -51,7 +51,7 @@ public class OKhttpManager {
     public interface  Func1{
     void  onResponse(String result);
 }
-    public    interface Func2{
+    public  interface Func2{
         void onResponse(byte [] result);
     }
     public  interface Func3{

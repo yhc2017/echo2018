@@ -12,7 +12,16 @@ package com.echo.quick.contracts;
 
 public interface LoginContract {
 
-    interface ILoginView{};
-    interface ILoginPresenter{};
+    interface ILoginView{
+
+        public void onClearText();
+        public void onLoginResult(Boolean result, int code);
+
+    };
+
+    interface ILoginPresenter{
+        void clear();
+        void doLogin(String name, String passwd);
+    };
 
 }

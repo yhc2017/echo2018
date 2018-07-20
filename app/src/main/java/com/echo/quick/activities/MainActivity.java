@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.echo.quick.contracts.MainContract;
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
 import com.echo.quick.model.dao.interfaces.OnlineWord;
 import com.echo.quick.pojo.Words;
@@ -25,7 +26,7 @@ import java.util.HashMap;
  *
 **/
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainContract.IMainView{
     Button mbt1,mbt2,mbtdialog;
 
 

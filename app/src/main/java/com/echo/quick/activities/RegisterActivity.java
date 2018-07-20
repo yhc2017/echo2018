@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.echo.quick.contracts.RegisterContract;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -36,7 +37,7 @@ import java.util.List;
  *
 **/
 
-public class RegisterActivity  extends AppCompatActivity implements Validator.ValidationListener {
+public class RegisterActivity  extends AppCompatActivity implements Validator.ValidationListener,RegisterContract.IRegisterView {
 
     private ImageView iv_register_back;
 
@@ -64,6 +65,7 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
     private RadioButton man,nv;
 
     protected Validator validator;
+
 
     //当表单信息验证通过后设为true
     private Boolean isOk = false;

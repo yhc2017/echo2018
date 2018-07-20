@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.echo.quick.contracts.LoginContract;
+import com.echo.quick.presenters.LoginPresenterImpl;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -32,7 +34,7 @@ import java.util.List;
  * 
 **/
 
-public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener {
+public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener,LoginContract.ILoginView {
 
     private TextView iv_register;
     private TextView iv_pwdforgive;
@@ -49,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     private Button bt_login;
 
     protected Validator validator;
+    private LoginContract.ILoginPresenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +59,13 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
 
+        initViews();
+        setEvents();
+
         validator = new Validator(this);
         validator.setValidationListener(this);
 
-        initViews();
-        setEvents();
+        loginPresenter = new LoginPresenterImpl(this);
         
     }
 
@@ -72,6 +77,8 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         login_back = (ImageView) findViewById(R.id.login_back);
         ed_loginID = (EditText) findViewById(R.id.login_id);
         ed_loginPwd = (EditText) findViewById(R.id.login_pwd);
+        ed_loginID.setText("15521186429");
+        ed_loginPwd.setText("123456");
         bt_login = (Button) findViewById(R.id.logbtn);
     }
 
@@ -91,7 +98,12 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         String loginTel = ed_loginID.getText().toString();       //登录账号
         String loginPwd = ed_loginPwd.getText().toString();      //登录密码
 
-        ToastUtils.showShort(LoginActivity.this, loginTel+loginPwd);
+        try {
+            loginPresenter.doLogin(loginTel, loginPwd);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        ToastUtils.showLong(this, "点击成功");
     }
 
     @Override
@@ -109,24 +121,32 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
     }
 
+    @Override
+    public void onClearText() {
+        ed_loginID.setText("");
+        ed_loginPwd.setText("");
+    }
+
+    @Override
+    public void onLoginResult(Boolean result, int code) {
+
+    }
+
     //选择触发的事件
     public class MyListener implements View.OnClickListener { /*用接口的方式*/
         public void onClick(View v) {
 
-            Intent intent = null;
             int id = v.getId();   /*得到v的id付给id*/
 
             switch (id) {
                 case R.id.iv_register:
-                    intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                    startActivity(intent);
+
+                    startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                     LogUtils.d("登录页面", "跳转注册页面 ");
                     finish();
                     break;
 
                 case R.id.login_back:
-                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
                     LogUtils.d("登录页面", "返回主界面 ");
                     finish();
                     break;

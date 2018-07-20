@@ -1,5 +1,9 @@
 package com.echo.quick.model.dao.interfaces;
 
+import com.echo.quick.pojo.User;
+
+import okhttp3.Callback;
+
 /**
  * 项目名称：echo2018
  * 类描述：
@@ -11,4 +15,7 @@ package com.echo.quick.model.dao.interfaces;
  */
 
 public interface ILoginDao {
+
+    User doLoginPost(String tel, String pwd, Callback callback);
+
 }

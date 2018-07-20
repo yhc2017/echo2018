@@ -43,4 +43,6 @@ dependencies {
     //第三方的表单验证框架
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
 
+    compile files('libs/activation.jar')
+
 }
