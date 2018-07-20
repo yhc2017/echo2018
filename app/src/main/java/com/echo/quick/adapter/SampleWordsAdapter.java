@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.echo.quick.activities.R;
@@ -22,9 +23,10 @@ import java.util.List;
  * @since ：[quick|速记单词模块]
  */
 
-public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private LayoutInflater mLayoutInflater;
     private List<Words> mData;
+    private OnItemClickListener mOnItemClickListener = null;
 
     /**
      * Method name : 构造方法
@@ -37,14 +39,27 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mData = data;
     }
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(mLayoutInflater.inflate(R.layout.item_words, parent, false));
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_words, parent, false);
+        ItemViewHolder vh = new ItemViewHolder(view);
+        //将创建的View注册点击事件
+        view.setOnClickListener(this);
+        return vh;
     }
+
+    //最后暴露给外面的调用者，定义一个设置Listener的方法（）：
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((ItemViewHolder)holder).setData(mData.get(position));
+        //将position保存在itemView的Tag中，以便点击时进行获取
+        holder.itemView.setTag(position);
     }
 
     @Override
@@ -52,6 +67,24 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return mData == null ? 0 : mData.size();
     }
 
+    /**
+     * Method name : onClick
+     * Specific description :继承View.OnClickListener 接口，实现这个点击方法
+     *@param    view
+     *@return void
+     */
+    @Override
+    public void onClick(View view) {
+        if (mOnItemClickListener != null) {
+            //注意这里使用getTag方法获取position
+            mOnItemClickListener.onItemClick(view,(int)view.getTag());
+        }
+    }
+
+    //define interface
+    public static interface OnItemClickListener {
+        void onItemClick(View view , int position);
+    }
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         public View vBackground; // 背景
         public View vItem;
@@ -80,5 +113,6 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tvSymbol.setText(data.getSymbol());
             tvExplain.setText(data.getExplain());
         }
+
     }
 }

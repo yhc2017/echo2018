@@ -9,12 +9,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.Toast;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
+import com.echo.quick.adapter.WordsAdapter;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.ToastUtils;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.utils.WordsShowDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +59,32 @@ public class WordsActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvList.setLayoutManager(linearLayoutManager);
 
-        mData = app.getList().subList(start, stop);
+        /**
+         * 原因描述 ：测试
+         * 注释人: HUAHUA
+         * @version :1.0 , 2018/7/20 20:44
+         *
+         * mData = app.getList().subList(start, stop);
+         *
+         */
+        //填充假数据
+        for (int i = 0; i < 5; i++) {
+            Words words = new Words("Quick","/kik/","");
+            mData.add(words);
+        }
 
         mSampleWordsAdapter = new SampleWordsAdapter(this, mData);
         rvList.setAdapter(mSampleWordsAdapter);
+        mSampleWordsAdapter.setOnItemClickListener(new SampleWordsAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(View view , int position){
+                ToastUtils.showShort(WordsActivity.this, "点击事件！");
+                Words words = new Words("Quick","/kwlk/","adj.   快的; 迅速的; 很快的\n" +
+                        "adv.  迅速地","She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
+                WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
+                customDialog.show();
+            }
+        });
 
          //new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) 表示不可以拖拽，只可以在左右方向滑动
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(

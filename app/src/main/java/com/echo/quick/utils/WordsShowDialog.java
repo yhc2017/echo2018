@@ -60,10 +60,10 @@ public class WordsShowDialog extends Dialog {
         tv_item.setText(words.getWord());
         tv_symbol.setText(words.getSymbol());
         tv_explain.setText(words.getExplain());
-        tv_eg1.setText("She gave him a quick glance.");
-        tv_eg1_chinese.setText("她迅速地扫了他一眼。");
-        tv_eg2.setText("She gave him a quick glance.");
-        tv_eg2_chinese.setText("她迅速地扫了他一眼。");
+        tv_eg1.setText(words.getEg1());
+        tv_eg1_chinese.setText(words.getEg1_chinese());
+        tv_eg2.setText(words.getEg2());
+        tv_eg2_chinese.setText(words.getEg2_chinese());
     }
 
 

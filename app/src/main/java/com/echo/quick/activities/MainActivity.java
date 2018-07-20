@@ -84,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
                 startActivity(intent);
             }
         });
+        /**
+         * Specific description :增加 mbtdialog 按钮测试dialog
+         *可以在这里设置数据
+         */
         mbtdialog = (Button)findViewById(R.id.bt_words_dialog);
         mbtdialog.setOnClickListener(new View.OnClickListener() {
 
@@ -99,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = null;
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
