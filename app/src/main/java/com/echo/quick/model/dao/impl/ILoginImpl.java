@@ -26,7 +26,7 @@ public class ILoginImpl implements ILoginDao {
 
         String requestContent = "tel=155211864297";
 
-        postHelper.doPost(requestContent, _NetHelper.POST_URL+"demo", callback);
+        postHelper.doPost(requestContent, _NetHelper.DOMAIN+"demo", callback);
 
         return null;
     }
