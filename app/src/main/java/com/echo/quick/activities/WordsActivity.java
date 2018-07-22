@@ -8,11 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
-import com.echo.quick.adapter.WordsAdapter;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.ToastUtils;
@@ -34,6 +33,9 @@ import java.util.List;
 public class WordsActivity extends AppCompatActivity {
     private RecyclerView rvList;
     private SampleWordsAdapter mSampleWordsAdapter;
+    private SampleWordsAdapter.OnItemClickListener listener;
+    private ItemTouchHelper itemTouchHelper;
+    private ItemTouchHelper.SimpleCallback simpleCallback;
     private List<Words> mData = new ArrayList<>();
     private App app;
     int start = 0;
@@ -44,7 +46,6 @@ public class WordsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words);
         app = (App)getApplication();
-
         initView();
     }
 
@@ -58,38 +59,24 @@ public class WordsActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvList.setLayoutManager(linearLayoutManager);
-
-        /**
-         * 原因描述 ：测试
-         * 注释人: HUAHUA
-         * @version :1.0 , 2018/7/20 20:44
-         *
-         * mData = app.getList().subList(start, stop);
-         *
-         */
-        //填充假数据
-        for (int i = 0; i < 5; i++) {
-            Words words = new Words("Quick","/kik/","");
-            mData.add(words);
-        }
-
-        mSampleWordsAdapter = new SampleWordsAdapter(this, mData);
+        //获取数据重新回到列表
+        mSampleWordsAdapter = new SampleWordsAdapter(this, getData());
         rvList.setAdapter(mSampleWordsAdapter);
-        mSampleWordsAdapter.setOnItemClickListener(new SampleWordsAdapter.OnItemClickListener(){
-            @Override
-            public void onItemClick(View view , int position){
-                ToastUtils.showShort(WordsActivity.this, "点击事件！");
-                Words words = new Words("Quick","/kwlk/","adj.   快的; 迅速的; 很快的\n" +
-                        "adv.  迅速地","She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
-                WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
-                customDialog.show();
-            }
-        });
+        //列表子项的点击监听
+        mSampleWordsAdapter.setOnItemClickListener(getListen());
+        //滑动事件
+        itemTouchHelper = new ItemTouchHelper(getEvent());
+        itemTouchHelper.attachToRecyclerView(rvList);
+    }
 
-         //new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) 表示不可以拖拽，只可以在左右方向滑动
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(
-                new ItemTouchHelper.SimpleCallback(
-                        0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+    /**
+     * Method name : getEvent
+     * Specific description :对于item的处理,不可以拖拽，只可以在左右方向滑动
+     *@return simpleCallback ItemTouchHelper.SimpleCallback
+     */
+    private ItemTouchHelper.SimpleCallback getEvent() {
+        simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 // 不处理拖拽事件回调
@@ -124,10 +111,7 @@ public class WordsActivity extends AppCompatActivity {
                     }
 
 
-                }
-                else {
-//                mData.remove(pos);
-//                mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                }else {
                     String text;
                     // 判断方向，进行不同的操作
                     if (direction == ItemTouchHelper.RIGHT) {
@@ -196,8 +180,47 @@ public class WordsActivity extends AppCompatActivity {
                 // 默认是操作ViewHolder的itemView，这里调用ItemTouchUIUtil的clearView方法传入指定的view
                 getDefaultUIUtil().onDrawOver(c, recyclerView, ((SampleWordsAdapter.ItemViewHolder) viewHolder).vItem, dX, dY, actionState, isCurrentlyActive);
             }
-        });
-        itemTouchHelper.attachToRecyclerView(rvList);
+        };
+        return simpleCallback;
+    }
+
+    /**
+     * Method name : getListen()
+     * Specific description :监听recycleview的item子项的点击事件
+     *@return listener SampleWordsAdapter.OnItemClickListener
+     */
+    private SampleWordsAdapter.OnItemClickListener getListen() {
+        listener = new SampleWordsAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(View view , int position){
+                ToastUtils.showShort(WordsActivity.this, "点击事件！");
+                Words words = new Words("Quick","/kwlk/","adj.   快的; 迅速的; 很快的\n" +
+                        "adv.  迅速地","She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
+                WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
+                customDialog.show();
+            }
+        };
+        return listener;
+    }
+
+    /**
+     * Method name : getData()
+     * Specific description :获取数据
+     *@return mData List<Words>
+     */
+    private List<Words> getData() {
+
+        if (mData==null) {
+            LogUtils.d("为空的数据列表！");
+        }else {
+            mData = app.getList().subList(start, stop);
+        }
+        //填充假数据
+//        for (int i = 0; i < 5; i++) {
+//            Words words = new Words("Quick","/kik/","");
+//            mData.add(words);
+//        }
+        return mData;
     }
 
 
