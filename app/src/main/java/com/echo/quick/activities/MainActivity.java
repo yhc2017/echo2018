@@ -1,5 +1,6 @@
 package com.echo.quick.activities;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,13 +8,15 @@ import android.view.View;
 import android.widget.Button;
 
 import com.echo.quick.contracts.MainContract;
-import com.echo.quick.model.dao.impl.OnlineWordImpl;
-import com.echo.quick.model.dao.interfaces.OnlineWord;
+import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.WordsShowDialog;
 
 import java.util.HashMap;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * 文件名：MainActivity
@@ -52,6 +55,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
     public App app;
 
     /**
+     * 需要申请的权限数组
+     */
+    protected String[] needPermissions = {
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.INTERNET,
+    };
+
+
+    /**
      * 方法名称：
      * 方法描述:
      * 参数1： 参数说明
@@ -65,6 +77,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
         setContentView(R.layout.activity_main);
 
         app = (App)getApplication();
+
+        OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("userId", "444");
+        map.put("classId", "11");
+        app.setList(onlineWordPresenter.getOnlineWord(map));
 
         mbt1 = (Button)findViewById(R.id.bt_words);
         mbt1.setOnClickListener(new View.OnClickListener() {
@@ -113,15 +131,24 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OnlineWord word = new OnlineWordImpl();
+                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
                 final HashMap<String, String> map = new HashMap<>();
                 map.put("userId", "444");
                 map.put("classId", "11");
-                word.postToWord(map);
+                app.setList(onlineWordPresenter.getOnlineWord(map));
             }
         });
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
 
 
 

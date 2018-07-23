@@ -1,9 +1,8 @@
 package com.echo.quick.model.dao.interfaces;
 
-import com.echo.quick.pojo.Words;
-
 import java.util.HashMap;
-import java.util.List;
+
+import okhttp3.Callback;
 
 /**
  * 项目名称：echo2018
@@ -17,6 +16,6 @@ import java.util.List;
 
 public interface OnlineWord {
 
-    List<Words> postToWord(HashMap<String, String> map);
+    void postToWord(HashMap<String, String> map, Callback callback);
 
 }

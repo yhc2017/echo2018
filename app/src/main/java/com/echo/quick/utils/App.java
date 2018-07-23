@@ -2,9 +2,11 @@ package com.echo.quick.utils;
 
 import android.app.Application;
 
-import com.echo.quick.model.dao.impl.OnlineWordImpl;
-import com.echo.quick.model.dao.interfaces.OnlineWord;
+import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.presenters.OnlineWordPresenterImpl;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,18 +29,20 @@ public class App extends Application{
     public void onCreate() {
         super.onCreate();
         list = new ArrayList<>();
-        init();
+        // 初始化LitePal数据库
+        LitePal.initialize(this);
+//        init();
     }
 
     public void init(){
         try {
-            OnlineWord word = new OnlineWordImpl();
+            OnlineWordContract.OnlineWordPresenter wordPresenter = new OnlineWordPresenterImpl();
             final HashMap<String, String> map = new HashMap<>();
             map.put("userId", "444");
             map.put("classId", "11");
-            setList(word.postToWord(map));
+            setList(wordPresenter.getOnlineWord(map));
         }catch (Exception e){
-
+            LogUtils.d("没在服务器获取到数据");
         }
     }
 

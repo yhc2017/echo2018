@@ -9,14 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.widget.Toast;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
-import com.echo.quick.adapter.WordsAdapter;
+import com.echo.quick.pojo.Words;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.ToastUtils;
-import com.echo.quick.pojo.Words;
 import com.echo.quick.utils.WordsShowDialog;
 
 import java.util.ArrayList;
@@ -59,19 +57,24 @@ public class WordsActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvList.setLayoutManager(linearLayoutManager);
 
+        //储存被remove的position
+        final List<Integer> list = new ArrayList<>();
         /**
          * 原因描述 ：测试
          * 注释人: HUAHUA
          * @version :1.0 , 2018/7/20 20:44
          *
          * mData = app.getList().subList(start, stop);
-         *
+         * 修改人：建旋
+         * 原因：从数组中割5个数据放到新数组里
          */
+        mData = app.getList().subList(start, stop);
+
         //填充假数据
-        for (int i = 0; i < 5; i++) {
-            Words words = new Words("Quick","/kik/","");
-            mData.add(words);
-        }
+//        for (int i = 0; i < 5; i++) {
+//            Words words = new Words("Quick","/kik/","");
+//            mData.add(words);
+//        }
 
         mSampleWordsAdapter = new SampleWordsAdapter(this, mData);
         rvList.setAdapter(mSampleWordsAdapter);
@@ -79,8 +82,12 @@ public class WordsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view , int position){
                 ToastUtils.showShort(WordsActivity.this, "点击事件！");
-                Words words = new Words("Quick","/kwlk/","adj.   快的; 迅速的; 很快的\n" +
-                        "adv.  迅速地","She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
+                int res = TraversingList(list, position);
+                int i = position - res ;
+
+                LogUtils.d("数字为："+i);
+                Words words = new Words(mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
+                        ,"She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
                 WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
                 customDialog.show();
             }
@@ -103,10 +110,11 @@ public class WordsActivity extends AppCompatActivity {
                 final Words item = mData.get(pos);//数据子项的位置
                 LogUtils.d(mSampleWordsAdapter.getItemCount()+"");
                 if(mSampleWordsAdapter.getItemCount() == 1){
+                    list.clear();
                     start = start+5;
                     stop = stop + 5;
                     if(stop > app.getList().size()){
-                        stop = app.getList().size()-1;
+                        stop = app.getList().size()-(app.getList().size() - stop);
                     }
                     try {
                         mData = app.getList().subList(start, stop);
@@ -115,6 +123,20 @@ public class WordsActivity extends AppCompatActivity {
                             public void run() {
                                 mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData);
                                 rvList.setAdapter(mSampleWordsAdapter);
+                                mSampleWordsAdapter.setOnItemClickListener(new SampleWordsAdapter.OnItemClickListener(){
+                                    @Override
+                                    public void onItemClick(View view , int position){
+                                        ToastUtils.showShort(WordsActivity.this, "点击事件！");
+                                        int res = TraversingList(list, position);
+                                        int i = position - res;
+
+                                        LogUtils.d("数字为："+i);
+                                        Words words = new Words(mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
+                                                ,"She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
+                                        WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
+                                        customDialog.show();
+                                    }
+                                });
                             }
                         });
                     }catch (Exception e){
@@ -130,15 +152,19 @@ public class WordsActivity extends AppCompatActivity {
 //                mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     String text;
                     // 判断方向，进行不同的操作
+                    list.add(pos);
                     if (direction == ItemTouchHelper.RIGHT) {
                         text = "已记住";
                         mData.remove(pos);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
                     } else {
                         text = "还没记住";
                         mData.remove(pos);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
                     }
+
                     /**
                      * 撤销上一个单词的操作
                      * @param  View 视图,  CharSequence 字符串, int 出现时间
@@ -198,6 +224,30 @@ public class WordsActivity extends AppCompatActivity {
             }
         });
         itemTouchHelper.attachToRecyclerView(rvList);
+    }
+
+    /**
+     * 方法名称：TraversingList
+     * 方法描述: 把remove的position收集起来的list和当前点击的position一起传进，计算跨度
+     * 参数1： List<Integer>,int
+     * @return int
+     **/
+    public int TraversingList(List<Integer> integers, int p){
+
+        //计算结果
+        int res = 0;
+
+        if(integers.isEmpty()){
+            return res;
+        }
+        int size = integers.size();
+
+        for(int i = 0; i < size; i++){
+            if(integers.get(i) < p)
+                res += 1;
+        }
+
+        return res;
     }
 
 

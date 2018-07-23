@@ -1,15 +1,13 @@
 package com.echo.quick.model.dao.impl;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.model.dao.interfaces.OnlineWord;
 import com.echo.quick.utils.LogUtils;
-import com.echo.quick.utils.OKhttpManager;
-import com.echo.quick.pojo.Words;
+import com.echo.quick.utils._NetHelper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
+
+import okhttp3.Callback;
 
 /**
  * 项目名称：echo2018
@@ -23,28 +21,22 @@ import java.util.List;
 
 public class OnlineWordImpl implements OnlineWord {
 
-    //返回结果
-    List<Words> data;
-    String URLONLINEWORD = "http://192.168.43.167:8080/words/selectWords";
+    //调用_NetHelper中的post与get方法，实现CRUD操作
+    private _NetHelper.PostHelper postHelper = new _NetHelper.PostHelper();
+
 
     @Override
-    public List<Words> postToWord(HashMap<String, String> map) {
-        OKhttpManager manager = OKhttpManager.getInstance();
-        data = new ArrayList<>();
-        manager.sendComplexForm(URLONLINEWORD, map, new OKhttpManager.Func1() {
-            @Override
-            public void onResponse(String result) {
-//                LogUtils.d(result);
-                JSONArray jsonArray = JSONObject.parseArray(result);
-//                LogUtils.d(jsonArray.toString());
-                for (int i = 0; i < jsonArray.size(); i++){
-                    JSONObject object = jsonArray.getJSONObject(i);
-                    Words words = new Words(object.getString("word"), object.getString("phon"), object.getString("para"));
-                    LogUtils.d(object.getString("word")+"       "+object.getString("para"));
-                    data.add(words);
-                }
+    public void postToWord(HashMap<String, String> params, Callback callback) {
+
+        String requestContent = "";
+
+        if (params != null && !params.isEmpty()) {
+            for(Map.Entry<String,String> entry : params.entrySet()){
+                requestContent += entry.getKey() + "=" + entry.getValue() +"&";
             }
-        });
-        return data;
+        }
+        LogUtils.d("requestContent = " + requestContent );
+
+        postHelper.doPost(requestContent, _NetHelper.POST_URL+"quick/words/selectWords", callback);
     }
 }
