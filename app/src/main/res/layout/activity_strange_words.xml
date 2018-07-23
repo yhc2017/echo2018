@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/strage_words_back"
+            android:layout_width="@dimen/toolbar_content"
+            android:layout_height="@dimen/toolbar_content"
+            android:layout_margin="@dimen/content_margin_hieght"
+            android:src="@drawable/ic_home" />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_coupon"
+            android:layout_centerInParent="true"
+            android:background="@color/white"
+            android:layout_width="200dp"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/black"
+            android:layout_height="100px">
+        </android.support.design.widget.TabLayout>
+    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <!--<android.support.design.widget.TabLayout-->
+        <!--android:id="@+id/tl_coupon"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:background="@color/white"-->
+        <!--app:tabIndicatorColor="@color/colorPrimary"-->
+        <!--app:tabSelectedTextColor="@color/colorPrimary"-->
+        <!--app:tabTextColor="@color/black">-->
+    <!--</android.support.design.widget.TabLayout>-->
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/vp_coupon"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+
+
+</LinearLayout>
