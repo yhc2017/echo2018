@@ -108,13 +108,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
          */
         mbtdialog = (Button)findViewById(R.id.bt_words_dialog);
         mbtdialog.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                Words words = new Words("Quick","/kwlk/","adj.   快的; 迅速的; 很快的\n" +
-                        "adv.  迅速地","She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
-                WordsShowDialog customDialog = new WordsShowDialog(MainActivity.this,words);
-                customDialog.show();
+                Intent intent = null;
+                intent = new Intent(MainActivity.this, StrangeWordsListActivity.class);
+                startActivity(intent);
             }
         });
         btn_login = (Button)findViewById(R.id.btn_login);

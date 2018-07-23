@@ -5,6 +5,8 @@ import com.echo.quick.model.dao.impl.ILoginImpl;
 import com.echo.quick.model.dao.interfaces.ILoginDao;
 import com.echo.quick.utils.LogUtils;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -21,7 +23,7 @@ import okhttp3.Response;
  * 修改备注：
  */
 
-public class LoginPresenterImpl implements LoginContract.ILoginPresenter {
+public class LoginPresenterImpl extends BasePresenter implements LoginContract.ILoginPresenter {
 
     LoginContract.ILoginView iLoginView;
 
@@ -47,7 +49,14 @@ public class LoginPresenterImpl implements LoginContract.ILoginPresenter {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                LogUtils.d(response.body().string());
+                //LogUtils.d(response.body().string());
+
+                //code指的是http状态码，可以判断操作的状态；
+                int code  = response.code();
+
+                //将获得的response直接解析成为JsonObject;
+                JSONObject jsonObject = getJSONObject(response);
+                // TO-DO:将上面得到的JsonObject进行处理，并通过用户上下文创建一个全局用户单例；
             }
         });
     }

@@ -6,8 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import java.io.File;
 import java.io.IOException;
 
-import javax.activation.MimetypesFileTypeMap;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -30,9 +28,9 @@ public class _NetHelper {
 
 //    private static String PORT = Config.getNetConfigProperties().getProperty("port");
 
-    private static String DOMAIN = "http://"+IP+':';
+    private static String PORT = "8080";
 
-    public static String POST_URL = DOMAIN+"8080/";
+    public static String DOMAIN = "http://"+IP+':'+PORT + '/';
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -192,42 +190,43 @@ public class _NetHelper {
         }
     }
 
-    static public class UploadFileHelper {
-        private Request.Builder builder;
-
-        //执行发送PATCH HTTP请求的方法
-        public void doUpload(String accessToken, File file, String url, Callback callback) {
-
-            String contentType  = new MimetypesFileTypeMap().getContentType(file);
-            MediaType type=MediaType.parse(contentType);
-            RequestBody fileBody = RequestBody.create(type, file);
-            RequestBody multipartBody = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addPart(Headers.of(
-                            "Content-Disposition",
-                            "form-data; name=\"file\";" +
-                            " filename=\""+file.getName()+"\"")
-                            , fileBody)
-                    .build();
-            Request request = (builder!=null?builder:new Request.Builder())
-                    .url(url)
-                    .addHeader("Authorization","Bearer "+ accessToken)
-                    .post(multipartBody)
-                    .build();
-
-
-            Call call = okHttpClient.newCall(request);
-            call.enqueue(callback);
-            builder = null;
-        }
-
-        /**
-         *  如果想要额外的设置Request对象的属性，可以使用这个方法
-         */
-        public void setBuilder(Request.Builder builder) {
-            this.builder = builder;
-        }
-    }
+    //上传文件的方法先注释
+//    static public class UploadFileHelper {
+//        private Request.Builder builder;
+//
+//        //执行发送PATCH HTTP请求的方法
+//        public void doUpload(String accessToken, File file, String url, Callback callback) {
+//
+//            String contentType  = new MimetypesFileTypeMap().getContentType(file);
+//            MediaType type=MediaType.parse(contentType);
+//            RequestBody fileBody = RequestBody.create(type, file);
+//            RequestBody multipartBody = new MultipartBody.Builder()
+//                    .setType(MultipartBody.FORM)
+//                    .addPart(Headers.of(
+//                            "Content-Disposition",
+//                            "form-data; name=\"file\";" +
+//                            " filename=\""+file.getName()+"\"")
+//                            , fileBody)
+//                    .build();
+//            Request request = (builder!=null?builder:new Request.Builder())
+//                    .url(url)
+//                    .addHeader("Authorization","Bearer "+ accessToken)
+//                    .post(multipartBody)
+//                    .build();
+//
+//
+//            Call call = okHttpClient.newCall(request);
+//            call.enqueue(callback);
+//            builder = null;
+//        }
+//
+//        /**
+//         *  如果想要额外的设置Request对象的属性，可以使用这个方法
+//         */
+//        public void setBuilder(Request.Builder builder) {
+//            this.builder = builder;
+//        }
+//    }
 
     static public class DeleteHelper {
 

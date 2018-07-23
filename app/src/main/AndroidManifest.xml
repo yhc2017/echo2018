@@ -29,6 +29,8 @@
         <activity android:name="com.echo.quick.activities.LoginActivity" />
         <activity android:name="com.echo.quick.activities.RegisterActivity" />
         <activity android:name="com.echo.quick.activities.UserMsgActivity" />
+        <activity android:name=".StrangeWordsListActivity"/>
+        <activity android:name=".ListShowActivity"/>
     </application>
 
 </manifest>
