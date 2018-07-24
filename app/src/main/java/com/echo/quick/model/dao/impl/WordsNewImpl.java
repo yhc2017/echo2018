@@ -42,4 +42,13 @@ public class WordsNewImpl implements WordsNewDao {
     public void delete(String id) {
         LitePal.deleteAll(Words_New.class, "wordId = ?", id);
     }
+
+    @Override
+    public boolean isExist(String wordId) {
+
+//        if()
+
+
+        return false;
+    }
 }

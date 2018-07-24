@@ -9,10 +9,8 @@ import android.widget.Button;
 
 import com.echo.quick.contracts.MainContract;
 import com.echo.quick.contracts.OnlineWordContract;
-import com.echo.quick.pojo.Words;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.utils.App;
-import com.echo.quick.utils.WordsShowDialog;
 
 import java.util.HashMap;
 
@@ -78,11 +76,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
 
         app = (App)getApplication();
 
-        OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-        final HashMap<String, String> map = new HashMap<>();
-        map.put("userId", "444");
-        map.put("classId", "11");
-        app.setList(onlineWordPresenter.getOnlineWord(map));
+        //预存在线单词（仅测试用）
+//        OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+//        final HashMap<String, String> map = new HashMap<>();
+//        map.put("userId", "444");
+//        map.put("classId", "11");
+//        app.setList(onlineWordPresenter.getOnlineWord(map));
 
         mbt1 = (Button)findViewById(R.id.bt_words);
         mbt1.setOnClickListener(new View.OnClickListener() {

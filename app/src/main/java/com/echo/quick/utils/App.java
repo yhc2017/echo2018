@@ -31,7 +31,7 @@ public class App extends Application{
         list = new ArrayList<>();
         // 初始化LitePal数据库
         LitePal.initialize(this);
-//        init();
+        init();
     }
 
     public void init(){

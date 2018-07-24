@@ -46,14 +46,24 @@ public class OnlineWordPresenterImpl implements OnlineWordContract.OnlineWordPre
 
                 try {
                     JSONArray jsonArray = JSONObject.parseArray(response.body().string());
-
+//                    WordsNewDao wordsNew = new WordsNewImpl();
                     for (int i = 0; i < jsonArray.size(); i++){
                         JSONObject object = jsonArray.getJSONObject(i);
                         Words words = new Words(object.getString("word"), object.getString("phon"), object.getString("para"));
                         LogUtils.d(object.getString("word")+"       "+object.getString("para"));
                         data.add(words);
-
+//
+//                        Words_New words_new = new Words_New();
+//                        words_new.setWordId(object.getString("id"));
+//                        words_new.setWord(object.getString("word"));
+//                        words_new.setExplain(object.getString("para"));
+//                        words_new.setPron(object.getString("pron"));
+//                        words_new.setSymbol(object.getString("phon"));
+//                        wordsNew.update(words_new);
                     }
+//                    for(Words_New words : wordsNew.select()){
+//                        LogUtils.d(words.getWord());
+//                    }
                 }catch (Exception e){
                     e.printStackTrace();
                     LogUtils.d("错误信息："+response.toString());
@@ -61,6 +71,7 @@ public class OnlineWordPresenterImpl implements OnlineWordContract.OnlineWordPre
 
             }
         });
+
 
         return data;
     }

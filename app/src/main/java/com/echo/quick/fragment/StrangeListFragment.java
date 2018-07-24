@@ -9,7 +9,10 @@ import android.widget.ListView;
 
 import com.echo.quick.activities.R;
 import com.echo.quick.adapter.ListShowAdapter;
+import com.echo.quick.model.dao.impl.WordsNewImpl;
+import com.echo.quick.model.dao.interfaces.WordsNewDao;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.pojo.Words_New;
 import com.echo.quick.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -34,10 +37,15 @@ public class StrangeListFragment extends Fragment {
     }
     //加载数据
     private List<Words> initList() {
-        for (int i = 0; i <20 ; i++) {
-            Words words = new Words("quick", "/kuki/", "adj.快的，很快的");
+        WordsNewDao newDao = new WordsNewImpl();
+        for(Words_New word: newDao.select()){
+            Words words = new Words(word.getWord(), word.getSymbol(), word.getExplain());
             mList.add(words);
         }
+//        for (int i = 0; i <20 ; i++) {
+//            Words words = new Words("quick", "/kuki/", "adj.快的，很快的");
+//            mList.add(words);
+//        }
         LogUtils.d(mList.toString());
         return mList;
     }

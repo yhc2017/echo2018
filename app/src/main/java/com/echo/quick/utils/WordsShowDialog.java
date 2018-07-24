@@ -11,16 +11,22 @@ import com.echo.quick.activities.R;
 import com.echo.quick.pojo.Words;
 
 /**
- * Created by HUAHUA on 2018/7/19.
- */
+ * 文件名：WordsShowDialog
+ * 创建人：HUAHUA
+ * 创建时间：2018/7/19
+ * 类描述：
+ *
+ * 修改人：周少侠
+ * 修改时间：2018/7/19 14:14
+ * 修改内容：增加了增删生词的监听操作
+ *
+**/
 
 public class WordsShowDialog extends Dialog {
     Context context;
     Words words;
 
-
-
-    private TextView tv_item,tv_symbol,tv_explain,tv_eg1,tv_eg1_chinese,tv_eg2,tv_eg2_chinese;
+    private TextView tv_item,tv_symbol,tv_explain,tv_eg1,tv_eg1_chinese,tv_eg2,tv_eg2_chinese,tv_add_new,tv_del_new;
 
     public WordsShowDialog(@NonNull Context context, Words words) {
         super(context);
@@ -52,6 +58,8 @@ public class WordsShowDialog extends Dialog {
         tv_eg1_chinese = (TextView) findViewById(R.id.tv_eg1_chinese);
         tv_eg2 = (TextView) findViewById(R.id.tv_eg2);
         tv_eg2_chinese = (TextView) findViewById(R.id.tv_eg2_chinese);
+        tv_add_new = (TextView)findViewById(R.id.tv_add_new);
+        tv_del_new = (TextView)findViewById(R.id.tv_del_new);
     }
     /**
      * 初始化界面控件的显示数据

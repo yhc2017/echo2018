@@ -40,4 +40,6 @@ public interface WordsNewDao {
      **/
     public void delete(String id);
 
+    public boolean isExist(String wordId);
+
 }

@@ -39,6 +39,7 @@ public class WordsActivity extends AppCompatActivity {
     private App app;
     int start = 0;
     int stop = 5;
+    final List<Integer> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class WordsActivity extends AppCompatActivity {
      *@return simpleCallback ItemTouchHelper.SimpleCallback
      */
     private ItemTouchHelper.SimpleCallback getEvent() {
-        final List<Integer> list = new ArrayList<>();
+
         simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -104,20 +105,7 @@ public class WordsActivity extends AppCompatActivity {
                             public void run() {
                                 mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData);
                                 rvList.setAdapter(mSampleWordsAdapter);
-                                mSampleWordsAdapter.setOnItemClickListener(new SampleWordsAdapter.OnItemClickListener(){
-                                    @Override
-                                    public void onItemClick(View view , int position){
-                                        ToastUtils.showShort(WordsActivity.this, "点击事件！");
-                                        int res = TraversingList(list, position);
-                                        int i = position - res ;
 
-                                        LogUtils.d("数字为："+i);
-                                        Words words = new Words(mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
-                                                ,"She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
-                                        WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
-                                        customDialog.show();
-                                    }
-                                });
                             }
                         });
                     }catch (Exception e){
@@ -211,12 +199,18 @@ public class WordsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view , int position){
                 ToastUtils.showShort(WordsActivity.this, "点击事件！");
-                Words words = new Words("Quick","/kwlk/","adj.   快的; 迅速的; 很快的\n" +
-                        "adv.  迅速地","She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
+                //计算出真正的位置i
+                int res = TraversingList(list, position);
+                int i = position - res ;
+
+                LogUtils.d("数字为："+i);
+                Words words = new Words(mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
+                        ,"She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
                 WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
                 customDialog.show();
             }
         };
+
         return listener;
     }
 

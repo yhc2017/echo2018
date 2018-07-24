@@ -37,6 +37,6 @@ public class OnlineWordImpl implements OnlineWord {
         }
         LogUtils.d("requestContent = " + requestContent );
 
-        postHelper.doPost(requestContent, _NetHelper.POST_URL+"quick/words/selectWords", callback);
+        postHelper.doPost(requestContent, _NetHelper.DOMAIN+"quick/words/selectWords", callback);
     }
 }
