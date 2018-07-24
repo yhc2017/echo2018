@@ -44,10 +44,10 @@ public class WordsNewImpl implements WordsNewDao {
     }
 
     @Override
-    public boolean isExist(String wordId) {
+    public boolean isExist(String word) {
 
-//        if()
-
+        if(LitePal.where("word = ?", word).find(Words_New.class) != null)
+            return true;
 
         return false;
     }

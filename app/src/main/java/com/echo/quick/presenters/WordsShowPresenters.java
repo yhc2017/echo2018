@@ -1,6 +1,8 @@
 package com.echo.quick.presenters;
 
 import com.echo.quick.contracts.WordsShowContracts;
+import com.echo.quick.model.dao.impl.WordsNewImpl;
+import com.echo.quick.model.dao.interfaces.WordsNewDao;
 import com.echo.quick.pojo.Words_New;
 
 /**
@@ -15,9 +17,20 @@ import com.echo.quick.pojo.Words_New;
 
 public class WordsShowPresenters implements WordsShowContracts.IWordsShowPresenter {
 
+    WordsShowContracts.IWordsShowView view;
+
+    public WordsShowPresenters(WordsShowContracts.IWordsShowView view){
+        this.view = view;
+    }
+
     @Override
     public void isExist(String word) {
-
+        WordsNewDao newDao = new WordsNewImpl();
+        if(newDao.isExist(word)){
+            view.initView(true);
+        }else {
+            view.initView(false);
+        }
     }
 
     @Override
