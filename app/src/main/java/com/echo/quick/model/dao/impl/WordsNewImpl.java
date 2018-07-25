@@ -19,7 +19,7 @@ import java.util.List;
 
 public class WordsNewImpl implements WordsNewDao {
 
-    Words_New wordsNew;
+    private Words_New wordsNew;
 
 
     @Override
@@ -46,9 +46,10 @@ public class WordsNewImpl implements WordsNewDao {
     @Override
     public boolean isExist(String word) {
 
-        if(LitePal.where("word = ?", word).find(Words_New.class) != null)
-            return true;
+        if(LitePal.where("word = ?", word).find(Words_New.class).isEmpty()){
+            return false;
+        }
 
-        return false;
+        return true;
     }
 }

@@ -11,7 +11,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
+import com.echo.quick.contracts.WordsContract;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.presenters.WordsPresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.ToastUtils;
@@ -35,18 +37,22 @@ public class WordsActivity extends AppCompatActivity {
     private SampleWordsAdapter.OnItemClickListener listener;
     private ItemTouchHelper itemTouchHelper;
     private ItemTouchHelper.SimpleCallback simpleCallback;
+    private List<Words> dataList = new ArrayList<>();
     private List<Words> mData = new ArrayList<>();
+    private List<Words> recurrent = new ArrayList<>();
     private App app;
     int start = 0;
     int stop = 5;
-    final List<Integer> list = new ArrayList<>();
+    WordsContract.IWordsPresenter wordsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words);
         app = (App)getApplication();
+        dataList = app.getList();
         initView();
+        wordsPresenter = new WordsPresenterImpl();
     }
 
     /**
@@ -91,46 +97,63 @@ public class WordsActivity extends AppCompatActivity {
                 final int pos = viewHolder.getAdapterPosition();//页面中子项的位置
                 final Words item = mData.get(pos);//数据子项的位置
                 LogUtils.d(mSampleWordsAdapter.getItemCount()+"");
+                //当页面还剩一条单词时，进行特殊处理
                 if(mSampleWordsAdapter.getItemCount() == 1){
-                    list.clear();
-                    start = start+5;
-                    stop = stop + 5;
-                    if(stop > app.getList().size()){
-                        stop = app.getList().size()-(app.getList().size() - stop);
-                    }
-                    try {
-                        mData = app.getList().subList(start, stop);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData);
-                                rvList.setAdapter(mSampleWordsAdapter);
-                                //列表子项的点击监听
-                                mSampleWordsAdapter.setOnItemClickListener(getListen());
+                    //当左滑单词需要复现的数组中存在单词时，将其加入到当前列表下
+                    mData.remove(pos);
+                        start = start + 5;
+                        stop = stop + 5;
+                        LogUtils.d("dataList.size:"+dataList.size()+"  start:"+start+"   stop:"+stop+"    recurrent:"+recurrent.size()+"\n"+dataList.toString());
 
+                        if(stop >= dataList.size()){
+                            if(recurrent.isEmpty()) {
+                                stop = dataList.size();
+                            } else{
+                                dataList.addAll(recurrent);
+                                recurrent.clear();
                             }
-                        });
-                    }catch (Exception e){
-                        ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
-                        mData.remove(pos);
-                        mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                        mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
-                    }
+                        }
+                        try {
+                            for(int i = start; i < stop; i++){
+                                Words word = dataList.get(i);
+                                mData.add(word);
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData);
+                                    rvList.setAdapter(mSampleWordsAdapter);
+                                    //列表子项的点击监听
+                                    mSampleWordsAdapter.setOnItemClickListener(getListen());
 
+                                }
+                            });
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
+                            mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                            mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
 
-                }else {
+                        }
+                }else {//页面超过1个单词时
                     String text;
-                    // 判断方向，进行不同的操作
-                    list.add(pos);
+                    //判断滑动方向
                     if (direction == ItemTouchHelper.RIGHT) {
                         text = "已记住";
+                        wordsPresenter.rightSwipe(mData.get(pos));
                         mData.remove(pos);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
                     } else {
                         text = "还没记住";
+                        Words words = mData.get(pos);
                         mData.remove(pos);
+                        recurrent.add(words);
+                        wordsPresenter.liefSwipe(words);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
                     }
+
                     mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
                     /**
                      * 撤销上一个单词的操作
@@ -220,14 +243,25 @@ public class WordsActivity extends AppCompatActivity {
      * Method name : getData()
      * Specific description :获取数据
      *@return mData List<Words>
+     *
+     * 修改人：周少侠
+     * 修改原因：WordsActivity作为一个展示的Activity，需要显示的单词可以放在app.list中
      */
     private List<Words> getData() {
 
-        if (mData==null) {
-            LogUtils.d("为空的数据列表！");
-        }else {
-            mData = app.getList().subList(start, stop);
+        try {
+            if (mData==null) {
+                LogUtils.d("为空的数据列表！");
+            }else {
+                for(int i = start; i < stop; i++){
+                    Words word = dataList.get(i);
+                    mData.add(word);
+                }
+            }
+        }catch (Exception e){
+            ToastUtils.showLong(WordsActivity.this,"网络连接出错");
         }
+
         //填充假数据
 //        for (int i = 0; i < 5; i++) {
 //            Words words = new Words("Quick","/kik/","");

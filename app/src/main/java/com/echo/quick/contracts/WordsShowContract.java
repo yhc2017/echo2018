@@ -12,30 +12,30 @@ import com.echo.quick.pojo.Words_New;
  * 修改备注：
  */
 
-public interface WordsShowContracts {
+public interface WordsShowContract {
 
-    public interface IWordsShowView{
+    interface IWordsShowView{
 
         /**
          * 方法名称：initView
          * 方法描述: 传入一个words，判断该词是否为生词
          * 参数1： String
-         * @return void
+         *
          **/
-        public void initVisibility(Boolean res);
+        void initVisibility(Boolean res);
 
 
     }
 
-    public interface IWordsShowPresenter{
+    interface IWordsShowPresenter{
 
         /**
          * 方法名称：isExist
          * 方法描述: 判断是否为生词
          * 参数1： 参数说明
-         * @return [返回类型说明]
+         *
          **/
-        public void isExist(String word);
+        void isExist(String word);
 
         /**
          * 方法名称：addNewWord
@@ -43,7 +43,7 @@ public interface WordsShowContracts {
          * 参数1： 一个生词对象
          * @return boolean
          **/
-        public boolean addNewWord(Words_New wordsNew);
+        boolean addNewWord(Words_New wordsNew);
 
         /**
          * 方法名称：delNewWord
@@ -51,7 +51,7 @@ public interface WordsShowContracts {
          * 参数1： 一个生词对象
          * @return boolean
          **/
-        public boolean delNewWord(String word);
+        boolean delNewWord(String word);
 
     }
 

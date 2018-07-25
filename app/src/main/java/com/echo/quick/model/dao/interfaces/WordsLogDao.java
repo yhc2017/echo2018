@@ -1,5 +1,6 @@
 package com.echo.quick.model.dao.interfaces;
 
+import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Log;
 
 import java.util.List;
@@ -20,9 +21,25 @@ public interface WordsLogDao {
      * 方法名称：查询生词
      * 方法描述: 返回生词本所有的生词
      * 参数1： 参数说明
+     * @return list
+     **/
+    List<Words_Log> select();
+
+    /**
+     * 方法名称：selectCount
+     * 方法描述: 获得数据库条数
+     * 参数1： 参数说明
+     * @return [int]
+     **/
+    int selectCount();
+
+    /**
+     * 方法名称：selectNum
+     * 方法描述: 根据单词返回num
+     * 参数1： 参数说明
      * @return [返回类型说明]
      **/
-    public List<Words_Log> select();
+    int selectNum(Words w);
 
     /**
      * 方法名称：更新或添加生词本
@@ -30,7 +47,7 @@ public interface WordsLogDao {
      * 参数1： 生词对象
      * @return [boolean]
      **/
-    public boolean update(Words_Log words);
+    boolean update(Words_Log words);
 
     /**
      * 方法名称：通过id更新num
@@ -38,14 +55,14 @@ public interface WordsLogDao {
      * 参数1： String wordId， int num
      * @return Boolean
      **/
-    public boolean updateNum(String wordId, int num);
+    boolean updateNum(String wordId, int num);
 
     /**
      * 方法名称：删除生词
      * 方法描述:
      * 参数1： 单词id
-     * @return [返回类型说明]
+     *
      **/
-    public void delete(String id);
+    void delete(String id);
 
 }

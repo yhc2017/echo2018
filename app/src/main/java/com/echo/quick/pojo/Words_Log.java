@@ -20,6 +20,14 @@ public class Words_Log extends LitePalSupport{
     private String prepare1;
     private int prepare2;
 
+    public Words_Log(){}
+
+    public Words_Log(String wordId,String word,int num){
+        this.wordId = wordId;
+        this.word = word;
+        this.num = num;
+    }
+
     public String getWordId() {
         return wordId;
     }

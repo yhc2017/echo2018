@@ -1,7 +1,9 @@
 package com.echo.quick.model.dao.impl;
 
 import com.echo.quick.model.dao.interfaces.WordsLogDao;
+import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Log;
+import com.echo.quick.utils.LogUtils;
 
 import org.litepal.LitePal;
 
@@ -19,13 +21,39 @@ import java.util.List;
 
 public class WordsLogImpl implements WordsLogDao {
 
-    Words_Log words;
+    private Words_Log words;
 
 
     @Override
     public List<Words_Log> select() {
 
         return LitePal.findAll(Words_Log.class);
+    }
+
+    @Override
+    public int selectCount() {
+
+        int num = select().size();
+
+        return num;
+    }
+
+    @Override
+    public int selectNum(Words w) {
+
+        List<Words_Log> logs = LitePal.where("word = ?", w.getWord()).find(Words_Log.class);
+        if(logs.isEmpty()){
+            Words_Log wordsLog = new Words_Log();
+            wordsLog.setWordId(w.getWordId());
+            wordsLog.setWord(w.getWord());
+            wordsLog.setNum(-1);
+            wordsLog.save();
+            return -1;
+        }
+        else if(logs.size() != 1){
+            LogUtils.d("word 不唯一。");
+        }
+        return logs.get(0).getNum();
     }
 
     @Override
