@@ -11,9 +11,11 @@ package com.echo.quick.pojo;
  */
 
 public class Words {
+    private String wordId;
     private String word;
     private String symbol;    //音标
     private String explain;   //释义
+    private String pron;
     //其他属性
     private String eg1;   //例句
     private String eg1_chinese;   //例句
@@ -46,15 +48,26 @@ public class Words {
      *@param   explain  String  释义
      *@param   eg1  String  例句
      */
-    public Words(String word,String symbol,String explain,String eg1,String eg1_chinese,String eg2,String eg2_chinese){
+    public Words(String wordId, String pron, String word,String symbol,String explain,String eg1,String eg1_chinese,String eg2,String eg2_chinese){
+        this.wordId = wordId;
         this.word = word;
         this.symbol = symbol;
         this.explain = explain;
+        this.pron = pron;
         this.eg1 = eg1;
         this.eg1_chinese = eg1_chinese;
         this.eg2 = eg2;
         this.eg2_chinese = eg2_chinese;
     }
+
+    public String getWordId() {
+        return wordId;
+    }
+
+    public void setWordId(String wordId) {
+        this.wordId = wordId;
+    }
+
     public String getEg1() {
         return eg1;
     }
@@ -87,8 +100,13 @@ public class Words {
         this.eg2_chinese = eg2_chinese;
     }
 
+    public String getPron() {
+        return pron;
+    }
 
-
+    public void setPron(String pron) {
+        this.pron = pron;
+    }
 
     public String getWord() {
         return word;

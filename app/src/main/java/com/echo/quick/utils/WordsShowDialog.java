@@ -5,10 +5,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.TextView;
 
 import com.echo.quick.activities.R;
+import com.echo.quick.contracts.WordsShowContracts;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.pojo.Words_New;
+import com.echo.quick.presenters.WordsShowPresenters;
 
 /**
  * 文件名：WordsShowDialog
@@ -22,11 +26,13 @@ import com.echo.quick.pojo.Words;
  *
 **/
 
-public class WordsShowDialog extends Dialog {
+public class WordsShowDialog extends Dialog implements WordsShowContracts.IWordsShowView,View.OnClickListener{
     Context context;
     Words words;
 
     private TextView tv_item,tv_symbol,tv_explain,tv_eg1,tv_eg1_chinese,tv_eg2,tv_eg2_chinese,tv_add_new,tv_del_new;
+
+    WordsShowContracts.IWordsShowPresenter wordsShowPresenter;
 
     public WordsShowDialog(@NonNull Context context, Words words) {
         super(context);
@@ -38,15 +44,22 @@ public class WordsShowDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_words_dialog);
+
+        wordsShowPresenter = new WordsShowPresenters(this);
+
         //按空白处可以取消动画
         setCanceledOnTouchOutside(true);
         //初始化界面控件
         initView();
         //初始化界面数据
         refreshView();
-//        //初始化界面控件的事件
-//        initEvent();
+
+        //初始化界面控件的事件
+        initEvent();
     }
+
+
+
     /**
      * 初始化界面控件
      */
@@ -74,6 +87,85 @@ public class WordsShowDialog extends Dialog {
         tv_eg2_chinese.setText(words.getEg2_chinese());
     }
 
+    /**
+     * 方法名称：initEvent
+     * 方法描述: 初始化事件
+     * @return void
+     **/
+    private void initEvent() {
+
+
+
+        wordsShowPresenter.isExist(words.getWord());
+
+        MyListener listener = new MyListener();
+
+        tv_add_new.setOnClickListener(listener);
+        tv_del_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LogUtils.d("监听中");
+            }
+        });
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tv_add_new:
+                Words_New wordsNew = new Words_New(words.getWordId(),
+                        words.getPron(),
+                        words.getWord(),
+                        words.getSymbol(),
+                        words.getExplain(),
+                        words.getEg1(),
+                        words.getEg1_chinese(),
+                        words.getEg2(),
+                        words.getEg2_chinese());
+                wordsShowPresenter.addNewWord(wordsNew);
+
+                break;
+
+            case R.id.tv_del_new:
+//                    wordsShowPresenter.delNewWord(words.getWord());
+                LogUtils.d("监听中");
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public class MyListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.tv_add_new:
+                    Words_New wordsNew = new Words_New(words.getWordId(),
+                            words.getPron(),
+                            words.getWord(),
+                            words.getSymbol(),
+                            words.getExplain(),
+                            words.getEg1(),
+                            words.getEg1_chinese(),
+                            words.getEg2(),
+                            words.getEg2_chinese());
+                    wordsShowPresenter.addNewWord(wordsNew);
+
+                    break;
+
+                case R.id.tv_del_new:
+//                    wordsShowPresenter.delNewWord(words.getWord());
+                    LogUtils.d("监听中");
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
 
 
     public WordsShowDialog(@NonNull Context context) {
@@ -86,5 +178,16 @@ public class WordsShowDialog extends Dialog {
 
     protected WordsShowDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
+    }
+
+    @Override
+    public void initVisibility(Boolean res) {
+
+        if(res){
+            tv_add_new.setVisibility(TextView.INVISIBLE);
+        }else {
+            tv_del_new.setVisibility(TextView.INVISIBLE);
+        }
+
     }
 }

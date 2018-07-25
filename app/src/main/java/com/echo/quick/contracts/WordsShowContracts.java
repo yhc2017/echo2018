@@ -22,7 +22,7 @@ public interface WordsShowContracts {
          * 参数1： String
          * @return void
          **/
-        public void initView(Boolean res);
+        public void initVisibility(Boolean res);
 
 
     }

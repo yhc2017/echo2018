@@ -26,6 +26,22 @@ public class Words_New extends LitePalSupport {
     private String prepare1;
     private int prepare2;
 
+    public Words_New(){
+
+    }
+
+    public Words_New(String wordId, String pron, String word,String symbol,String explain,String eg1,String eg1_chinese,String eg2,String eg2_chinese){
+        this.wordId = wordId;
+        this.word = word;
+        this.symbol = symbol;
+        this.explain = explain;
+        this.pron = pron;
+        this.eg1 = eg1;
+        this.eg1Chinese = eg1_chinese;
+        this.eg2 = eg2;
+        this.eg2Chinese = eg2_chinese;
+    }
+
     public String getWordId() {
         return wordId;
     }

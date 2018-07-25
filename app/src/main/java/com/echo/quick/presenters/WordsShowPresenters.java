@@ -27,9 +27,9 @@ public class WordsShowPresenters implements WordsShowContracts.IWordsShowPresent
     public void isExist(String word) {
         WordsNewDao newDao = new WordsNewImpl();
         if(newDao.isExist(word)){
-            view.initView(true);
+            view.initVisibility(true);
         }else {
-            view.initView(false);
+            view.initVisibility(false);
         }
     }
 

@@ -105,6 +105,8 @@ public class WordsActivity extends AppCompatActivity {
                             public void run() {
                                 mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData);
                                 rvList.setAdapter(mSampleWordsAdapter);
+                                //列表子项的点击监听
+                                mSampleWordsAdapter.setOnItemClickListener(getListen());
 
                             }
                         });
@@ -112,6 +114,7 @@ public class WordsActivity extends AppCompatActivity {
                         ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
                         mData.remove(pos);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                        mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
                     }
 
 
@@ -128,6 +131,7 @@ public class WordsActivity extends AppCompatActivity {
                         mData.remove(pos);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     }
+                    mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
                     /**
                      * 撤销上一个单词的操作
                      * @param  View 视图,  CharSequence 字符串, int 出现时间
@@ -198,13 +202,11 @@ public class WordsActivity extends AppCompatActivity {
         listener = new SampleWordsAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(View view , int position){
-                ToastUtils.showShort(WordsActivity.this, "点击事件！");
-                //计算出真正的位置i
-                int res = TraversingList(list, position);
-                int i = position - res ;
+//                ToastUtils.showShort(WordsActivity.this, "点击事件！");
+                int i = position ;
 
                 LogUtils.d("数字为："+i);
-                Words words = new Words(mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
+                Words words = new Words(mData.get(i).getWordId(),mData.get(i).getPron(),mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
                         ,"She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
                 WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
                 customDialog.show();
@@ -232,30 +234,6 @@ public class WordsActivity extends AppCompatActivity {
 //            mData.add(words);
 //        }
         return mData;
-    }
-
-    /**
-     * 方法名称：TraversingList
-     * 方法描述: 把remove的position收集起来的list和当前点击的position一起传进，计算跨度
-     * 参数1： List<Integer>,int
-     * @return int
-     **/
-    public int TraversingList(List<Integer> integers, int p){
-
-        //计算结果
-        int res = 0;
-
-        if(integers.isEmpty()){
-            return res;
-        }
-        int size = integers.size();
-
-        for(int i = 0; i < size; i++){
-            if(integers.get(i) < p)
-                res += 1;
-        }
-
-        return res;
     }
 
 
