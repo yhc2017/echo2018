@@ -29,4 +29,7 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="dp_70">70dp</dimen>
+    <dimen name="toolbar_minHeight">35dp</dimen>
+
+    <dimen name="myfont_reading_title_size">18dp</dimen>
 </resources>

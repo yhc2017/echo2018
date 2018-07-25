@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">quickly</string>
 
     <!--title-->
@@ -45,5 +45,19 @@
     <string name="re_real_name_tip">请输入真实姓名</string>
     <string name="re_real_idcard_tip">请输入身份证号码</string>
     <string name="title_activity_words2">Words2Activity</string>
+
+    <string name="reading_example">
+        \n\t\tNobody really knows how big Lagos is. What\'s indisputable is that it\'s growing very quickly. Between now and 2050, the urban population of Africa could triple. Yet cities in sub-Saharan Africa are not getting richer the way cities in the rest of the world have. Most urban Africans live in slums （贫民窟）; migrants are often not much better off than they were in the countryside. Why?
+        \n\n\t\tThe immediate problem is poverty. Most of Africa is urbanising at a lower level of income than other regions of the world did. That means there\'s little money around for investment that would make cities liveable and more productive. Without upgrades and new capacity, bridges, roads and power systems are unable to cope with expanding populations. With the exception of South Africa, the only light rail metro system in sub-Saharan Africa is in Addis Ababa, Ethiopia. Traffic jam leads to expense and unpredictability, things that keep investors away.
+        \n\n\t\tIn other parts of the world, increasing agricultural productivity and industrialisation went together. More productive farmers meant there was a surplus that could feed cities; in turn, that created a pool of labour for factories. But African cities are different. They are too often built around consuming natural resources. Government is concentrated in capitals, so is the money. Most urban Africans work for a small minority of the rich, who tend to be involved in either cronyish （有裙带关系的） businesses or politics. Since African agriculture is still broadly unproductive, food is imported, consuming a portion of revenue.
+         \n\n\t\tSo what can be done? Though African countries are poor, not all African cities are. In Lagos, foreign oil workers can pay as much as 65,000 dollars per year in rent for a modest apartment in a safe part of town. If that income were better taxed, it might provide the revenue for better infrastructure. If city leaders were more accountable to their residents, they might favour projects designed to help them more. Yet even as new roads are built, new people arrive. When a city\'s population grows by 5\% a year, it is difficult to keep up.</string>
+    <string name="reading_example_chinese">
+        \n\t\t没有人真正知道拉各斯有多大。无可争辩的是，它的发展非常迅速。从现在到2050年间，非洲的城市人口可以翻三倍。然而撒哈拉以南非洲的城市并不像世界其他城市那样富裕。大多数城市非洲人住在贫民窟里，移民往往比农村人好得多。为什么？    \n\n\t\t眼前的问题是贫穷。非洲大部分城市的收入水平低于世界其他地区。这意味着没有多少资金用于投资，使城市更具生产力和生产力。没有升级和新的容量，桥梁、道路和电力系统无法应对不断扩大的人口。除南非外，撒哈拉以南非洲唯一的轻轨地铁系统在埃塞俄比亚的亚的斯亚贝巴。交通堵塞会导致费用和不可预测性，这会让投资者望而却步。    \n\n\t\t在世界其他地区，农业生产率和工业化程度不断提高。更有生产力的农民意味着有剩余的东西可以养活城市，反过来，这也为工厂创造了大量的劳动力。但是非洲城市是不同的。它们往往是在消耗自然资源的基础上建造起来的。政府集中在资金上，资金也是如此。绝大多数城市非洲人为少数富人工作，他们往往参与任人唯亲的商业或政治。由于非洲农业仍然没有生产能力，粮食是进口的，消耗了部分收入。
+\n\n\t\t那么，我们能做些什么呢？尽管非洲国家贫穷，但并非所有非洲城市都如此。在拉各斯，外国石油工人每年可以在镇上一个安全的公寓里支付65000美元的租金。如果收入更好的征税，它可能会提供更好的基础设施的收入。如果城市领导人对他们的居民更负责任，他们可能会赞成旨在帮助他们更多的项目。然而，即使新的道路被修建，新的人们也会到达。当一个城市的人口每年增长5%时，很难跟上。</string>
+
+    <string name="answer_A">They have more slums than other cities in the world.</string>
+    <string name="answer_B">They are growing fast without becoming richer.</string>
+    <string name="answer_C">They are as modernised as many cities elsewhere.</string>
+    <string name="answer_D">They attract migrants who want to be better off.</string>
 
 </resources>

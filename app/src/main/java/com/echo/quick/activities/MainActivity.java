@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                intent = new Intent(MainActivity.this, StrangeWordsListActivity.class);
+                intent = new Intent(MainActivity.this, ReadActivity.class);
                 startActivity(intent);
             }
         });

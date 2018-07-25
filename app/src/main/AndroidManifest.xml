@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.echo.quick.activities.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,13 +24,16 @@
         <activity
             android:name=".Words2Activity"
             android:label="@string/title_activity_words2"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name="com.echo.quick.activities.WordsActivity" />
-        <activity android:name="com.echo.quick.activities.LoginActivity" />
-        <activity android:name="com.echo.quick.activities.RegisterActivity" />
-        <activity android:name="com.echo.quick.activities.UserMsgActivity" />
-        <activity android:name=".StrangeWordsListActivity"/>
-        <activity android:name=".ListShowActivity"/>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".WordsActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".UserMsgActivity" />
+        <activity android:name=".StrangeWordsListActivity" />
+        <activity android:name=".ListShowActivity" />
+        <activity android:name=".ReadActivity" />
+        <activity android:name=".ReadingAnswerActivity" />
+        <activity android:name=".ReadingTranslateActivity"></activity>
     </application>
 
 </manifest>
