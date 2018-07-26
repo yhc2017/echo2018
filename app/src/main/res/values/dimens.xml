@@ -32,4 +32,28 @@
     <dimen name="toolbar_minHeight">35dp</dimen>
 
     <dimen name="myfont_reading_title_size">18dp</dimen>
+    <dimen name="myfont_home_title_size">13dp</dimen>
+
+
+
+    <!--可以删减-->
+    <dimen name="user_card_text_mar">5dp</dimen>
+    <dimen name="user_card_width">20dp</dimen>
+    <dimen name="user_card_heigh">55dp</dimen>
+    <dimen name="user_card_center_heigh">1dp</dimen>
+    <dimen name="user_card_text_s">10dp</dimen>
+    <dimen name="user_card_text_m">11dp</dimen>
+    <!--playmusic.xml-->
+    <dimen name="play_music_img_song_word">35dp</dimen>
+    <dimen name="play_music_img_size">300dp</dimen>
+    <!--onliemusictext-->
+    <dimen name="text_onlineleft_modle">7dp</dimen>
+    <dimen name="text_onlineright_modle">2dp</dimen>
+    <dimen name="text_online_modle">15dp</dimen>
+    <dimen name="text_online_songwidth_modle">75dp</dimen>
+    <dimen name="text_online_singerwidth_modle">30dp</dimen>
+    <dimen name="text_online_song_modle">5pt</dimen>
+    <dimen name="text_online_singer_modle">4pt</dimen>
+    <!--home_page_modle_mine-->
+    <dimen name="modle_mine_top">10dp</dimen>
 </resources>

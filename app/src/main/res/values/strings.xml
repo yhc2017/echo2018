@@ -60,4 +60,24 @@
     <string name="answer_C">They are as modernised as many cities elsewhere.</string>
     <string name="answer_D">They attract migrants who want to be better off.</string>
 
+
+
+    <string name="soso_mo">四级词库打卡\t\t生词本</string>
+    <string name="sp_mo">四级高频\t\t四级真题阅读单词</string>
+
+    <string name="words_ct4">大学英语四级</string>
+    <string name="words_ct6">大学英语六级</string>
+    <string name="words_ct4_2">四级高频</string>
+    <string name="words_for1">考研词汇</string>
+    <string name="words_for2">出国考试(G)</string>
+    <string name="words_for3">出国考试(GM)</string>
+    <string name="words_for4">出国考试(T)</string>
+    <string name="words_for5">高考词汇</string>
+
+
+    <!--这里是可以删的-->
+    <string name="modle_personal_design">私人定制</string>
+    <string name="modle_local_music">本地音乐</string>
+    <string name="modle_personal_history">个人音乐历程</string>
+    <string name="modle_online_music">在线音乐</string>
 </resources>

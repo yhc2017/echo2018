@@ -20,6 +20,11 @@
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">monospace</item>
     </style>
+
+    <style name="MyFont.Home.Title" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/myfont_reading_title_size</item>
+    </style>
 <!--想改变toolbar的盖度没有作用-->
     <!--<style name="ToolbarStyle" parent="Base.Widget.AppCompat.ActionBar">-->
         <!--<item name="android:text">""</item>-->
