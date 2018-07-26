@@ -19,6 +19,10 @@ public class StrangeFragmentAdapter  extends FragmentPagerAdapter {
         this.titleList = titleList;
         this.fragmentList = fragmentList;
     }
+    public StrangeFragmentAdapter(FragmentManager fm, ArrayList<Fragment> fragmentList) {
+        super(fm);
+        this.fragmentList = fragmentList;
+    }
 
     @Override
     public Fragment getItem(int position) {
