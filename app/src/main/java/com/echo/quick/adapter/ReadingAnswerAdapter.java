@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by HUAHUA on 2018/7/25.
+ * 暂时无用的适配器
  */
 
 public class ReadingAnswerAdapter extends BaseExpandableListAdapter{

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.echo.quick.activities.R;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.utils.LogUtils;
 
 import java.util.List;
 
@@ -26,7 +27,12 @@ import java.util.List;
 public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private LayoutInflater mLayoutInflater;
     private List<Words> mData;
+    private List<String> mtitle;
     private OnItemClickListener mOnItemClickListener = null;
+    View view;
+    int mviewType;
+    final int ONE = 1;
+    final int TWO = 2;
 
     /**
      * Method name : 构造方法
@@ -34,19 +40,49 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      *@param   context Context
      *@param   data ArrayList<String>
      */
-    public SampleWordsAdapter(Context context, List<Words> data) {
+    public SampleWordsAdapter(Context context, List data,int viewType) {
         mLayoutInflater = LayoutInflater.from(context);
-        mData = data;
+        mviewType = viewType;
+        if(ONE==viewType) {
+            mData = data;
+            LogUtils.d("这是打印单词的");
+        }else if(TWO==viewType){
+            mtitle = data;
+            LogUtils.d(mtitle.toString());
+            LogUtils.d("打印数量"+mtitle.size());
+        }
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_words, parent, false);
-        ItemViewHolder vh = new ItemViewHolder(view);
-        //将创建的View注册点击事件
-        view.setOnClickListener(this);
-        return vh;
+        LogUtils.d("打印子类类型："+viewType);
+        if (ONE==viewType) {
+            LogUtils.d("这是绑定单词的list！");
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_words, parent, false);
+            ItemViewHolder vh = new ItemViewHolder(view);
+            //将创建的View注册点击事件
+            view.setOnClickListener(this);
+            return vh;
+        }else if (TWO==viewType){
+            LogUtils.d("这是绑定阅读的item！！！！！！！！！！！！！！");
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reading_home, parent, false);
+            TwoItemViewHolder vh = new TwoItemViewHolder(view);
+            //将创建的View注册点击事件
+            view.setOnClickListener(this);
+            return vh;
+        }
+        return null;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(ONE==mviewType){
+            LogUtils.d("返回类型："+ONE);
+            return ONE;
+        } else {
+            LogUtils.d("返回类型："+TWO);
+            return TWO;
+        }
     }
 
     //最后暴露给外面的调用者，定义一个设置Listener的方法（）：
@@ -57,14 +93,25 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ItemViewHolder)holder).setData(mData.get(position));
+        if(holder instanceof ItemViewHolder){
+            LogUtils.d("绑定单词的布局");
+            ((ItemViewHolder)holder).setData(mData.get(position));
+        }else if (holder instanceof TwoItemViewHolder){
+            LogUtils.d("绑定非单词的   的 的车从DVD v反对v的布局");
+            ((TwoItemViewHolder)holder).setData(mtitle.get(position));
+        }
         //将position保存在itemView的Tag中，以便点击时进行获取
         holder.itemView.setTag(position);
     }
 
     @Override
     public int getItemCount() {
-        return mData == null ? 0 : mData.size();
+        if (ONE==mviewType) {
+            return mData.size();
+        }else{
+            LogUtils.d("打印数量2"+mtitle.size());
+            return mtitle.size();
+        }
     }
 
     /**
@@ -112,6 +159,22 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tvItem.setText(data.getWord());
             tvSymbol.setText(data.getSymbol());
             tvExplain.setText(data.getExplain());
+        }
+
+    }
+
+    public static class TwoItemViewHolder extends RecyclerView.ViewHolder {
+        public TextView tv_reading_title;
+
+
+        public TwoItemViewHolder(View itemView) {
+            super(itemView);
+            tv_reading_title = (TextView) itemView.findViewById(R.id.tv_reading_title);
+        }
+        //绑定数据
+        public void setData(String title){
+            LogUtils.d(title);
+            tv_reading_title.setText(title);
         }
 
     }

@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Created by YanZhenjie on 2017/10/3.
+ * 暂时无用的适配器
  */
 public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 

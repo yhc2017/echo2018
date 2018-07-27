@@ -2,7 +2,6 @@
 <LinearLayout
     android:id="@+id/rl_background"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
@@ -10,34 +9,46 @@
     android:minHeight="20dp">
 
     <RelativeLayout
-        android:id="@+id/rl_ct4"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:id="@+id/rl_reading_home"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:background="@drawable/card_bg2">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_top"/>
 
         <TextView
+            android:id="@+id/tv_reading_title"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             style="@style/MyFont.Home.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/words_ct4" />
+            android:text="阶段冲刺一" />
+
+        <TextView
+            android:id="@+id/bule_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/num_bg_blue"
+            android:padding="5dp"
+            android:text=" 0 "
+            android:textColor="@color/white"
+            android:textSize="12dp" />
         <TextView
             android:layout_centerVertical="true"
             android:padding="5dp"
             android:textSize="12dp"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/bule_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1453"
+            android:text=" 4 "
             android:textColor="@color/white"
-            android:background="@drawable/num_bg1"/>
+            android:background="@drawable/num_bg_green"
+            android:id="@+id/textView2" />
+
     </RelativeLayout>
 </LinearLayout>

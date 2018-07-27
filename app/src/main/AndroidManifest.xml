@@ -21,10 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Words2Activity"
-            android:label="@string/title_activity_words2"
-            android:theme="@style/AppTheme" />
+        <!--<activity-->
+            <!--android:name=".Words2Activity"-->
+            <!--android:label="@string/title_activity_words2"-->
+            <!--android:theme="@style/AppTheme" />-->
         <activity android:name=".WordsActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
@@ -34,6 +34,7 @@
         <activity android:name=".ReadActivity" />
         <activity android:name=".ReadingAnswerActivity" />
         <activity android:name=".ReadingTranslateActivity"></activity>
+        <activity android:name=".ReadingMianActivity"></activity>
     </application>
 
 </manifest>

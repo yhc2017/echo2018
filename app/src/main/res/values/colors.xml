@@ -36,6 +36,8 @@
     <color name="colorSchedule">#ef2c00</color>
     <color name="green_normal">#37C000</color>
     <color name="green_pressed">#30A070</color>
+    <color name="blue">#4083ff</color>
+    <color name="green">#04bc0a</color>
 
 
     <!--这里可以删-->

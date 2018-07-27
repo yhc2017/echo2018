@@ -27,8 +27,8 @@ import java.util.List;
  * Specific description :背单词的主界面
  * 创建人: HUAHUA
  * @version :1.0 , 2018/7/17 14:50
- * 修改人：
- * @version :
+ * 修改人：茹韶燕
+ * @version : 因为修改了适配器，构造方法多一个参数是自布局的类型
  * @since ：[quick|背单词模块]
  */
 public class WordsActivity extends AppCompatActivity {
@@ -65,9 +65,9 @@ public class WordsActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvList.setLayoutManager(linearLayoutManager);
-        mSampleWordsAdapter = new SampleWordsAdapter(this, mData);
+        mSampleWordsAdapter = new SampleWordsAdapter(this, mData,1);
         //获取数据重新回到列表
-        mSampleWordsAdapter = new SampleWordsAdapter(this, getData());
+        mSampleWordsAdapter = new SampleWordsAdapter(this, getData(),1);
         rvList.setAdapter(mSampleWordsAdapter);
         //列表子项的点击监听
         mSampleWordsAdapter.setOnItemClickListener(getListen());
@@ -121,7 +121,7 @@ public class WordsActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData);
+                                    mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData,1);
                                     rvList.setAdapter(mSampleWordsAdapter);
                                     //列表子项的点击监听
                                     mSampleWordsAdapter.setOnItemClickListener(getListen());
