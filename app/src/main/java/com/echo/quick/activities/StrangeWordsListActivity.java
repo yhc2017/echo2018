@@ -36,7 +36,7 @@ public class StrangeWordsListActivity extends AppCompatActivity {
     private void initView() {
         titleDatas=new ArrayList<>();
         titleDatas.add("生词");
-        titleDatas.add("不熟词");
+        titleDatas.add("词库");
         fragmentList = new ArrayList<Fragment>();
         fragmentList.add(new StrangeListFragment());
         fragmentList.add(new StrangeTwoListFragment());

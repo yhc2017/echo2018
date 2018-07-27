@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
      */
 //    private OKhttpManager manager = OKhttpManager.getInstance();
 
-    private Button btn_login,btn_test;
+    private Button btn_login,btn_test,btn_quick;
 
     public App app;
 
@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
             Intent intent = null;
             @Override
             public void onClick(View view) {
-                intent = new Intent(MainActivity.this, Words2Activity.class);
-                startActivity(intent);
+//                intent = new Intent(MainActivity.this, Words2Activity.class);
+//                startActivity(intent);
             }
         });
         /**
@@ -136,6 +136,21 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
             }
         });
 
+        btn_quick = (Button)findViewById(R.id.btn_quick);
+        btn_quick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+            }
+        });
+
+        Button btn_strange = (Button)findViewById(R.id.btn_strange);
+        btn_strange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, StrangeWordsListActivity.class));
+            }
+        });
     }
 
     @Override

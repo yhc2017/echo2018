@@ -19,8 +19,10 @@ public interface OnlineWordContract {
 
     interface OnlineWordPresenter{
 
-        public List<Words> getOnlineWord(HashMap<String, String> map);
+        List<Words> getOnlineWord(HashMap<String, String> map);
 
-    };
+        List<Words> getOnlineSprint(HashMap<String, String> map);
+
+    }
 
 }

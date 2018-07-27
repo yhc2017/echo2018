@@ -3,7 +3,9 @@ package com.echo.quick.presenters;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.model.dao.impl.ILoginImpl;
 import com.echo.quick.model.dao.interfaces.ILoginDao;
+import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.SPUtils;
 
 import org.json.JSONObject;
 
@@ -27,6 +29,8 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
     LoginContract.ILoginView iLoginView;
 
+    JSONObject jsonObject;
+
     public LoginPresenterImpl(LoginContract.ILoginView loginView){
 
         this.iLoginView = loginView;
@@ -40,8 +44,10 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
     @Override
     public void doLogin(String name, String passwd) {
+
+
         ILoginDao loginDao = new ILoginImpl();
-        loginDao.doLoginPost(name, passwd, new Callback() {
+        loginDao.doLoginPost(name, passwd,  new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtils.d("失败");
@@ -54,10 +60,13 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                 //code指的是http状态码，可以判断操作的状态；
                 int code  = response.code();
 
-                //将获得的response直接解析成为JsonObject;
-                JSONObject jsonObject = getJSONObject(response);
+                String res = response.body().string();
+
+                SPUtils.put(App.getContext(), "UserInfo", res);
+
                 // TO-DO:将上面得到的JsonObject进行处理，并通过用户上下文创建一个全局用户单例；
             }
         });
+
     }
 }

@@ -159,7 +159,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginTop="1dp"
             android:orientation="horizontal">
@@ -183,74 +183,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:text="女" />
+
+                <TextView
+                    android:id="@+id/register_sex_name"
+                    android:paddingLeft="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
             </RadioGroup>
 
 
-
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/content_margin_hieght"
-            android:text="@string/re_toolbar_real_name"
-            android:textColor="@color/colorPrimary"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-               android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/re_real_name"
-                    android:textSize="@dimen/re_title_textsize" />
-
-                <EditText
-                    android:id="@+id/register_realname"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/re_margin"
-                    android:background="@null"
-                    android:hint="@string/re_real_name_tip"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/content_textsize_small" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/re_real_idcard"
-                    android:textSize="@dimen/re_title_textsize" />
-
-                <EditText
-                    android:id="@+id/register_idcard"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/re_margin"
-                    android:background="@null"
-                    android:hint="@string/re_real_idcard_tip"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/content_textsize_small" />
-            </LinearLayout>
 
             <Button
                 android:id="@+id/register_next_btn"
@@ -266,8 +215,7 @@
                 android:id="@+id/tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="170dp"
-                android:text="---  注册  ---"
+                android:text="---------------------------------------------"
                 android:textAlignment="center" />
 
             <LinearLayout
@@ -284,7 +232,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="最后一哩服务"
+                    android:text="quick服务"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp" />
 

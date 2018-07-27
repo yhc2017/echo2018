@@ -33,7 +33,8 @@
         <activity android:name=".ListShowActivity" />
         <activity android:name=".ReadActivity" />
         <activity android:name=".ReadingAnswerActivity" />
-        <activity android:name=".ReadingTranslateActivity"></activity>
+        <activity android:name=".ReadingTranslateActivity" />
+        <activity android:name=".HomeActivity"></activity>
         <activity android:name=".ReadingMianActivity"></activity>
     </application>
 

@@ -8,7 +8,7 @@
     tools:context="com.echo.quick.activities.MainActivity">
     <Button
         android:id="@+id/bt_words"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="背单词界面"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
     <Button
         android:id="@+id/bt_words_two"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="背单词界面2"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
     <Button
         android:id="@+id/bt_words_dialog"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="测试生词列表"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +36,7 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,8 +46,21 @@
 
     <Button
         android:id="@+id/btn_test"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="测试" />
+
+    <Button
+        android:id="@+id/btn_strange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="生词" />
+
+    <Button
+        android:id="@+id/btn_quick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        />
 
 </LinearLayout>

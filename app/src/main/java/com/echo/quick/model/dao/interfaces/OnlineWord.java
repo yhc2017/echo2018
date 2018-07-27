@@ -16,6 +16,6 @@ import okhttp3.Callback;
 
 public interface OnlineWord {
 
-    void postToWord(HashMap<String, String> map, Callback callback);
+    void postToWord(HashMap<String, String> map, String adress, Callback callback);
 
 }

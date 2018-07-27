@@ -9,9 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.echo.quick.contracts.RegisterContract;
+import com.echo.quick.presenters.RegisterPresenterImpl;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -63,8 +65,10 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
     private Button btn_regidter;
     private RadioGroup register_sex_group;
     private RadioButton man,nv;
+    private TextView register_sex_name;
 
     protected Validator validator;
+    private RegisterContract.IRegister register;
 
 
     //当表单信息验证通过后设为true
@@ -79,6 +83,8 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
 
         validator = new Validator(this);
         validator.setValidationListener(this);
+        register = new RegisterPresenterImpl(this);
+
 
         initViews();
         setEvents();
@@ -97,7 +103,7 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
         ed_pwd = (EditText) findViewById(R.id.register_password);
         ed_sure_pwd = (EditText) findViewById(R.id.register_repassword);
         ed_name = (EditText) findViewById(R.id.register_uname);
-
+        register_sex_name = (TextView)findViewById(R.id.register_sex_name);
         btn_regidter = (Button) findViewById(R.id.register_next_btn);
 
         register_sex_group = (RadioGroup)findViewById(R.id.register_sex_group);
@@ -130,13 +136,16 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
         register_sex_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                validator.validate();
                 switch (i){
                     case R.id.register_sex_nan:
                         sex = "男";
+                        register_sex_name.setText("少侠");
                         break;
 
                     case R.id.register_sex_nv:
                         sex = "女";
+                        register_sex_name.setText("女侠");
                         break;
 
                     default:
@@ -170,6 +179,22 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
 
     }
 
+    @Override
+    public void onClearText() {
+
+    }
+
+    @Override
+    public void onRegisterResult(Boolean result, int code) {
+        if(result){
+            ToastUtils.showShort(RegisterActivity.this, "注册成功");
+            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            finish();
+        }else {
+            ToastUtils.showShort(this, "注册失败");
+        }
+    }
+
     //选择触发的事件
     public class MyListener implements  View.OnClickListener { /*用接口的方式*/
         public void onClick(View v) {
@@ -196,8 +221,12 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
                         if (tel.equals("") || pwd.equals("") || surePwd.equals("") || name.equals("")) {
                             ToastUtils.showShort(RegisterActivity.this, R.string.RegInfoNotFull);
                         } else {
-                            // 发起网络请求进行注册
-                            ToastUtils.showShort(RegisterActivity.this, tel+pwd+surePwd+name+sex);
+                            validator.validate();
+                            register.doRegister(tel, pwd, name, sex);
+//                            SPUtils.put(RegisterActivity.this, "UserInfo", user);
+//                            Object o = SPUtils.get(RegisterActivity.this, "UserInfo", null);
+//                            // 发起网络请求进行注册
+//                            ToastUtils.showShort(RegisterActivity.this, o.toString());
                         }
                     }
                     break;

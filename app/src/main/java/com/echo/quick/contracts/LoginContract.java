@@ -14,14 +14,14 @@ public interface LoginContract {
 
     interface ILoginView{
 
-        public void onClearText();
-        public void onLoginResult(Boolean result, int code);
+        void onClearText();
+        void onLoginResult(Boolean result, int code);
 
-    };
+    }
 
     interface ILoginPresenter{
         void clear();
         void doLogin(String name, String passwd);
-    };
+    }
 
 }
