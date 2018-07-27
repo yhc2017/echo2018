@@ -19,12 +19,12 @@ public class ListShowAdapter extends ArrayAdapter<Words> {
     private int resourceId;
     private List<Words> mobjects;
 
-    public ListShowAdapter(Context context, int textViewResourceId,
-                           List<Words> objects){
+    public ListShowAdapter(Context context, int textViewResourceId, List<Words> objects){
         super(context,textViewResourceId,objects);
         resourceId = textViewResourceId;
         mobjects = objects;
     }
+
     class ViewHolder {
         TextView tv_word;
         TextView tv_symbol;

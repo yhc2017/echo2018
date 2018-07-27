@@ -95,9 +95,7 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
      * @return void
      **/
     private void initEvent() {
-
         MyListener listener = new MyListener();
-
         tv_add_new.setOnClickListener(listener);
         tv_del_new.setOnClickListener(listener);
 
