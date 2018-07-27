@@ -24,9 +24,9 @@ public class ILoginImpl implements ILoginDao {
     @Override
     public User doLoginPost(String tel, String pwd, Callback callback) {
 
-        String requestContent = "tel=155211864297";
+        String requestContent = "tel="+tel+"&pwd="+pwd;
 
-        postHelper.doPost(requestContent, _NetHelper.DOMAIN+"demo", callback);
+        postHelper.doPost(requestContent, _NetHelper.DOMAIN+"userLogin", callback);
 
         return null;
     }

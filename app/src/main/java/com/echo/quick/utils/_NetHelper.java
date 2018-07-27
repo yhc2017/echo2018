@@ -24,8 +24,8 @@ import okhttp3.Response;
 public class _NetHelper {
 
 //    private static String IP = Config.getNetConfigProperties().getProperty("ip");
-    private static String IP = "193.112.12.207";
-
+//    private static String IP = "193.112.12.207";
+    private static String IP = "172.16.4.19";
 //    private static String PORT = Config.getNetConfigProperties().getProperty("port");
 
     private static String PORT = "8080";

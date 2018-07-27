@@ -1,5 +1,6 @@
 package com.echo.quick.activities;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class WordsActivity extends AppCompatActivity {
     private App app;
     int start = 0;
     int stop = 5;
+    private String CTE;
     WordsContract.IWordsPresenter wordsPresenter;
 
     @Override
@@ -50,6 +52,12 @@ public class WordsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words);
         app = (App)getApplication();
+
+        Intent intent = getIntent();
+        if(intent != null){
+            CTE = intent.getStringExtra("CTE");
+        }
+
         dataList = app.getList();
         initView();
         wordsPresenter = new WordsPresenterImpl();

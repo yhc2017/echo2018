@@ -1,5 +1,8 @@
 package com.echo.quick.model.dao.interfaces;
 
+import okhttp3.Callback;
+
+
 /**
  * 项目名称：echo2018
  * 类描述：
@@ -11,4 +14,7 @@ package com.echo.quick.model.dao.interfaces;
  */
 
 public interface IRegisterDao {
+
+    void doRegisterPost(String tel, String pwd, String introduce, String sex, Callback callback);
+
 }

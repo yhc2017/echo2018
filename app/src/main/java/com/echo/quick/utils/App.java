@@ -1,6 +1,7 @@
 package com.echo.quick.utils;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.pojo.Words;
@@ -26,10 +27,13 @@ public class App extends Application{
 
     public List<Words> list;
 
+    private static Context mContext;
+
     public void onCreate() {
         super.onCreate();
         list = new ArrayList<>();
         // 初始化LitePal数据库
+        mContext = getApplicationContext();
         LitePal.initialize(this);
         init();
     }
@@ -53,5 +57,12 @@ public class App extends Application{
 
     public void setList(List<Words> list) {
         this.list = list;
+    }
+
+    /**获取Context.
+     * @return
+     */
+    public static Context getContext(){
+        return mContext;
     }
 }

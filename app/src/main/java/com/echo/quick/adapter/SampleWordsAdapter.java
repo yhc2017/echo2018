@@ -5,9 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.echo.quick.activities.R;
 import com.echo.quick.pojo.Words;
 import com.echo.quick.utils.LogUtils;
@@ -158,7 +158,8 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public void setData(Words data){
             tvItem.setText(data.getWord());
             tvSymbol.setText(data.getSymbol());
-            tvExplain.setText(data.getExplain());
+//            tvExplain.setText(data.getExplain());
+            tvExplain.setText("");
         }
 
     }

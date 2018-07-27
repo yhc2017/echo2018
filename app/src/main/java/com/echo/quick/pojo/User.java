@@ -13,20 +13,33 @@ package com.echo.quick.pojo;
 
 public class User{
 
-    private int userId;
+    private String userId;
     private String nickname;
     private String pwd;
     private String sex;
     private String icon;
     private String introduce;
     private String tel;
-    private int code;
+    private String code;
 
-    public int getUserId() {
+    public User(){}
+
+    public User(String userId, String nickname, String pwd, String sex, String icon, String introduce, String tel, String code) {
+        this.userId = userId;
+        this.nickname = nickname;
+        this.pwd = pwd;
+        this.sex = sex;
+        this.icon = icon;
+        this.introduce = introduce;
+        this.tel = tel;
+        this.code = code;
+    }
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -78,12 +91,11 @@ public class User{
         this.tel = tel;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
-
 }

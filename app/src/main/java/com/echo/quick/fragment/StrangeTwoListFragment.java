@@ -6,19 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 
 import com.echo.quick.activities.R;
-import com.echo.quick.activities.StrangeWordsListActivity;
 import com.echo.quick.activities.WordsActivity;
-import com.echo.quick.adapter.ListShowAdapter;
-import com.echo.quick.pojo.Words;
-import com.echo.quick.utils.LogUtils;
+import com.echo.quick.contracts.OnlineWordContract;
+import com.echo.quick.presenters.OnlineWordPresenterImpl;
+import com.echo.quick.utils.App;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Created by HUAHUA on 2018/7/23.
@@ -26,6 +22,7 @@ import java.util.List;
 
 public class StrangeTwoListFragment extends Fragment {
     RelativeLayout mrlct4;
+    App app;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +39,8 @@ public class StrangeTwoListFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        app = (App)getActivity().getApplication();
+
         intview();
         setEvent();
     }
@@ -78,6 +77,19 @@ public class StrangeTwoListFragment extends Fragment {
             Intent intent = null;
             switch (id) {
                 case R.id.rl_ct4:
+                    //需要从网上获取数据
+                    if(false){
+                        try {
+                            OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+                            final HashMap<String, String> map = new HashMap<>();
+                            map.put("userId", "111");
+                            map.put("time", "201606");
+                            map.put("level", "A");
+                            app.setList(onlineWordPresenter.getOnlineSprint(map));
+                        }catch (Exception e){
+
+                        }
+                    }
                     intent = new Intent(getActivity(), WordsActivity.class);
                     startActivity(intent);
                 break;

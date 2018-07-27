@@ -26,7 +26,7 @@ public class OnlineWordImpl implements OnlineWord {
 
 
     @Override
-    public void postToWord(HashMap<String, String> params, Callback callback) {
+    public void postToWord(HashMap<String, String> params, String adress, Callback callback) {
 
         String requestContent = "";
 
@@ -37,6 +37,6 @@ public class OnlineWordImpl implements OnlineWord {
         }
         LogUtils.d("requestContent = " + requestContent );
 
-        postHelper.doPost(requestContent, _NetHelper.DOMAIN+"quick/words/selectWords", callback);
+        postHelper.doPost(requestContent, _NetHelper.DOMAIN + adress, callback);
     }
 }
