@@ -78,21 +78,12 @@ public class StrangeTwoListFragment extends Fragment {
             switch (id) {
                 case R.id.rl_ct4:
                     //需要从网上获取数据
-                    if(false){
-                        try {
-                            OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-                            final HashMap<String, String> map = new HashMap<>();
-                            map.put("userId", "111");
-                            map.put("time", "201606");
-                            map.put("level", "A");
-                            app.setList(onlineWordPresenter.getOnlineSprint(map));
-                        }catch (Exception e){
 
-                        }
-                    }
+
                     intent = new Intent(getActivity(), WordsActivity.class);
                     startActivity(intent);
                 break;
+
                 default:
                     break;
             }

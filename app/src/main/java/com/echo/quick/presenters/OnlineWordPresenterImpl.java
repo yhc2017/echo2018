@@ -9,7 +9,9 @@ import com.echo.quick.model.dao.interfaces.OnlineWord;
 import com.echo.quick.model.dao.interfaces.WordsNewDao;
 import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_New;
+import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.ToastUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,15 +32,14 @@ import okhttp3.Response;
  * 修改备注：
  */
 
-public class OnlineWordPresenterImpl implements OnlineWordContract.OnlineWordPresenter {
+public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWordContract.OnlineWordPresenter {
+
+    App app = (App) App.getContext();
 
     @Override
     public List<Words> getOnlineWord(HashMap<String, String> map) {
 
         final List<Words> data = new ArrayList<>();
-
-
-
 
         OnlineWord onlineWord = new OnlineWordImpl();
         onlineWord.postToWord(map, "words/selectWords", new Callback() {
@@ -91,6 +92,7 @@ public class OnlineWordPresenterImpl implements OnlineWordContract.OnlineWordPre
                                 word.getEg2Chinese()));
                     }
                     LogUtils.d("错误信息："+response.toString());
+
                 }
 
             }
@@ -105,19 +107,37 @@ public class OnlineWordPresenterImpl implements OnlineWordContract.OnlineWordPre
 
         final List<Words> data = new ArrayList<>();
 
-        OnlineWord onlineWord = new OnlineWordImpl();
+        final OnlineWord onlineWord = new OnlineWordImpl();
 
-        onlineWord.postToWord(map, "", new Callback() {
+
+        onlineWord.postToWord(map, "quick/paper/getReadingInfo", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                ToastUtils.showShort(App.getContext(), "申请出错");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
 
+                JSONArray jsonArray = JSONObject.parseArray(response.body().string());
+
+                JSONObject res = jsonArray.getJSONObject(0);
+
+                JSONArray jsonArray1 = JSONObject.parseArray(res.getString("wordCet4HighList"));
+
+                app.setContent(res.getString("content"));
+                app.setTranslation(res.getString("translation"));
+
+                for (int i = 0; i < jsonArray1.size(); i++){
+                    JSONObject object = jsonArray1.getJSONObject(i);
+                    Words words = new Words(object.getString("word"), object.getString("phon"), object.getString("para"));
+                    LogUtils.d(object.getString("word")+"       "+object.getString("para"));
+                    data.add(words);
+                }
+
             }
         });
+
 
         return data;
     }

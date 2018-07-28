@@ -109,6 +109,10 @@ public class WordsActivity extends AppCompatActivity {
                 if(mSampleWordsAdapter.getItemCount() == 1){
                     //当左滑单词需要复现的数组中存在单词时，将其加入到当前列表下
                     mData.remove(pos);
+                    if(dataList.size() == 0){
+                        ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
+                        ToastUtils.showLong(WordsActivity.this, app.getContent());
+                    }
                         start = start + 5;
                         stop = stop + 5;
                         LogUtils.d("dataList.size:"+dataList.size()+"  start:"+start+"   stop:"+stop+"    recurrent:"+recurrent.size()+"\n"+dataList.toString());
@@ -122,6 +126,7 @@ public class WordsActivity extends AppCompatActivity {
                             }
                         }
                         try {
+
                             for(int i = start; i < stop; i++){
                                 Words word = dataList.get(i);
                                 mData.add(word);
@@ -141,7 +146,7 @@ public class WordsActivity extends AppCompatActivity {
                             ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
                             mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                             mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
-
+                            ToastUtils.showLong(WordsActivity.this, app.getContent());
                         }
                 }else {//页面超过1个单词时
                     String text;

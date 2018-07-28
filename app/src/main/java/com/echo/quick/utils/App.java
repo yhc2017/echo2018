@@ -29,6 +29,10 @@ public class App extends Application{
 
     private static Context mContext;
 
+    private String content;
+
+    private String translation;
+
     public void onCreate() {
         super.onCreate();
         list = new ArrayList<>();
@@ -40,11 +44,12 @@ public class App extends Application{
 
     public void init(){
         try {
-            OnlineWordContract.OnlineWordPresenter wordPresenter = new OnlineWordPresenterImpl();
+            OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
             final HashMap<String, String> map = new HashMap<>();
-            map.put("userId", "444");
-            map.put("classId", "11");
-            setList(wordPresenter.getOnlineWord(map));
+            map.put("userId", "111");
+            map.put("paperDate", "2017-06-04-");
+            map.put("paperType", "A");
+            setList(onlineWordPresenter.getOnlineSprint(map));
         }catch (Exception e){
             LogUtils.d("没在服务器获取到数据");
         }
@@ -64,5 +69,21 @@ public class App extends Application{
      */
     public static Context getContext(){
         return mContext;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getTranslation() {
+        return translation;
+    }
+
+    public void setTranslation(String translation) {
+        this.translation = translation;
     }
 }
