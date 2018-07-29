@@ -23,7 +23,7 @@ public class OnlineWordImpl implements OnlineWord {
 
     //调用_NetHelper中的post与get方法，实现CRUD操作
     private _NetHelper.PostHelper postHelper = new _NetHelper.PostHelper();
-
+    private _NetHelper.GetHelper getHelper = new _NetHelper.GetHelper();
 
     @Override
     public void postToWord(HashMap<String, String> params, String adress, Callback callback) {
@@ -38,5 +38,12 @@ public class OnlineWordImpl implements OnlineWord {
         LogUtils.d("requestContent = " + requestContent );
 
         postHelper.doPost(requestContent, _NetHelper.DOMAIN + adress, callback);
+    }
+
+    @Override
+    public void getToWord(String adress, Callback callback) {
+
+        getHelper.doGet(_NetHelper.DOMAIN + adress, callback);
+
     }
 }

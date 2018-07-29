@@ -141,4 +141,32 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
         return data;
     }
+
+    @Override
+    public List<String> getOnlineSprintType() {
+        final List<String> data = new ArrayList<>();
+
+        final OnlineWord onlineWord = new OnlineWordImpl();
+
+        onlineWord.getToWord("quick/paper/getPaperList", new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                ToastUtils.showShort(App.getContext(), "getOnlineSprintType()---申请出错");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                JSONArray jsonArray = JSONObject.parseArray(response.body().string());
+                for (int i = 0; i < jsonArray.size(); i++){
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    String res = object.getString("paperDate");
+                    data.add(res);
+                    LogUtils.d(res);
+                }
+                app.setPagerList(data);
+            }
+        });
+
+        return data;
+    }
 }

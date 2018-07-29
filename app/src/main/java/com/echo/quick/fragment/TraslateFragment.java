@@ -21,7 +21,7 @@ public class TraslateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reading, container, false);
-        textView = (TextView)view.findViewById(R.id.pager);
+        textView = (TextView)view.findViewById(R.id.tv_pager);
         textView.setText(R.string.reading_example_chinese);
         return view;
     }

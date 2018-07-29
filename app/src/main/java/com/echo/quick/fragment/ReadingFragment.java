@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.echo.quick.activities.R;
 import com.echo.quick.adapter.ListShowAdapter;
+import com.echo.quick.pojo.Pager;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.utils.LogUtils;
 
 import java.util.ArrayList;
 
@@ -22,12 +24,30 @@ import java.util.ArrayList;
 
 
 public class ReadingFragment extends Fragment {
+    TextView mtv_title;
+    TextView mtv_content;
+    String mtitle = "";
+    String mContent = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reading, container, false);
+        mtv_title = (TextView)view.findViewById(R.id.tv_title);
+        mtv_content = (TextView)view.findViewById(R.id.tv_pager);
+        setData();
         return view;
     }
+
+    public void setData(){
+//        mtv_title.setText(pager.mtitle);
+        String content = getArguments().getString("content");
+        LogUtils.d(content);
+        mtv_content.setText(content);
+    }
+
+
+
+
 
 
 }

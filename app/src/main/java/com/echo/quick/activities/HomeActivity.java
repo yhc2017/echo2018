@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.utils.App;
+import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.SPUtils;
 
 import org.json.JSONException;
@@ -72,6 +73,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.L_sprint:
+                startActivity(new Intent(HomeActivity.this, ReadingMianActivity.class));
 
                 break;
 

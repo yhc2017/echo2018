@@ -15,8 +15,8 @@ import java.util.ArrayList;
  * Specific description :翻译阅读
  * 创建人: HUAHUA
  * @version :1.0 , 2018/7/25 22:38
- * 修改人：
- * @version :
+ * 修改人：茹韶燕
+ * @version : 把那个特定的控件单独拿出，作为一个工具类
  * @since ：[quick|阅读背单词]
  */
 public class ReadingTranslateActivity extends AppCompatActivity {
@@ -69,10 +69,7 @@ public class ReadingTranslateActivity extends AppCompatActivity {
         fragmentList = new ArrayList<Fragment>();
         fragmentList.add(new TraslateFragment());
         fragmentList.add(new TraslateFragment());
-        fragmentList.add(new TraslateFragment());
-        fragmentList.add(new TraslateFragment());
         adapter = new StrangeFragmentAdapter(getSupportFragmentManager(),fragmentList);
-
     }
 
     /**

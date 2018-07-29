@@ -27,6 +27,8 @@ public class App extends Application{
 
     public List<Words> list;
 
+    public List<String> pagerList;//真题类型列表
+
     private static Context mContext;
 
     private String content;
@@ -47,9 +49,10 @@ public class App extends Application{
             OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
             final HashMap<String, String> map = new HashMap<>();
             map.put("userId", "111");
-            map.put("paperDate", "2017-06-04-");
+            map.put("paperDate", "2017年6月四级真题A卷");
             map.put("paperType", "A");
             setList(onlineWordPresenter.getOnlineSprint(map));
+            onlineWordPresenter.getOnlineSprintType();
         }catch (Exception e){
             LogUtils.d("没在服务器获取到数据");
         }
@@ -85,5 +88,13 @@ public class App extends Application{
 
     public void setTranslation(String translation) {
         this.translation = translation;
+    }
+
+    public List<String> getPagerList() {
+        return pagerList;
+    }
+
+    public void setPagerList(List<String> pagerList) {
+        this.pagerList = pagerList;
     }
 }

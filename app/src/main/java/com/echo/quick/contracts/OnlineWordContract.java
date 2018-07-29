@@ -23,6 +23,10 @@ public interface OnlineWordContract {
 
         List<Words> getOnlineSprint(HashMap<String, String> map);
 
+        //茹韶燕，新增加获取真题分类列表
+        List<String> getOnlineSprintType();
+
+
     }
 
 }

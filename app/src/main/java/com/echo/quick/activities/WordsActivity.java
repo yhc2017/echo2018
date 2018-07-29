@@ -44,7 +44,7 @@ public class WordsActivity extends AppCompatActivity {
     private App app;
     int start = 0;
     int stop = 5;
-    private String CTE;
+    private String CTE = "";
     WordsContract.IWordsPresenter wordsPresenter;
 
     @Override
@@ -147,6 +147,7 @@ public class WordsActivity extends AppCompatActivity {
                             mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                             mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
                             ToastUtils.showLong(WordsActivity.this, app.getContent());
+
                         }
                 }else {//页面超过1个单词时
                     String text;

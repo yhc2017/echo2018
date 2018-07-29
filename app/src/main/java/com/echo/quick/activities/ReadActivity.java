@@ -3,6 +3,7 @@ package com.echo.quick.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.echo.quick.adapter.StrangeFragmentAdapter;
 import com.echo.quick.fragment.ReadingFragment;
+import com.echo.quick.pojo.Pager;
+import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.ToucherActionIcon;
 
@@ -75,12 +78,27 @@ public class ReadActivity extends AppCompatActivity {
      */
     private void initView() {
         fragmentList = new ArrayList<Fragment>();
-        fragmentList.add(new ReadingFragment());
-        fragmentList.add(new ReadingFragment());
-        fragmentList.add(new ReadingFragment());
-        fragmentList.add(new ReadingFragment());
+        App app = (App)getApplication();
+        String content = app.getContent();
+        LogUtils.d(content);
+        fragmentList.add(newInstance(content));
+        fragmentList.add(newInstance(content));
         adapter = new StrangeFragmentAdapter(getSupportFragmentManager(),fragmentList);
 
+    }
+    /**
+     * Method name : newInstance
+     * Specific description :传递数据给fragment
+     *@param
+     *@param
+     *@return
+     */
+    public static ReadingFragment newInstance(String content) {
+        ReadingFragment fragment = new ReadingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("content",content);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     /**
