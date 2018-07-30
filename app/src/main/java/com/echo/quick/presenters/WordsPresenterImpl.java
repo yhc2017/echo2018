@@ -39,4 +39,9 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
         }
     }
 
+    @Override
+    public void endOnce() {
+
+    }
+
 }

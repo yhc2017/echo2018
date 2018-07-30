@@ -2,25 +2,19 @@ package com.echo.quick.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 
-import com.echo.quick.adapter.ListShowAdapter;
 import com.echo.quick.adapter.SampleWordsAdapter;
-import com.echo.quick.adapter.StrangeFragmentAdapter;
 import com.echo.quick.contracts.OnlineWordContract;
-import com.echo.quick.pojo.Words;
+import com.echo.quick.contracts.ReadMainContract;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
+import com.echo.quick.presenters.ReadMainPresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
-import com.echo.quick.utils.SPUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,12 +28,14 @@ public class ReadingMianActivity extends AppCompatActivity{
     private List<String> mList;
     RecyclerView listView;
     App app;
+    ReadMainContract.ReadMainPresenter readMainPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_home);
         app = (App)getApplication();
+        readMainPresenter = new ReadMainPresenterImpl();
         listView = (RecyclerView)findViewById(R.id.recycler_view);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -74,16 +70,17 @@ public class ReadingMianActivity extends AppCompatActivity{
         listener = new SampleWordsAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(View view , int position){
-                String paperDate = "CTE";
+                String paperDate = "";
                 try {
                     paperDate =  mList.get(position);
+                    String res = readMainPresenter.isExist(paperDate);
                     OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
                     final HashMap<String, String> map = new HashMap<>();
                     map.put("userId", "111");
                     map.put("paperDate", paperDate);
                     map.put("paperType", "A");
-                    app.setList(onlineWordPresenter.getOnlineSprint(map));
-                    onlineWordPresenter.getOnlineSprintType();
+                    onlineWordPresenter.getOnlineSprint(map);
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }

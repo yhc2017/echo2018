@@ -26,7 +26,7 @@ public class ILoginImpl implements ILoginDao {
 
         String requestContent = "tel="+tel+"&pwd="+pwd;
 
-        postHelper.doPost(requestContent, _NetHelper.DOMAIN+"userLogin", callback);
+        postHelper.doPost(requestContent, _NetHelper.DOMAIN+"quick/userLogin", callback);
 
         return null;
     }

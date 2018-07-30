@@ -39,10 +39,16 @@
         android:layout_height="match_parent">
     </android.support.v4.view.ViewPager>
     </LinearLayout>
-    <com.echo.quick.utils.ToucherActionIcon
-        android:id="@+id/action_icon"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:src="@drawable/ic_english"/>
+    <!--<com.echo.quick.utils.ToucherActionIcon-->
+        <!--android:id="@+id/action_icon"-->
+        <!--android:layout_width="55dp"-->
+        <!--android:layout_height="55dp"-->
+        <!--android:src="@drawable/ic_english"/>-->
+
+    <ImageView
+    android:id="@+id/action_icon"
+    android:layout_width="55dp"
+    android:layout_height="55dp"
+    android:src="@drawable/ic_english"/>
 </RelativeLayout>
 

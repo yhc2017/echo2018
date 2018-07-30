@@ -8,10 +8,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.utils.App;
-import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.NetUtils;
 import com.echo.quick.utils.SPUtils;
 
 import org.json.JSONException;
@@ -30,6 +31,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        if(NetUtils.isConnected(HomeActivity.this)){
+            Toast.makeText(this, "网络已连接", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "网络未连接，请连接再操作", Toast.LENGTH_SHORT).show();
+        }
 
         //初始化
         initView();
@@ -73,8 +80,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.L_sprint:
-                startActivity(new Intent(HomeActivity.this, ReadingMianActivity.class));
-
+                if(NetUtils.isConnected(HomeActivity.this)){
+                    Toast.makeText(this, "网络已连接", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(HomeActivity.this, ReadingMianActivity.class));
+                }else {
+                    Toast.makeText(this, "网络未连接，请连接再操作", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.roundImageView_home:

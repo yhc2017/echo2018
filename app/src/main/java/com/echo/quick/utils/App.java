@@ -50,8 +50,8 @@ public class App extends Application{
             final HashMap<String, String> map = new HashMap<>();
             map.put("userId", "111");
             map.put("paperDate", "2017年6月四级真题A卷");
-            map.put("paperType", "A");
-            setList(onlineWordPresenter.getOnlineSprint(map));
+//            map.put("paperType", "A");
+            onlineWordPresenter.getOnlineSprint(map);
             onlineWordPresenter.getOnlineSprintType();
         }catch (Exception e){
             LogUtils.d("没在服务器获取到数据");
