@@ -28,7 +28,7 @@
         android:id="@+id/bt_words_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="测试生词列表"
+        android:text="测试阅读界面"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

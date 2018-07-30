@@ -11,7 +11,7 @@
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/im_delete"
-            android:visibility="gone"
+            android:visibility="visible"
             android:src="@drawable/ic_strange_delete2"
             android:layout_marginLeft="10dp"
             android:layout_width="20dp"

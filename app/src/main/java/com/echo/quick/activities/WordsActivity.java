@@ -201,6 +201,7 @@ public class WordsActivity extends AppCompatActivity {
                 ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundColor(Color.TRANSPARENT);
                 ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivSchedule.setVisibility(View.GONE);
                 ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivDone.setVisibility(View.GONE);
+                ((SampleWordsAdapter.ItemViewHolder) viewHolder).tvExplain.setVisibility(View.GONE);
             }
 
             @Override
@@ -219,12 +220,14 @@ public class WordsActivity extends AppCompatActivity {
                 getDefaultUIUtil().onDraw(c, recyclerView, ((SampleWordsAdapter.ItemViewHolder) viewHolder).vItem, dX, dY, actionState, isCurrentlyActive);
                 if (dX > 0) { // 向左滑动是的提示
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundResource(R.drawable.item_left);
+                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).tvExplain.setVisibility(View.GONE);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivDone.setVisibility(View.VISIBLE);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivSchedule.setVisibility(View.GONE);
                 }
                 if (dX < 0) { // 向右滑动时的提示
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundResource(R.drawable.item_right);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivSchedule.setVisibility(View.VISIBLE);
+                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).tvExplain.setVisibility(View.VISIBLE);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivDone.setVisibility(View.GONE);
                 }
             }

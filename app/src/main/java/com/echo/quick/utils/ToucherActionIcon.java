@@ -22,7 +22,7 @@ import android.widget.RelativeLayout;
 
 @SuppressLint("AppCompatCustomView")
 public class ToucherActionIcon extends ImageView{
-    private OnMyListener mOnmylistenter = null;
+    private OnMyListener mOnmylistenter;
     private int xDelta;//横坐标
     private int yDelta;//纵坐标
     private long startTime = 0;//小球，按下去的时间
@@ -99,15 +99,26 @@ public class ToucherActionIcon extends ImageView{
                 } else {
                     isclick = true;
                 }
-                System.out.println("执行顺序up");
+                System.out.println("执行顺序up"+isclick);
                 if (isclick) {
-                    //调用接口中的方法
-                    mOnmylistenter.myClick(isclick);
+                    ballClick();
             }
                 break;
+
         }
         this.invalidate();
         return true;
+
+    }
+
+    public void ballClick(){
+        if (null == mOnmylistenter) {
+            //调用接口中的方法
+            LogUtils.d("小球失败动作！！！"+mOnmylistenter);
+        }else {
+            //调用接口中的方法
+            LogUtils.d("小球跳转页面到翻译阅读界面！！！"+mOnmylistenter);
+        }
     }
 
 
@@ -115,8 +126,8 @@ public class ToucherActionIcon extends ImageView{
      * interface name : OnMyListener
      * Specific description :自定义接口，实现这个接口必须实现接口的方法
      */
-    public static interface OnMyListener{
-        void myClick(Boolean isclick);
+    public  interface OnMyListener{
+        void myClick(Boolean b);
     }
 
     /**
@@ -124,7 +135,9 @@ public class ToucherActionIcon extends ImageView{
      * Specific description :利用这个方法，暴露给外面的调用者
      */
     public void setOnMyClickListener(OnMyListener listener) {
+        LogUtils.d("用到小球的监听"+mOnmylistenter);
         this.mOnmylistenter = listener;
     }
+
 
 }

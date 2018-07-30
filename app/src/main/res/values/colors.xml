@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#d81e06</color>
-    <color name="colorPrimaryDark">#d81e06</color>
-    <color name="colorAccent">#d81e06</color>
+    <color name="colorPrimary">#89cff0</color>
+    <color name="colorPrimaryDark">#89cff0</color>
+    <color name="colorAccent">#5bc3f4</color>
 
     <!-- common -->
     <color name="white">#FFFFFF</color>
@@ -41,7 +41,7 @@
 
 
     <!--这里可以删-->
-    <color name="colorBackground">#fcfcfc</color>
+    <color name="colorBackground">#eef4f7</color>
     <!--ModuleColor-->
     <color name="colorPersonalTailoModule">#8ab869</color>
     <color name="colorLocalMusicModule">#ffc670</color>
