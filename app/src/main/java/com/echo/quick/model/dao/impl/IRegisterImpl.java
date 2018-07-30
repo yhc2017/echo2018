@@ -28,7 +28,7 @@ public class IRegisterImpl implements IRegisterDao {
                 "&nickname="+ nickname +
                 "&sex="+sex;
 
-        postHelper.doPost(requestContent, _NetHelper.DOMAIN+"userRegister", callback);
+        postHelper.doPost(requestContent, _NetHelper.DOMAIN+"quick/userRegister", callback);
 
     }
 

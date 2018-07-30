@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
@@ -44,7 +45,8 @@ public class WordsActivity extends AppCompatActivity {
     private App app;
     int start = 0;
     int stop = 5;
-    private String CTE = "";
+    boolean isEnd = false;
+    private String CTE = "no";
     WordsContract.IWordsPresenter wordsPresenter;
 
     @Override
@@ -59,6 +61,7 @@ public class WordsActivity extends AppCompatActivity {
         }
 
         dataList = app.getList();
+
         initView();
         wordsPresenter = new WordsPresenterImpl();
     }
@@ -104,51 +107,57 @@ public class WordsActivity extends AppCompatActivity {
                 // 处理滑动事件回调
                 final int pos = viewHolder.getAdapterPosition();//页面中子项的位置
                 final Words item = mData.get(pos);//数据子项的位置
-                LogUtils.d(mSampleWordsAdapter.getItemCount()+"");
+
+                Log.d("quick", "dataList.size:"+dataList.size()+"  start:"+start+"   stop:"+stop+"    recurrent:"+recurrent.size());
                 //当页面还剩一条单词时，进行特殊处理
                 if(mSampleWordsAdapter.getItemCount() == 1){
                     //当左滑单词需要复现的数组中存在单词时，将其加入到当前列表下
-                    mData.remove(pos);
-                    if(dataList.size() == 0){
-                        ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
-                        ToastUtils.showLong(WordsActivity.this, app.getContent());
+                    Words words = mData.get(pos);
+                    if (direction == ItemTouchHelper.RIGHT) {
+                        wordsPresenter.rightSwipe(words);
+                        mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    } else {
+                        dataList.add(words);
+                        wordsPresenter.liefSwipe(words);
                     }
-                        start = start + 5;
-                        stop = stop + 5;
-                        LogUtils.d("dataList.size:"+dataList.size()+"  start:"+start+"   stop:"+stop+"    recurrent:"+recurrent.size()+"\n"+dataList.toString());
+                    mData.remove(pos);
 
-                        if(stop >= dataList.size()){
-                            if(recurrent.isEmpty()) {
-                                stop = dataList.size();
-                            } else{
-                                dataList.addAll(recurrent);
-                                recurrent.clear();
-                            }
+                    if(isEnd){
+                        startActivity(new Intent(WordsActivity.this, ReadActivity.class));
+                    }
+
+                    start = stop;
+                    stop += 5;
+
+                    if(stop >= dataList.size()) {
+                        stop = dataList.size();
+                        isEnd = true;
+                    }
+
+                    try {
+
+                        for(int i = start; i < stop; i++){
+                            Words word = dataList.get(i);
+                            mData.add(word);
                         }
-                        try {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData,1);
+                                rvList.setAdapter(mSampleWordsAdapter);
+                                //列表子项的点击监听
+                                mSampleWordsAdapter.setOnItemClickListener(getListen());
 
-                            for(int i = start; i < stop; i++){
-                                Words word = dataList.get(i);
-                                mData.add(word);
                             }
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData,1);
-                                    rvList.setAdapter(mSampleWordsAdapter);
-                                    //列表子项的点击监听
-                                    mSampleWordsAdapter.setOnItemClickListener(getListen());
+                        });
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
+                        mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                        mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
+                        ToastUtils.showLong(WordsActivity.this, app.getContent());
 
-                                }
-                            });
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
-                            mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                            mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
-                            ToastUtils.showLong(WordsActivity.this, app.getContent());
-
-                        }
+                    }
                 }else {//页面超过1个单词时
                     String text;
                     //判断滑动方向
@@ -162,7 +171,7 @@ public class WordsActivity extends AppCompatActivity {
                         text = "还没记住";
                         Words words = mData.get(pos);
                         mData.remove(pos);
-                        recurrent.add(words);
+                        dataList.add(words);
                         wordsPresenter.liefSwipe(words);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 

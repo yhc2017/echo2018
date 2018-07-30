@@ -14,7 +14,11 @@ import com.echo.quick.pojo.Words;
 
 public interface WordsContract {
 
-    interface IWordsView{}
+    interface IWordsView{
+
+        void RefreshPage(Boolean result);
+
+    }
 
     interface IWordsPresenter{
 
@@ -33,6 +37,8 @@ public interface WordsContract {
          *
          **/
         void rightSwipe(Words w);
+
+        void endOnce();
 
     }
 

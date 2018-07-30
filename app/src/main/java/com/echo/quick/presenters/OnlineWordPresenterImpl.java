@@ -1,5 +1,7 @@
 package com.echo.quick.presenters;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.OnlineWordContract;
@@ -134,6 +136,8 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                     LogUtils.d(object.getString("word")+"       "+object.getString("para"));
                     data.add(words);
                 }
+
+                app.setList(data);
 
             }
         });

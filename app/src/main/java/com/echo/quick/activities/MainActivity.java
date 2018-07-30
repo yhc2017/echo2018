@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
 
         app = (App)getApplication();
 
+
+
         //预存在线单词（仅测试用）
 //        OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
 //        final HashMap<String, String> map = new HashMap<>();

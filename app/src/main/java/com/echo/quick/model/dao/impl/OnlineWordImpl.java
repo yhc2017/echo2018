@@ -41,6 +41,21 @@ public class OnlineWordImpl implements OnlineWord {
     }
 
     @Override
+    public void postToWordString(HashMap<String, String> map, String adress, Callback callback) {
+        String requestContent = "";
+
+        if (map != null && !map.isEmpty()) {
+            for(Map.Entry<String,String> entry : map.entrySet()){
+                requestContent += entry.getKey() + "=" + entry.getValue() +"&";
+            }
+        }
+        LogUtils.d("requestContent = " + requestContent );
+
+        postHelper.doPostString(requestContent, _NetHelper.DOMAIN + adress, callback);
+    }
+
+
+    @Override
     public void getToWord(String adress, Callback callback) {
 
         getHelper.doGet(_NetHelper.DOMAIN + adress, callback);
