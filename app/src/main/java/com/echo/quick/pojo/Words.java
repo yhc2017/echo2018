@@ -21,6 +21,7 @@ public class Words {
     private String eg1_chinese;   //例句
     private String eg2;   //例句
     private String eg2_chinese;   //例句
+    private String topicId;
 
     /**
      * Method name : 构造方法一
@@ -48,7 +49,7 @@ public class Words {
      *@param   explain  String  释义
      *@param   eg1  String  例句
      */
-    public Words(String wordId, String pron, String word,String symbol,String explain,String eg1,String eg1_chinese,String eg2,String eg2_chinese){
+    public Words(String wordId, String pron, String word,String symbol,String explain,String eg1,String eg1_chinese,String eg2,String eg2_chinese,String topicId){
         this.wordId = wordId;
         this.word = word;
         this.symbol = symbol;
@@ -58,6 +59,7 @@ public class Words {
         this.eg1_chinese = eg1_chinese;
         this.eg2 = eg2;
         this.eg2_chinese = eg2_chinese;
+        this.topicId = topicId;
     }
 
     public String getWordId() {
@@ -130,5 +132,13 @@ public class Words {
 
     public void setExplain(String explain) {
         this.explain = explain;
+    }
+
+    public String getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(String topicId) {
+        this.topicId = topicId;
     }
 }

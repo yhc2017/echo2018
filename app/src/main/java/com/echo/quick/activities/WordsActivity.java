@@ -270,7 +270,7 @@ public class WordsActivity extends AppCompatActivity {
 
                 LogUtils.d("数字为："+i);
                 Words words = new Words(mData.get(i).getWordId(),mData.get(i).getPron(),mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
-                        ,mData.get(i).getEg1(),mData.get(i).getEg1_chinese(),"","");
+                        ,mData.get(i).getEg1(),mData.get(i).getEg1_chinese(),"","", mData.get(i).getTopicId());
                 WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
                 customDialog.show();
             }

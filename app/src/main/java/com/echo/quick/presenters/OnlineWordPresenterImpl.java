@@ -52,15 +52,16 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                 WordsNewDao newDao = new WordsNewImpl();
                 List<Words_New> news = newDao.select();
                 for(Words_New word: news){
-                    data.add(new Words(word.getWordId(),
-                            word.getPron(),
-                            word.getWord(),
-                            word.getSymbol(),
-                            word.getExplain(),
-                            word.getEg1(),
-                            word.getEg1Chinese(),
-                            word.getEg2(),
-                            word.getEg2Chinese()));
+                    Words wd = new Words();
+                    wd.setWordId(word.getWordId());
+                    wd.setWord(word.getWord());
+                    wd.setPron(word.getPron());
+                    wd.setSymbol(word.getSymbol());
+                    wd.setExplain(word.getExplain());
+                    wd.setEg1(word.getEg1());
+                    wd.setEg1_chinese(word.getEg1Chinese());
+                    wd.setWordId(word.getWordId());
+                    data.add(wd);
                 }
             }
 
@@ -81,31 +82,31 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                                 object.getString("build"),
                                 object.getString("example"),
                                 object.getString(""),
-                                object.getString(""));
+                                object.getString(""),
+                                object.getString("topicId"));
                         LogUtils.d(object.getString("id")+"       "+object.getString("para"));
                         data.add(words);
                     }
-//                    for(Words_New words : wordsNew.select()){
-//                        LogUtils.d(words.getWord());
-//                    }
                 }catch (Exception e){
                     e.printStackTrace();
                     WordsNewDao newDao = new WordsNewImpl();
                     List<Words_New> news = newDao.select();
                     for(Words_New word: news){
-                        data.add(new Words(word.getWordId(),
-                                word.getPron(),
-                                word.getWord(),
-                                word.getSymbol(),
-                                word.getExplain(),
-                                word.getEg1(),
-                                word.getEg1Chinese(),
-                                word.getEg2(),
-                                word.getEg2Chinese()));
+                        Words wd = new Words();
+                        wd.setWordId(word.getWordId());
+                        wd.setWord(word.getWord());
+                        wd.setPron(word.getPron());
+                        wd.setSymbol(word.getSymbol());
+                        wd.setExplain(word.getExplain());
+                        wd.setEg1(word.getEg1());
+                        wd.setEg1_chinese(word.getEg1Chinese());
+                        wd.setWordId(word.getWordId());
+                        data.add(wd);
                     }
                     LogUtils.d("错误信息："+response.toString());
 
                 }
+                app.setList(data);
 
             }
         });
@@ -151,7 +152,8 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                             object.getString("build"),
                             object.getString("example"),
                             object.getString(""),
-                            object.getString(""));
+                            object.getString(""),
+                            object.getString("topicId"));
                     LogUtils.d(object.getString("id")+"       "+object.getString("para"));
                     data.add(words);
                 }
@@ -202,6 +204,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
             String body = "{" +
                     "'wordId':"+log.getWordId()+
                     "',word':"+log.getWord()+
+                    "',topicId':"+log.getTopicId()+
                     "',num':"+log.getNum()+
                     "},";
             json += body;

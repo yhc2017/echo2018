@@ -46,6 +46,7 @@ public class WordsLogImpl implements WordsLogDao {
             Words_Log wordsLog = new Words_Log();
             wordsLog.setWordId(w.getWordId());
             wordsLog.setWord(w.getWord());
+            wordsLog.setTopicId(w.getTopicId());
             wordsLog.setNum(-1);
             wordsLog.save();
             LogUtils.d("word 不存在。");
