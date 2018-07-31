@@ -26,6 +26,7 @@ public interface OnlineWordContract {
         //茹韶燕，新增加获取真题分类列表
         List<String> getOnlineSprintType();
 
+        void postOnlineWordsLog();
 
     }
 

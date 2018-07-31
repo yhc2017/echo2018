@@ -55,7 +55,6 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                //LogUtils.d(response.body().string());
 
                 //code指的是http状态码，可以判断操作的状态；
                 int code  = response.code();
@@ -63,6 +62,8 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                 String res = response.body().string();
 
                 SPUtils.put(App.getContext(), "UserInfo", res);
+
+                iLoginView.onLoginResult(true, code);
 
                 // TO-DO:将上面得到的JsonObject进行处理，并通过用户上下文创建一个全局用户单例；
             }

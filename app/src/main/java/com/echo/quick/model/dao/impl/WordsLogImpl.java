@@ -48,10 +48,14 @@ public class WordsLogImpl implements WordsLogDao {
             wordsLog.setWord(w.getWord());
             wordsLog.setNum(-1);
             wordsLog.save();
+            LogUtils.d("word 不存在。");
             return -1;
         }
         else if(logs.size() != 1){
             LogUtils.d("word 不唯一。");
+        }
+        else {
+            LogUtils.d("word Num = "+logs.get(0).getNum());
         }
         return logs.get(0).getNum();
     }
@@ -67,12 +71,12 @@ public class WordsLogImpl implements WordsLogDao {
     }
 
     @Override
-    public boolean updateNum(String wordId, int num) {
+    public boolean updateNum(String word, int num) {
 
         Words_Log wordsLog = new Words_Log();
         wordsLog.setNum(num);
         try {
-            wordsLog.updateAll("wordId = ?", wordId);
+            wordsLog.updateAll("word = ?", word);
             return true;
         }catch (Exception e){
             return false;

@@ -17,15 +17,16 @@ public class Words_Log extends LitePalSupport{
     private String wordId;
     private String word;
     private int num;
-    private String prepare1;
+    private String topicId;
     private int prepare2;
 
     public Words_Log(){}
 
-    public Words_Log(String wordId,String word,int num){
+    public Words_Log(String wordId,String word,int num,String topicId){
         this.wordId = wordId;
         this.word = word;
         this.num = num;
+        this.topicId = topicId;
     }
 
     public String getWordId() {
@@ -52,12 +53,12 @@ public class Words_Log extends LitePalSupport{
         this.num = num;
     }
 
-    public String getPrepare1() {
-        return prepare1;
+    public String getTopicId() {
+        return topicId;
     }
 
-    public void setPrepare1(String prepare1) {
-        this.prepare1 = prepare1;
+    public void setTopicId(String topicId) {
+        this.topicId = topicId;
     }
 
     public int getPrepare2() {

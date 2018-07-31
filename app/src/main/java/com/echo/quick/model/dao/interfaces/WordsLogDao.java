@@ -51,11 +51,11 @@ public interface WordsLogDao {
 
     /**
      * 方法名称：通过id更新num
-     * 方法描述: 传入单词对应的单词id更新对应的num
-     * 参数1： String wordId， int num
+     * 方法描述: 传入单词对应的单词更新对应的num
+     * 参数1： String word， int num
      * @return Boolean
      **/
-    boolean updateNum(String wordId, int num);
+    boolean updateNum(String word, int num);
 
     /**
      * 方法名称：删除生词

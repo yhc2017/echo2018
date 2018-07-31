@@ -14,7 +14,10 @@ import android.view.View;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
 import com.echo.quick.contracts.WordsContract;
+import com.echo.quick.model.dao.impl.WordsLogImpl;
+import com.echo.quick.model.dao.interfaces.WordsLogDao;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.pojo.Words_Log;
 import com.echo.quick.presenters.WordsPresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
@@ -64,6 +67,16 @@ public class WordsActivity extends AppCompatActivity {
 
         initView();
         wordsPresenter = new WordsPresenterImpl();
+
+
+
+        WordsLogDao dao = new WordsLogImpl();
+        List<Words_Log> logs = dao.select();
+        for(Words_Log log:logs){
+            Log.d("Word     ",log.getWord()+"   num = "+ log.getNum());
+        }
+
+
     }
 
     /**
@@ -122,42 +135,43 @@ public class WordsActivity extends AppCompatActivity {
                     }
                     mData.remove(pos);
 
-                    if(isEnd){
+                    if(mData.size() == 0){
                         startActivity(new Intent(WordsActivity.this, ReadActivity.class));
+                        finish();
                     }
 
-                    start = stop;
-                    stop += 5;
+//                    start = stop;
+//                    stop += 5;
 
-                    if(stop >= dataList.size()) {
-                        stop = dataList.size();
-                        isEnd = true;
-                    }
+//                    if(stop >= dataList.size()) {
+//                        stop = dataList.size();
+//                        isEnd = true;
+//                    }
 
-                    try {
+//                    try {
 
-                        for(int i = start; i < stop; i++){
-                            Words word = dataList.get(i);
-                            mData.add(word);
-                        }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData,1);
-                                rvList.setAdapter(mSampleWordsAdapter);
-                                //列表子项的点击监听
-                                mSampleWordsAdapter.setOnItemClickListener(getListen());
-
-                            }
-                        });
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
-                        mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                        mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
-                        ToastUtils.showLong(WordsActivity.this, app.getContent());
-
-                    }
+//                        for(int i = start; i < stop; i++){
+//                            Words word = dataList.get(i);
+//                            mData.add(word);
+//                        }
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData,1);
+//                                rvList.setAdapter(mSampleWordsAdapter);
+//                                //列表子项的点击监听
+//                                mSampleWordsAdapter.setOnItemClickListener(getListen());
+//
+//                            }
+//                        });
+//                    }catch (Exception e){
+//                        e.printStackTrace();
+//                        ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
+//                        mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+//                        mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
+//                        ToastUtils.showLong(WordsActivity.this, app.getContent());
+//
+//                    }
                 }else {//页面超过1个单词时
                     String text;
                     //判断滑动方向
@@ -171,7 +185,7 @@ public class WordsActivity extends AppCompatActivity {
                         text = "还没记住";
                         Words words = mData.get(pos);
                         mData.remove(pos);
-                        dataList.add(words);
+                        mData.add(words);
                         wordsPresenter.liefSwipe(words);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
@@ -253,7 +267,7 @@ public class WordsActivity extends AppCompatActivity {
 
                 LogUtils.d("数字为："+i);
                 Words words = new Words(mData.get(i).getWordId(),mData.get(i).getPron(),mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
-                        ,"She gave him a quick glance.","她迅速地扫了他一眼。","She gave him a quick glance.","她迅速地扫了他一眼。");
+                        ,mData.get(i).getEg1(),mData.get(i).getEg1_chinese(),"","");
                 WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
                 customDialog.show();
             }
@@ -276,7 +290,7 @@ public class WordsActivity extends AppCompatActivity {
             if (mData==null) {
                 LogUtils.d("为空的数据列表！");
             }else {
-                for(int i = start; i < stop; i++){
+                for(int i = 0; i < dataList.size(); i++){
                     Words word = dataList.get(i);
                     mData.add(word);
                 }

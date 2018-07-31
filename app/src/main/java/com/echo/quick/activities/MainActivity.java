@@ -12,8 +12,6 @@ import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.utils.App;
 
-import java.util.HashMap;
-
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -131,10 +129,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
             @Override
             public void onClick(View view) {
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-                final HashMap<String, String> map = new HashMap<>();
-                map.put("userId", "444");
-                map.put("classId", "11");
-                app.setList(onlineWordPresenter.getOnlineWord(map));
+//                final HashMap<String, String> map = new HashMap<>();
+//                map.put("userId", "444");
+//                map.put("classId", "11");
+//                app.setList(onlineWordPresenter.getOnlineWord(map));
+                onlineWordPresenter.postOnlineWordsLog();
             }
         });
 

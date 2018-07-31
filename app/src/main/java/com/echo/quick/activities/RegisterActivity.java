@@ -187,9 +187,9 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
     @Override
     public void onRegisterResult(Boolean result, int code) {
         if(result){
-            ToastUtils.showShort(RegisterActivity.this, "注册成功");
-            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
             finish();
+
         }else {
             ToastUtils.showShort(this, "注册失败");
         }
@@ -221,13 +221,11 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
                         if (tel.equals("") || pwd.equals("") || surePwd.equals("") || name.equals("")) {
                             ToastUtils.showShort(RegisterActivity.this, R.string.RegInfoNotFull);
                         } else {
+
                             validator.validate();
                             register.doRegister(tel, pwd, name, sex);
-//                            SPUtils.put(RegisterActivity.this, "UserInfo", user);
-//                            Object o = SPUtils.get(RegisterActivity.this, "UserInfo", null);
-//                            // 发起网络请求进行注册
-//                            ToastUtils.showShort(RegisterActivity.this, o.toString());
-                        }
+
+                      }
                     }
                     break;
 

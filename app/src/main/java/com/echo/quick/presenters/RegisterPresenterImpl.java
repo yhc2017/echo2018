@@ -1,15 +1,12 @@
 package com.echo.quick.presenters;
 
+import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.RegisterContract;
 import com.echo.quick.model.dao.impl.IRegisterImpl;
 import com.echo.quick.model.dao.interfaces.IRegisterDao;
 import com.echo.quick.pojo.User;
 import com.echo.quick.utils.App;
-import com.echo.quick.utils.LogUtils;
-import com.echo.quick.utils.ToastUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.echo.quick.utils.SPUtils;
 
 import java.io.IOException;
 
@@ -45,7 +42,7 @@ public class RegisterPresenterImpl extends BasePresenter implements RegisterCont
     }
 
     @Override
-    public User doRegister(String tel, String pwd, String nickname, String sex) {
+    public void doRegister(String tel, String pwd, String nickname, String sex) {
         IRegisterDao registerDao = new IRegisterImpl();
         registerDao.doRegisterPost(tel, pwd, nickname, sex, new Callback() {
             @Override
@@ -55,34 +52,18 @@ public class RegisterPresenterImpl extends BasePresenter implements RegisterCont
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                JSONObject res = getJSONObject(response);
 
+                int code  = response.code();
+                String res = response.body().string();
 
-                try {
-                    if(res.getString("prepare4").equals("204")) {
-//                        iRegisterView.onRegisterResult(true, 204);
-                        ToastUtils.showShort(App.getContext(), "用户注册成功");
-                    }else if(res.getString("prepare4").equals("205")){
-                        ToastUtils.showShort(App.getContext(), "用户已注册");
-                    }
-                    String code = res.getString("prepare4");
-                    if(code.equals("200")) {
-                        LogUtils.d("res.getString(\"userId\")" + res.getString("userId"));
-                    }
-                    user = new User(res.getString("userId"),
-                            res.getString("nickname"),
-                            res.getString("pwd"),
-                            res.getString("sex"),
-                            res.getString("icon"),
-                            res.getString("introduce"),
-                            res.getString("tel"),
-                            res.getString("prepare4"));
+                JSONObject jsonObject = JSONObject.parseObject(res);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if(jsonObject.getString("prepare4").equals("204")){
+                    SPUtils.put(App.getContext(), "UserInfo", res);
+                    iRegisterView.onRegisterResult(true, code);
                 }
+
             }
         });
-        return user;
     }
 }
