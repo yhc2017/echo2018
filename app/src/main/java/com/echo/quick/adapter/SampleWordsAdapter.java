@@ -158,8 +158,8 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public void setData(Words data){
             tvItem.setText(data.getWord());
             tvSymbol.setText(data.getSymbol());
-//            tvExplain.setText(data.getExplain());
-            tvExplain.setText("");
+            tvExplain.setText(data.getExplain());
+//            tvExplain.setText("");
         }
 
     }

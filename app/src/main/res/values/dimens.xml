@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!--背单词界面-item_words.xml-->
-    <dimen name="item_word_height">70dp</dimen>
+    <dimen name="item_word_height">54dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <!--login.xml-->
     <dimen name="toolbar_heigh">230dp</dimen>
