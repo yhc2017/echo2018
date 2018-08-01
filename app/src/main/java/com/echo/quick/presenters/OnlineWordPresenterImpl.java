@@ -201,17 +201,17 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
         List<Words_Log> logs = logDao.select();
         String json = "[";
         for (Words_Log log:logs){
-            String body = "{" +
-                    "'wordId':"+log.getWordId()+
-                    "',word':"+log.getWord()+
-                    "',topicId':"+log.getTopicId()+
-                    "',num':"+log.getNum()+
-                    "},";
+            String body = "{\"wordId\":"+log.getWordId()
+                    +",\"word\":\""+log.getWord()
+                    +"\",\"topicId\":\""+log.getTopicId()
+                    +"\",\"leftNum\":\""+log.getLeftNum()
+                    +"\",\"rightNum\":\""+log.getRightNum()
+                    +"\"},";
             json += body;
         }
+        //切割掉最后一个逗号
+        json = json.substring(0, json.length()-1);
         json += "]";
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("logs", json);
-        LogUtils.d(jsonObject.toString());
+        LogUtils.d(json);
     }
 }

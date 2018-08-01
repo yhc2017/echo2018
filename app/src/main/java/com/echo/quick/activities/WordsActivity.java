@@ -73,7 +73,7 @@ public class WordsActivity extends AppCompatActivity {
         WordsLogDao dao = new WordsLogImpl();
         List<Words_Log> logs = dao.select();
         for(Words_Log log:logs){
-            Log.d("Word     ",log.getWord()+"   num = "+ log.getNum());
+            Log.d("Word     ",log.getWord()+"   leftNum = "+ log.getLeftNum()+"   rightNum = "+ log.getRightNum());
         }
 
 

@@ -25,22 +25,18 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
     public void liefSwipe(Words word) {
         int num;
         wordsLogDao = new WordsLogImpl();
-        num = wordsLogDao.selectNum(word);
+        num = wordsLogDao.selectLeftNum(word);
         Log.d("left num    =    ", "   "+num);
-        wordsLogDao.updateNum(word.getWord(), num+1);
+        wordsLogDao.updateLeftNum(word.getWord(), num+1);
     }
 
     @Override
     public void rightSwipe(Words word) {
         int num;
         wordsLogDao = new WordsLogImpl();
-        num = wordsLogDao.selectNum(word);
+        num = wordsLogDao.selectRightNum(word);
         Log.d("right num    =    ", "   "+num);
-        if(num < 3){
-            wordsLogDao.updateNum(word.getWord(), -2);
-        }else {
-            wordsLogDao.updateNum(word.getWord(), num+1);
-        }
+        wordsLogDao.updateRightNum(word.getWord(), num+1);
     }
 
     @Override

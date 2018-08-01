@@ -39,7 +39,7 @@ public class WordsLogImpl implements WordsLogDao {
     }
 
     @Override
-    public int selectNum(Words w) {
+    public int selectLeftNum(Words w) {
 
         List<Words_Log> logs = LitePal.where("word = ?", w.getWord()).find(Words_Log.class);
         if(logs.isEmpty()){
@@ -47,7 +47,8 @@ public class WordsLogImpl implements WordsLogDao {
             wordsLog.setWordId(w.getWordId());
             wordsLog.setWord(w.getWord());
             wordsLog.setTopicId(w.getTopicId());
-            wordsLog.setNum(-1);
+            wordsLog.setLeftNum(0);
+            wordsLog.setRightNum(0);
             wordsLog.save();
             LogUtils.d("word 不存在。");
             return -1;
@@ -56,9 +57,33 @@ public class WordsLogImpl implements WordsLogDao {
             LogUtils.d("word 不唯一。");
         }
         else {
-            LogUtils.d("word Num = "+logs.get(0).getNum());
+            LogUtils.d("word Num = "+logs.get(0).getLeftNum());
         }
-        return logs.get(0).getNum();
+        return logs.get(0).getLeftNum();
+    }
+
+    @Override
+    public int selectRightNum(Words w) {
+
+        List<Words_Log> logs = LitePal.where("word = ?", w.getWord()).find(Words_Log.class);
+        if(logs.isEmpty()){
+            Words_Log wordsLog = new Words_Log();
+            wordsLog.setWordId(w.getWordId());
+            wordsLog.setWord(w.getWord());
+            wordsLog.setTopicId(w.getTopicId());
+            wordsLog.setLeftNum(0);
+            wordsLog.setRightNum(0);
+            wordsLog.save();
+            LogUtils.d("word 不存在。");
+            return -1;
+        }
+        else if(logs.size() != 1){
+            LogUtils.d("word 不唯一。");
+        }
+        else {
+            LogUtils.d("word Num = "+logs.get(0).getRightNum());
+        }
+        return logs.get(0).getRightNum();
     }
 
     @Override
@@ -72,10 +97,23 @@ public class WordsLogImpl implements WordsLogDao {
     }
 
     @Override
-    public boolean updateNum(String word, int num) {
+    public boolean updateLeftNum(String word, int num) {
 
         Words_Log wordsLog = new Words_Log();
-        wordsLog.setNum(num);
+        wordsLog.setLeftNum(num);
+        try {
+            wordsLog.updateAll("word = ?", word);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateRightNum(String word, int num) {
+
+        Words_Log wordsLog = new Words_Log();
+        wordsLog.setRightNum(num);
         try {
             wordsLog.updateAll("word = ?", word);
             return true;
