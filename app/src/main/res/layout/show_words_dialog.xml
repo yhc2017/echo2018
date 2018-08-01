@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    android:layout_margin="20dp"
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/dialog_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
-        android:background="@color/dialog_colorAnRed"
+        android:background="@drawable/dialog_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

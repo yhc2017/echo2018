@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.utils.App;
+import com.echo.quick.utils.MyPlanDialog;
 import com.echo.quick.utils.NetUtils;
 import com.echo.quick.utils.SPUtils;
 
@@ -22,7 +23,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView tv_user_name;
 
-    private ImageView roundImageView_home,roundImageView_user_setting;
+    private ImageView roundImageView_home,roundImageView_user_setting,mim_setting,mim_date;
 
     private LinearLayout Lordinario;
     private LinearLayout Lsprint;
@@ -62,6 +63,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Lordinario = (LinearLayout)findViewById(R.id.L_ordinario);
         Lsprint = (LinearLayout)findViewById(R.id.L_sprint);
 
+        mim_setting = (ImageView)findViewById(R.id.im_setting);
+        mim_date = (ImageView)findViewById(R.id.im_date);
+
+        mim_setting.setOnClickListener(this);
+        mim_date.setOnClickListener(this);
+
         tv_user_name.setOnClickListener(this);
 
         roundImageView_home.setOnClickListener(this);
@@ -100,6 +107,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.tv_user_name:
                 toUser(this);
+                break;
+
+            case R.id.im_setting:
+                System.out.println("设置计划点击成功");
+                MyPlanDialog myPlanDialog = new MyPlanDialog(HomeActivity.this);
+                myPlanDialog.show();
+                break;
+
+            case R.id.im_date:
+                System.out.println("查看打卡点击成功");
                 break;
 
             default:

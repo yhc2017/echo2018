@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.echo.quick.activities.R;
@@ -29,6 +30,7 @@ import com.echo.quick.presenters.WordsShowPresenters;
 public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsShowView{
     Context context;
     Words words;
+    LinearLayout L_1,L_2;
 
     private TextView tv_item,tv_symbol,tv_explain,tv_eg1,tv_eg1_chinese,tv_eg2,tv_eg2_chinese,tv_add_new,tv_del_new;
 
@@ -75,6 +77,8 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
         tv_eg2_chinese = (TextView) findViewById(R.id.tv_eg2_chinese);
         tv_add_new = (TextView)findViewById(R.id.tv_add_new);
         tv_del_new = (TextView)findViewById(R.id.tv_del_new);
+        L_1 = (LinearLayout) findViewById(R.id.L_1);
+        L_2 = (LinearLayout) findViewById(R.id.L_2);
     }
     /**
      * 初始化界面控件的显示数据
@@ -161,11 +165,11 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
     public void initVisibility(Boolean res) {
 
         if(res){
-            tv_add_new.setVisibility(TextView.INVISIBLE);
-            tv_del_new.setVisibility(TextView.VISIBLE);
+            L_1.setVisibility(LinearLayout.GONE);
+            L_2.setVisibility(LinearLayout.VISIBLE);
         }else {
-            tv_del_new.setVisibility(TextView.INVISIBLE);
-            tv_add_new.setVisibility(TextView.VISIBLE);
+            L_1.setVisibility(LinearLayout.VISIBLE);
+            L_2.setVisibility(LinearLayout.GONE);
         }
 
     }

@@ -3,14 +3,14 @@
 
     <color name="colorPrimary">#89cff0</color>
     <color name="colorPrimaryDark">#89cff0</color>
-    <color name="colorAccent">#5bc3f4</color>
+    <color name="colorAccent">#55b6e4</color>
 
     <!-- common -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="half_transparent">#8f000000</color>
-    <color name="bule">#f20197ce</color>
+    <color name="bule">#f2679ee7</color>
     <color name="yellow">#f1c823</color>
 
     <!-- background -->
@@ -30,13 +30,13 @@
     <color name="divider_1">#e2e2e2</color>
     <color name="divider_2">#e6e6e6</color>
 
-    <color name="dialog_colorAnRed">#fdfcfc</color>
+    <color name="dialog_colorAnRed">#fcfcf5</color>
     <color name="colorAnRed">#ba0900</color>
     <color name="colorDone">#0F9D58</color>
     <color name="colorSchedule">#ef2c00</color>
     <color name="green_normal">#37C000</color>
     <color name="green_pressed">#30A070</color>
-    <color name="blue">#4083ff</color>
+    <color name="blue">#4a74c2</color>
     <color name="green">#04bc0a</color>
 
 

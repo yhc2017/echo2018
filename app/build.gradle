@@ -18,6 +18,13 @@ android {
     }
 }
 
+allprojects {
+    repositories {
+        //github上的开源库添加至了allprojects而不是buildscript
+        maven { url "https://jitpack.io" }
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
@@ -47,5 +54,8 @@ dependencies {
     implementation 'pub.devrel:easypermissions:1.2.0'
 
     compile files('libs/activation.jar')
+
+    //NiceSpinner组件
+    implementation 'com.github.arcadefire:nice-spinner:1.3.4'
 
 }
