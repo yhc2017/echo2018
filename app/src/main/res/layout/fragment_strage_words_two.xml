@@ -201,35 +201,35 @@
             android:textColor="@color/white"
             android:background="@drawable/num_bg1"/>
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/card_bg2">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_top"/>
+    <!--<RelativeLayout-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:background="@drawable/card_bg2">-->
+        <!--<ImageView-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:src="@drawable/ic_top"/>-->
 
-        <TextView
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            style="@style/MyFont.Home.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/words_for5" />
-        <TextView
-            android:textSize="12dp"
-            android:layout_centerVertical="true"
-            android:padding="5dp"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3563"
-            android:textColor="@color/white"
-            android:background="@drawable/num_bg1"/>
-    </RelativeLayout>
+        <!--<TextView-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--style="@style/MyFont.Home.Title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/words_for5" />-->
+        <!--<TextView-->
+            <!--android:textSize="12dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:padding="5dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="3563"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:background="@drawable/num_bg1"/>-->
+    <!--</RelativeLayout>-->
 </LinearLayout>
