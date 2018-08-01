@@ -16,13 +16,21 @@ import okhttp3.Callback;
  * 修改备注：
  */
 
-public class ILoginImpl implements ILoginDao {
+public class LoginImpl implements ILoginDao {
 
     //调用_NetHelper中的post与get方法，实现CRUD操作
     private _NetHelper.PostHelper postHelper = new _NetHelper.PostHelper();
 
     @Override
     public User doLoginPost(String tel, String pwd, Callback callback) {
+
+//          json格式
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("pwd", pwd);
+//        jsonObject.put("tel", tel);
+//        String json = jsonObject.toJSONString();
+//
+//        LogUtils.d(json);
 
         String requestContent = "tel="+tel+"&pwd="+pwd;
 

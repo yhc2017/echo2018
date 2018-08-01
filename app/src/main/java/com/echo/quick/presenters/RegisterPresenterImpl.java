@@ -2,7 +2,7 @@ package com.echo.quick.presenters;
 
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.RegisterContract;
-import com.echo.quick.model.dao.impl.IRegisterImpl;
+import com.echo.quick.model.dao.impl.RegisterImpl;
 import com.echo.quick.model.dao.interfaces.IRegisterDao;
 import com.echo.quick.pojo.User;
 import com.echo.quick.utils.App;
@@ -43,7 +43,7 @@ public class RegisterPresenterImpl extends BasePresenter implements RegisterCont
 
     @Override
     public void doRegister(String tel, String pwd, String nickname, String sex) {
-        IRegisterDao registerDao = new IRegisterImpl();
+        IRegisterDao registerDao = new RegisterImpl();
         registerDao.doRegisterPost(tel, pwd, nickname, sex, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

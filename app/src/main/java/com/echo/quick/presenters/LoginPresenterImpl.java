@@ -1,7 +1,7 @@
 package com.echo.quick.presenters;
 
 import com.echo.quick.contracts.LoginContract;
-import com.echo.quick.model.dao.impl.ILoginImpl;
+import com.echo.quick.model.dao.impl.LoginImpl;
 import com.echo.quick.model.dao.interfaces.ILoginDao;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
@@ -46,7 +46,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
     public void doLogin(String name, String passwd) {
 
 
-        ILoginDao loginDao = new ILoginImpl();
+        ILoginDao loginDao = new LoginImpl();
         loginDao.doLoginPost(name, passwd,  new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

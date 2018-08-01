@@ -1,5 +1,7 @@
 package com.echo.quick.contracts;
 
+import android.content.Context;
+
 import com.echo.quick.pojo.Words;
 
 /**
@@ -38,7 +40,7 @@ public interface WordsContract {
          **/
         void rightSwipe(Words w);
 
-        void endOnce();
+        void endOnce(Context context);
 
     }
 

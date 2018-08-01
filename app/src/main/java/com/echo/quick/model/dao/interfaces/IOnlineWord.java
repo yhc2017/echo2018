@@ -14,7 +14,7 @@ import okhttp3.Callback;
  * 修改备注：
  */
 
-public interface OnlineWord {
+public interface IOnlineWord {
 
     void postToWord(HashMap<String, String> map, String adress, Callback callback);
 

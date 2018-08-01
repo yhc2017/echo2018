@@ -1,6 +1,6 @@
 package com.echo.quick.model.dao.impl;
 
-import com.echo.quick.model.dao.interfaces.WordsNewDao;
+import com.echo.quick.model.dao.interfaces.IWordsNewDao;
 import com.echo.quick.pojo.Words_New;
 
 import org.litepal.LitePal;
@@ -17,7 +17,7 @@ import java.util.List;
  * 修改备注：
  */
 
-public class WordsNewImpl implements WordsNewDao {
+public class WordsNewImpl implements IWordsNewDao {
 
     private Words_New wordsNew;
 

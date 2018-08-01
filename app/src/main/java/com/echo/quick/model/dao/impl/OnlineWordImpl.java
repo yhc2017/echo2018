@@ -1,6 +1,6 @@
 package com.echo.quick.model.dao.impl;
 
-import com.echo.quick.model.dao.interfaces.OnlineWord;
+import com.echo.quick.model.dao.interfaces.IOnlineWord;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils._NetHelper;
 
@@ -19,7 +19,7 @@ import okhttp3.Callback;
  * 修改备注：
  */
 
-public class OnlineWordImpl implements OnlineWord {
+public class OnlineWordImpl implements IOnlineWord {
 
     //调用_NetHelper中的post与get方法，实现CRUD操作
     private _NetHelper.PostHelper postHelper = new _NetHelper.PostHelper();

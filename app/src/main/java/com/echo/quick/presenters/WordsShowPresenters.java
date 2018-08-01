@@ -2,7 +2,7 @@ package com.echo.quick.presenters;
 
 import com.echo.quick.contracts.WordsShowContract;
 import com.echo.quick.model.dao.impl.WordsNewImpl;
-import com.echo.quick.model.dao.interfaces.WordsNewDao;
+import com.echo.quick.model.dao.interfaces.IWordsNewDao;
 import com.echo.quick.pojo.Words_New;
 
 /**
@@ -25,7 +25,7 @@ public class WordsShowPresenters implements WordsShowContract.IWordsShowPresente
 
     @Override
     public void isExist(String word) {
-        WordsNewDao newDao = new WordsNewImpl();
+        IWordsNewDao newDao = new WordsNewImpl();
         if(newDao.isExist(word)){
             view.initVisibility(true);
         }else {
@@ -35,7 +35,7 @@ public class WordsShowPresenters implements WordsShowContract.IWordsShowPresente
 
     @Override
     public boolean addNewWord(Words_New wordsNew) {
-        WordsNewDao newDao = new WordsNewImpl();
+        IWordsNewDao newDao = new WordsNewImpl();
 
         if(newDao.update(wordsNew))
             return true;
@@ -45,7 +45,7 @@ public class WordsShowPresenters implements WordsShowContract.IWordsShowPresente
 
     @Override
     public boolean delNewWord(String wordId) {
-        WordsNewDao newDao = new WordsNewImpl();
+        IWordsNewDao newDao = new WordsNewImpl();
         newDao.delete(wordId);
         return false;
     }

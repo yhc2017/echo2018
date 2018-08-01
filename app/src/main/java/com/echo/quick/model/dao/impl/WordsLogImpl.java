@@ -1,6 +1,6 @@
 package com.echo.quick.model.dao.impl;
 
-import com.echo.quick.model.dao.interfaces.WordsLogDao;
+import com.echo.quick.model.dao.interfaces.IWordsLogDao;
 import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Log;
 import com.echo.quick.utils.LogUtils;
@@ -19,7 +19,7 @@ import java.util.List;
  * 修改备注：
  */
 
-public class WordsLogImpl implements WordsLogDao {
+public class WordsLogImpl implements IWordsLogDao {
 
     private Words_Log words;
 
