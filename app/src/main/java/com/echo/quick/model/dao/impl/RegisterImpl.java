@@ -15,13 +15,21 @@ import okhttp3.Callback;
  * 修改备注：
  */
 
-public class IRegisterImpl implements IRegisterDao {
+public class RegisterImpl implements IRegisterDao {
 
     //调用_NetHelper中的post与get方法，实现CRUD操作
     private _NetHelper.PostHelper postHelper = new _NetHelper.PostHelper();
 
     @Override
     public void doRegisterPost(String tel, String pwd, String nickname, String sex, Callback callback) {
+
+//         注册数据-json       ]
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("tel", tel);
+//        jsonObject.put("pwd", pwd);
+//        jsonObject.put("nickname", nickname);
+//        jsonObject.put("sex", sex);
+//        String json = jsonObject.toJSONString();
 
         String requestContent = "tel="+ tel +
                 "&pwd="+ pwd +

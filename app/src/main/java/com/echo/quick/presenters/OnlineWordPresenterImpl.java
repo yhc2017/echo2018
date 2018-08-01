@@ -6,9 +6,9 @@ import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
 import com.echo.quick.model.dao.impl.WordsLogImpl;
 import com.echo.quick.model.dao.impl.WordsNewImpl;
-import com.echo.quick.model.dao.interfaces.OnlineWord;
-import com.echo.quick.model.dao.interfaces.WordsLogDao;
-import com.echo.quick.model.dao.interfaces.WordsNewDao;
+import com.echo.quick.model.dao.interfaces.IOnlineWord;
+import com.echo.quick.model.dao.interfaces.IWordsLogDao;
+import com.echo.quick.model.dao.interfaces.IWordsNewDao;
 import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Log;
 import com.echo.quick.pojo.Words_New;
@@ -44,12 +44,12 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
         final List<Words> data = new ArrayList<>();
 
-        OnlineWord onlineWord = new OnlineWordImpl();
-        onlineWord.postToWord(map, "words/selectWords", new Callback() {
+        IOnlineWord IOnlineWord = new OnlineWordImpl();
+        IOnlineWord.postToWord(map, "words/selectWords", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtils.d("无法获取OnlineWord");
-                WordsNewDao newDao = new WordsNewImpl();
+                IWordsNewDao newDao = new WordsNewImpl();
                 List<Words_New> news = newDao.select();
                 for(Words_New word: news){
                     Words wd = new Words();
@@ -70,7 +70,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
                 try {
                     JSONArray jsonArray = JSONObject.parseArray(response.body().string());
-//                    WordsNewDao wordsNew = new WordsNewImpl();
+//                    IWordsNewDao wordsNew = new WordsNewImpl();
                     for (int i = 0; i < jsonArray.size(); i++){
                         JSONObject object = jsonArray.getJSONObject(i);
                         Words words = new Words(
@@ -89,7 +89,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                     }
                 }catch (Exception e){
                     e.printStackTrace();
-                    WordsNewDao newDao = new WordsNewImpl();
+                    IWordsNewDao newDao = new WordsNewImpl();
                     List<Words_New> news = newDao.select();
                     for(Words_New word: news){
                         Words wd = new Words();
@@ -120,10 +120,10 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
         final List<Words> data = new ArrayList<>();
 
-        final OnlineWord onlineWord = new OnlineWordImpl();
+        final IOnlineWord IOnlineWord = new OnlineWordImpl();
 
 
-        onlineWord.postToWord(map, "quick/paper/getReadingInfo", new Callback() {
+        IOnlineWord.postToWord(map, "quick/paper/getReadingInfo", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 ToastUtils.showShort(App.getContext(), "申请出错");
@@ -171,9 +171,9 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
     public List<String> getOnlineSprintType() {
         final List<String> data = new ArrayList<>();
 
-        final OnlineWord onlineWord = new OnlineWordImpl();
+        final IOnlineWord IOnlineWord = new OnlineWordImpl();
 
-        onlineWord.getToWord("quick/paper/getPaperList", new Callback() {
+        IOnlineWord.getToWord("quick/paper/getPaperList", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 ToastUtils.showShort(App.getContext(), "getOnlineSprintType()---申请出错");
@@ -197,21 +197,21 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
     @Override
     public void postOnlineWordsLog() {
-        WordsLogDao logDao = new WordsLogImpl();
+        IWordsLogDao logDao = new WordsLogImpl();
         List<Words_Log> logs = logDao.select();
         String json = "[";
         for (Words_Log log:logs){
-            String body = "{" +
-                    "'wordId':"+log.getWordId()+
-                    "',word':"+log.getWord()+
-                    "',topicId':"+log.getTopicId()+
-                    "',num':"+log.getNum()+
-                    "},";
+            String body = "{\"wordId\":"+log.getWordId()
+                    +",\"word\":\""+log.getWord()
+                    +"\",\"topicId\":\""+log.getTopicId()
+                    +"\",\"leftNum\":\""+log.getLeftNum()
+                    +"\",\"rightNum\":\""+log.getRightNum()
+                    +"\"},";
             json += body;
         }
+        //切割掉最后一个逗号
+        json = json.substring(0, json.length()-1);
         json += "]";
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("logs", json);
-        LogUtils.d(jsonObject.toString());
+        LogUtils.d(json);
     }
 }

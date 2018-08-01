@@ -12,7 +12,7 @@ import com.echo.quick.model.dao.interfaces.IMainDao;
  * 修改备注：
  */
 
-public class IMainImpl implements IMainDao {
+public class MainImpl implements IMainDao {
 
 
 

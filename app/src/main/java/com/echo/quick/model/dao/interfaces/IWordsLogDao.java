@@ -15,7 +15,7 @@ import java.util.List;
  * 修改备注：
  */
 
-public interface WordsLogDao {
+public interface IWordsLogDao {
 
     /**
      * 方法名称：查询生词
@@ -39,7 +39,15 @@ public interface WordsLogDao {
      * 参数1： 参数说明
      * @return [返回类型说明]
      **/
-    int selectNum(Words w);
+    int selectLeftNum(Words w);
+
+    /**
+     * 方法名称：selectNum
+     * 方法描述: 根据单词返回num
+     * 参数1： 参数说明
+     * @return [返回类型说明]
+     **/
+    int selectRightNum(Words w);
 
     /**
      * 方法名称：更新或添加生词本
@@ -50,12 +58,20 @@ public interface WordsLogDao {
     boolean update(Words_Log words);
 
     /**
-     * 方法名称：通过id更新num
+     * 方法名称：通过id更新左滑num
      * 方法描述: 传入单词对应的单词更新对应的num
      * 参数1： String word， int num
      * @return Boolean
      **/
-    boolean updateNum(String word, int num);
+    boolean updateLeftNum(String word, int num);
+
+    /**
+     * 方法名称：通过id更新右滑num
+     * 方法描述: 传入单词对应的单词更新对应的num
+     * 参数1： String word， int num
+     * @return Boolean
+     **/
+    boolean updateRightNum(String word, int num);
 
     /**
      * 方法名称：删除生词

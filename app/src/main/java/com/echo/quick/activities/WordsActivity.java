@@ -8,17 +8,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
 import com.echo.quick.contracts.WordsContract;
-import com.echo.quick.model.dao.impl.WordsLogImpl;
-import com.echo.quick.model.dao.interfaces.WordsLogDao;
 import com.echo.quick.pojo.Words;
-import com.echo.quick.pojo.Words_Log;
 import com.echo.quick.presenters.WordsPresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
@@ -37,7 +33,7 @@ import java.util.List;
  * @version : 因为修改了适配器，构造方法多一个参数是自布局的类型
  * @since ：[quick|背单词模块]
  */
-public class WordsActivity extends AppCompatActivity {
+public class WordsActivity extends AppCompatActivity implements WordsContract.IWordsView{
     private RecyclerView rvList;
     private SampleWordsAdapter mSampleWordsAdapter;
     private SampleWordsAdapter.OnItemClickListener listener;
@@ -50,7 +46,7 @@ public class WordsActivity extends AppCompatActivity {
     int start = 0;
     int stop = 5;
     boolean isEnd = false;
-    private String CTE = "no";
+    String CTE = "no";
     WordsContract.IWordsPresenter wordsPresenter;
 
     @Override
@@ -67,16 +63,7 @@ public class WordsActivity extends AppCompatActivity {
         dataList = app.getList();
 
         initView();
-        wordsPresenter = new WordsPresenterImpl();
-
-
-
-        WordsLogDao dao = new WordsLogImpl();
-        List<Words_Log> logs = dao.select();
-        for(Words_Log log:logs){
-            Log.d("Word     ",log.getWord()+"   num = "+ log.getNum());
-        }
-
+        wordsPresenter = new WordsPresenterImpl(this);
 
     }
 
@@ -137,8 +124,14 @@ public class WordsActivity extends AppCompatActivity {
                     mData.remove(pos);
 
                     if(mData.size() == 0){
-                        startActivity(new Intent(WordsActivity.this, ReadActivity.class));
-                        finish();
+                        //当需要跳转翻译时传yes过来。
+                        if(CTE == null){
+                            //否则将做别的操作
+                            wordsPresenter.endOnce(WordsActivity.this);
+                        }else{
+                            startActivity(new Intent(WordsActivity.this, ReadActivity.class));
+                            finish();
+                        }
                     }
 
 //                    start = stop;
@@ -313,4 +306,13 @@ public class WordsActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void RefreshPage(Boolean result) {
+        if(result){
+            startActivity(new Intent(WordsActivity.this, UserMsgActivity.class));
+            finish();
+        }else {
+
+        }
+    }
 }

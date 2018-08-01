@@ -14,7 +14,7 @@ import java.util.List;
  * 修改备注：
  */
 
-public interface WordsNewDao {
+public interface IWordsNewDao {
 
     /**
      * 方法名称：查询生词

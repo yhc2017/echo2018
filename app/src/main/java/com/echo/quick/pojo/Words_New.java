@@ -23,8 +23,8 @@ public class Words_New extends LitePalSupport {
     private String eg1Chinese;
     private String eg2;
     private String eg2Chinese;
-    private String prepare1;
-    private int prepare2;
+//    private String prepare1;
+//    private int prepare2;
 
     public Words_New(){
 
@@ -114,19 +114,19 @@ public class Words_New extends LitePalSupport {
         this.eg2Chinese = eg2Chinese;
     }
 
-    public String getPrepare1() {
-        return prepare1;
-    }
-
-    public void setPrepare1(String prepare1) {
-        this.prepare1 = prepare1;
-    }
-
-    public int getPrepare2() {
-        return prepare2;
-    }
-
-    public void setPrepare2(int prepare2) {
-        this.prepare2 = prepare2;
-    }
+//    public String getPrepare1() {
+//        return prepare1;
+//    }
+//
+//    public void setPrepare1(String prepare1) {
+//        this.prepare1 = prepare1;
+//    }
+//
+//    public int getPrepare2() {
+//        return prepare2;
+//    }
+//
+//    public void setPrepare2(int prepare2) {
+//        this.prepare2 = prepare2;
+//    }
 }
