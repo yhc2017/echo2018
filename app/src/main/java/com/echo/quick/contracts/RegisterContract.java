@@ -1,7 +1,5 @@
 package com.echo.quick.contracts;
 
-import com.echo.quick.pojo.User;
-
 /**
  * 项目名称：echo2018
  * 类描述：把P-V以合约的方式绑定，方便操作和管理
@@ -20,7 +18,7 @@ public interface RegisterContract {
     }
     interface IRegister{
         void clear();
-        User doRegister(String tel, String pwd, String nickname, String sex);
+        void doRegister(String tel, String pwd, String nickname, String sex);
     }
 
 }

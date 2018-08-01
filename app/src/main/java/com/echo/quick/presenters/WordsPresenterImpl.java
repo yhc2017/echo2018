@@ -1,5 +1,7 @@
 package com.echo.quick.presenters;
 
+import android.util.Log;
+
 import com.echo.quick.contracts.WordsContract;
 import com.echo.quick.model.dao.impl.WordsLogImpl;
 import com.echo.quick.model.dao.interfaces.WordsLogDao;
@@ -24,7 +26,8 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
         int num;
         wordsLogDao = new WordsLogImpl();
         num = wordsLogDao.selectNum(word);
-        wordsLogDao.updateNum(word.getWordId(), num+1);
+        Log.d("left num    =    ", "   "+num);
+        wordsLogDao.updateNum(word.getWord(), num+1);
     }
 
     @Override
@@ -32,10 +35,11 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
         int num;
         wordsLogDao = new WordsLogImpl();
         num = wordsLogDao.selectNum(word);
+        Log.d("right num    =    ", "   "+num);
         if(num < 3){
-            wordsLogDao.updateNum(word.getWordId(), 3);
+            wordsLogDao.updateNum(word.getWord(), -2);
         }else {
-            wordsLogDao.updateNum(word.getWordId(), num+1);
+            wordsLogDao.updateNum(word.getWord(), num+1);
         }
     }
 

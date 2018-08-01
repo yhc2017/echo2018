@@ -1,15 +1,16 @@
 package com.echo.quick.presenters;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
+import com.echo.quick.model.dao.impl.WordsLogImpl;
 import com.echo.quick.model.dao.impl.WordsNewImpl;
 import com.echo.quick.model.dao.interfaces.OnlineWord;
+import com.echo.quick.model.dao.interfaces.WordsLogDao;
 import com.echo.quick.model.dao.interfaces.WordsNewDao;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.pojo.Words_Log;
 import com.echo.quick.pojo.Words_New;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
@@ -51,15 +52,16 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                 WordsNewDao newDao = new WordsNewImpl();
                 List<Words_New> news = newDao.select();
                 for(Words_New word: news){
-                    data.add(new Words(word.getWordId(),
-                            word.getPron(),
-                            word.getWord(),
-                            word.getSymbol(),
-                            word.getExplain(),
-                            word.getEg1(),
-                            word.getEg1Chinese(),
-                            word.getEg2(),
-                            word.getEg2Chinese()));
+                    Words wd = new Words();
+                    wd.setWordId(word.getWordId());
+                    wd.setWord(word.getWord());
+                    wd.setPron(word.getPron());
+                    wd.setSymbol(word.getSymbol());
+                    wd.setExplain(word.getExplain());
+                    wd.setEg1(word.getEg1());
+                    wd.setEg1_chinese(word.getEg1Chinese());
+                    wd.setWordId(word.getWordId());
+                    data.add(wd);
                 }
             }
 
@@ -71,31 +73,40 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 //                    WordsNewDao wordsNew = new WordsNewImpl();
                     for (int i = 0; i < jsonArray.size(); i++){
                         JSONObject object = jsonArray.getJSONObject(i);
-                        Words words = new Words(object.getString("word"), object.getString("phon"), object.getString("para"));
-                        LogUtils.d(object.getString("word")+"       "+object.getString("para"));
+                        Words words = new Words(
+                                object.getString("id"),
+                                object.getString("word"),
+                                object.getString(""),
+                                object.getString("para"),
+                                object.getString("phon"),
+                                object.getString("build"),
+                                object.getString("example"),
+                                object.getString(""),
+                                object.getString(""),
+                                object.getString("topicId"));
+                        LogUtils.d(object.getString("id")+"       "+object.getString("para"));
                         data.add(words);
                     }
-//                    for(Words_New words : wordsNew.select()){
-//                        LogUtils.d(words.getWord());
-//                    }
                 }catch (Exception e){
                     e.printStackTrace();
                     WordsNewDao newDao = new WordsNewImpl();
                     List<Words_New> news = newDao.select();
                     for(Words_New word: news){
-                        data.add(new Words(word.getWordId(),
-                                word.getPron(),
-                                word.getWord(),
-                                word.getSymbol(),
-                                word.getExplain(),
-                                word.getEg1(),
-                                word.getEg1Chinese(),
-                                word.getEg2(),
-                                word.getEg2Chinese()));
+                        Words wd = new Words();
+                        wd.setWordId(word.getWordId());
+                        wd.setWord(word.getWord());
+                        wd.setPron(word.getPron());
+                        wd.setSymbol(word.getSymbol());
+                        wd.setExplain(word.getExplain());
+                        wd.setEg1(word.getEg1());
+                        wd.setEg1_chinese(word.getEg1Chinese());
+                        wd.setWordId(word.getWordId());
+                        data.add(wd);
                     }
                     LogUtils.d("错误信息："+response.toString());
 
                 }
+                app.setList(data);
 
             }
         });
@@ -132,8 +143,18 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
                 for (int i = 0; i < jsonArray1.size(); i++){
                     JSONObject object = jsonArray1.getJSONObject(i);
-                    Words words = new Words(object.getString("word"), object.getString("phon"), object.getString("para"));
-                    LogUtils.d(object.getString("word")+"       "+object.getString("para"));
+                    Words words = new Words(
+                            object.getString("id"),
+                            object.getString("phon"),
+                            object.getString("word"),
+                            object.getString(""),
+                            object.getString("para"),
+                            object.getString("build"),
+                            object.getString("example"),
+                            object.getString(""),
+                            object.getString(""),
+                            object.getString("topicId"));
+                    LogUtils.d(object.getString("id")+"       "+object.getString("para"));
                     data.add(words);
                 }
 
@@ -172,5 +193,25 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
         });
 
         return data;
+    }
+
+    @Override
+    public void postOnlineWordsLog() {
+        WordsLogDao logDao = new WordsLogImpl();
+        List<Words_Log> logs = logDao.select();
+        String json = "[";
+        for (Words_Log log:logs){
+            String body = "{" +
+                    "'wordId':"+log.getWordId()+
+                    "',word':"+log.getWord()+
+                    "',topicId':"+log.getTopicId()+
+                    "',num':"+log.getNum()+
+                    "},";
+            json += body;
+        }
+        json += "]";
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("logs", json);
+        LogUtils.d(jsonObject.toString());
     }
 }

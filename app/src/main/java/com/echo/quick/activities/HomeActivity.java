@@ -41,13 +41,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         //初始化
         initView();
 
+    }
+
+    protected void onResume() {
+        super.onResume();
         try {
-            updateUserName(true);
+            updateUserName();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void initView(){
@@ -116,12 +118,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void updateUserName(Boolean isExist) throws JSONException {
-        if(isExist){
+    public void updateUserName() throws JSONException {
+        if(true){
             Object o2 = "请先登录";
             Object o = SPUtils.get(App.getContext(), "UserInfo", o2);
-            JSONObject object = new JSONObject(o.toString());
-            tv_user_name.setText(object.getString("nickname"));
+            if(o != o2){
+                JSONObject object = new JSONObject(o.toString());
+                tv_user_name.setText(object.getString("nickname"));
+            }else {
+                tv_user_name.setText("请先登录");
+            }
+
         }
     }
 }

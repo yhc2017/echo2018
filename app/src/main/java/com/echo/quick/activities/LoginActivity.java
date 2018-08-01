@@ -13,19 +13,13 @@ import android.widget.Toast;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.presenters.LoginPresenterImpl;
 import com.echo.quick.utils.LogUtils;
-import com.echo.quick.utils.SPUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Pattern;
 
-import java.io.IOException;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * 文件名：LoginActivity
@@ -134,7 +128,9 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
     @Override
     public void onLoginResult(Boolean result, int code) {
-
+        if(result){
+            finish();
+        }
     }
 
     //选择触发的事件
