@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
@@ -190,8 +191,8 @@ public class WordsActivity extends AppCompatActivity {
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
                     }
-
-                    mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
+                    //解决闪屏问题
+                    mSampleWordsAdapter.notifyDataSetChanged();
                     /**
                      * 撤销上一个单词的操作
                      * @param  View 视图,  CharSequence 字符串, int 出现时间
@@ -220,6 +221,7 @@ public class WordsActivity extends AppCompatActivity {
 
             @Override
             public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                LogUtils.d("WordActivity--滑动操作actionState："+actionState);
                 // 当viewHolder的滑动或拖拽状态改变时回调
                 if (viewHolder != null) {
                     // 默认是操作ViewHolder的itemView，这里调用ItemTouchUIUtil的clearView方法传入指定的view
