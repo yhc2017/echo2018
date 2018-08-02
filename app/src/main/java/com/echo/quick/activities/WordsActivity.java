@@ -78,7 +78,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvList.setLayoutManager(linearLayoutManager);
         mSampleWordsAdapter = new SampleWordsAdapter(this, mData,1);
-        //获取数据重新回到列表  、
+        //获取数据重新回到列表
         mSampleWordsAdapter = new SampleWordsAdapter(this, getData(),1);
         rvList.setAdapter(mSampleWordsAdapter);
         //列表子项的点击监听

@@ -31,7 +31,8 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private OnItemClickListener mOnItemClickListener = null;
     View view;
     int mviewType;
-    final int ONE = 1;
+    final int WORDS_ONE = 1;
+    final int WORDS_TWO = 3;
     final int TWO = 2;
 
     /**
@@ -43,7 +44,7 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public SampleWordsAdapter(Context context, List data,int viewType) {
         mLayoutInflater = LayoutInflater.from(context);
         mviewType = viewType;
-        if(ONE==viewType) {
+        if(WORDS_ONE==viewType || WORDS_TWO==viewType) {
             mData = data;
             LogUtils.d("这是打印单词的");
         }else if(TWO==viewType){
@@ -56,7 +57,7 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LogUtils.d("打印子类类型："+viewType);
-        if (ONE==viewType) {
+        if (WORDS_ONE==viewType) {
             LogUtils.d("这是绑定单词的list！");
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_words, parent, false);
             ItemViewHolder vh = new ItemViewHolder(view);
@@ -70,19 +71,30 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             //将创建的View注册点击事件
             view.setOnClickListener(this);
             return vh;
+        }else if (WORDS_TWO==viewType) {
+            LogUtils.d("这是绑定生词本的item！！！！！！！！！！！！！！");
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_strage_words_two, parent, false);
+            ThreeItemViewHolder vh = new ThreeItemViewHolder(view);
+            //将创建的View注册点击事件
+            view.setOnClickListener(this);
+            return vh;
         }
-        return null;
+            return null;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(ONE==mviewType){
-            LogUtils.d("返回类型："+ONE);
-            return ONE;
-        } else {
+        if(WORDS_ONE==mviewType){
+            LogUtils.d("返回类型："+WORDS_ONE);
+            return WORDS_ONE;
+        } else if (TWO==mviewType){
             LogUtils.d("返回类型："+TWO);
             return TWO;
+        }else if (WORDS_TWO==mviewType){
+            LogUtils.d("返回类型："+WORDS_TWO);
+            return WORDS_TWO;
         }
+        return 0;
     }
 
     //最后暴露给外面的调用者，定义一个设置Listener的方法（）：
@@ -97,8 +109,11 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             LogUtils.d("绑定单词的布局");
             ((ItemViewHolder)holder).setData(mData.get(position));
         }else if (holder instanceof TwoItemViewHolder){
-            LogUtils.d("绑定非单词的   的 的车从DVD v反对v的布局");
+            LogUtils.d("绑定其他的界面");
             ((TwoItemViewHolder)holder).setData(mtitle.get(position));
+        }else if (holder instanceof ThreeItemViewHolder){
+            LogUtils.d("绑定生词本界面");
+            ((ThreeItemViewHolder)holder).setData(mData.get(position));
         }
         //将position保存在itemView的Tag中，以便点击时进行获取
         holder.itemView.setTag(position);
@@ -106,7 +121,7 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        if (ONE==mviewType) {
+        if (WORDS_ONE==mviewType || WORDS_TWO==mviewType) {
             return mData.size();
         }else{
             LogUtils.d("打印数量2"+mtitle.size());
@@ -176,6 +191,36 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public void setData(String title){
             LogUtils.d(title);
             tv_reading_title.setText(title);
+        }
+
+    }
+
+    public static class ThreeItemViewHolder extends RecyclerView.ViewHolder {
+        public TextView tv_word;
+        public TextView tv_symbol;
+        public TextView tv_explain;
+        public ImageView im_delete;
+
+
+        public ThreeItemViewHolder(View itemView) {
+            super(itemView);
+            tv_word = (TextView) itemView.findViewById(R.id.tv_word);
+            tv_symbol = (TextView) itemView.findViewById(R.id.tv_symbol);
+            tv_explain = (TextView) itemView.findViewById(R.id.tv_explain);
+            im_delete = (ImageView) itemView.findViewById(R.id.im_delete);
+        }
+        //绑定数据
+        public void setData(Words data){
+            LogUtils.d(data.getWord());
+            if (null == data) {
+                LogUtils.d("生词列表：数据为空！！！");
+            }else {
+                //绑定数据
+                LogUtils.d("打印生词本words："+data.getWord());
+                tv_word.setText(data.getWord());
+                tv_symbol.setText(data.getSymbol());
+                tv_explain.setText(data.getExplain());
+            }
         }
 
     }
