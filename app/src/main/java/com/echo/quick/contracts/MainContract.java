@@ -12,7 +12,11 @@ package com.echo.quick.contracts;
 
 public interface MainContract {
 
-    interface IMainView{};
-    interface IMainPresenter{};
+    interface IMainView{
+
+        void OverShowPL(Boolean isShow);
+
+    }
+    interface IMainPresenter{}
 
 }

@@ -4,21 +4,19 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
 import com.echo.quick.contracts.WordsContract;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.WordsPresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
-import com.echo.quick.utils.ToastUtils;
 import com.echo.quick.utils.WordsShowDialog;
 
 import java.util.ArrayList;
@@ -39,13 +37,10 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
     private SampleWordsAdapter.OnItemClickListener listener;
     private ItemTouchHelper itemTouchHelper;
     private ItemTouchHelper.SimpleCallback simpleCallback;
+//    private List<Words> dataList = new ArrayList<>();
     private List<Words> dataList = new ArrayList<>();
-    private List<Words> mData = new ArrayList<>();
-    private List<Words> recurrent = new ArrayList<>();
+    private List<Words_Status> mData = new ArrayList<>();
     private App app;
-    int start = 0;
-    int stop = 5;
-    boolean isEnd = false;
     String CTE = "no";
     WordsContract.IWordsPresenter wordsPresenter;
 
@@ -60,7 +55,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
             CTE = intent.getStringExtra("CTE");
         }
 
-        dataList = app.getList();
+        mData = app.getStatusList();
 
         initView();
         wordsPresenter = new WordsPresenterImpl(this);
@@ -107,18 +102,16 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 // 处理滑动事件回调
                 final int pos = viewHolder.getAdapterPosition();//页面中子项的位置
-                final Words item = mData.get(pos);//数据子项的位置
-
-                Log.d("quick", "dataList.size:"+dataList.size()+"  start:"+start+"   stop:"+stop+"    recurrent:"+recurrent.size());
-                //当页面还剩一条单词时，进行特殊处理
+                final Words_Status item = mData.get(pos);//数据子项的位置
+                    //当页面还剩一条单词时，进行特殊处理
                 if(mSampleWordsAdapter.getItemCount() == 1){
                     //当左滑单词需要复现的数组中存在单词时，将其加入到当前列表下
-                    Words words = mData.get(pos);
+                    Words_Status words = mData.get(pos);
                     if (direction == ItemTouchHelper.RIGHT) {
                         wordsPresenter.rightSwipe(words);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     } else {
-                        dataList.add(words);
+                        mData.add(words);
                         wordsPresenter.liefSwipe(words);
                     }
                     mData.remove(pos);
@@ -134,38 +127,6 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                         }
                     }
 
-//                    start = stop;
-//                    stop += 5;
-
-//                    if(stop >= dataList.size()) {
-//                        stop = dataList.size();
-//                        isEnd = true;
-//                    }
-
-//                    try {
-
-//                        for(int i = start; i < stop; i++){
-//                            Words word = dataList.get(i);
-//                            mData.add(word);
-//                        }
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                mSampleWordsAdapter = new SampleWordsAdapter(WordsActivity.this, mData,1);
-//                                rvList.setAdapter(mSampleWordsAdapter);
-//                                //列表子项的点击监听
-//                                mSampleWordsAdapter.setOnItemClickListener(getListen());
-//
-//                            }
-//                        });
-//                    }catch (Exception e){
-//                        e.printStackTrace();
-//                        ToastUtils.showShort(WordsActivity.this, "一轮练习已完成");
-//                        mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-//                        mSampleWordsAdapter.notifyItemRangeRemoved(pos,mData.size());
-//                        ToastUtils.showLong(WordsActivity.this, app.getContent());
-//
-//                    }
                 }else {//页面超过1个单词时
                     String text;
                     //判断滑动方向
@@ -177,7 +138,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
 
                     } else {
                         text = "还没记住";
-                        Words words = mData.get(pos);
+                        Words_Status words = mData.get(pos);
                         mData.remove(pos);
                         mData.add(words);
                         wordsPresenter.liefSwipe(words);
@@ -186,18 +147,18 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                     }
                     //解决闪屏问题
                     mSampleWordsAdapter.notifyDataSetChanged();
-                    /**
-                     * 撤销上一个单词的操作
-                     * @param  View 视图,  CharSequence 字符串, int 出现时间
-                     */
-                    Snackbar.make(viewHolder.itemView, text, Snackbar.LENGTH_LONG)
-                            .setAction("撤销", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    mData.add(pos, item);
-                                    mSampleWordsAdapter.notifyItemInserted(pos);
-                                }
-                            }).show();
+//                    /**
+//                     * 撤销上一个单词的操作
+//                     * @param  View 视图,  CharSequence 字符串, int 出现时间
+//                     */
+//                    Snackbar.make(viewHolder.itemView, text, Snackbar.LENGTH_LONG)
+//                            .setAction("撤销", new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    mData.add(pos, item);
+//                                    mSampleWordsAdapter.notifyItemInserted(pos);
+//                                }
+//                            }).show();
                 }
             }
 
@@ -261,12 +222,12 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
             @Override
             public void onItemClick(View view , int position){
 //                ToastUtils.showShort(WordsActivity.this, "点击事件！");
-                int i = position ;
+//                int i = position ;
 
-                LogUtils.d("数字为："+i);
-                Words words = new Words(mData.get(i).getWordId(),mData.get(i).getPron(),mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
-                        ,mData.get(i).getEg1(),mData.get(i).getEg1_chinese(),"","", mData.get(i).getTopicId());
-                WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this,words);
+//                LogUtils.d("数字为："+i);
+//                Words words = new Words(mData.get(i).getWordId(),mData.get(i).getPron(),mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
+//                        ,mData.get(i).getEg1(),mData.get(i).getEg1Chinese(),"","", mData.get(i).getTopicId());
+                WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this, mData.get(position));
                 customDialog.show();
             }
         };
@@ -282,20 +243,20 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
      * 修改人：周少侠
      * 修改原因：WordsActivity作为一个展示的Activity，需要显示的单词可以放在app.list中
      */
-    private List<Words> getData() {
+    private List<Words_Status> getData() {
 
-        try {
-            if (mData==null) {
-                LogUtils.d("为空的数据列表！");
-            }else {
-                for(int i = 0; i < dataList.size(); i++){
-                    Words word = dataList.get(i);
-                    mData.add(word);
-                }
-            }
-        }catch (Exception e){
-            ToastUtils.showLong(WordsActivity.this,"网络连接出错");
-        }
+//        try {
+//            if (mData==null) {
+//                LogUtils.d("为空的数据列表！");
+//            }else {
+//                for(int i = 0; i < dataList.size(); i++){
+//                    Words word = dataList.get(i);
+//                    mData.add(word);
+//                }
+//            }
+//        }catch (Exception e){
+//            ToastUtils.showLong(WordsActivity.this,"网络连接出错");
+//        }
 
         //填充假数据
 //        for (int i = 0; i < 5; i++) {

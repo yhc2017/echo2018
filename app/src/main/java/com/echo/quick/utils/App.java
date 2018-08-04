@@ -4,7 +4,10 @@ import android.app.Application;
 import android.content.Context;
 
 import com.echo.quick.contracts.OnlineWordContract;
+import com.echo.quick.model.dao.impl.WordsStatusImpl;
+import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.Words;
+import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 
 import org.litepal.LitePal;
@@ -27,6 +30,8 @@ public class App extends Application{
 
     public List<Words> list;
 
+    public List<Words_Status> statusList;
+
     public List<String> pagerList;//真题类型列表
 
     private static Context mContext;
@@ -38,6 +43,7 @@ public class App extends Application{
     public void onCreate() {
         super.onCreate();
         list = new ArrayList<>();
+        statusList = new ArrayList<>();
         // 初始化LitePal数据库
         mContext = getApplicationContext();
         LitePal.initialize(this);
@@ -46,12 +52,16 @@ public class App extends Application{
 
     public void init(){
         try {
+            IWordsStatusDao statusDao = new WordsStatusImpl();
+            List<Words_Status> statuses = statusDao.selectByStatus("");
+//            setStatusList(statuses);
             OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-            final HashMap<String, String> map = new HashMap<>();
-            map.put("userId", "111");
-            map.put("paperDate", "2017年6月四级真题A卷");
-//            map.put("paperType", "A");
-            onlineWordPresenter.getOnlineSprint(map);
+            if(statuses.size() == 5){
+                final HashMap<String, String> map = new HashMap<>();
+                map.put("userId", "111");
+                map.put("topicId", "17");
+                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "learn");
+            }
             onlineWordPresenter.getOnlineSprintType();
         }catch (Exception e){
             LogUtils.d("没在服务器获取到数据");
@@ -65,6 +75,14 @@ public class App extends Application{
 
     public void setList(List<Words> list) {
         this.list = list;
+    }
+
+    public List<Words_Status> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<Words_Status> statusList) {
+        this.statusList = statusList;
     }
 
     /**获取Context.

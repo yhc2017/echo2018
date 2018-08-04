@@ -2,7 +2,7 @@ package com.echo.quick.contracts;
 
 import android.content.Context;
 
-import com.echo.quick.pojo.Words;
+import com.echo.quick.pojo.Words_Status;
 
 /**
  * 项目名称：echo2018
@@ -30,7 +30,7 @@ public interface WordsContract {
          * 参数1： 参数说明
          *
          **/
-        void liefSwipe(Words w);
+        void liefSwipe(Words_Status w);
 
         /**
          * 方法名称：rightSwipe
@@ -38,7 +38,7 @@ public interface WordsContract {
          * 参数1： 参数说明
          *
          **/
-        void rightSwipe(Words w);
+        void rightSwipe(Words_Status w);
 
         void endOnce(Context context);
 

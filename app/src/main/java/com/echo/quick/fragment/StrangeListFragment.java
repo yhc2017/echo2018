@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.echo.quick.activities.R;
 import com.echo.quick.adapter.SampleWordsAdapter;
 import com.echo.quick.pojo.WordList;
-import com.echo.quick.pojo.Words;
+import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class StrangeListFragment extends Fragment {
     private RecyclerView rvList;
     private SampleWordsAdapter mSampleWordsAdapter;
     private SampleWordsAdapter.OnItemClickListener listener;
-    private List<Words> dataList = new ArrayList<>();
+    private List<Words_Status> dataList = new ArrayList<>();
 //    private List<Words> mData = new ArrayList<>();
     View view;
 
@@ -47,13 +47,13 @@ public class StrangeListFragment extends Fragment {
     /**
      * Method name : initView()
      * Specific description :初始化单词的view
-     *@return void
+     *
      */
     private void initView() {
 
     }
     //加载数据
-    private List<Words> initList() {
+    private List<Words_Status> initList() {
         WordList dataBean = (WordList)getArguments().getSerializable("dataList");
 //避免报空指针异常,重新创建了mData,并添加了data
         dataList = dataBean.getData();

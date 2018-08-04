@@ -11,11 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.echo.quick.adapter.StrangeFragmentAdapter;
 import com.echo.quick.fragment.StrangeListFragment;
-import com.echo.quick.model.dao.impl.WordsNewImpl;
-import com.echo.quick.model.dao.interfaces.IWordsNewDao;
+import com.echo.quick.model.dao.impl.WordsStatusImpl;
+import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.WordList;
-import com.echo.quick.pojo.Words;
-import com.echo.quick.pojo.Words_New;
+import com.echo.quick.pojo.Words_Status;
+import com.echo.quick.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,10 @@ public class StrangeWordsListActivity extends AppCompatActivity {
     private TabLayout tabs;
     private ViewPager viewPager;
     private StrangeFragmentAdapter adapter;
-    private List<Words> dataList = new ArrayList<>();
+    private List<Words_Status> newList = new ArrayList<>();
+    private List<Words_Status> studyList = new ArrayList<>();
+    private List<Words_Status> reviewList = new ArrayList<>();
+    private List<Words_Status> graspList = new ArrayList<>();
 
     @SuppressLint("WrongConstant")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -46,20 +49,29 @@ public class StrangeWordsListActivity extends AppCompatActivity {
     }
     private void initView() {
         titleDatas=new ArrayList<>();
-        titleDatas.add("生词本");
         titleDatas.add("学习中");
         titleDatas.add("待复习");
+        titleDatas.add("生词本");
         titleDatas.add("熟悉本");
         fragmentList = new ArrayList<Fragment>();
-        IWordsNewDao newDao = new WordsNewImpl();
-        for(Words_New word: newDao.select()){
-            Words words = new Words(word.getWord(), word.getSymbol(), word.getExplain());
-            dataList.add(words);
+        IWordsStatusDao newDao = new WordsStatusImpl();
+        for(Words_Status word: newDao.select()){
+            String status = word.getStatus();
+            if(status.equals("new")){
+                newList.add(word);
+            } else if(status.equals("study")){
+                studyList.add(word);
+            } else if(status.equals("review")){
+                reviewList.add(word);
+            } else if(status.equals("grasp")){
+                graspList.add(word);
+            }
+            LogUtils.d(word.getWord());
         }
-        fragmentList.add(newInstance(dataList));
-        fragmentList.add(newInstance(dataList));
-        fragmentList.add(newInstance(dataList));
-        fragmentList.add(newInstance(dataList));
+        fragmentList.add(newInstance(studyList));
+        fragmentList.add(newInstance(reviewList));
+        fragmentList.add(newInstance(newList));
+        fragmentList.add(newInstance(graspList));
         adapter = new StrangeFragmentAdapter(getSupportFragmentManager(), titleDatas, fragmentList);
 
     }
@@ -71,7 +83,7 @@ public class StrangeWordsListActivity extends AppCompatActivity {
      *@param
      *@return
      */
-    public static StrangeListFragment newInstance(List<Words> dataList ) {
+    public static StrangeListFragment newInstance(List<Words_Status> dataList ) {
         StrangeListFragment fragment = new StrangeListFragment();
         Bundle bundle = new Bundle();
         WordList wordList = new WordList();

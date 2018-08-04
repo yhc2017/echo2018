@@ -6,10 +6,14 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.echo.quick.activities.R;
+import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.contracts.WordsContract;
 import com.echo.quick.model.dao.impl.WordsLogImpl;
+import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsLogDao;
-import com.echo.quick.pojo.Words;
+import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
+import com.echo.quick.pojo.Words_Status;
+import com.echo.quick.utils.LogUtils;
 
 /**
  * 项目名称：echo2018
@@ -36,21 +40,47 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
     }
 
     @Override
-    public void liefSwipe(Words word) {
+    public void liefSwipe(Words_Status word) {
         int num;
         IWordsLogDao = new WordsLogImpl();
         num = IWordsLogDao.selectLeftNum(word);
-        Log.d("left num    =    ", "   "+num);
         IWordsLogDao.updateLeftNum(word.getWord(), num+1);
+        if(num == 0){
+            Words_Status wordsNew = new Words_Status();
+            wordsNew.setStatus("study");
+            wordsNew.setWord(word.getWord());
+            IWordsStatusDao newDao = new WordsStatusImpl();
+            if(newDao.updateByWord(wordsNew)){
+                LogUtils.d("添加成功。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
+            }
+        }
     }
 
     @Override
-    public void rightSwipe(Words word) {
+    public void rightSwipe(Words_Status word) {
         int num;
         IWordsLogDao = new WordsLogImpl();
         num = IWordsLogDao.selectRightNum(word);
         Log.d("right num    =    ", "   "+num);
         IWordsLogDao.updateRightNum(word.getWord(), num+1);
+        if(num == 0){
+            Words_Status wordsNew = new Words_Status();
+            wordsNew.setStatus("review");
+            wordsNew.setWord(word.getWord());
+            IWordsStatusDao newDao = new WordsStatusImpl();
+            if(newDao.updateByWord(wordsNew)){
+                LogUtils.d("添加成功。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
+            }
+        }
+        if(num == 1){
+            Words_Status wordsNew = new Words_Status();
+            wordsNew.setStatus("grasp");
+            wordsNew.setWord(word.getWord());
+            IWordsStatusDao newDao = new WordsStatusImpl();
+            if(newDao.updateByWord(wordsNew)){
+                LogUtils.d("添加成功。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
+            }
+        }
     }
 
     @Override
@@ -70,6 +100,8 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
         builder.setNegativeButton("打卡结束喽", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+                onlineWordPresenter.postOnlineWordsLog();
                 iWordsView.RefreshPage(true);
             }
         });

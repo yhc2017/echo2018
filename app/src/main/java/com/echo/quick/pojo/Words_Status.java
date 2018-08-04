@@ -1,5 +1,6 @@
 package com.echo.quick.pojo;
 
+import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 /**
@@ -12,8 +13,9 @@ import org.litepal.crud.LitePalSupport;
  * 修改备注：
  */
 
-public class Words_New extends LitePalSupport {
+public class Words_Status extends LitePalSupport {
 
+    @Column(unique = true, defaultValue = "unknown")
     private String wordId;
     private String word;
     private String symbol;
@@ -23,14 +25,15 @@ public class Words_New extends LitePalSupport {
     private String eg1Chinese;
     private String eg2;
     private String eg2Chinese;
-//    private String prepare1;
+    private String status;
+    private String topicId;
 //    private int prepare2;
 
-    public Words_New(){
+    public Words_Status(){
 
     }
 
-    public Words_New(String wordId, String pron, String word,String symbol,String explain,String eg1,String eg1_chinese,String eg2,String eg2_chinese){
+    public Words_Status(String wordId, String pron, String word, String symbol, String explain, String eg1, String eg1_chinese, String eg2, String eg2_chinese,String status, String topicId){
         this.wordId = wordId;
         this.word = word;
         this.symbol = symbol;
@@ -40,6 +43,8 @@ public class Words_New extends LitePalSupport {
         this.eg1Chinese = eg1_chinese;
         this.eg2 = eg2;
         this.eg2Chinese = eg2_chinese;
+        this.status = status;
+        this.topicId = topicId;
     }
 
     public String getWordId() {
@@ -114,15 +119,23 @@ public class Words_New extends LitePalSupport {
         this.eg2Chinese = eg2Chinese;
     }
 
-//    public String getPrepare1() {
-//        return prepare1;
-//    }
-//
-//    public void setPrepare1(String prepare1) {
-//        this.prepare1 = prepare1;
-//    }
-//
-//    public int getPrepare2() {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(String topicId) {
+        this.topicId = topicId;
+    }
+
+    //    public int getPrepare2() {
 //        return prepare2;
 //    }
 //

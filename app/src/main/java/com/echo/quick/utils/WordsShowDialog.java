@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.echo.quick.activities.R;
 import com.echo.quick.contracts.WordsShowContract;
-import com.echo.quick.pojo.Words;
-import com.echo.quick.pojo.Words_New;
+import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.WordsShowPresenters;
 
 /**
@@ -29,14 +28,14 @@ import com.echo.quick.presenters.WordsShowPresenters;
 
 public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsShowView{
     Context context;
-    Words words;
+    Words_Status words;
     LinearLayout L_1,L_2;
 
     private TextView tv_item,tv_symbol,tv_explain,tv_eg1,tv_eg1_chinese,tv_eg2,tv_eg2_chinese,tv_add_new,tv_del_new;
 
     WordsShowContract.IWordsShowPresenter wordsShowPresenter;
 
-    public WordsShowDialog(@NonNull Context context, Words words) {
+    public WordsShowDialog(@NonNull Context context, Words_Status words) {
         super(context);
         this.context = context;
         this.words = words;
@@ -88,9 +87,9 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
         tv_symbol.setText(words.getSymbol());
         tv_explain.setText(words.getExplain());
         tv_eg1.setText(words.getEg1());
-        tv_eg1_chinese.setText(words.getEg1_chinese());
+        tv_eg1_chinese.setText(words.getEg1Chinese());
         tv_eg2.setText(words.getEg2());
-        tv_eg2_chinese.setText(words.getEg2_chinese());
+        tv_eg2_chinese.setText(words.getEg2Chinese());
     }
 
     /**
@@ -112,16 +111,10 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
             switch (view.getId()){
                 case R.id.tv_add_new:
                     try {
-                        Words_New wordsNew = new Words_New(words.getWordId(),
-                                words.getPron(),
-                                words.getWord(),
-                                words.getSymbol(),
-                                words.getExplain(),
-                                words.getEg1(),
-                                words.getEg1_chinese(),
-                                words.getEg2(),
-                                words.getEg2_chinese());
-                        if(wordsShowPresenter.addNewWord(wordsNew)) {
+                        Words_Status wordsNew = new Words_Status();
+                        wordsNew.setStatus("new");
+                        wordsNew.setWord(words.getWord());
+                        if(wordsShowPresenter.updateWord(wordsNew)) {
                             initVisibility(true);
                             LogUtils.d("添加成功");
                             ToastUtils.showShort(context, "添加成功");
@@ -134,7 +127,7 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
 
                 case R.id.tv_del_new:
                     try {
-                        wordsShowPresenter.delNewWord(words.getWordId());
+                        wordsShowPresenter.delNewWord(words.getWord());
                         ToastUtils.showShort(context, "移除成功");
                         initVisibility(false);
                     }catch (Exception e){

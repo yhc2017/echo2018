@@ -13,13 +13,13 @@ import java.util.List;
  * @since ：[产品|模块版本]
  */
 public  class WordList implements Serializable {
-   private List<Words> data;
+   private List<Words_Status> data;
 
-    public List<Words> getData() {
+    public List<Words_Status> getData() {
         return data;
     }
 
-    public void setData(List<Words> data) {
+    public void setData(List<Words_Status> data) {
         this.data = data;
     }
 }

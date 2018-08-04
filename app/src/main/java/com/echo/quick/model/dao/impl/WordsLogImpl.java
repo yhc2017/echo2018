@@ -1,8 +1,8 @@
 package com.echo.quick.model.dao.impl;
 
 import com.echo.quick.model.dao.interfaces.IWordsLogDao;
-import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Log;
+import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.utils.LogUtils;
 
 import org.litepal.LitePal;
@@ -39,7 +39,7 @@ public class WordsLogImpl implements IWordsLogDao {
     }
 
     @Override
-    public int selectLeftNum(Words w) {
+    public int selectLeftNum(Words_Status w) {
 
         List<Words_Log> logs = LitePal.where("word = ?", w.getWord()).find(Words_Log.class);
         if(logs.isEmpty()){
@@ -51,7 +51,7 @@ public class WordsLogImpl implements IWordsLogDao {
             wordsLog.setRightNum(0);
             wordsLog.save();
             LogUtils.d("word 不存在。");
-            return -1;
+            return 0;
         }
         else if(logs.size() != 1){
             LogUtils.d("word 不唯一。");
@@ -63,7 +63,7 @@ public class WordsLogImpl implements IWordsLogDao {
     }
 
     @Override
-    public int selectRightNum(Words w) {
+    public int selectRightNum(Words_Status w) {
 
         List<Words_Log> logs = LitePal.where("word = ?", w.getWord()).find(Words_Log.class);
         if(logs.isEmpty()){
@@ -75,7 +75,7 @@ public class WordsLogImpl implements IWordsLogDao {
             wordsLog.setRightNum(0);
             wordsLog.save();
             LogUtils.d("word 不存在。");
-            return -1;
+            return 0;
         }
         else if(logs.size() != 1){
             LogUtils.d("word 不唯一。");

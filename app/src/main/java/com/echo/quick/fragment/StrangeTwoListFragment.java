@@ -10,11 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.echo.quick.activities.R;
 import com.echo.quick.activities.WordsActivity;
-import com.echo.quick.contracts.OnlineWordContract;
-import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.utils.App;
-
-import java.util.HashMap;
 
 /**
  * Created by HUAHUA on 2018/7/23.
@@ -78,8 +74,6 @@ public class StrangeTwoListFragment extends Fragment {
             switch (id) {
                 case R.id.rl_ct4:
                     //需要从网上获取数据
-
-
                     intent = new Intent(getActivity(), WordsActivity.class);
                     startActivity(intent);
                 break;

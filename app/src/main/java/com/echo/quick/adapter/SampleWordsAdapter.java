@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.echo.quick.activities.R;
-import com.echo.quick.pojo.Words;
+import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.utils.LogUtils;
 
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private LayoutInflater mLayoutInflater;
-    private List<Words> mData;
+    private List<Words_Status> mData;
     private List<String> mtitle;
     private OnItemClickListener mOnItemClickListener = null;
     View view;
@@ -170,7 +170,7 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         //绑定数据
-        public void setData(Words data){
+        public void setData(Words_Status data){
             tvItem.setText(data.getWord());
             tvSymbol.setText(data.getSymbol());
             tvExplain.setText(data.getExplain());
@@ -210,7 +210,7 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             im_delete = (ImageView) itemView.findViewById(R.id.im_delete);
         }
         //绑定数据
-        public void setData(Words data){
+        public void setData(Words_Status data){
             LogUtils.d(data.getWord());
             if (null == data) {
                 LogUtils.d("生词列表：数据为空！！！");

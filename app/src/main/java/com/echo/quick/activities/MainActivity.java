@@ -1,16 +1,37 @@
 package com.echo.quick.activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.echo.quick.contracts.MainContract;
 import com.echo.quick.contracts.OnlineWordContract;
+import com.echo.quick.model.dao.impl.WordsLogImpl;
+import com.echo.quick.model.dao.impl.WordsStatusImpl;
+import com.echo.quick.model.dao.interfaces.IWordsLogDao;
+import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
+import com.echo.quick.pojo.Words_Log;
+import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.utils.App;
+
+import java.util.HashMap;
+import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -46,9 +67,22 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
      */
 //    private OKhttpManager manager = OKhttpManager.getInstance();
 
-    private Button btn_login,btn_test,btn_quick;
+    private Button btn_login,btn_test,btn_quick,btn_study,btn_re_study,btn_test_db,btn_test_db2;
+
+    private TextView textView3;
+
+    private ProgressBar progressBar;
+
+    OnlineWordContract.OnlineWordPresenter onlineWordPresenter;
+
+    private ActivityReceiver activityReceiver;
 
     public App app;
+
+    public static final String UPDATE_ACTION = "com.yhc.action.UPDATE_ACTION";
+
+    Handler mHandler = null;
+    Runnable mRunnable = null;
 
     /**
      * 需要申请的权限数组
@@ -66,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
      * @return [返回类型说明]
      **/
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -73,6 +108,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
         setContentView(R.layout.activity_main);
 
         app = (App)getApplication();
+
+        onlineWordPresenter = new OnlineWordPresenterImpl(this);
+
+        // 创建BroadcastReceiver
+        activityReceiver = new ActivityReceiver();
+        // 创建IntentFilter
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(UPDATE_ACTION);
+        registerReceiver(activityReceiver, filter);
+
+        textView3 = (TextView)findViewById(R.id.textView3);
 
 
 
@@ -88,8 +134,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
             Intent intent = null;
             @Override
             public void onClick(View view) {
-                intent = new Intent(MainActivity.this, WordsActivity.class);
-                startActivity(intent);
+                getWordStatus(true);
             }
         });
         mbt2 = (Button)findViewById(R.id.bt_words_two);
@@ -128,12 +173,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-//                final HashMap<String, String> map = new HashMap<>();
-//                map.put("userId", "444");
-//                map.put("classId", "11");
-//                app.setList(onlineWordPresenter.getOnlineWord(map));
-                onlineWordPresenter.postOnlineWordsLog();
+
+//                MediaPlayer mediaPlayer = new MediaPlayer();
+//                try {
+//                    mediaPlayer.reset();
+//                    mediaPlayer.setDataSource("https://dictionary.blob.core.chinacloudapi.cn/media/audio/george/e6/54/E65474CFB3DE4E42B9DBFB6BF4777C0C.mp3");
+//                    mediaPlayer.prepare();
+//                    mediaPlayer.start();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
 
@@ -152,6 +201,52 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
                 startActivity(new Intent(MainActivity.this, StrangeWordsListActivity.class));
             }
         });
+
+        btn_study = (Button)findViewById(R.id.btn_study);
+        btn_study.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getWordStatus(true);
+            }
+        });
+
+        btn_re_study = (Button)findViewById(R.id.btn_re_study);
+        btn_re_study.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getWordStatus(false);
+            }
+        });
+
+        progressBar = (ProgressBar) findViewById(R.id.PB_words);
+        progressBar.setMax(3500);
+        progressBar.setProgress(100);
+
+        btn_test_db = (Button)findViewById(R.id.btn_test_db);
+        btn_test_db.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IWordsLogDao wordsLogDao = new WordsLogImpl();
+                String str = "";
+                for(Words_Log wordsLog:wordsLogDao.select()){
+                    str += wordsLog.getWord()+"  "+wordsLog.getLeftNum()+"    "+wordsLog.getRightNum()+"\n";
+                }
+                textView3.setText(str);
+            }
+        });
+
+        btn_test_db2 = (Button)findViewById(R.id.btn_test_db2);
+        btn_test_db2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IWordsStatusDao words = new WordsStatusImpl();
+                String str = "";
+                for(Words_Status word:words.select()){
+                    str += word.getWord()+word.getStatus()+"\n";
+                }
+                textView3.setText(str);
+            }
+        });
     }
 
     @Override
@@ -163,6 +258,109 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
     }
 
 
+    public void showPL(Boolean isShow){
 
+    }
+
+
+    @Override
+    public void OverShowPL(Boolean isShow) {
+        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setIcon(R.drawable.boy);
+        progressDialog.setTitle("请稍等");
+        progressDialog.setMessage("正在生成推荐结果");
+        if(isShow){
+            progressDialog.show();
+        }else {
+            progressDialog.dismiss();
+        }
+    }
+
+    public void popWindow(final Context context, final Boolean learn){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("今日份已完成");
+//        final EditText editText;
+//        builder.setView(editText = new EditText(AthleticsActivity.this));
+        builder.setIcon(R.drawable.boy);
+        builder.setNeutralButton("返回", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.setPositiveButton("继续下一组", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+                final HashMap<String, String> map = new HashMap<>();
+                map.put("userId", "111");
+                map.put("topicId", "17");
+                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "learn");
+                final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setIcon(R.drawable.boy);
+                progressDialog.setTitle("请稍等");
+                progressDialog.setMessage("正在加载中");
+                progressDialog.show();
+                mHandler = new Handler();
+                mRunnable = new Runnable() {
+                    @Override
+                    public void run()
+                    {
+
+                        IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
+                        if(iWordsStatusDao.selectByStatus("").size() >10){
+                            progressDialog.dismiss();
+                            getWordStatus(learn);
+                        }
+
+                    }
+                };
+                mHandler.postDelayed(mRunnable, 2000);
+            }
+        });
+        builder.show();
+    }
+
+    public class ActivityReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String str = intent.getStringExtra("service").toString();
+            String title = intent.getStringExtra("title").toString();
+            Log.d("MainActivity", "接收成功"+str);
+
+        }
+    }
+
+    public void getWordStatus(Boolean learn){
+
+        IWordsStatusDao statusDao = new WordsStatusImpl();
+        List<Words_Status> wordLearn = statusDao.selectByStatus("");
+        List<Words_Status> wordReview = statusDao.selectByStatus("review");
+        if(statusDao.selectCount() != 0){
+            if(learn){
+                wordLearn.addAll(wordReview);
+                app.setStatusList(wordLearn);
+            }else {
+                wordReview.addAll(wordLearn);
+                app.setStatusList(wordReview);
+            }
+            Intent intent = new Intent(MainActivity.this, WordsActivity.class);
+            startActivity(intent);
+        }else {
+            popWindow(MainActivity.this, learn);
+        }
+    }
+
+    protected void onPause() {
+        super.onPause();
+        try {
+            mHandler.removeCallbacks(mRunnable);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 
 }

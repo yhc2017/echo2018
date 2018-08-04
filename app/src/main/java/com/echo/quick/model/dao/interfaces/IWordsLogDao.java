@@ -1,7 +1,7 @@
 package com.echo.quick.model.dao.interfaces;
 
-import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Log;
+import com.echo.quick.pojo.Words_Status;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public interface IWordsLogDao {
      * 参数1： 参数说明
      * @return [返回类型说明]
      **/
-    int selectLeftNum(Words w);
+    int selectLeftNum(Words_Status w);
 
     /**
      * 方法名称：selectNum
@@ -47,7 +47,7 @@ public interface IWordsLogDao {
      * 参数1： 参数说明
      * @return [返回类型说明]
      **/
-    int selectRightNum(Words w);
+    int selectRightNum(Words_Status w);
 
     /**
      * 方法名称：更新或添加生词本

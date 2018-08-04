@@ -1,6 +1,7 @@
 package com.echo.quick.contracts;
 
-import com.echo.quick.pojo.Words_New;
+import com.echo.quick.pojo.Words;
+import com.echo.quick.pojo.Words_Status;
 
 /**
  * 项目名称：echo2018
@@ -43,7 +44,23 @@ public interface WordsShowContract {
          * 参数1： 一个生词对象
          * @return boolean
          **/
-        boolean addNewWord(Words_New wordsNew);
+        boolean addNewWord(Words_Status words);
+
+        /**
+         * 方法名称：addNewWord
+         * 方法描述: 传入一个word对象，添加到数据库里
+         * 参数1： 一个生词对象
+         * @return boolean
+         **/
+        boolean updateWord(Words_Status word);
+
+        /**
+         * 方法名称：addWordToStatus
+         * 方法描述: 传入一个word对象，添加到数据库里
+         * 参数1： 一个单词对象
+         * @return boolean
+         **/
+        boolean addWordToStatus(Words word);
 
         /**
          * 方法名称：delNewWord
