@@ -37,8 +37,8 @@
             android:text="词库："/>
         <org.angmarch.views.NiceSpinner
             android:id="@+id/nice_spinner"
-            app:dropDownListPaddingBottom="20dp"
-            android:scrollbars="vertical"
+            android:verticalScrollbarPosition="right"
+            app:dropDownListPaddingBottom="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"/>
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:verticalScrollbarPosition="right"
-            app:dropDownListPaddingBottom="20dp"
+            app:dropDownListPaddingBottom="30dp"
             android:layout_margin="16dp"/>
     </LinearLayout>
     <LinearLayout

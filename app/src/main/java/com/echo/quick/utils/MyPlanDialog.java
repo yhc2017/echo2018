@@ -22,7 +22,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by HUAHUA on 2018/8/1.
+ * Class name: MyPlanDialog
+ * Specific description :我的计划的对话框
+ * 创建人: HUAHUA
+ * @version :1.0 , 2018/8/2 10:55
+ * 修改人：茹韶燕
+ * @version : 增加了获取值以及事件处理
+ * @since ：[产品|模块版本]
  */
 
 public class MyPlanDialog extends Dialog{
@@ -91,8 +97,7 @@ public class MyPlanDialog extends Dialog{
             switch (id){
                 case R.id.bt_ok :
                     HashMap hs = getMyValue();
-                    LogUtils.d("词库:"+hs.get("wordbox")+",目标时间:"+hs.get("plan") + ",选中框的值:"+hs.get("plantype"));
-                    System.out.print("我的计划我的计划");
+                    LogUtils.d("我的计划====词库:"+hs.get("wordbox")+",目标时间:"+hs.get("plan") + ",选中框的值:"+hs.get("plantype"));
                     dismiss();
                     break;
                 case R.id.bt_cancel:
@@ -104,7 +109,7 @@ public class MyPlanDialog extends Dialog{
     }
 
     /**
-     * Method name :
+     * Method name : getMyValue
      * Specific description :获取所有选择的值
      *@return hs HashMap
      */
