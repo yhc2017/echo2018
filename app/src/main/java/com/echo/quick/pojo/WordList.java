@@ -13,6 +13,7 @@ import java.util.List;
  * @since ：[产品|模块版本]
  */
 public  class WordList implements Serializable {
+
    private List<Words> data;
 
     public List<Words> getData() {
