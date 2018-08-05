@@ -34,12 +34,12 @@ public interface IWordsStatusDao {
     List<Words_Status> selectByStatus(String status);
 
     /**
-     * 方法名称：
-     * 方法描述: 查有多少没背的单词
-     * 参数1： 参数说明
+     * 方法名称：需要加入什么查询条件请进行扩展
+     * 方法描述: 查的单词数目,使用单参数的方法，减低接口数量加强扩展性
+     * 参数1： 传入条件
      * @return [返回类型说明]
      **/
-    int selectCount();
+    int selectCount(String request);
 
     /**
      * 方法名称：查询生词

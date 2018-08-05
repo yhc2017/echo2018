@@ -290,6 +290,22 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
     }
 
+    @Override
+    public void GetAllWordTopicInfo() {
+        IOnlineWord iOnline = new OnlineWordImpl();
+        iOnline.getToWord("quick/selectAllWordTopicInfo", new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+    }
+
     public void initNewWord(JSONArray jsonArray){
         for(int i = 0; i < jsonArray.size(); i++){
             WordsShowContract.IWordsShowPresenter wordsShowPresenter = new WordsShowPresenters();
