@@ -7,10 +7,10 @@
             <corners android:radius="5dip" />
             <gradient
                 android:angle="0"
-                android:centerColor="#241809"
+                android:centerColor="@color/bule"
                 android:centerY="0.75"
-                android:endColor="#241809"
-                android:startColor="#241809" />
+                android:endColor="@color/bule"
+                android:startColor="@color/bule" />
         </shape>
     </item>
 
@@ -21,10 +21,10 @@
                 <corners android:radius="5dip" />
                 <gradient
                     android:angle="0"
-                    android:centerColor="#47179f"
+                    android:centerColor="@color/colorLocalMusicModule"
                     android:centerY="0.75"
-                    android:endColor="#672fad"
-                    android:startColor="#47179f" />
+                    android:endColor="@color/colorLocalMusicModule"
+                    android:startColor="@color/colorLocalMusicModule" />
             </shape>
         </clip>
     </item>

@@ -17,8 +17,8 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
             android:layout_marginTop="30dp">
 
             <TextView
@@ -31,7 +31,7 @@
                 android:text="四级" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tv_obtion"
                 style="@style/MyFont.Home.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,24 +43,41 @@
                 style="@style/MyFont.Home.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView4"
+                android:layout_below="@+id/tv_obtion"
                 android:layout_toEndOf="@+id/tv_from"
                 android:layout_toRightOf="@+id/tv_from"
                 android:text="考试通关" />
 
             <ImageView
+                android:id="@+id/im_tor"
+                android:layout_marginRight="5dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="7dp"
                 android:src="@drawable/ic_tor_girl" />
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/im_tor"
+                android:layout_alignStart="@+id/im_tor"
+                android:layout_below="@+id/im_tor"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:text="未登录"
+                android:textColor="@color/black" />
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/im_setting"
             style="@style/MyFont.Home.Content"
-            android:layout_width="match_parent"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="5dp"
             android:gravity="right"
             android:text="修改计划 >" />
@@ -79,6 +96,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_word_finish"
                     style="@style/MyFont.Home.Content.Num"
                     android:textColor="@color/blue"
                     android:layout_width="match_parent"
@@ -97,7 +115,7 @@
                     android:layout_width="1dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|left"
-                    android:background="@color/white" />
+                    android:background="@color/black" />
 
                 <LinearLayout
                     android:layout_marginRight="20dp"
@@ -106,6 +124,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_word_obtion"
                         style="@style/MyFont.Home.Content.Num"
                         android:textColor="@color/colorOnLineMusicModule"
                         android:layout_width="match_parent"
@@ -117,7 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="今日份" />
+                        android:text="今日目标" />
                 </LinearLayout>
 
                 <View
@@ -125,12 +144,13 @@
                     android:layout_width="1dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|right"
-                    android:background="@color/white" />
+                    android:background="@color/black" />
             <LinearLayout
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/tv_word_over"
                     style="@style/MyFont.Home.Content.Num"
                     android:textColor="@color/colorLocalMusicModule"
                     android:layout_width="match_parent"
@@ -145,6 +165,7 @@
             </LinearLayout>
             </LinearLayout>
         <ProgressBar
+            android:id="@+id/my_word_plan_progressbar"
             android:layout_width="match_parent"
             android:layout_height="12dp"
             style="?android:attr/progressBarStyleHorizontal"
@@ -153,6 +174,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"/>
         <TextView
+            android:id="@+id/tv_word_num"
             android:text="3500"
             android:layout_marginTop="3dp"
             android:layout_marginRight="18dp"
@@ -160,8 +182,8 @@
             android:layout_height="wrap_content"
             android:gravity="right"/>
         <Button
+            android:id="@+id/bt_start_study"
             android:text="开   始   学   习"
-            android:textColor="@color/white"
             android:textSize="22dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_bg2"

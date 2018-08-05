@@ -7,12 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.echo.quick.activities.R;
+import com.echo.quick.activities.StrangeWordsListActivity;
 import com.echo.quick.adapter.SampleWordsAdapter;
 import com.echo.quick.pojo.WordList;
+import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.MyPlanDialog;
+import com.echo.quick.utils.WordsShowDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,20 +43,25 @@ public class StrangeListFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvList.setLayoutManager(linearLayoutManager);
         //获取数据重新回到列表
-        mSampleWordsAdapter = new SampleWordsAdapter(view.getContext(), initList(), 3);
+        mSampleWordsAdapter = new SampleWordsAdapter(view.getContext(), initList(), getViewType());
         rvList.setAdapter(mSampleWordsAdapter);
         //列表子项的点击监听
-        mSampleWordsAdapter.setOnItemClickListener(getListen());
+        mSampleWordsAdapter.setOnItemClickListener(getListener());
         return view;
     }
 
     /**
-     * Method name : initView()
-     * Specific description :初始化单词的view
-     *
+     * Method name : getViewType()
+     * Specific description :确定item布局
      */
-    private void initView() {
-
+    private int getViewType() {
+        //获取activity的frgment的bunle传回来的值
+        String str = (String) getArguments().getCharSequence("type");
+        if (str.equals("study")||str.equals("new")){
+            return 4;
+        }else {
+            return 3;
+        }
     }
     //加载数据
     private List<Words_Status> initList() {
@@ -66,20 +77,23 @@ public class StrangeListFragment extends Fragment {
      * Specific description :监听recycleview的item子项的点击事件
      *@return listener SampleWordsAdapter.OnItemClickListener
      */
-    private SampleWordsAdapter.OnItemClickListener getListen() {
-//        listener = new SampleWordsAdapter.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(View view , int position){
-////                ToastUtils.showShort(WordsActivity.this, "点击事件！");
-//                int i = position ;
-//
-//                LogUtils.d("数字为："+i);
-//                Words words = new Words(dataList.get(i).getWordId(),dataList.get(i).getPron(),dataList.get(i).getWord(),dataList.get(i).getSymbol(),dataList.get(i).getExplain()+"\n"
-//                        ,dataList.get(i).getEg1(),dataList.get(i).getEg1_chinese(),"","", dataList.get(i).getTopicId());
-//                WordsShowDialog customDialog = new WordsShowDialog(view.getContext(),words);
-//                customDialog.show();
-//            }
-//        };
+    private SampleWordsAdapter.OnItemClickListener getListener(){
+            listener = new SampleWordsAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(View view , int position){
+                int i = position ;
+                LogUtils.d("数字为："+i);
+                switch(view.getId()){
+                    case R.id.bt_del:
+                        LogUtils.d("回到学习中"+position);
+                        break;
+                        default:
+                            LogUtils.d("这个是子项"+position);
+                            break;
+                }
+
+            }
+        };
 
         return listener;
     }

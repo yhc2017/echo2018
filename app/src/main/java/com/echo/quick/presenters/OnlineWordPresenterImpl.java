@@ -125,6 +125,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                 LogUtils.d("无法获取OnlineWord");
             }
 
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
 
