@@ -51,6 +51,12 @@ public interface OnlineWordContract {
         //词库id写死为17
         void postOnlineWordsLog();
 
+        /**
+         * 方法名称：GetAllWordTopicInfo
+         * 方法描述: 通过Get请求获取所有词库信息
+         **/
+        void GetAllWordTopicInfo();
+
 
 
     }

@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
         IWordsStatusDao statusDao = new WordsStatusImpl();
         List<Words_Status> wordLearn = statusDao.selectByStatus("");
         List<Words_Status> wordReview = statusDao.selectByStatus("review");
-        if(statusDao.selectCount() != 0){
+        if(statusDao.selectCount("") != 0){
             if(learn){
                 wordLearn.addAll(wordReview);
                 app.setStatusList(wordLearn);

@@ -35,9 +35,27 @@ public class WordsStatusImpl implements IWordsStatusDao {
     }
 
     @Override
-    public int selectCount() {
+    public int selectCount(String request) {
+        switch (request){
 
-        return LitePal.where("status = ?",  "").find(Words_Status.class).size();
+            case "":
+                return LitePal.where("status = ?",  "").find(Words_Status.class).size();
+
+            case "review":
+                return LitePal.where("status = ?",  "review").find(Words_Status.class).size();
+
+            case "grasp":
+                return LitePal.where("status = ?",  "grasp").find(Words_Status.class).size();
+
+            case "study":
+                return LitePal.where("status = ?",  "study").find(Words_Status.class).size();
+
+            case "review_grasp":
+                return LitePal.where("status = ? or status = ?",  "review", "grasp").find(Words_Status.class).size();
+
+            default:
+                return -1;
+        }
     }
 
     @Override
