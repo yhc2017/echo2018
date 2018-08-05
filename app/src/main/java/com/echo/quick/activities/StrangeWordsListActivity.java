@@ -68,10 +68,10 @@ public class StrangeWordsListActivity extends AppCompatActivity {
             }
             LogUtils.d(word.getWord());
         }
-        fragmentList.add(newInstance(studyList));
-        fragmentList.add(newInstance(reviewList));
-        fragmentList.add(newInstance(newList));
-        fragmentList.add(newInstance(graspList));
+        fragmentList.add(newInstance(studyList,"study"));
+        fragmentList.add(newInstance(reviewList,"review"));
+        fragmentList.add(newInstance(newList,"new"));
+        fragmentList.add(newInstance(graspList,"grasp"));
         adapter = new StrangeFragmentAdapter(getSupportFragmentManager(), titleDatas, fragmentList);
 
     }
@@ -83,11 +83,14 @@ public class StrangeWordsListActivity extends AppCompatActivity {
      *@param
      *@return
      */
-    public static StrangeListFragment newInstance(List<Words_Status> dataList ) {
+    public static StrangeListFragment newInstance(List<Words_Status> dataList,String type ) {
         StrangeListFragment fragment = new StrangeListFragment();
         Bundle bundle = new Bundle();
+        //传送类型
+        bundle.putCharSequence("type",type);
         WordList wordList = new WordList();
         wordList.setData(dataList);
+        //传送数据
         bundle.putSerializable("dataList",wordList);
         fragment.setArguments(bundle);
         return fragment;

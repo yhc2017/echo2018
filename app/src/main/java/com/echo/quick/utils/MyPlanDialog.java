@@ -12,10 +12,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.activities.R;
+import com.echo.quick.contracts.HomeContract;
+import com.echo.quick.presenters.HomePresenterImpl;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -38,6 +44,7 @@ public class MyPlanDialog extends Dialog{
     private Button button_ok,button_cancel;
     MyLisenter lisenter;
     List<String> dataset1,dataset2;
+    HomeContract.IHomePresenter homePresenter;
 
     public MyPlanDialog(@NonNull Context context) {
         super(context);
@@ -56,6 +63,7 @@ public class MyPlanDialog extends Dialog{
         setContentView(R.layout.myplan_setting_dialog);
         //设置点击空白处不可以关掉dialog
         setCanceledOnTouchOutside(false);
+        homePresenter = new HomePresenterImpl();
         setView();
     }
     /**
@@ -72,10 +80,41 @@ public class MyPlanDialog extends Dialog{
         mbt1 = (RadioButton) findViewById(R.id.rb_study);
         mbt2 = (RadioButton) findViewById(R.id.rb_restudy);
 
-        mbt1.setChecked(true);//默认复习优先
-        dataset1 = new LinkedList<>(Arrays.asList("四级", "六级", "雅思", "出国(G)","出国(K)", "出国(B)", "出国(A)", "出国(D)"));
+        mbt1.setChecked(true);//默认复习优先、
+
+//        List<String> wordsBox = new ArrayList<>();
+        dataset1 = new ArrayList<>();
+        try {
+            Object o = SPUtils.get(App.getContext(), "wordsBox", "");
+            JSONArray jsonArray = JSONArray.parseArray(o.toString());
+            for(int i = 0; i < jsonArray.size(); i++){
+                JSONObject object = jsonArray.getJSONObject(i);
+                dataset1.add(object.getString("topicName"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
         mniceSpinner1.attachDataSource(dataset1);
-        dataset2 = new LinkedList<>(Arrays.asList("2018年6月", "2018年12月", "2019年6月", "2019年12月", "2020年6月"));
+        int year = homePresenter.getYear();
+        int mouth = homePresenter.getMouth();
+        String str1="";
+        String str2="";
+        String str3="";
+        String str4="";
+        if (mouth < 6){
+            str1 = year+"年"+6+"月";
+            str2 = year+"年"+12+"月";
+            str3 = (year+1)+"年"+6+"月";
+            str4 = (year+1)+"年"+12+"月";
+        }else {
+            str1 = year+"年"+12+"月";
+            str2 = (year+1)+"年"+6+"月";
+            str3 = (year+1)+"年"+12+"月";
+            str4 = (year+2)+"年"+6+"月";
+        }
+        dataset2 = new LinkedList<>(Arrays.asList(str1, str2, str3, str4));
         mniceSpinner2.attachDataSource(dataset2);
 
         lisenter = new MyLisenter();
@@ -98,7 +137,11 @@ public class MyPlanDialog extends Dialog{
                 case R.id.bt_ok :
                     HashMap hs = getMyValue();
                     LogUtils.d("我的计划====词库:"+hs.get("wordbox")+",目标时间:"+hs.get("plan") + ",选中框的值:"+hs.get("plantype"));
+                    SPUtils.put(App.getContext(), "box", hs.get("wordbox"));
+                    SPUtils.put(App.getContext(), "plan", hs.get("plan"));
+                    SPUtils.put(App.getContext(), "planType", hs.get("plantype"));
                     dismiss();
+                    
                     break;
                 case R.id.bt_cancel:
                     dismiss();

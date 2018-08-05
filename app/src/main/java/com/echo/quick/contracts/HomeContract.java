@@ -13,9 +13,15 @@ package com.echo.quick.contracts;
 public interface HomeContract {
 
     interface IHomeView{
-
+        void updatePlan();
     }
 
-    interface IHomePresenter{}
+    interface IHomePresenter{
+
+        int getYear();
+        int getMouth();
+        void updatePlan();
+
+    }
 
 }

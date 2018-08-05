@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <TextView
-                            style="@style/MyFont.Home.Title"
+                            style="@style/MyFont.Home.Content.Num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="100dp"

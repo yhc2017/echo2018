@@ -65,6 +65,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
             <LinearLayout
+                android:id="@+id/ll_word"
                 android:layout_width="243dp"
                 android:layout_height="wrap_content">
                 <TextView
@@ -93,6 +94,7 @@
                 android:background="@color/colorPrimary"
                 android:layout_height="match_parent"/>
             <ImageView
+                android:id="@+id/iv_play"
                 android:padding="2dp"
                 android:layout_marginLeft="12dp"
                 android:layout_width="23dp"

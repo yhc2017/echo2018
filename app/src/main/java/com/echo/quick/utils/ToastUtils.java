@@ -75,7 +75,7 @@ public class ToastUtils
  
 	/**
 	 * 自定义显示Toast时间
-	 * 
+	 *
 	 * @param context
 	 * @param message
 	 * @param duration

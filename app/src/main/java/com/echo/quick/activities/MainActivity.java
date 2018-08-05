@@ -75,11 +75,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
 
     OnlineWordContract.OnlineWordPresenter onlineWordPresenter;
 
-    private ActivityReceiver activityReceiver;
 
     public App app;
-
-    public static final String UPDATE_ACTION = "com.yhc.action.UPDATE_ACTION";
 
     Handler mHandler = null;
     Runnable mRunnable = null;
@@ -110,13 +107,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
         app = (App)getApplication();
 
         onlineWordPresenter = new OnlineWordPresenterImpl(this);
-
-        // 创建BroadcastReceiver
-        activityReceiver = new ActivityReceiver();
-        // 创建IntentFilter
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(UPDATE_ACTION);
-        registerReceiver(activityReceiver, filter);
 
         textView3 = (TextView)findViewById(R.id.textView3);
 
@@ -321,17 +311,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
         builder.show();
     }
 
-    public class ActivityReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            String str = intent.getStringExtra("service").toString();
-            String title = intent.getStringExtra("title").toString();
-            Log.d("MainActivity", "接收成功"+str);
-
-        }
-    }
 
     public void getWordStatus(Boolean learn){
 
