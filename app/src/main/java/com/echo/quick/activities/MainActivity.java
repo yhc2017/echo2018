@@ -315,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
 
                     }
                 };
-                mHandler.postDelayed(mRunnable, 2000);
+                mHandler.postDelayed(mRunnable, 1000);
             }
         });
         builder.show();
