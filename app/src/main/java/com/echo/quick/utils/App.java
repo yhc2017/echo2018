@@ -40,6 +40,8 @@ public class App extends Application{
 
     private String translation;
 
+    private String userId;
+
     public void onCreate() {
         super.onCreate();
         list = new ArrayList<>();
@@ -63,9 +65,13 @@ public class App extends Application{
                 onlineWordPresenter.getOnlineWordReviewOrLearn(map, "learn");
             }
             onlineWordPresenter.getOnlineSprintType();
+            onlineWordPresenter.GetAllWordTopicInfo();
         }catch (Exception e){
             LogUtils.d("没在服务器获取到数据");
         }
+
+        setUserId("111");
+
     }
 
 
@@ -114,5 +120,13 @@ public class App extends Application{
 
     public void setPagerList(List<String> pagerList) {
         this.pagerList = pagerList;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

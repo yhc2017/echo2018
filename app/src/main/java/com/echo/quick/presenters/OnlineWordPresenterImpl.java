@@ -16,6 +16,7 @@ import com.echo.quick.pojo.Words_Log;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.SPUtils;
 import com.echo.quick.utils.ToastUtils;
 
 import java.io.IOException;
@@ -225,7 +226,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
         IOnlineWord.getToWord("quick/paper/getPaperList", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                ToastUtils.showShort(App.getContext(), "getOnlineSprintType()---申请出错");
+
             }
 
             @Override
@@ -296,12 +297,14 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
         iOnline.getToWord("quick/selectAllWordTopicInfo", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                LogUtils.d("无法接收单词表信息");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
+                String res = response.body().string();
+                //保存到shareP。。。中
+                SPUtils.put(App.getContext(), "wordsBox", res);
             }
         });
     }
