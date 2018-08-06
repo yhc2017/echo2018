@@ -18,12 +18,20 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.activities.R;
 import com.echo.quick.contracts.HomeContract;
+import com.echo.quick.model.dao.impl.WordsStatusImpl;
+import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.presenters.HomePresenterImpl;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,6 +54,8 @@ public class MyPlanDialog extends Dialog{
     MyLisenter lisenter;
     List<String> dataset1,dataset2;
     HomeContract.IHomePresenter homePresenter;
+    JSONArray jsonArray_wordsBox;
+    Object o;
 
     public MyPlanDialog(@NonNull Context context) {
         super(context);
@@ -81,15 +91,15 @@ public class MyPlanDialog extends Dialog{
         mbt1 = (RadioButton) findViewById(R.id.rb_study);
         mbt2 = (RadioButton) findViewById(R.id.rb_restudy);
 
-        mbt1.setChecked(true);//默认复习优先、
+        mbt2.setChecked(true);//默认复习优先、
 
 //        List<String> wordsBox = new ArrayList<>();
         dataset1 = new ArrayList<>();
         try {
-            Object o = SPUtils.get(App.getContext(), "wordsBox", "");
-            JSONArray jsonArray = JSONArray.parseArray(o.toString());
-            for(int i = 0; i < jsonArray.size(); i++){
-                JSONObject object = jsonArray.getJSONObject(i);
+            o = SPUtils.get(App.getContext(), "wordsBox", "");
+            jsonArray_wordsBox = JSONArray.parseArray(o.toString());
+            for(int i = 0; i < jsonArray_wordsBox.size(); i++){
+                JSONObject object = jsonArray_wordsBox.getJSONObject(i);
                 dataset1.add(object.getString("topicName"));
             }
         }catch (Exception e){
@@ -105,15 +115,15 @@ public class MyPlanDialog extends Dialog{
         String str3="";
         String str4="";
         if (mouth < 6){
-            str1 = year+"年"+6+"月";
-            str2 = year+"年"+12+"月";
-            str3 = (year+1)+"年"+6+"月";
-            str4 = (year+1)+"年"+12+"月";
+            str1 = year+"-"+6;
+            str2 = year+"-"+12;
+            str3 = (year+1)+"-"+6;
+            str4 = (year+1)+"-"+12;
         }else {
-            str1 = year+"年"+12+"月";
-            str2 = (year+1)+"年"+6+"月";
-            str3 = (year+1)+"年"+12+"月";
-            str4 = (year+2)+"年"+6+"月";
+            str1 = year+"-"+12;
+            str2 = (year+1)+"-"+6;
+            str3 = (year+1)+"-"+12;
+            str4 = (year+2)+"-"+6;
         }
         dataset2 = new LinkedList<>(Arrays.asList(str1, str2, str3, str4));
         mniceSpinner2.attachDataSource(dataset2);
@@ -142,6 +152,15 @@ public class MyPlanDialog extends Dialog{
                     SPUtils.put(App.getContext(), "boxPosition", hs.get("position")+"");
                     SPUtils.put(App.getContext(), "plan", hs.get("plan"));
                     SPUtils.put(App.getContext(), "planType", hs.get("plantype"));
+
+                    try {
+                        //存入目标数
+                        int datenum = homePresenter.calMyPlanNmu(hs.get("plan").toString(), (Integer) hs.get("position"));
+                        System.out.printf("=================每日的目标数："+datenum);
+                        SPUtils.put(App.getContext(), "dateNum", datenum);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     dismiss();
                     Intent intent = new Intent();
                     intent.setAction("com.zjx.action.UPDATE_ACTION");
@@ -183,7 +202,6 @@ public class MyPlanDialog extends Dialog{
 
         return hs;
     }
-
 
 
 

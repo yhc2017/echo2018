@@ -1,5 +1,7 @@
 package com.echo.quick.contracts;
 
+import java.text.ParseException;
+
 /**
  * 项目名称：echo2018
  * 类描述：
@@ -21,6 +23,7 @@ public interface HomeContract {
         int getYear();
         int getMouth();
         void updatePlan();
+        int calMyPlanNmu(String date,int wordindex) throws ParseException;
 
     }
 

@@ -35,6 +35,7 @@ import com.echo.quick.utils.ToastUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private Button bt_start_study;
     private ImageView im_tor;
     private App app;
+    int datenum2 = 0;
 //线程
     Handler mHandler = null;
     Runnable mRunnable = null;
@@ -85,6 +87,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         //初始化
         initView();
+        initData();
         setdate();
     }
 
@@ -127,6 +130,22 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
+     * Method name : initData
+     * Specific description :数据初始化
+     *@return void
+     */
+    public void initData(){
+        //今日目标单词数默认值
+        try {
+            datenum2 = homePresenter.calMyPlanNmu("2018-12", 1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.printf("=================每日的目标数："+datenum2);
+        tv_word_obtion.setText(""+datenum2);
+    }
+
+    /**
      * Method name : setdate
      * Specific description :塞数据
      *@return void
@@ -145,6 +164,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             String i = SPUtils.get(App.getContext(), "boxPosition", "1").toString();
             com.alibaba.fastjson.JSONObject object = jsonArray.getJSONObject(Integer.parseInt(i));
             allWords = Integer.valueOf(object.getString("wordAllCount"));
+            //今日目标单词数
+            tv_word_obtion.setText(SPUtils.get(App.getContext(), "dateNum",datenum2).toString());
         }catch (Exception e){
             e.printStackTrace();
             tv_from.setText("四级");
@@ -153,8 +174,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         //完成单词数
         tv_word_finish.setText(String.valueOf(overWords));
-        //今日目标单词数
-        tv_word_obtion.setText(String.valueOf(20));
+
         //超前学习单词数
         tv_word_over.setText(String.valueOf(0));
         //词库单词数量
@@ -234,7 +254,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
                 final HashMap<String, String> map = new HashMap<>();
                 map.put("userId", app.getUserId());
-                map.put("topicId", "11");
+                map.put("topicId", "17");
                 String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
                 if(planType.equals("复习优先")) {
                     onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
