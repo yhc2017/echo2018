@@ -17,6 +17,7 @@ import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.WordsPresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.ToastUtils;
 import com.echo.quick.utils.WordsShowDialog;
 
 import java.util.ArrayList;
@@ -221,12 +222,12 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
         listener = new SampleWordsAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(View view , int position){
-//                ToastUtils.showShort(WordsActivity.this, "点击事件！");
-//                int i = position ;
-
-//                LogUtils.d("数字为："+i);
-//                Words words = new Words(mData.get(i).getWordId(),mData.get(i).getPron(),mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
-//                        ,mData.get(i).getEg1(),mData.get(i).getEg1Chinese(),"","", mData.get(i).getTopicId());
+                ToastUtils.showShort(WordsActivity.this, "点击事件！");
+                int i = position ;
+                LogUtils.d("数字为："+i);
+                Words words = new Words(mData.get(i).getWordId(),mData.get(i).getPron(),mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
+                        ,mData.get(i).getEg1(),mData.get(i).getEg1Chinese(),"","", mData.get(i).getTopicId());
+                LogUtils.d("==============="+mData.get(i).getEg1Chinese());
                 WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this, mData.get(position));
                 customDialog.show();
             }

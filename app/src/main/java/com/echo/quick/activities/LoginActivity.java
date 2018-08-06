@@ -76,8 +76,6 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         login_back = (ImageView) findViewById(R.id.login_back);
         ed_loginID = (EditText) findViewById(R.id.login_id);
         ed_loginPwd = (EditText) findViewById(R.id.login_pwd);
-        ed_loginID.setText("15521186429");
-        ed_loginPwd.setText("123456");
         bt_login = (Button) findViewById(R.id.logbtn);
     }
 
@@ -149,6 +147,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
                 case R.id.login_back:
                     LogUtils.d("登录页面", "返回主界面 ");
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
                     break;
 

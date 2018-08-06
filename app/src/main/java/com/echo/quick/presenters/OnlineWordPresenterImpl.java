@@ -294,7 +294,8 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
     @Override
     public void GetAllWordTopicInfo() {
         IOnlineWord iOnline = new OnlineWordImpl();
-        iOnline.getToWord("quick/selectAllWordTopicInfo", new Callback() {
+//        iOnline.getToWord("quick/selectAllWordTopicInfo", new Callback() {
+        iOnline.getToWord("quick/selectWordTopic17Info", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtils.d("无法接收单词表信息");

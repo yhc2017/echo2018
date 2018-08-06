@@ -203,8 +203,8 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
             switch (id) {
                 //返回按钮
                 case R.id.register_back:
-                    intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
+//                    intent = new Intent(RegisterActivity.this, MainActivity.class);
+//                    startActivity(intent);
                     LogUtils.d("注册页面跳转首页");
                     finish();
                     break;
