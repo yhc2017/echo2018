@@ -1,5 +1,7 @@
 package com.echo.quick.presenters;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.model.dao.impl.LoginImpl;
 import com.echo.quick.model.dao.interfaces.ILoginDao;
@@ -7,7 +9,6 @@ import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.SPUtils;
 
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -43,7 +44,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
     }
 
     @Override
-    public void doLogin(String name, String passwd) {
+    public void doLogin(String name, final String passwd) {
 
 
         ILoginDao loginDao = new LoginImpl();
@@ -61,9 +62,13 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
                 String res = response.body().string();
 
+                JSONObject object = JSON.parseObject(res);
+
+                String prepare4 = object.getString("prepare4");
+
                 SPUtils.put(App.getContext(), "UserInfo", res);
 
-                iLoginView.onLoginResult(true, code);
+                iLoginView.onLoginResult(true, prepare4);
 
                 // TO-DO:将上面得到的JsonObject进行处理，并通过用户上下文创建一个全局用户单例；
             }

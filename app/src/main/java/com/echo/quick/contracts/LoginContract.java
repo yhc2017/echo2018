@@ -15,7 +15,7 @@ public interface LoginContract {
     interface ILoginView{
 
         void onClearText();
-        void onLoginResult(Boolean result, int code);
+        void onLoginResult(Boolean result, String code);
 
     }
 

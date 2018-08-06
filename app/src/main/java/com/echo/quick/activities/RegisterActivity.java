@@ -186,13 +186,14 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
 
     @Override
     public void onRegisterResult(Boolean result, int code) {
-        if(result){
-
-            finish();
-
-        }else {
-            ToastUtils.showShort(this, "注册失败");
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ToastUtils.showLong(RegisterActivity.this, "注册成功,以跳登录");
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
     }
 
     //选择触发的事件
