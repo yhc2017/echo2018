@@ -40,6 +40,7 @@
                 android:text="2018年12月" />
 
             <TextView
+                android:id="@+id/tv_a"
                 style="@style/MyFont.Home.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,14 +174,29 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"/>
-        <TextView
-            android:id="@+id/tv_word_num"
-            android:text="3500"
-            android:layout_marginTop="3dp"
-            android:layout_marginRight="18dp"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"/>
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_way"
+                android:text="复习优先"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"/>
+            <TextView
+                android:id="@+id/tv_word_num"
+                android:text="3500"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"/>
+        </RelativeLayout>
+
         <Button
             android:id="@+id/bt_start_study"
             android:text="开   始   学   习"

@@ -42,6 +42,9 @@ public class App extends Application{
 
     private String userId;
 
+    public static final String CTL_ACTION = "com.zjx.action.CTL_ACTION";
+    public static final String UPDATE_ACTION = "com.zjx.action.UPDATE_ACTION";
+
     public void onCreate() {
         super.onCreate();
         list = new ArrayList<>();

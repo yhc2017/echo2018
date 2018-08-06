@@ -1,9 +1,11 @@
 package com.echo.quick.activities;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONArray;
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
@@ -46,7 +49,7 @@ import java.util.List;
  */
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener,HomeContract.IHomeView{
 
-    private TextView tv_user_name,tv_from,tv_obtion,im_setting,tv_word_finish,tv_word_obtion,tv_word_over,tv_word_num;
+    private TextView tv_way,tv_user_name,tv_from,tv_obtion,im_setting,tv_word_finish,tv_word_obtion,tv_word_over,tv_word_num;
     private ProgressBar my_word_plan_progressbar;
     private Button bt_start_study;
     private ImageView im_tor;
@@ -57,11 +60,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     HomeContract.IHomePresenter homePresenter;
 
+    private ActivityReceiver activityReceiver1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         app = (App)getApplication();
+
+        // 创建BroadcastReceiver
+        activityReceiver1 = new ActivityReceiver();
+        // 创建IntentFilter
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(app.UPDATE_ACTION);
+        registerReceiver(activityReceiver1, filter);
+
         if(NetUtils.isConnected(HomeActivity.this)){
             Toast.makeText(this, "网络已连接", Toast.LENGTH_SHORT).show();
         }else {
@@ -79,6 +92,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         try {
             updateUserName();
+            setdate();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -102,6 +116,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         my_word_plan_progressbar = (ProgressBar)findViewById(R.id.my_word_plan_progressbar);
         bt_start_study = (Button) findViewById(R.id.bt_start_study);
         im_tor = (ImageView)findViewById(R.id.im_tor);
+        tv_way = (TextView)findViewById(R.id.tv_way);
 
         //绑定监听
         im_setting.setOnClickListener(this);
@@ -117,24 +132,36 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
      *@return void
      */
     public void setdate(){
+        IWordsStatusDao statusDao = new WordsStatusImpl();
+        //完成单词数
+        int overWords = statusDao.selectCount("review_grasp");
+        int allWords = 3500;
         try{
             tv_from.setText(SPUtils.get(App.getContext(), "box","四级").toString().substring(0, 2));
-            tv_obtion.setText(SPUtils.get(App.getContext(), "plan","四级").toString());
+            tv_obtion.setText(SPUtils.get(App.getContext(), "plan","2018").toString());
+            tv_way.setText(SPUtils.get(App.getContext(), "planType","复习优先").toString());
+            Object o = SPUtils.get(App.getContext(), "wordsBox", "");
+            JSONArray jsonArray = JSONArray.parseArray(o.toString());
+            String i = SPUtils.get(App.getContext(), "boxPosition", "1").toString();
+            com.alibaba.fastjson.JSONObject object = jsonArray.getJSONObject(Integer.parseInt(i));
+            allWords = Integer.valueOf(object.getString("wordAllCount"));
         }catch (Exception e){
             e.printStackTrace();
             tv_from.setText("四级");
             tv_obtion.setText("2018年12月");
         }
-        //词库单词数量
-        tv_word_num.setText(String.valueOf(3500));
+
         //完成单词数
-        tv_word_finish.setText(String.valueOf(630));
+        tv_word_finish.setText(String.valueOf(overWords));
         //今日目标单词数
         tv_word_obtion.setText(String.valueOf(20));
         //超前学习单词数
-        tv_word_over.setText(String.valueOf(10));
+        tv_word_over.setText(String.valueOf(0));
+        //词库单词数量
+        tv_word_num.setText(overWords+"/"+allWords);
         //进度数
-        my_word_plan_progressbar.setProgress(50);
+        my_word_plan_progressbar.setMax(allWords);
+        my_word_plan_progressbar.setProgress(overWords);
 
     }
 
@@ -208,7 +235,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 final HashMap<String, String> map = new HashMap<>();
                 map.put("userId", app.getUserId());
                 map.put("topicId", "11");
-                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "learn");
+                String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
+                if(planType.equals("复习优先")) {
+                    onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
+                } else {
+                    onlineWordPresenter.getOnlineWordReviewOrLearn(map, "learn");
+                }
                 final ProgressDialog progressDialog = new ProgressDialog(HomeActivity.this);
                 progressDialog.setIcon(R.drawable.boy);
                 progressDialog.setTitle("请稍等");
@@ -270,10 +302,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     protected void onPause() {
         super.onPause();
         try {
             mHandler.removeCallbacks(mRunnable);
+            setdate();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -283,5 +317,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void updatePlan() {
         setdate();
+    }
+
+    public class ActivityReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setdate();
+        }
     }
 }

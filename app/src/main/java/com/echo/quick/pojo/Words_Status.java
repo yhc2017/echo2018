@@ -3,6 +3,8 @@ package com.echo.quick.pojo;
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
+import java.io.Serializable;
+
 /**
  * 项目名称：echo2018
  * 类描述：生词表,使用LitePal框架
@@ -13,7 +15,7 @@ import org.litepal.crud.LitePalSupport;
  * 修改备注：
  */
 
-public class Words_Status extends LitePalSupport {
+public class Words_Status extends LitePalSupport implements Serializable {
 
     @Column(unique = true, defaultValue = "unknown")
     private String wordId;

@@ -2,6 +2,7 @@ package com.echo.quick.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -138,10 +139,13 @@ public class MyPlanDialog extends Dialog{
                     HashMap hs = getMyValue();
                     LogUtils.d("我的计划====词库:"+hs.get("wordbox")+",目标时间:"+hs.get("plan") + ",选中框的值:"+hs.get("plantype"));
                     SPUtils.put(App.getContext(), "box", hs.get("wordbox"));
+                    SPUtils.put(App.getContext(), "boxPosition", hs.get("position")+"");
                     SPUtils.put(App.getContext(), "plan", hs.get("plan"));
                     SPUtils.put(App.getContext(), "planType", hs.get("plantype"));
                     dismiss();
-                    
+                    Intent intent = new Intent();
+                    intent.setAction("com.zjx.action.UPDATE_ACTION");
+                    getContext().sendBroadcast(intent);
                     break;
                 case R.id.bt_cancel:
                     dismiss();
@@ -164,6 +168,7 @@ public class MyPlanDialog extends Dialog{
         int selectedIndex1 = mniceSpinner1.getSelectedIndex();
         String datapick1 = dataset1.get(selectedIndex1);
         hs.put("wordbox", datapick1);
+        hs.put("position", selectedIndex1);
 
         //目标时间
         int selectedIndex2 = mniceSpinner2.getSelectedIndex();

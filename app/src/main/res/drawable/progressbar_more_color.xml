@@ -7,10 +7,10 @@
             <corners android:radius="5dip" />
             <gradient
                 android:angle="0"
-                android:centerColor="@color/bule"
+                android:centerColor="@color/bule2"
                 android:centerY="0.75"
-                android:endColor="@color/bule"
-                android:startColor="@color/bule" />
+                android:endColor="@color/bule2"
+                android:startColor="@color/bule2" />
         </shape>
     </item>
 
@@ -37,9 +37,9 @@
                 <!--渐变 中间、结束、开始-->
                 <gradient
                     android:angle="0"
-                    android:centerColor="#4fff"
-                    android:endColor="#4fff"
-                    android:startColor="#4fff" />
+                    android:centerColor="@color/blue"
+                    android:endColor="@color/blue"
+                    android:startColor="@color/blue" />
             </shape>
         </clip>
     </item>

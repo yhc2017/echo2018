@@ -1,6 +1,10 @@
 package com.echo.quick.activities;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -15,6 +19,7 @@ import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.WordList;
 import com.echo.quick.pojo.Words_Status;
+import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -28,8 +33,11 @@ public class StrangeWordsListActivity extends AppCompatActivity {
     private StrangeFragmentAdapter adapter;
     private List<Words_Status> newList = new ArrayList<>();
     private List<Words_Status> studyList = new ArrayList<>();
+    private List<Words_Status> studyList2 = new ArrayList<>();
     private List<Words_Status> reviewList = new ArrayList<>();
     private List<Words_Status> graspList = new ArrayList<>();
+    private ActivityReceiver activityReceiver;
+    StrangeListFragment fragment1;
 
     @SuppressLint("WrongConstant")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -38,9 +46,18 @@ public class StrangeWordsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_strange_words);
         initView();
+        // 创建BroadcastReceiver
+        activityReceiver = new ActivityReceiver();
+        // 创建IntentFilter
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(App.CTL_ACTION);
+        registerReceiver(activityReceiver, filter);
+
         viewPager = (ViewPager)findViewById(R.id.vp_coupon);
         tabs = (TabLayout)findViewById(R.id.tl_coupon);
         viewPager.setAdapter(adapter);
+//        viewPager.setOnPageChangeListener(new PagerListener());
+        viewPager.setOffscreenPageLimit(0);
         //为TabLayout设置ViewPager
         tabs.setupWithViewPager(viewPager);
         //使用ViewPager的适配器
@@ -54,6 +71,17 @@ public class StrangeWordsListActivity extends AppCompatActivity {
         titleDatas.add("生词本");
         titleDatas.add("熟悉本");
         fragmentList = new ArrayList<Fragment>();
+        addData();
+        fragment1 = newInstance(studyList,"study");
+        fragmentList.add(fragment1);
+        fragmentList.add(newInstance(reviewList,"review"));
+        fragmentList.add(newInstance(newList,"new"));
+        fragmentList.add(newInstance(graspList,"grasp"));
+        adapter = new StrangeFragmentAdapter(getSupportFragmentManager(), titleDatas, fragmentList);
+
+    }
+
+    public void addData(){
         IWordsStatusDao newDao = new WordsStatusImpl();
         for(Words_Status word: newDao.select()){
             String status = word.getStatus();
@@ -68,13 +96,9 @@ public class StrangeWordsListActivity extends AppCompatActivity {
             }
             LogUtils.d(word.getWord());
         }
-        fragmentList.add(newInstance(studyList,"study"));
-        fragmentList.add(newInstance(reviewList,"review"));
-        fragmentList.add(newInstance(newList,"new"));
-        fragmentList.add(newInstance(graspList,"grasp"));
-        adapter = new StrangeFragmentAdapter(getSupportFragmentManager(), titleDatas, fragmentList);
-
     }
+
+
 
     /**
      * Method name : newInstance
@@ -97,7 +121,15 @@ public class StrangeWordsListActivity extends AppCompatActivity {
     }
 
 
+    public class ActivityReceiver extends BroadcastReceiver {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Words_Status addword = (Words_Status) intent.getSerializableExtra("addword");
+            fragment1.setNewDate(addword);
+                LogUtils.d("发送成功..................................");
+            }
+        }
 
 
 }
