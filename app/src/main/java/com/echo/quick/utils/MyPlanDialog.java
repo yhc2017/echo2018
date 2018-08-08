@@ -108,6 +108,7 @@ public class MyPlanDialog extends Dialog{
 
 
         mniceSpinner1.attachDataSource(dataset1);
+        mniceSpinner1.setEnabled(false);
         int year = homePresenter.getYear();
         int mouth = homePresenter.getMouth();
         String str1="";

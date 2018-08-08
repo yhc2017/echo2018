@@ -3,6 +3,8 @@ package com.echo.quick.utils;
 import android.app.Application;
 import android.content.Context;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
@@ -41,6 +43,8 @@ public class App extends Application{
     private String translation;
 
     private String userId;
+    private String nickName;
+    private String sex;
 
     public static final String CTL_ACTION = "com.zjx.action.CTL_ACTION";
     public static final String UPDATE_ACTION = "com.zjx.action.UPDATE_ACTION";
@@ -57,6 +61,15 @@ public class App extends Application{
 
     public void init(){
         try {
+            setUserId("111");
+            Object o2 = "未登录";
+            Object o = SPUtils.get(App.getContext(), "UserInfo", o2);
+            if(o != o2) {
+                JSONObject object = JSON.parseObject(o.toString());
+                setUserId(object.getString("userId"));
+                setNickName(object.getString("nickname"));
+                setSex(object.getString("sex"));
+            }
             IWordsStatusDao statusDao = new WordsStatusImpl();
             List<Words_Status> statuses = statusDao.selectByStatus("");
 //            setStatusList(statuses);
@@ -65,16 +78,13 @@ public class App extends Application{
                 final HashMap<String, String> map = new HashMap<>();
                 map.put("userId", "111");
                 map.put("topicId", "17");
-                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "learn");
+                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
             }
             onlineWordPresenter.getOnlineSprintType();
             onlineWordPresenter.GetAllWordTopicInfo();
         }catch (Exception e){
             LogUtils.d("没在服务器获取到数据");
         }
-
-        setUserId("111");
-
     }
 
 
@@ -131,5 +141,21 @@ public class App extends Application{
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

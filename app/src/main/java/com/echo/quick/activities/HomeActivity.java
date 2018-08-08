@@ -18,7 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
@@ -31,9 +33,6 @@ import com.echo.quick.utils.MyPlanDialog;
 import com.echo.quick.utils.NetUtils;
 import com.echo.quick.utils.SPUtils;
 import com.echo.quick.utils.ToastUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.HashMap;
@@ -96,7 +95,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         try {
             updateUserName();
             setdate();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -137,7 +136,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void initData(){
         //今日目标单词数默认值
         try {
-            datenum2 = homePresenter.calMyPlanNmu("2018-12", 1);
+            datenum2 = homePresenter.calMyPlanNmu("2018-12", 0);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -199,8 +198,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.bt_start_study:
                 if(NetUtils.isConnected(HomeActivity.this)){
-                    Toast.makeText(this, "网络已连接", Toast.LENGTH_SHORT).show();
-                    getWordStatus(true);
+                    if(app.getUserId().equals("111")){
+                        Toast.makeText(this, "请注册登录，以便于我们更好的为您服务（暂不支持未登录操作）", Toast.LENGTH_SHORT).show();
+                    }else {
+                        getWordStatus(true);
+                    }
                 }else {
                     Toast.makeText(this, "网络未连接，请连接再操作", Toast.LENGTH_SHORT).show();
                 }
@@ -238,7 +240,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     public void popWindow(final Context context, final Boolean learn){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("今日份已完成");
+        builder.setTitle("获取单词进行练习");
 //        final EditText editText;
 //        builder.setView(editText = new EditText(AthleticsActivity.this));
         builder.setIcon(R.drawable.boy);
@@ -248,7 +250,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        builder.setPositiveButton("继续下一组", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("冲啊！皮卡丘", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
@@ -273,7 +275,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     {
 
                         IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
-                        if(iWordsStatusDao.selectByStatus("").size() >10){
+                        if(iWordsStatusDao.selectByStatus("").size() >1){
                             progressDialog.dismiss();
                             getWordStatus(learn);
                         }
@@ -307,18 +309,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void updateUserName() throws JSONException {
-        if(true){
-            Object o2 = "未登录";
-            Object o = SPUtils.get(App.getContext(), "UserInfo", o2);
-            if(o != o2){
-                JSONObject object = new JSONObject(o.toString());
-                tv_user_name.setText(object.getString("nickname"));
-                app.setUserId(object.getString("userId"));
-            }else {
-                tv_user_name.setText("未登录");
-            }
-
+    @Override
+    public void updateUserName(){
+        Object o2 = "未登录";
+        Object o = SPUtils.get(App.getContext(), "UserInfo", o2);
+        if(o != o2){
+            JSONObject object = JSON.parseObject(o.toString());
+            tv_user_name.setText(object.getString("nickname"));
+            app.setUserId(object.getString("userId"));
+            app.setNickName(object.getString("nickname"));
+            app.setSex(object.getString("sex"));
+        }else {
+            tv_user_name.setText("点击这进行注册登录");
         }
     }
 

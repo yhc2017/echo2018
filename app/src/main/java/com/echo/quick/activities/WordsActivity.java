@@ -3,6 +3,7 @@ package com.echo.quick.activities;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.ToastUtils;
 import com.echo.quick.utils.WordsShowDialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -269,12 +271,42 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
 
 
     @Override
-    public void RefreshPage(Boolean result) {
-        if(result){
-            startActivity(new Intent(WordsActivity.this, UserMsgActivity.class));
-            finish();
-        }else {
+    public void RefreshPage(final String result) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(result.equals("log")){
+                    ToastUtils.showLong(WordsActivity.this, "数据上传成功");
+                    finish();
+                }else {
+                    if(app.getSex().equals("男")){
+                        shareMsg("每日打卡", "每日打卡", app.getNickName()+"少侠"+"\n今天顺利完成今天任务，打卡证明","");
+                    }else {
+                        shareMsg("HomeActivity", "每日打卡", app.getNickName()+"女侠"+"\n今天顺利完成今天任务，打卡证明","");
+                    }
+                    finish();
+                }
+            }
+        });
 
+    }
+
+    public void shareMsg(String activityTitle, String msgTitle, String msgText,
+                         String imgPath) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        if (imgPath == null || imgPath.equals("")) {
+            intent.setType("text/plain"); // 纯文本
+        } else {
+            File f = new File(imgPath);
+            if (f != null && f.exists() && f.isFile()) {
+                intent.setType("image/jpg");
+                Uri u = Uri.fromFile(f);
+                intent.putExtra(Intent.EXTRA_STREAM, u);
+            }
         }
+        intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
+        intent.putExtra(Intent.EXTRA_TEXT, msgText);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(Intent.createChooser(intent, activityTitle));
     }
 }

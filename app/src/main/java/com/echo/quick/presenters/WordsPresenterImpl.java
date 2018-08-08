@@ -102,21 +102,23 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
             public void onClick(DialogInterface dialogInterface, int i) {
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
                 onlineWordPresenter.postOnlineWordsLog();
-                iWordsView.RefreshPage(true);
+                iWordsView.RefreshPage("");
             }
         });
         builder.setNeutralButton("上传数据", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+                onlineWordPresenter.postOnlineWordsLog();
+                iWordsView.RefreshPage("log");
             }
         });
-        builder.setPositiveButton("继续", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
+//        builder.setPositiveButton("继续", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//            }
+//        });
         builder.show();
     }
 
