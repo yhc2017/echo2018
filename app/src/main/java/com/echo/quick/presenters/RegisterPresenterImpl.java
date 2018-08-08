@@ -61,6 +61,8 @@ public class RegisterPresenterImpl extends BasePresenter implements RegisterCont
                 if(jsonObject.getString("prepare4").equals("204")){
                     SPUtils.put(App.getContext(), "UserInfo", res);
                     iRegisterView.onRegisterResult(true, code);
+                }else {
+                    iRegisterView.onRegisterResult(false, code);
                 }
 
             }

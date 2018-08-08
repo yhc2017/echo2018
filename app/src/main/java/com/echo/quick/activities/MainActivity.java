@@ -291,8 +291,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
             public void onClick(DialogInterface dialogInterface, int i) {
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
                 final HashMap<String, String> map = new HashMap<>();
-                map.put("userId", "111");
-                map.put("topicId", "17");
+                map.put("userId", app.getUserId());
+                map.put("topicId", app.getTopicId());
                 onlineWordPresenter.getOnlineWordReviewOrLearn(map, "learn");
                 final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
                 progressDialog.setIcon(R.drawable.boy);
@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
                     {
 
                         IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
-                        if(iWordsStatusDao.selectByStatus("").size() >10){
+                        if(iWordsStatusDao.selectByStatusAndTopicId("learn_", app.getTopicId()).size() >1){
                             progressDialog.dismiss();
                             getWordStatus(learn);
                         }
@@ -323,9 +323,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
     public void getWordStatus(Boolean learn){
 
         IWordsStatusDao statusDao = new WordsStatusImpl();
-        List<Words_Status> wordLearn = statusDao.selectByStatus("");
-        List<Words_Status> wordReview = statusDao.selectByStatus("review");
-        if(statusDao.selectCount("") != 0){
+        List<Words_Status> wordLearn = statusDao.selectByStatusAndTopicId("learn_", app.getTopicId());
+        List<Words_Status> wordReview = statusDao.selectByStatusAndTopicId("review", app.getTopicId());
+        if(statusDao.selectCountByStatusAndTopicId("", app.getTopicId()) != 0){
             if(learn){
                 wordLearn.addAll(wordReview);
                 app.setStatusList(wordLearn);

@@ -1,5 +1,6 @@
 package com.echo.quick.presenters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSONArray;
@@ -31,9 +32,13 @@ import java.util.GregorianCalendar;
 
 public class HomePresenterImpl implements HomeContract.IHomePresenter {
 
-    HomeContract.IHomeView iHomeView;
-    JSONArray jsonArray_wordsBox;
-    Object o;
+    private HomeContract.IHomeView iHomeView;
+
+    private App app;
+
+    {
+        app = (App) App.getContext();
+    }
 
     public HomePresenterImpl(){}
 
@@ -43,13 +48,13 @@ public class HomePresenterImpl implements HomeContract.IHomePresenter {
 
     @Override
     public int getYear() {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyy");
         return Integer.valueOf(df.format(new Date()));
     }
 
     @Override
     public int getMouth() {
-        SimpleDateFormat df = new SimpleDateFormat("MM");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("MM");
         return Integer.valueOf(df.format(new Date()));
     }
 
@@ -73,21 +78,133 @@ public class HomePresenterImpl implements HomeContract.IHomePresenter {
         int datenum = 0;
         String s1=date+"-12";
         String s2= getYear()+"-"+getMouth()+"-12";
-        DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+        @SuppressLint("SimpleDateFormat") DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar=new GregorianCalendar();
         Date d1=df.parse(s1);
         Date d2=df.parse(s2);
         int hh = (int) ((d1.getTime()-d2.getTime())/(60*60*1000*24));
 
         //全部单词数量
-        o = SPUtils.get(App.getContext(), "wordsBox", "");
-        jsonArray_wordsBox = JSONArray.parseArray(o.toString());
+        Object o = SPUtils.get(App.getContext(), "wordsBox", "[\n" +
+                "    {\n" +
+                "        \"topicId\": \"12\",\n" +
+                "        \"topicName\": \"六级必备词汇\",\n" +
+                "        \"tableName\": \"word_12\",\n" +
+                "        \"wordAllCount\": 2087,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"11\",\n" +
+                "        \"topicName\": \"四级必备词汇\",\n" +
+                "        \"tableName\": \"word_11\",\n" +
+                "        \"wordAllCount\": 13527,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"140\",\n" +
+                "        \"topicName\": \"高考大纲词汇\",\n" +
+                "        \"tableName\": \"word_140\",\n" +
+                "        \"wordAllCount\": 3874,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"141\",\n" +
+                "        \"topicName\": \"高考常用短语词汇\",\n" +
+                "        \"tableName\": \"word_141\",\n" +
+                "        \"wordAllCount\": 362,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"13\",\n" +
+                "        \"topicName\": \"考研必备词汇\",\n" +
+                "        \"tableName\": \"word_13\",\n" +
+                "        \"wordAllCount\": 5475,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"14\",\n" +
+                "        \"topicName\": \"TOEFL必备词汇\",\n" +
+                "        \"tableName\": \"word_14\",\n" +
+                "        \"wordAllCount\": 4883,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"16\",\n" +
+                "        \"topicName\": \"GRE考试必备词汇\",\n" +
+                "        \"tableName\": \"word_16\",\n" +
+                "        \"wordAllCount\": 14992,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"15\",\n" +
+                "        \"topicName\": \"雅思必备词汇\",\n" +
+                "        \"tableName\": \"word_15\",\n" +
+                "        \"wordAllCount\": 4541,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"17\",\n" +
+                "        \"topicName\": \"四级高频词汇\",\n" +
+                "        \"tableName\": \"word_cet4_high\",\n" +
+                "        \"wordAllCount\": 685,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"18\",\n" +
+                "        \"topicName\": \"真题阅读词汇\",\n" +
+                "        \"tableName\": \"word_paper_reading\",\n" +
+                "        \"wordAllCount\": 65,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    }\n" +
+                "]");
+        assert o != null;
+        JSONArray jsonArray_wordsBox = JSONArray.parseArray(o.toString());
         JSONObject object = jsonArray_wordsBox.getJSONObject(wordindex);
         int allWords = Integer.valueOf(object.getString("wordAllCount"));
 
         //已背单词数量
         IWordsStatusDao statusDao = new WordsStatusImpl();
-        int overWords = statusDao.selectCount("review_grasp");
+        int overWords = statusDao.selectCountByStatusAndTopicId("review_grasp", app.getTopicId());
 
         //四舍五入取整得到每日目标数
         datenum = Math.round((allWords - overWords)/hh);
