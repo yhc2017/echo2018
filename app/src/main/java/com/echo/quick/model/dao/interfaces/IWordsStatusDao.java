@@ -24,14 +24,30 @@ public interface IWordsStatusDao {
      **/
     List<Words_Status> select();
 
+    /**
+     * 方法名称：查询生词
+     * 方法描述: 通过topicId返回生词本的生词
+     * 参数1： 参数说明
+     * @return [返回类型说明]
+     **/
+    List<Words_Status> selectByTopicId(String topicId);
+
 
     /**
      * 方法名称：查询生词
      * 方法描述: 通过状态返回生词本属于这个状态的生词，例如生词，熟词
      * 参数1： 参数说明
-     * @return [返回类型说明]
+     * @return List<Words_Status>
      **/
     List<Words_Status> selectByStatus(String status);
+
+    /**
+     * 方法名称：查询生词
+     * 方法描述: 通过状态和词库Id返回生词本属于这个状态的生词，例如生词，熟词
+     * 参数1： 参数说明
+     * @return List<Words_Status>
+     **/
+    List<Words_Status> selectByStatusAndTopicId(String status, String topicId);
 
     /**
      * 方法名称：需要加入什么查询条件请进行扩展
@@ -40,6 +56,14 @@ public interface IWordsStatusDao {
      * @return [返回类型说明]
      **/
     int selectCount(String request);
+
+    /**
+     * 方法名称：需要加入什么查询条件请进行扩展
+     * 方法描述: 查的单词数目,使用单参数的方法，减低接口数量加强扩展性
+     * 参数1： 状态和词库Id
+     * @return int
+     **/
+    int selectCountByStatusAndTopicId(String request, String topicId);
 
     /**
      * 方法名称：查询生词

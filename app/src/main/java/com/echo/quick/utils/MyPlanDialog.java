@@ -49,12 +49,10 @@ import java.util.List;
 public class MyPlanDialog extends Dialog{
     private NiceSpinner mniceSpinner1,mniceSpinner2;
     private RadioGroup mradioGroup;
-    private RadioButton mbt1,mbt2;
     private Button button_ok,button_cancel;
     MyLisenter lisenter;
     List<String> dataset1,dataset2;
-    HomeContract.IHomePresenter homePresenter;
-    JSONArray jsonArray_wordsBox;
+    private HomeContract.IHomePresenter homePresenter;
     Object o;
 
     public MyPlanDialog(@NonNull Context context) {
@@ -82,22 +80,23 @@ public class MyPlanDialog extends Dialog{
      * Specific description :初始化页面 和 数据 以及 事件监听
      *@return void
      */
-    public void setView(){
+    private void setView(){
         button_ok = (Button) findViewById(R.id.bt_ok);
         button_cancel = (Button) findViewById(R.id.bt_cancel);
         mniceSpinner1 = (NiceSpinner) findViewById(R.id.nice_spinner);
         mniceSpinner2 = (NiceSpinner) findViewById(R.id.spinner_pick);
         mradioGroup = (RadioGroup)findViewById(R.id.radiogroup);
-        mbt1 = (RadioButton) findViewById(R.id.rb_study);
-        mbt2 = (RadioButton) findViewById(R.id.rb_restudy);
+        RadioButton mbt1 = (RadioButton) findViewById(R.id.rb_study);
+        RadioButton mbt2 = (RadioButton) findViewById(R.id.rb_restudy);
 
         mbt2.setChecked(true);//默认复习优先、
 
-//        List<String> wordsBox = new ArrayList<>();
+        List<String> wordsBox = new ArrayList<>();
         dataset1 = new ArrayList<>();
         try {
             o = SPUtils.get(App.getContext(), "wordsBox", "");
-            jsonArray_wordsBox = JSONArray.parseArray(o.toString());
+            assert o != null;
+            JSONArray jsonArray_wordsBox = JSONArray.parseArray(o.toString());
             for(int i = 0; i < jsonArray_wordsBox.size(); i++){
                 JSONObject object = jsonArray_wordsBox.getJSONObject(i);
                 dataset1.add(object.getString("topicName"));
@@ -108,7 +107,7 @@ public class MyPlanDialog extends Dialog{
 
 
         mniceSpinner1.attachDataSource(dataset1);
-        mniceSpinner1.setEnabled(false);
+//        mniceSpinner1.setEnabled(false);
         int year = homePresenter.getYear();
         int mouth = homePresenter.getMouth();
         String str1="";
@@ -138,7 +137,6 @@ public class MyPlanDialog extends Dialog{
     /**
      * Class name : MyLisenter
      * Specific description :事件处理
-     *@return void
      */
     public class MyLisenter implements View.OnClickListener{
 
@@ -149,9 +147,12 @@ public class MyPlanDialog extends Dialog{
                 case R.id.bt_ok :
                     HashMap hs = getMyValue();
                     LogUtils.d("我的计划====词库:"+hs.get("wordbox")+",目标时间:"+hs.get("plan") + ",选中框的值:"+hs.get("plantype"));
+                    //选择的词库
                     SPUtils.put(App.getContext(), "box", hs.get("wordbox"));
                     SPUtils.put(App.getContext(), "boxPosition", hs.get("position")+"");
+                    //选择的计划完成日期
                     SPUtils.put(App.getContext(), "plan", hs.get("plan"));
+                    //选择的背单词模式
                     SPUtils.put(App.getContext(), "planType", hs.get("plantype"));
 
                     try {
@@ -181,7 +182,7 @@ public class MyPlanDialog extends Dialog{
      *@return hs HashMap
      */
 
-    public HashMap getMyValue(){
+    private HashMap getMyValue(){
         HashMap hs = new HashMap();
 
         //词库类型
