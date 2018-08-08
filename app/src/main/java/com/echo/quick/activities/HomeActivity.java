@@ -252,6 +252,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         startActivity(new Intent(context, LoginActivity.class));
 
+
     }
 
     public void popWindow(final Context context, final Boolean learn){
