@@ -18,7 +18,7 @@ public interface WordsContract {
 
     interface IWordsView{
 
-        void RefreshPage(Boolean result);
+        void RefreshPage(String result);
 
     }
 

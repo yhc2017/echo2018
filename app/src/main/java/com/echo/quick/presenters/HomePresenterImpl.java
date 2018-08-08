@@ -3,6 +3,7 @@ package com.echo.quick.presenters;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
@@ -81,7 +82,7 @@ public class HomePresenterImpl implements HomeContract.IHomePresenter {
         //全部单词数量
         o = SPUtils.get(App.getContext(), "wordsBox", "");
         jsonArray_wordsBox = JSONArray.parseArray(o.toString());
-        com.alibaba.fastjson.JSONObject object = jsonArray_wordsBox.getJSONObject(wordindex);
+        JSONObject object = jsonArray_wordsBox.getJSONObject(wordindex);
         int allWords = Integer.valueOf(object.getString("wordAllCount"));
 
         //已背单词数量

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.presenters.LoginPresenterImpl;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Order;
@@ -125,10 +126,18 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     }
 
     @Override
-    public void onLoginResult(Boolean result, int code) {
-        if(result){
-            finish();
-        }
+    public void onLoginResult(Boolean result, final String code) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(code.equals("200")){
+                    ToastUtils.showLong(LoginActivity.this,"登录成功");
+                    finish();
+                }else {
+                    ToastUtils.showLong(LoginActivity.this,"error，请检查账号或密码是否正确");
+                }
+            }
+        });
     }
 
     //选择触发的事件

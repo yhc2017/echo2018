@@ -231,14 +231,19 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                JSONArray jsonArray = JSONObject.parseArray(response.body().string());
-                for (int i = 0; i < jsonArray.size(); i++){
-                    JSONObject object = jsonArray.getJSONObject(i);
-                    String res = object.getString("paperDate");
-                    data.add(res);
-                    LogUtils.d(res);
+                try {
+                    JSONArray jsonArray = JSONObject.parseArray(response.body().string());
+                    for (int i = 0; i < jsonArray.size(); i++){
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String res = object.getString("paperDate");
+                        data.add(res);
+                        LogUtils.d(res);
+                    }
+                    app.setPagerList(data);
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
-                app.setPagerList(data);
+
             }
         });
 
