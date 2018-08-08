@@ -178,7 +178,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }catch (Exception e){
             e.printStackTrace();
             tv_from.setText("四级");
-            tv_obtion.setText("2018年12月");
+            tv_obtion.setText("2018-12");
         }
 
         //完成单词数
