@@ -250,8 +250,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     public void toUser(Context context){
 
-        startActivity(new Intent(context, LoginActivity.class));
-
+        if(app.getUserId().equals("111") || app.getUserId() == null) {
+            startActivity(new Intent(context, LoginActivity.class));
+        }else {
+            startActivity(new Intent(context, UserMessageActivity.class));
+        }
 
     }
 

@@ -23,6 +23,8 @@
     <string name="next_opr">下一步</string>
     <string name="iphone_number">请输入手机号</string>
     <string name="password">请输入密码</string>
+    <string name="new_password">请输入新密码</string>
+    <string name="new_password_2">请再次输入新密码</string>
     <string name="login">登 录</string>
     <string name="exit">退出账号</string>
     <string name="forgive_pwd">忘记密码？</string>
