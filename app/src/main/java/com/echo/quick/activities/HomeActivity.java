@@ -231,7 +231,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if(1 == 1){
             startActivity(new Intent(context, LoginActivity.class));
         }else {
-            startActivity(new Intent(context, UserMsgActivity.class));
+            startActivity(new Intent(context, UserMessageActivity.class));
         }
 
     }

@@ -271,7 +271,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
     @Override
     public void RefreshPage(Boolean result) {
         if(result){
-            startActivity(new Intent(WordsActivity.this, UserMsgActivity.class));
+            startActivity(new Intent(WordsActivity.this, UserMessageActivity.class));
             finish();
         }else {
 

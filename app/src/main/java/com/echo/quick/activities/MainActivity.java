@@ -25,6 +25,7 @@ import com.echo.quick.model.dao.impl.WordsLogImpl;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsLogDao;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
+import com.echo.quick.pojo.User;
 import com.echo.quick.pojo.Words_Log;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
      */
 //    private OKhttpManager manager = OKhttpManager.getInstance();
 
-    private Button btn_login,btn_test,btn_quick,btn_study,btn_re_study,btn_test_db,btn_test_db2;
+    private Button btn_login,btn_test,btn_quick,btn_study,btn_re_study,btn_test_db,btn_test_db2,btn_view;
 
     private TextView textView3;
 
@@ -109,6 +110,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
         onlineWordPresenter = new OnlineWordPresenterImpl(this);
 
         textView3 = (TextView)findViewById(R.id.textView3);
+        btn_view = (Button)findViewById(R.id.btn_view);
+        btn_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, UserMessageActivity.class));
+            }
+        });
 
 
 
