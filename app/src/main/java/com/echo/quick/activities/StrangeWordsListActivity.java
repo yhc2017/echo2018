@@ -26,10 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StrangeWordsListActivity extends AppCompatActivity {
-    private ArrayList<Fragment> fragmentList;
     ArrayList<String> titleDatas;
-    private TabLayout tabs;
-    private ViewPager viewPager;
     private StrangeFragmentAdapter adapter;
     private List<Words_Status> newList = new ArrayList<>();
     private List<Words_Status> studyList = new ArrayList<>();
@@ -38,6 +35,7 @@ public class StrangeWordsListActivity extends AppCompatActivity {
     private List<Words_Status> graspList = new ArrayList<>();
     private ActivityReceiver activityReceiver;
     StrangeListFragment fragment1;
+    App app;
 
     @SuppressLint("WrongConstant")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -45,6 +43,7 @@ public class StrangeWordsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_strange_words);
+        app = (App)App.getContext();
         initView();
         // 创建BroadcastReceiver
         activityReceiver = new ActivityReceiver();
@@ -53,8 +52,8 @@ public class StrangeWordsListActivity extends AppCompatActivity {
         filter.addAction(App.CTL_ACTION);
         registerReceiver(activityReceiver, filter);
 
-        viewPager = (ViewPager)findViewById(R.id.vp_coupon);
-        tabs = (TabLayout)findViewById(R.id.tl_coupon);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.vp_coupon);
+        TabLayout tabs = (TabLayout) findViewById(R.id.tl_coupon);
         viewPager.setAdapter(adapter);
 //        viewPager.setOnPageChangeListener(new PagerListener());
         viewPager.setOffscreenPageLimit(0);
@@ -70,7 +69,7 @@ public class StrangeWordsListActivity extends AppCompatActivity {
         titleDatas.add("待复习");
         titleDatas.add("生词本");
         titleDatas.add("熟悉本");
-        fragmentList = new ArrayList<Fragment>();
+        ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
         addData();
         fragment1 = newInstance(studyList,"study");
         fragmentList.add(fragment1);
@@ -83,7 +82,7 @@ public class StrangeWordsListActivity extends AppCompatActivity {
 
     public void addData(){
         IWordsStatusDao newDao = new WordsStatusImpl();
-        for(Words_Status word: newDao.select()){
+        for(Words_Status word: newDao.selectByTopicId(app.getTopicId())){
             String status = word.getStatus();
             if(status.equals("new")){
                 newList.add(word);
@@ -131,5 +130,9 @@ public class StrangeWordsListActivity extends AppCompatActivity {
             }
         }
 
-
+    protected void onDestroy(){
+        super.onDestroy();
+        //注销广播
+        unregisterReceiver(activityReceiver);
+    }
 }

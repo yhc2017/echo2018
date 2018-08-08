@@ -16,8 +16,8 @@ public interface HomeContract {
 
     interface IHomeView{
         void updatePlan();
-
         void updateUserName();
+        void addPlanResult(Boolean result);
     }
 
     interface IHomePresenter{

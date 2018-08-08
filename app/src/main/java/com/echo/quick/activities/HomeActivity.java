@@ -1,5 +1,6 @@
 package com.echo.quick.activities;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -61,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     HomeContract.IHomePresenter homePresenter;
 
-    private ActivityReceiver activityReceiver1;
+    private ActivityReceiver activityReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +71,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         app = (App)getApplication();
 
         // 创建BroadcastReceiver
-        activityReceiver1 = new ActivityReceiver();
+        activityReceiver = new ActivityReceiver();
         // 创建IntentFilter
         IntentFilter filter = new IntentFilter();
-        filter.addAction(app.UPDATE_ACTION);
-        registerReceiver(activityReceiver1, filter);
+        filter.addAction(App.UPDATE_ACTION);
+        registerReceiver(activityReceiver, filter);
 
         if(NetUtils.isConnected(HomeActivity.this)){
             Toast.makeText(this, "网络已连接", Toast.LENGTH_SHORT).show();
@@ -147,22 +148,31 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Method name : setdate
      * Specific description :塞数据
-     *@return void
+     *@return HashMap 希望不是个错误
      */
-    public void setdate(){
+    public HashMap<String, String> setdate(){
+
+        //需要上传到服务器的数据
+        final HashMap<String, String> map = new HashMap<>();
+
+
         IWordsStatusDao statusDao = new WordsStatusImpl();
-        //完成单词数
-        int overWords = statusDao.selectCount("review_grasp");
         int allWords = 3500;
+        String topicId = "12";
         try{
             tv_from.setText(SPUtils.get(App.getContext(), "box","四级").toString().substring(0, 2));
             tv_obtion.setText(SPUtils.get(App.getContext(), "plan","2018").toString());
             tv_way.setText(SPUtils.get(App.getContext(), "planType","复习优先").toString());
             Object o = SPUtils.get(App.getContext(), "wordsBox", "");
+            assert o != null;
             JSONArray jsonArray = JSONArray.parseArray(o.toString());
-            String i = SPUtils.get(App.getContext(), "boxPosition", "1").toString();
-            com.alibaba.fastjson.JSONObject object = jsonArray.getJSONObject(Integer.parseInt(i));
+            int i = Integer.valueOf(SPUtils.get(App.getContext(), "boxPosition", "1").toString());
+            com.alibaba.fastjson.JSONObject object = jsonArray.getJSONObject(i);
             allWords = Integer.valueOf(object.getString("wordAllCount"));
+            topicId = object.getString("topicId");
+            app.setTopicId(topicId);
+            //存储当前选择的topicId
+            SPUtils.put(App.getContext(), "topicId", topicId);
             //今日目标单词数
             tv_word_obtion.setText(SPUtils.get(App.getContext(), "dateNum",datenum2).toString());
         }catch (Exception e){
@@ -172,6 +182,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         //完成单词数
+        //完成单词数
+        int overWords = statusDao.selectCountByStatusAndTopicId("review_grasp", app.getTopicId());
         tv_word_finish.setText(String.valueOf(overWords));
 
         //超前学习单词数
@@ -182,6 +194,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         my_word_plan_progressbar.setMax(allWords);
         my_word_plan_progressbar.setProgress(overWords);
 
+        map.put("userId", app.getUserId());
+        map.put("topicId", topicId);
+        map.put("endTime", tv_obtion.getText().toString()+"-25");
+        if(tv_way.getText().toString().equals("复习优先")){
+            map.put("model", "211");
+        }else {
+            map.put("model", "210");
+        }
+        return map;
     }
 
 
@@ -193,7 +214,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_word_finish:
                 intent = new Intent(HomeActivity.this, StrangeWordsListActivity.class);
                 startActivity(intent);
-                finish();
                 break;
 
             case R.id.bt_start_study:
@@ -230,11 +250,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     public void toUser(Context context){
 
-        if(1 == 1){
-            startActivity(new Intent(context, LoginActivity.class));
-        }else {
-            startActivity(new Intent(context, UserMsgActivity.class));
-        }
+        startActivity(new Intent(context, LoginActivity.class));
 
     }
 
@@ -256,7 +272,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
                 final HashMap<String, String> map = new HashMap<>();
                 map.put("userId", app.getUserId());
-                map.put("topicId", "17");
+                map.put("topicId", app.getTopicId());
                 String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
                 if(planType.equals("复习优先")) {
                     onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
@@ -275,7 +291,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     {
 
                         IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
-                        if(iWordsStatusDao.selectByStatus("").size() >1){
+                        if(iWordsStatusDao.selectByStatusAndTopicId("learn_", app.getTopicId()).size() >1){
                             progressDialog.dismiss();
                             getWordStatus(learn);
                         }
@@ -292,9 +308,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void getWordStatus(Boolean learn){
 
         IWordsStatusDao statusDao = new WordsStatusImpl();
-        List<Words_Status> wordLearn = statusDao.selectByStatus("");
-        List<Words_Status> wordReview = statusDao.selectByStatus("review");
-        if(statusDao.selectCount("") != 0){
+        List<Words_Status> wordLearn = statusDao.selectByStatusAndTopicId("learn_", app.getTopicId());
+        List<Words_Status> wordReview = statusDao.selectByStatusAndTopicId("review", app.getTopicId());
+        if(statusDao.selectCountByStatusAndTopicId("learn_review", app.getTopicId()) != 0){
             if(learn){
                 wordLearn.addAll(wordReview);
                 app.setStatusList(wordLearn);
@@ -324,10 +340,25 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void addPlanResult(final Boolean result) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(result){
+                    ToastUtils.showLong(HomeActivity.this, "计划制定完成");
+                }else {
+                    ToastUtils.showLong(HomeActivity.this, "计划制定出现小问题，请留意网络状态");
+                }
+            }
+        });
+    }
+
 
     protected void onPause() {
         super.onPause();
         try {
+            if(mHandler != null)
             mHandler.removeCallbacks(mRunnable);
             setdate();
         }catch (Exception e){
@@ -338,14 +369,32 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void updatePlan() {
-        setdate();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //刷新界面,从这个方法获取HashMap貌似可以，但不知会不会是个错误
+                HashMap<String, String> map = setdate();
+                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+                onlineWordPresenter.postToAddWordPlan(map);
+            }
+        });
     }
 
     public class ActivityReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            setdate();
+            //刷新界面,从这个方法获取HashMap貌似可以，但不知会不会是个错误
+            HashMap<String, String> map = setdate();
+            OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(HomeActivity.this);
+            onlineWordPresenter.postToAddWordPlan(map);
         }
     }
+
+    protected void onDestroy(){
+        super.onDestroy();
+        //注销广播
+        unregisterReceiver(activityReceiver);
+    }
+
 }
