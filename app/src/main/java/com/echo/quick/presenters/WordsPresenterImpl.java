@@ -91,7 +91,7 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
     }
 
 
-    public void popWindow(final Context context){
+    private void popWindow(final Context context){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("今日份已完成");
 //        final EditText editText;

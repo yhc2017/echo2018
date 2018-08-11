@@ -36,10 +36,13 @@ public class App extends Application{
     private static Context mContext;
     private String content;
     private String translation;
+
     private String userId;
     private String nickName;
     private String sex;
     private String topicId;
+    private String study;
+
     public static final String CTL_ACTION = "com.zjx.action.CTL_ACTION";
     public static final String UPDATE_ACTION = "com.zjx.action.UPDATE_ACTION";
 
@@ -60,22 +63,21 @@ public class App extends Application{
             Object o2 = "未登录";
             Object o = SPUtils.get(App.getContext(), "UserInfo", o2);
             Object topicId = SPUtils.get(getContext(), "topicID", "12");
+            setTopicId(topicId.toString());
+            OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
             if(o != o2) {
                 JSONObject object = JSON.parseObject(o.toString());
                 setUserId(object.getString("userId"));
                 setNickName(object.getString("nickname"));
                 setSex(object.getString("sex"));
-                setTopicId(topicId.toString());
-            }
-            IWordsStatusDao statusDao = new WordsStatusImpl();
-            List<Words_Status> statuses = statusDao.selectByStatusAndTopicId("learn_", getTopicId());
-//            setStatusList(statuses);
-            OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-            if(statuses.size() == 5){
-                final HashMap<String, String> map = new HashMap<>();
-                map.put("userId", getUserId());
-                map.put("topicId", getTopicId());
-                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
+                IWordsStatusDao statusDao = new WordsStatusImpl();
+                List<Words_Status> statuses = statusDao.selectByStatusAndTopicId("learn_", getTopicId());
+                if (statuses.size() < 5) {
+                    final HashMap<String, String> map = new HashMap<>();
+                    map.put("userId", getUserId());
+                    map.put("topicId", getTopicId());
+                    onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
+                }
             }
             onlineWordPresenter.getOnlineSprintType();
             onlineWordPresenter.GetAllWordTopicInfo();
@@ -162,5 +164,13 @@ public class App extends Application{
 
     public void setTopicId(String topicId) {
         this.topicId = topicId;
+    }
+
+    public String getStudy() {
+        return study;
+    }
+
+    public void setStudy(String study) {
+        this.study = study;
     }
 }

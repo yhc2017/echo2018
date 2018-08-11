@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,11 +25,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.HomeContract;
+import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.HomePresenterImpl;
+import com.echo.quick.presenters.LoginPresenterImpl;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.MyPlanDialog;
@@ -35,9 +39,12 @@ import com.echo.quick.utils.NetUtils;
 import com.echo.quick.utils.SPUtils;
 import com.echo.quick.utils.ToastUtils;
 
+import org.json.JSONException;
+
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class name: HomeActivity
@@ -61,6 +68,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     Runnable mRunnable = null;
 
     HomeContract.IHomePresenter homePresenter;
+    LoginContract.ILoginPresenter loginPresenter;
 
     private ActivityReceiver activityReceiver;
 
@@ -84,6 +92,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         homePresenter = new HomePresenterImpl(this);
+        loginPresenter = new LoginPresenterImpl(this);
 
         //初始化
         initView();
@@ -156,11 +165,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
      * Specific description :塞数据
      *@return HashMap 希望不是个错误
      */
+    @Override
     public HashMap<String, String> setdate(){
 
         //需要上传到服务器的数据
         final HashMap<String, String> map = new HashMap<>();
-
 
         IWordsStatusDao statusDao = new WordsStatusImpl();
         int allWords = 3500;
@@ -193,7 +202,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tv_word_finish.setText(String.valueOf(overWords));
 
         //超前学习单词数
-        tv_word_over.setText(String.valueOf(0));
+        tv_word_over.setText("0");
         //词库单词数量
         tv_word_num.setText(overWords+"/"+allWords);
         //进度数
@@ -224,10 +233,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.bt_start_study:
                 if(NetUtils.isConnected(HomeActivity.this)){
-                    if(app.getUserId().equals("111")){
+                    if(app.getUserId().equals("111") || app.getUserId().equals("")){
                         Toast.makeText(this, "请注册登录，以便于我们更好的为您服务（暂不支持未登录操作）", Toast.LENGTH_SHORT).show();
                     }else {
-                        getWordStatus(true);
+                        String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
+                        ToastUtils.showLong(HomeActivity.this, planType);
+                        if(planType.equals("复习优先")) {
+                            getWordStatus(false);
+                        } else {
+                            getWordStatus(true);
+                        }
                     }
                 }else {
                     Toast.makeText(this, "网络未连接，请连接再操作", Toast.LENGTH_SHORT).show();
@@ -301,9 +316,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     {
 
                         IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
-                        if(iWordsStatusDao.selectByStatusAndTopicId("learn_", app.getTopicId()).size() >1){
+                        if(iWordsStatusDao.selectCountByStatusAndTopicId("learn_", app.getTopicId()) != 0){
                             progressDialog.dismiss();
-                            getWordStatus(learn);
+                            String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
+                            if(planType.equals("复习优先")) {
+                                getWordStatus(false);
+                            } else {
+                                getWordStatus(true);
+                            }
                         }
 
                     }
@@ -320,7 +340,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         IWordsStatusDao statusDao = new WordsStatusImpl();
         List<Words_Status> wordLearn = statusDao.selectByStatusAndTopicId("learn_", app.getTopicId());
         List<Words_Status> wordReview = statusDao.selectByStatusAndTopicId("review", app.getTopicId());
-        if(statusDao.selectCountByStatusAndTopicId("learn_review", app.getTopicId()) != 0){
+        if(wordLearn.size() != 0){
             if(learn){
                 wordLearn.addAll(wordReview);
                 app.setStatusList(wordLearn);
@@ -357,8 +377,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 if(result){
                     ToastUtils.showLong(HomeActivity.this, "计划制定完成");
+                    setdate();
                 }else {
                     ToastUtils.showLong(HomeActivity.this, "计划制定出现小问题，请留意网络状态");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void overWordInfo() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+
+                    loginPresenter.allWordInfo(false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    finish();
                 }
             }
         });
@@ -379,15 +417,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void updatePlan() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //刷新界面,从这个方法获取HashMap貌似可以，但不知会不会是个错误
-                HashMap<String, String> map = setdate();
-                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-                onlineWordPresenter.postToAddWordPlan(map);
-            }
-        });
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                //刷新界面,从这个方法获取HashMap貌似可以，但不知会不会是个错误
+//                HashMap<String, String> map = setdate();
+//                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+//                onlineWordPresenter.postToAddWordPlan(map);
+//            }
+//        });
     }
 
     public class ActivityReceiver extends BroadcastReceiver {
@@ -398,11 +436,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             HashMap<String, String> map = setdate();
             OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(HomeActivity.this);
             onlineWordPresenter.postToAddWordPlan(map);
+            IWordsStatusDao wordsStatusDao = new WordsStatusImpl();
+            if(wordsStatusDao.selectCountByStatusAndTopicId("review", app.getTopicId()) == 0) {
+                HashMap<String, String> map2 = new HashMap<>();
+                map2.put("userId", app.getUserId());
+                map2.put("topicId", app.getTopicId());
+                onlineWordPresenter.postToGetTopicIdWords(map2, false);
+            }
         }
     }
 
     protected void onDestroy(){
         super.onDestroy();
+
         //注销广播
         unregisterReceiver(activityReceiver);
     }

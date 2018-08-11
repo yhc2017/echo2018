@@ -1,6 +1,7 @@
 package com.echo.quick.contracts;
 
 import java.text.ParseException;
+import java.util.HashMap;
 
 /**
  * 项目名称：echo2018
@@ -18,6 +19,8 @@ public interface HomeContract {
         void updatePlan();
         void updateUserName();
         void addPlanResult(Boolean result);
+        void overWordInfo();
+        HashMap<String, String> setdate();
     }
 
     interface IHomePresenter{

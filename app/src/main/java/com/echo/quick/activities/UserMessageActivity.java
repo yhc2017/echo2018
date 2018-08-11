@@ -17,16 +17,30 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.echo.quick.contracts.OnlineWordContract;
+import com.echo.quick.contracts.UserMessageContract;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
+import com.echo.quick.pojo.Words_Log;
+import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
+import com.echo.quick.presenters.UserMessagePresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.SPUtils;
 import com.echo.quick.utils.ToastUtils;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Length;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Order;
+
+import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Class name: UserMessageActivity
@@ -38,9 +52,12 @@ import java.util.HashMap;
  * @since ：[quick|user]
  */
 
-public class UserMessageActivity extends AppCompatActivity{
+public class UserMessageActivity extends AppCompatActivity implements UserMessageContract.IUserMessageView,Validator.ValidationListener{
 
-    private EditText et_name,et_password;
+    @NotEmpty(messageResId=R.string.resigter_user_name_hint)
+    @Length(max=8, messageResId=R.string.resigter_user_name_length_hint)
+    @Order(1)
+    private EditText et_name;
     private TextView tv_mod_user_ok,tv_sex_rs,tv_id;
     private Button exitbtn;
     private RadioGroup rg_sex;
@@ -49,12 +66,17 @@ public class UserMessageActivity extends AppCompatActivity{
     private MyListener listener;
     private RelativeLayout rl_modify_pwd;
     private App app;
+    private UserMessageContract.IUserMessagePresenter presenter;
+    protected Validator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_message2);
         app = (App)getApplicationContext();
+        presenter = new UserMessagePresenterImpl(this);
+        validator = new Validator(this);
+        validator.setValidationListener(this);
         initView();
         initData();
     }
@@ -68,9 +90,8 @@ public class UserMessageActivity extends AppCompatActivity{
         tv_id = (TextView) findViewById(R.id.tv_id);
         iv_user_message_back = (ImageView) findViewById(R.id.iv_user_message_back);
         et_name = (EditText) findViewById(R.id.et_name);
-        et_password = (EditText) findViewById(R.id.et_name);
-        tv_mod_user_ok = (TextView) findViewById(R.id.et_name);
-        tv_sex_rs = (TextView) findViewById(R.id.et_name);
+        tv_mod_user_ok = (TextView) findViewById(R.id.tv_mod_user_ok);
+        tv_sex_rs = (TextView) findViewById(R.id.tv_sex_rs);
         exitbtn = (Button) findViewById(R.id.exitbtn);
         rg_sex = (RadioGroup) findViewById(R.id.rg_sex);
         rb_man = (RadioButton) findViewById(R.id.rb_man);
@@ -97,6 +118,49 @@ public class UserMessageActivity extends AppCompatActivity{
             rb_man.setChecked(true);
         }else {
             rb_woman.setChecked(true);
+        }
+    }
+
+    @Override
+    public void updateInfoResult(final Boolean res) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(res){
+                    ToastUtils.showLong(UserMessageActivity.this, "更新成功");
+                    initData();
+                }else{
+                    ToastUtils.showLong(UserMessageActivity.this, "异常情况，无法完成操作");
+                    initData();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("userId", app.getUserId());
+        map.put("nickname", et_name.getText().toString());
+        if(tv_sex_rs.getText().toString().equals("少侠")) {
+            map.put("sex", "男");
+        }
+        else {
+            map.put("sex", "女");
+        }
+        presenter.postToUpdate(map);
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -127,14 +191,27 @@ public class UserMessageActivity extends AppCompatActivity{
                     builder.setPositiveButton("确认退出", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ToastUtils.showLong(UserMessageActivity.this, "点击确认退出按钮");
+                            ToastUtils.showLong(UserMessageActivity.this, "清除数据");
+                            OnlineWordContract.OnlineWordPresenter online = new OnlineWordPresenterImpl();
+                            //发送数据
+                            online.postOnlineWordsLog();
+                            SPUtils.clear(App.getContext());
+                            LitePal.deleteAll(Words_Status.class);
+                            LitePal.deleteAll(Words_Log.class);
+                            app.setUserId("111");
+                            app.setNickName("请登录");
+                            startActivity(new Intent(UserMessageActivity.this, LoginActivity.class));
+                            finish();
                         }
                     });
                     builder.show();
                     break;
 
                 case R.id.tv_mod_user_ok:
+                    validator.validate();
                     //提交修改
+                    break;
+                case R.id.rl_modify_pwd:
                     Intent intent = new Intent(UserMessageActivity.this, ModifyPasswordActivity.class);
                     if(getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null){
                         startActivity(intent);
@@ -142,12 +219,9 @@ public class UserMessageActivity extends AppCompatActivity{
                         ToastUtils.showLong(UserMessageActivity.this, "异常");
                     }
                     break;
-                case R.id.rl_modify_pwd:
-                    startActivity(new Intent(UserMessageActivity.this,ModifyPasswordActivity.class));
-                    finish();
+
+                default:
                     break;
-                    default:
-                        break;
             }
         }
     }

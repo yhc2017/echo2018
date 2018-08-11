@@ -81,4 +81,6 @@ public interface IWordsLogDao {
      **/
     void delete(String id);
 
+    boolean detectionEmpty();
+
 }

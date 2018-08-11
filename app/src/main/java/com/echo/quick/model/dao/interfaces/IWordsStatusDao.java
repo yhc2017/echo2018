@@ -101,4 +101,6 @@ public interface IWordsStatusDao {
 
     boolean isExist(String word);
 
+    boolean detectionEmpty();
+
 }

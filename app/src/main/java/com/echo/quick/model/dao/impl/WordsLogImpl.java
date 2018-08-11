@@ -126,4 +126,9 @@ public class WordsLogImpl implements IWordsLogDao {
     public void delete(String id) {
         LitePal.deleteAll(Words_Log.class, "wordId = ?", id);
     }
+
+    @Override
+    public boolean detectionEmpty() {
+        return LitePal.findAll(Words_Log.class).size() == 0;
+    }
 }
