@@ -18,6 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 public class Words_Log extends LitePalSupport{
 
+
     private String wordId;
     private String word;
     private int leftNum;

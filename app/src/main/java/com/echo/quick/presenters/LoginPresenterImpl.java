@@ -138,7 +138,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                 initOldWord(array);
             }
             if(login)
-                iLoginView.onLoginResult(true, "200");
+                iLoginView.onLoginResult(true, "500");
             else
                 iHomeView.setdate();
         }catch (Exception e) {
