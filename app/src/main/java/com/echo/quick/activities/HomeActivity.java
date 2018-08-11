@@ -192,7 +192,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         //完成单词数
         //完成单词数
-        int overWords = statusDao.selectCountByStatusAndTopicId("review_grasp", app.getTopicId());
+        int overWords = statusDao.selectCountByStatusAndTopicId("grasp", app.getTopicId());
         tv_word_finish.setText(String.valueOf(overWords));
 
         //超前学习单词数
