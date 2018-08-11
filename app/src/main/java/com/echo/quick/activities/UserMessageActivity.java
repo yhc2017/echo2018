@@ -1,8 +1,13 @@
 package com.echo.quick.activities;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.camera2.params.RggbChannelVector;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +17,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.echo.quick.contracts.OnlineWordContract;
+import com.echo.quick.model.dao.impl.WordsStatusImpl;
+import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
+import com.echo.quick.presenters.OnlineWordPresenterImpl;
+import com.echo.quick.utils.App;
+import com.echo.quick.utils.SPUtils;
+import com.echo.quick.utils.ToastUtils;
+
+import java.util.HashMap;
 
 /**
  * Class name: UserMessageActivity
@@ -33,11 +48,13 @@ public class UserMessageActivity extends AppCompatActivity{
     private ImageView iv_user_message_back;
     private MyListener listener;
     private RelativeLayout rl_modify_pwd;
+    private App app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_message2);
+        app = (App)getApplicationContext();
         initView();
         initData();
     }
@@ -53,7 +70,7 @@ public class UserMessageActivity extends AppCompatActivity{
         et_name = (EditText) findViewById(R.id.et_name);
         et_password = (EditText) findViewById(R.id.et_name);
         tv_mod_user_ok = (TextView) findViewById(R.id.et_name);
-        tv_sex_rs = (TextView) findViewById(R.id.et_name);;
+        tv_sex_rs = (TextView) findViewById(R.id.et_name);
         exitbtn = (Button) findViewById(R.id.exitbtn);
         rg_sex = (RadioGroup) findViewById(R.id.rg_sex);
         rb_man = (RadioButton) findViewById(R.id.rb_man);
@@ -65,7 +82,6 @@ public class UserMessageActivity extends AppCompatActivity{
         tv_mod_user_ok.setOnClickListener(listener);
         exitbtn.setOnClickListener(listener);
         rl_modify_pwd.setOnClickListener(listener);
-
         rg_sex.setOnCheckedChangeListener(new RGListener());
     }
     
@@ -75,8 +91,13 @@ public class UserMessageActivity extends AppCompatActivity{
      *@return 
      */
     public void initData(){
-//        tv_id.setText("");//手机账号
-//        et_name.setText("");//昵称
+        tv_id.setText(app.getUserId());//手机账号
+        et_name.setText(app.getNickName());//昵称
+        if(app.getSex().equals("男")){
+            rb_man.setChecked(true);
+        }else {
+            rb_woman.setChecked(true);
+        }
     }
 
     /**
@@ -94,9 +115,32 @@ public class UserMessageActivity extends AppCompatActivity{
                     break;
                 case R.id.exitbtn:
                     //退出登录
+                    AlertDialog.Builder builder = new AlertDialog.Builder(UserMessageActivity.this);
+                    builder.setTitle("退出登录");
+                    builder.setIcon(R.drawable.ic_back);
+                    builder.setNeutralButton("返回", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ToastUtils.showLong(UserMessageActivity.this, "点击返回按钮");
+                        }
+                    });
+                    builder.setPositiveButton("确认退出", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ToastUtils.showLong(UserMessageActivity.this, "点击确认退出按钮");
+                        }
+                    });
+                    builder.show();
                     break;
+
                 case R.id.tv_mod_user_ok:
                     //提交修改
+                    Intent intent = new Intent(UserMessageActivity.this, ModifyPasswordActivity.class);
+                    if(getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null){
+                        startActivity(intent);
+                    }else {
+                        ToastUtils.showLong(UserMessageActivity.this, "异常");
+                    }
                     break;
                 case R.id.rl_modify_pwd:
                     startActivity(new Intent(UserMessageActivity.this,ModifyPasswordActivity.class));

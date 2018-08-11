@@ -1,9 +1,12 @@
 package com.echo.quick.pojo;
 
+import lombok.Data;
+
 /**
  * Created by HUAHUA on 2018/7/28.
  */
 
+@Data
 public class Pager {
     public String mtitle;
     public String mcontent;
@@ -15,27 +18,4 @@ public class Pager {
         this.mtranslation=mtranslation;
     }
 
-    public String getMtitle() {
-        return mtitle;
-    }
-
-    public void setMtitle(String mtitle) {
-        this.mtitle = mtitle;
-    }
-
-    public String getMcontent() {
-        return mcontent;
-    }
-
-    public void setMcontent(String mcontent) {
-        this.mcontent = mcontent;
-    }
-
-    public String getMtranslation() {
-        return mtranslation;
-    }
-
-    public void setMtranslation(String mtranslation) {
-        this.mtranslation = mtranslation;
-    }
 }
