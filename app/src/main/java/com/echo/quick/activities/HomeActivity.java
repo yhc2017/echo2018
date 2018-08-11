@@ -135,6 +135,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
      *@return void
      */
     public void initData(){
+        String sex = app.getSex();
+        if (sex.equals("女")){
+            im_tor.setImageResource(R.drawable.ic_tor_girl);
+        }else {
+            im_tor.setImageResource(R.drawable.ic_tor_boy);
+        }
         //今日目标单词数默认值
         try {
             datenum2 = homePresenter.calMyPlanNmu("2018-12", 0);

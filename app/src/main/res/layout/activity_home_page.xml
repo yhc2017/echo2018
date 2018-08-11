@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homepage"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -10,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="390dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="vertical">
 
@@ -56,7 +54,7 @@
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="7dp"
-                android:src="@drawable/ic_tor_girl" />
+                android:src="@drawable/ic_tor_boy" />
 
             <TextView
                 android:id="@+id/tv_user_name"
@@ -79,12 +77,12 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:gravity="right"
             android:text="修改计划 >" />
 
         <LinearLayout
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -103,13 +101,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="650" />
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="已背" />
+                    android:text="滚瓜烂熟" />
             </LinearLayout>
                 <View
                     android:layout_marginRight="20dp"
@@ -131,7 +129,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="hhh" />
+                        android:text="0" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -157,7 +155,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="10" />
+                    android:text="0" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -171,7 +169,7 @@
             android:layout_height="12dp"
             style="?android:attr/progressBarStyleHorizontal"
             android:progressDrawable="@drawable/progressbar_more_color"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="18dp"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"/>
         <RelativeLayout
@@ -190,7 +188,7 @@
                 android:id="@+id/tv_word_num"
                 android:text="3500"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="18dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -205,7 +203,30 @@
             android:background="@drawable/button_bg2"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="55dp" />
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="© "/>
+            <TextView
+                android:textColor="@color/blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Firefly"/>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

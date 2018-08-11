@@ -52,6 +52,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tv_explain"
+                android:ellipsize="end"
                 android:textSize="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:text="学习中"
+            android:text="撤回学习中"
             android:textColor="@color/white"
             android:background="@drawable/button_bg2"/>
     </LinearLayout>
