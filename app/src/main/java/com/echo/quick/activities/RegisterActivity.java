@@ -190,8 +190,8 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
             @Override
             public void run() {
                 if(result) {
-                    ToastUtils.showLong(RegisterActivity.this, "注册成功,以跳登录");
-                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                    ToastUtils.showLong(RegisterActivity.this, "注册成功");
+                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                     finish();
                 }else {
                     ToastUtils.showLong(RegisterActivity.this, "同一个号码只能注册一次");

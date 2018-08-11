@@ -60,28 +60,24 @@ public class App extends Application{
         try {
             setUserId("111");
             setTopicId("12");
-            Object o2 = "未登录";
-            Object o = SPUtils.get(App.getContext(), "UserInfo", o2);
             Object topicId = SPUtils.get(getContext(), "topicID", "12");
             setTopicId(topicId.toString());
             OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-            if(o != o2) {
-                JSONObject object = JSON.parseObject(o.toString());
-                setUserId(object.getString("userId"));
-                setNickName(object.getString("nickname"));
-                setSex(object.getString("sex"));
-                IWordsStatusDao statusDao = new WordsStatusImpl();
-                List<Words_Status> statuses = statusDao.selectByStatusAndTopicId("learn_", getTopicId());
-                if (statuses.size() < 5) {
-                    final HashMap<String, String> map = new HashMap<>();
-                    map.put("userId", getUserId());
-                    map.put("topicId", getTopicId());
-                    onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
-                }
-            }
             onlineWordPresenter.getOnlineSprintType();
             onlineWordPresenter.GetAllWordTopicInfo();
+            setUserId(SPUtils.get(getContext(), "userId", "111").toString());
+            setNickName(SPUtils.get(getContext(), "nickname", "请登录").toString());
+            setSex(SPUtils.get(getContext(), "sex", "男").toString());
+            IWordsStatusDao statusDao = new WordsStatusImpl();
+            List<Words_Status> statuses = statusDao.selectByStatusAndTopicId("learn_", getTopicId());
+            if (statuses.size() < 5) {
+                final HashMap<String, String> map = new HashMap<>();
+                map.put("userId", getUserId());
+                map.put("topicId", getTopicId());
+                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
+            }
         }catch (Exception e){
+            e.printStackTrace();
             LogUtils.d("没在服务器获取到数据");
         }
     }
@@ -173,4 +169,5 @@ public class App extends Application{
     public void setStudy(String study) {
         this.study = study;
     }
+
 }
