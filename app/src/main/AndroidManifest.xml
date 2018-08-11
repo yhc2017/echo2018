@@ -31,7 +31,7 @@
         <activity android:name=".ModifyPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".StrangeWordsListActivity" />
-        <activity android:name=".ListShowActivity" />
+        <!--<activity android:name=".ListShowActivity" />-->
         <activity android:name=".ReadActivity" />
         <activity android:name=".ReadingAnswerActivity" />
         <activity android:name=".ReadingTranslateActivity" />

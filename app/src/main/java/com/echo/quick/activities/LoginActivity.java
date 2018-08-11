@@ -102,6 +102,16 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         iv_pwdforgive.setOnClickListener(listener);
         login_back.setOnClickListener(listener);
         bt_login.setOnClickListener(listener);
+        ed_loginID.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if (!hasFocus) {
+                    loginPresenter.detectionAndRestoration(ed_loginID.getText().toString());
+                }
+
+            }
+        });
     }
 
     @Override
@@ -145,35 +155,36 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         ed_loginPwd.setText("");
     }
 
+
     @Override
     public void onLoginResult(Boolean result, final String code) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-                progressDialog.setIcon(R.drawable.boy);
-                progressDialog.setTitle("请稍等");
-                progressDialog.setMessage("正在加载中");
-                progressDialog.show();
-                if(code.equals("200")){
+                switch (code) {
+                    case "200":
 //                    loginPresenter.detectionAndRestoration(app.getUserId());
-                    ToastUtils.showLong(LoginActivity.this, app.getTopicId()+app.getUserId());
-                    IWordsLogDao iWordsLogDao = new WordsLogImpl();
-                    IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
-                    if(iWordsLogDao.detectionEmpty() && iWordsStatusDao.detectionEmpty()){
-                        HashMap<String, String> map = new HashMap<>();
-                        map.put("userId", app.getUserId());
-                        map.put("topicId", app.getTopicId());
-                        onlineWordPresenter.postToGetTopicIdWords(map, true);
-                        ToastUtils.showLong(LoginActivity.this,"查询是否有以往的记录");
-                    }else {
-                        ToastUtils.showLong(LoginActivity.this,"登录成功");
-                        progressDialog.dismiss();
+                        ToastUtils.showLong(LoginActivity.this, app.getTopicId() + app.getUserId());
+                        IWordsLogDao iWordsLogDao = new WordsLogImpl();
+                        IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
+                        if (iWordsLogDao.detectionEmpty() && iWordsStatusDao.detectionEmpty()) {
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("userId", app.getUserId());
+                            map.put("topicId", app.getTopicId());
+                            onlineWordPresenter.postToGetTopicIdWords(map, true);
+                        } else {
+                            ToastUtils.showLong(LoginActivity.this, "登录成功");
+                            finish();
+                        }
+                        break;
+                    //成功获取
+                    case "500":
+                        ToastUtils.showLong(LoginActivity.this, "登录成功");
                         finish();
-                    }
-                }else {
-                    progressDialog.dismiss();
-                    ToastUtils.showLong(LoginActivity.this,"error，请检查账号或密码是否正确");
+                        break;
+                    default:
+                        ToastUtils.showLong(LoginActivity.this, "error，请检查账号或密码是否正确");
+                        break;
                 }
             }
         });
@@ -223,7 +234,12 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                 case R.id.logbtn:
                     //通过校验后，在校验成功里进行登录操作
                     validator.validate();
-
+                    ToastUtils.showLong(LoginActivity.this, "请稍后");
+//                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+//                    progressDialog.setIcon(R.drawable.boy);
+//                    progressDialog.setTitle("请稍等");
+//                    progressDialog.setMessage("正在加载中");
+//                    progressDialog.show();
                     break;
 
                 default:

@@ -224,12 +224,11 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
         listener = new SampleWordsAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(View view , int position){
-                ToastUtils.showShort(WordsActivity.this, "点击事件！");
-                int i = position ;
-                LogUtils.d("数字为："+i);
-                Words words = new Words(mData.get(i).getWordId(),mData.get(i).getPron(),mData.get(i).getWord(),mData.get(i).getSymbol(),mData.get(i).getExplain()+"\n"
-                        ,mData.get(i).getEg1(),mData.get(i).getEg1Chinese(),"","", mData.get(i).getTopicId());
-                LogUtils.d("==============="+mData.get(i).getEg1Chinese());
+//                ToastUtils.showShort(WordsActivity.this, "点击事件！");
+                LogUtils.d("数字为："+ position);
+                Words words = new Words(mData.get(position).getWordId(),mData.get(position).getPron(),mData.get(position).getWord(),mData.get(position).getSymbol(),mData.get(position).getExplain()+"\n"
+                        ,mData.get(position).getEg1(),mData.get(position).getEg1Chinese(),"","", mData.get(position).getTopicId());
+                LogUtils.d("==============="+mData.get(position).getEg1Chinese());
                 WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this, mData.get(position));
                 customDialog.show();
             }
@@ -280,7 +279,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                     finish();
                 }else {
                     if(app.getSex().equals("男")){
-                        shareMsg("每日打卡", "每日打卡", app.getNickName()+"少侠"+"\n今天顺利完成今天任务，打卡证明","");
+                        shareMsg("HomeActivity", "每日打卡", app.getNickName()+"少侠"+"\n今天顺利完成今天任务，打卡证明","");
                     }else {
                         shareMsg("HomeActivity", "每日打卡", app.getNickName()+"女侠"+"\n今天顺利完成今天任务，打卡证明","");
                     }

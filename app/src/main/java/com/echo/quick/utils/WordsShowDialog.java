@@ -113,6 +113,7 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
         MyListener listener = new MyListener();
         tv_add_new.setOnClickListener(listener);
         tv_del_new.setOnClickListener(listener);
+        iv_audio.setOnClickListener(listener);
 
     }
 
