@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:src="@drawable/ic_back_login"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="35dp"
+            android:layout_height="30dp" />
+        <TextView
+            style="@style/MyFont.Home.Content"
+            android:text="定一个计划吧"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="18dp"
+           android:text="1.请选择一个目标词库"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/nice_spinner1"
+            android:verticalScrollbarPosition="right"
+            app:dropDownListPaddingBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"/>
+        <TextView
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="18dp"
+            android:text="2.请选择目标结束时间"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/nice_spinner2"
+            android:verticalScrollbarPosition="right"
+            app:dropDownListPaddingBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"/>
+        <TextView
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="18dp"
+            android:text="3.请选择背单词的模式"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RadioGroup
+            android:id="@+id/radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rb_study"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/radio_style"
+                android:text="    学习优先"
+                android:textSize="17dp"
+                android:textColor="@drawable/radio_text_style"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:layout_marginTop="10dp"
+                android:id="@+id/rb_restudy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/radio_style"
+                android:text="   复习优先"
+                android:textSize="17dp"
+                android:textColor="@drawable/radio_text_style"
+                android:textStyle="bold" />
+        </RadioGroup>
+        <Button
+            android:textSize="20dp"
+            android:text="提    交"
+            android:textStyle="bold"
+            android:background="@drawable/button_bg_write"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
