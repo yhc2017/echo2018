@@ -2,10 +2,13 @@ package com.echo.quick.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,6 +16,8 @@ import com.echo.quick.activities.R;
 import com.echo.quick.contracts.WordsShowContract;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.WordsShowPresenters;
+
+import java.util.Objects;
 
 /**
  * 文件名：WordsShowDialog
@@ -33,7 +38,11 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
 
     private TextView tv_item,tv_symbol,tv_explain,tv_eg1,tv_eg1_chinese,tv_eg2,tv_eg2_chinese,tv_add_new,tv_del_new;
 
+    private ImageView iv_audio;
+
     WordsShowContract.IWordsShowPresenter wordsShowPresenter;
+
+    private MediaPlayer mediaPlayer;
 
     public WordsShowDialog(@NonNull Context context, Words_Status words) {
         super(context);
@@ -47,6 +56,8 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
         setContentView(R.layout.show_words_dialog);
 
         wordsShowPresenter = new WordsShowPresenters(this);
+
+        mediaPlayer = new MediaPlayer();
 
         //按空白处可以取消动画
         setCanceledOnTouchOutside(true);
@@ -78,6 +89,7 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
         tv_del_new = (TextView)findViewById(R.id.tv_del_new);
         L_1 = (LinearLayout) findViewById(R.id.L_1);
         L_2 = (LinearLayout) findViewById(R.id.L_2);
+        iv_audio = (ImageView) findViewById(R.id.iv_audio);
     }
     /**
      * 初始化界面控件的显示数据
@@ -132,6 +144,23 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
                         initVisibility(false);
                     }catch (Exception e){
                         ToastUtils.showShort(context, "移除失败");
+                    }
+                    break;
+
+                case R.id.iv_audio:
+                    String url = words.getPron();
+                    if(url != null && !url.equals("")){
+                        try{
+                            mediaPlayer.reset();
+                            mediaPlayer.setDataSource(url);
+                            mediaPlayer.prepare();
+                            mediaPlayer.start();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            ToastUtils.showLong(getContext(), "音频播放失败");
+                        }
+                    }else {
+                        ToastUtils.showLong(getContext(), "暂无该音频");
                     }
                     break;
 

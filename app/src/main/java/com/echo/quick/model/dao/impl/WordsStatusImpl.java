@@ -67,7 +67,7 @@ public class WordsStatusImpl implements IWordsStatusDao {
                 return LitePal.where("status = ? and topicId = ?", "learn", topicId).find(Words_Status.class);
 
             case "learn_":
-                return LitePal.where("(status = ? or status = ?) and topicId = ?",  "", "review" ,topicId).find(Words_Status.class);
+                return LitePal.where("(status = ? or status = ?) and topicId = ?",  "", "learn" , topicId).find(Words_Status.class);
 
             default:
                 return LitePal.where("status = ? and topicId = ?", status, topicId).find(Words_Status.class);
@@ -179,5 +179,10 @@ public class WordsStatusImpl implements IWordsStatusDao {
 
 
         return true;
+    }
+
+    @Override
+    public boolean detectionEmpty() {
+        return LitePal.findAll(Words_Status.class).size() == 0;
     }
 }

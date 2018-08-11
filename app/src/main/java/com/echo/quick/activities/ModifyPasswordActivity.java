@@ -9,8 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.echo.quick.contracts.UserMessageContract;
 import com.echo.quick.presenters.RegisterPresenterImpl;
+import com.echo.quick.presenters.UserMessagePresenterImpl;
 import com.echo.quick.utils.App;
+import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
@@ -31,7 +34,7 @@ import java.util.List;
  * @since ：[quick|user]
  */
 
-public class ModifyPasswordActivity extends AppCompatActivity implements Validator.ValidationListener{
+public class ModifyPasswordActivity extends AppCompatActivity implements Validator.ValidationListener,UserMessageContract.IUserMessageView{
     private ImageView ic_back;
 
     @NotEmpty(messageResId=R.string.password)
@@ -54,6 +57,8 @@ public class ModifyPasswordActivity extends AppCompatActivity implements Validat
 
     private App app;
 
+    private UserMessageContract.IUserMessagePresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +66,7 @@ public class ModifyPasswordActivity extends AppCompatActivity implements Validat
         app = (App)getApplicationContext();
         validator = new Validator(this);
         validator.setValidationListener(this);
-
+        presenter = new UserMessagePresenterImpl(this);
         initView();
     }
 
@@ -90,6 +95,7 @@ public class ModifyPasswordActivity extends AppCompatActivity implements Validat
         map.put("userId", app.getUserId());
         map.put("oldPwd", et_before_pwd.getText().toString());
         map.put("newPwd", et_new_pwd.getText().toString());
+        presenter.postToUpdatePwd(map);
 
     }
 
@@ -104,6 +110,20 @@ public class ModifyPasswordActivity extends AppCompatActivity implements Validat
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void updateInfoResult(final Boolean res) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(res){
+                    ToastUtils.showLong(ModifyPasswordActivity.this, "修改成功");
+                }else{
+                    ToastUtils.showLong(ModifyPasswordActivity.this, "异常情况，无法完成操作");
+                }
+            }
+        });
     }
 
     /**

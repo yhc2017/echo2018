@@ -1,16 +1,33 @@
 package com.echo.quick.presenters;
 
+import android.app.ProgressDialog;
+import android.support.annotation.NonNull;
+
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.LoginContract;
+import com.echo.quick.contracts.WordsShowContract;
 import com.echo.quick.model.dao.impl.LoginImpl;
+import com.echo.quick.model.dao.impl.OnlineWordImpl;
+import com.echo.quick.model.dao.impl.WordsLogImpl;
+import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.ILoginDao;
+import com.echo.quick.model.dao.interfaces.IOnlineWord;
+import com.echo.quick.model.dao.interfaces.IWordsLogDao;
+import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
+import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.SPUtils;
+import com.echo.quick.utils.ToastUtils;
 
+
+import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,9 +45,17 @@ import okhttp3.Response;
 
 public class LoginPresenterImpl extends BasePresenter implements LoginContract.ILoginPresenter {
 
-    LoginContract.ILoginView iLoginView;
+    private LoginContract.ILoginView iLoginView;
+    private HomeContract.IHomeView iHomeView;
+    private App app;
 
-    JSONObject jsonObject;
+    {
+        app = (App) App.getContext();
+    }
+
+    public LoginPresenterImpl(HomeContract.IHomeView iHomeView){
+        this.iHomeView = iHomeView;
+    }
 
     public LoginPresenterImpl(LoginContract.ILoginView loginView){
 
@@ -50,12 +75,12 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
         ILoginDao loginDao = new LoginImpl();
         loginDao.doLoginPost(name, passwd,  new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 LogUtils.d("失败");
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 
                 //code指的是http状态码，可以判断操作的状态；
                 int code  = response.code();
@@ -70,9 +95,89 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
                 iLoginView.onLoginResult(true, prepare4);
 
-                // TO-DO:将上面得到的JsonObject进行处理，并通过用户上下文创建一个全局用户单例；
+                app.setUserId(object.getString("userId"));
             }
         });
 
     }
+
+    @Override
+    public void detectionAndRestoration(final String userId) {
+        IOnlineWord online = new OnlineWordImpl();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        online.postToWord(map, "quick/getUserInfo", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                JSONObject all = JSON.parseObject(response.body().string());
+                if(all != null) {
+//                    JSONObject userInfo = all.getJSONObject("userInfo");
+//                    JSONObject allPlan = all.getJSONObject("allPlan");
+                    JSONObject lastPlan = all.getJSONObject("lastPlan");
+                    String topicId = lastPlan.getString("topicId");
+                    app.setTopicId(topicId);
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public void allWordInfo(Boolean login) throws JSONException {
+        Object object = SPUtils.get(App.getContext(), "UserAllWordInfo", "");
+        try {
+            if (object != "") {
+                LogUtils.d("object.toString............."+object.toString());
+                org.json.JSONObject object1 = new org.json.JSONObject(object.toString());
+                org.json.JSONArray array = object1.getJSONArray("wordInfo");
+                initOldWord(array);
+            }
+            if(login)
+                iLoginView.onLoginResult(true, "200");
+            else
+                iHomeView.setdate();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initOldWord(org.json.JSONArray jsonArray) throws JSONException {
+        WordsShowContract.IWordsShowPresenter wordsShowPresenter = new WordsShowPresenters();
+        for(int i = 0; i < jsonArray.length(); i++){
+            org.json.JSONObject object = jsonArray.getJSONObject(i);
+            String status = "";
+            switch (object.getString("status")){
+                case "207":
+                    status = "learn";
+                    break;
+                case "208":
+                    status = "review";
+                    break;
+                case "209":
+                    status = "grasp";
+                    break;
+                default:
+                    break;
+            }
+            Words_Status words = new Words_Status(object.getString("id"),
+                    object.getString("pron"),
+                    object.getString("word"),
+                    object.getString("phon"),
+                    object.getString("para"),
+                    object.getString("build"),
+                    object.getString("example"),
+                    "",
+                    "",
+                    status,
+                    object.getString("topicId"));
+            wordsShowPresenter.addNewWord(words);
+        }
+
+    }
+
 }
