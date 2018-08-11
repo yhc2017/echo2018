@@ -89,15 +89,14 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_marginRight="20dp"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_word_finish"
+                    android:id="@+id/tv_over_day"
                     style="@style/MyFont.Home.Content.Num"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/colorSchedule"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -107,25 +106,50 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="滚瓜烂熟" />
+                    android:text="距结束天数" />
+            </LinearLayout>
+            <View
+                android:layout_marginRight="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical|left"
+                android:background="@color/black" />
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_word_obtion"
+                    style="@style/MyFont.Home.Content.Num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="0" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="今日目标" />
             </LinearLayout>
                 <View
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_width="1dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|left"
                     android:background="@color/black" />
 
                 <LinearLayout
-                    android:layout_marginRight="20dp"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_word_obtion"
+                        android:id="@+id/tv_word_over"
                         style="@style/MyFont.Home.Content.Num"
-                        android:textColor="@color/colorOnLineMusicModule"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -135,11 +159,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="今日目标" />
+                        android:text="待复习" />
                 </LinearLayout>
 
                 <View
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_width="1dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|right"
@@ -149,9 +174,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tv_word_over"
+                    android:id="@+id/tv_word_finish"
                     style="@style/MyFont.Home.Content.Num"
-                    android:textColor="@color/colorLocalMusicModule"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -160,7 +184,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="超前学习" />
+                    android:text="滚瓜烂熟" />
             </LinearLayout>
             </LinearLayout>
         <ProgressBar
@@ -170,8 +194,8 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:progressDrawable="@drawable/progressbar_more_color"
             android:layout_marginTop="18dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -180,7 +204,7 @@
                 android:text="复习优先"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="3dp"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="26dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"/>
@@ -189,7 +213,7 @@
                 android:text="3500"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="18dp"
+                android:layout_marginRight="26dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"/>
@@ -200,33 +224,48 @@
             android:text="开   始   学   习"
             android:textSize="22dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_bg2"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:background="@drawable/button_bg_write"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
             android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="55dp" />
     </LinearLayout>
     <RelativeLayout
+        android:background="@color/lightwrite"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_marginBottom="10dp"
+        <RelativeLayout
+            android:layout_marginBottom="20dp"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:textColor="@color/blue"
+                android:layout_centerInParent="true"
+                android:id="@+id/tv_yhc"
+                android:visibility="visible"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="© "/>
-            <TextView
-                android:textColor="@color/blue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Firefly"/>
-        </LinearLayout>
+                android:text="© YHC"/>
+            <View
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/tv_yhc"
+                android:layout_centerVertical="true"
+                android:id="@+id/view1"
+                android:background="@color/blue"
+                android:layout_width="30dp"
+                android:layout_height="1dp"/>
+            <View
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/view2"
+                android:layout_toRightOf="@+id/tv_yhc"
+                android:background="@color/blue"
+                android:layout_width="30dp"
+                android:layout_height="1dp"/>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

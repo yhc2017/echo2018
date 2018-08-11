@@ -23,7 +23,7 @@
 
     <style name="MyFont.Home.Title" parent="Base.TextAppearance.AppCompat">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textStyle">bold</item>
+        <!--<item name="android:textStyle">bold</item>-->
         <item name="android:textSize">@dimen/myfont_home_title_size</item>
     </style>
 

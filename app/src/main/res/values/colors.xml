@@ -40,6 +40,8 @@
     <color name="blue">#4a74c2</color>
     <color name="green">#04bc0a</color>
 
+    <color name="lightwrite">#F4F4F4</color>
+
 
     <!--这里可以删-->
     <color name="colorBackground">#eef4f7</color>
