@@ -298,7 +298,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        builder.setPositiveButton("冲啊！皮卡丘", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("冲鸭！皮卡丘", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();

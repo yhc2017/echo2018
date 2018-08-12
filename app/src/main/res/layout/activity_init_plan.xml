@@ -67,7 +67,7 @@
             android:layout_height="wrap_content" />
 
         <RadioGroup
-            android:id="@+id/radiogroup"
+            android:id="@+id/init_radiogroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="45dp"
@@ -95,6 +95,7 @@
                 android:textStyle="bold" />
         </RadioGroup>
         <Button
+            android:id="@+id/btn_plan"
             android:textSize="20dp"
             android:text="提    交"
             android:textStyle="bold"
