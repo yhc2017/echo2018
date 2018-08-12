@@ -138,6 +138,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         try {
+            String sex = app.getSex();
+            if (sex.equals("女")){
+                im_tor.setImageResource(R.drawable.ic_tor_girl);
+            }else {
+                im_tor.setImageResource(R.drawable.ic_tor_boy);
+            }
             updateUserName();
             setdate();
         } catch (Exception e) {
@@ -180,6 +186,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
      *@return void
      */
     public void initData(){
+        String sex = app.getSex();
+        if (sex.equals("女")){
+            im_tor.setImageResource(R.drawable.ic_tor_girl);
+        }else {
+            im_tor.setImageResource(R.drawable.ic_tor_boy);
+        }
         //今日目标单词数默认值
         try {
             datenum2 = homePresenter.calMyPlanNmu("2018-12", 0);
@@ -188,6 +200,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
         System.out.printf("=================每日的目标数："+datenum2);
         tv_word_obtion.setText(""+datenum2);
+        //因为
+        OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+        onlineWordPresenter.getOnlineSprintType();
+        onlineWordPresenter.GetAllWordTopicInfo();
     }
 
     /**
@@ -229,7 +245,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         //完成单词数
         //完成单词数
         int overWords = statusDao.selectCountByStatusAndTopicId("grasp", app.getTopicId());
-        tv_word_finish.setText(String.valueOf(overWords));
+        tv_word_finish.setText(overWords+"");
+        tv_word_over.setText(statusDao.selectCountByStatusAndTopicId("review", app.getTopicId())+"");
 
         //超前学习单词数
         tv_word_over.setText("0");
@@ -288,6 +305,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         Intent intent = null;
+        MyPlanDialog myPlanDialog = new MyPlanDialog(HomeActivity.this);
         switch (view.getId()){
             case R.id.tv_word_over:
                 intent = new Intent(HomeActivity.this, StrangeWordsListActivity.class);
@@ -359,7 +377,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        builder.setPositiveButton("冲啊！皮卡丘", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("冲鸭！皮卡丘", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
@@ -425,16 +443,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void updateUserName(){
-        Object o2 = "未登录";
-        Object o = SPUtils.get(App.getContext(), "UserInfo", o2);
-        if(o != o2){
-            JSONObject object = JSON.parseObject(o.toString());
-            tv_user_name.setText(object.getString("nickname"));
-            app.setUserId(object.getString("userId"));
-            app.setNickName(object.getString("nickname"));
-            app.setSex(object.getString("sex"));
+        if(!app.getNickName().equals("请登录")){
+            tv_user_name.setText(app.getNickName());
         }else {
-            tv_user_name.setText("未登录");
+            tv_user_name.setText("点击这进行注册登录");
         }
     }
 
@@ -505,7 +517,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(HomeActivity.this);
             onlineWordPresenter.postToAddWordPlan(map);
             IWordsStatusDao wordsStatusDao = new WordsStatusImpl();
-            if(wordsStatusDao.selectCountByStatusAndTopicId("review", app.getTopicId()) == 0) {
+            if(wordsStatusDao.selectCountByStatusAndTopicId("all", app.getTopicId()) == 0) {
                 HashMap<String, String> map2 = new HashMap<>();
                 map2.put("userId", app.getUserId());
                 map2.put("topicId", app.getTopicId());
@@ -519,6 +531,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         //注销广播
         unregisterReceiver(activityReceiver);
+        SPUtils.put(App.getContext(), "userId", app.getUserId());
+        SPUtils.put(App.getContext(), "nickname", app.getNickName());
+        SPUtils.put(App.getContext(), "sex", app.getSex());
     }
 
 }

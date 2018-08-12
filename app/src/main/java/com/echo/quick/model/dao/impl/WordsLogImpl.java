@@ -33,9 +33,7 @@ public class WordsLogImpl implements IWordsLogDao {
     @Override
     public int selectCount() {
 
-        int num = select().size();
-
-        return num;
+        return select().size();
     }
 
     @Override

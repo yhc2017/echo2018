@@ -275,7 +275,6 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
             @Override
             public void run() {
                 if(result.equals("log")){
-                    ToastUtils.showLong(WordsActivity.this, "数据上传成功");
                     finish();
                 }else {
                     if(app.getSex().equals("男")){
@@ -288,6 +287,11 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
             }
         });
 
+    }
+
+    @Override
+    public void sendLogResult() {
+        ToastUtils.showLong(WordsActivity.this, "数据上传成功");
     }
 
     public void shareMsg(String activityTitle, String msgTitle, String msgText,

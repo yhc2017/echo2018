@@ -80,6 +80,10 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
         loginPresenter = new LoginPresenterImpl(this);
         onlineWordPresenter = new OnlineWordPresenterImpl(this);
+
+        if(!app.getUserId().equals("111")){
+            ed_loginID.setText(app.getUserId());
+        }
         
     }
 
@@ -107,7 +111,15 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
             public void onFocusChange(View v, boolean hasFocus) {
 
                 if (!hasFocus) {
-                    loginPresenter.detectionAndRestoration(ed_loginID.getText().toString());
+                    new Thread() {
+                        public void run() {
+                            try {
+                                loginPresenter.detectionAndRestoration(ed_loginID.getText().toString());
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
                 }
 
             }

@@ -235,11 +235,11 @@ public class UserMessageActivity extends AppCompatActivity implements UserMessag
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int id) {
             switch (id){
-                case R.id.register_sex_nan:
+                case R.id.rb_man:
                     tv_sex_rs.setText("少侠");
                     break;
 
-                case R.id.register_sex_nv:
+                case R.id.rb_woman:
                     tv_sex_rs.setText("女侠");
                     break;
 

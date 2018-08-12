@@ -105,7 +105,7 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
                 iWordsView.RefreshPage("");
             }
         });
-        builder.setNeutralButton("上传数据", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("低调低调", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();

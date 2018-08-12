@@ -272,34 +272,34 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
     public void postOnlineWordsLog() {
         IWordsLogDao logDao = new WordsLogImpl();
         List<Words_Log> logs = logDao.select();
-        String json = "[";
+        StringBuilder json = new StringBuilder("[");
         for (Words_Log log:logs){
             String body = "{\"wordId\":\""+log.getWordId()
                     +"\",\"word\":\""+log.getWord()
-                    +"\",\"topicId\":\""+app.getTopicId()
+                    +"\",\"topicId\":\""+log.getTopicId()
                     +"\",\"leftNum\":\""+log.getLeftNum()
                     +"\",\"rightNum\":\""+log.getRightNum()
                     +"\"},";
-            json += body;
+            json.append(body);
         }
         //切割掉最后一个逗号
-        json = json.substring(0, json.length()-1);
-        json += "]";
-        LogUtils.d(json);
+        json = new StringBuilder(json.substring(0, json.length() - 1));
+        json.append("]");
+        LogUtils.d(json.toString());
 
         final HashMap<String, String> map = new HashMap<>();
         map.put("userId", app.getUserId());
-        map.put("logs", json);
+        map.put("logs", json.toString());
 
         final IOnlineWord iOnlineWord = new OnlineWordImpl();
         iOnlineWord.postToWord(map, "quick/reviewOrLearn/pushUserAction", new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 LogUtils.d("logs发送失败");
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 
                 String str = response.body().string();
 

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,7 +43,7 @@ public class UserMessagePresenterImpl extends BasePresenter implements UserMessa
     public void postToUpdate(HashMap<String, String> map) {
 
         IOnlineWord online = new OnlineWordImpl();
-        online.postToWord(map, "", new Callback() {
+        online.postToWord(map, "quick/userUpdateInfo", new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 iUserMessageView.updateInfoResult(false);
@@ -71,7 +72,7 @@ public class UserMessagePresenterImpl extends BasePresenter implements UserMessa
     @Override
     public void postToUpdatePwd(HashMap<String, String> map) {
         IOnlineWord online = new OnlineWordImpl();
-        online.postToWord(map, "", new Callback() {
+        online.postToWord(map, "quick/userUpdatePwd", new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 iUserMessageView.updateInfoResult(false);
@@ -79,8 +80,8 @@ public class UserMessagePresenterImpl extends BasePresenter implements UserMessa
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                JSONObject object = getJSONObject(response);
-                if(object != null){
+                String res = response.body().string();
+                if(!res.equals("0")){
                     iUserMessageView.updateInfoResult(true);
                 }else{
                     iUserMessageView.updateInfoResult(false);

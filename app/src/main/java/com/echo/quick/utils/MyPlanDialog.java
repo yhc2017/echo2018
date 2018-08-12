@@ -95,6 +95,7 @@ public class MyPlanDialog extends Dialog{
         dataset1 = new ArrayList<>();
         try {
             o = SPUtils.get(App.getContext(), "wordsBox", "");
+            LogUtils.d(o.toString());
             assert o != null;
             JSONArray jsonArray_wordsBox = JSONArray.parseArray(o.toString());
             for(int i = 0; i < jsonArray_wordsBox.size(); i++){

@@ -40,20 +40,16 @@ public class WordsShowPresenters implements WordsShowContract.IWordsShowPresente
     public boolean addNewWord(Words_Status wordsNew) {
         IWordsStatusDao newDao = new WordsStatusImpl();
 
-        if(newDao.update(wordsNew))
-            return true;
+        return newDao.update(wordsNew);
 
-        return false;
     }
 
     @Override
     public boolean updateWord(Words_Status word) {
 
         IWordsStatusDao newDao = new WordsStatusImpl();
-        if(newDao.updateByWord(word))
-            return true;
+        return newDao.updateByWord(word);
 
-        return false;
     }
 
     @Override
@@ -71,10 +67,8 @@ public class WordsShowPresenters implements WordsShowContract.IWordsShowPresente
                 words.getTopicId());
         IWordsStatusDao newDao = new WordsStatusImpl();
 
-        if(newDao.update(wordsNew))
-            return true;
+        return newDao.update(wordsNew);
 
-        return false;
     }
 
     @Override

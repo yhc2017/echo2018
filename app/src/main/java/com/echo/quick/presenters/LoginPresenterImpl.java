@@ -88,14 +88,19 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                 String res = response.body().string();
 
                 JSONObject object = JSON.parseObject(res);
-
                 String prepare4 = object.getString("prepare4");
-
-                SPUtils.put(App.getContext(), "UserInfo", res);
-
                 iLoginView.onLoginResult(true, prepare4);
-
-                app.setUserId(object.getString("userId"));
+                if(prepare4.equals("200")) {
+                    String userId = object.getString("userId");
+                    String nickname = object.getString("nickname");
+                    String sex = object.getString("sex");
+                    SPUtils.put(App.getContext(), "userId", userId);
+                    SPUtils.put(App.getContext(), "nickname", nickname);
+                    SPUtils.put(App.getContext(), "sex", sex);
+                    app.setUserId(userId);
+                    app.setNickName(nickname);
+                    app.setSex(sex);
+                }
             }
         });
 
@@ -114,13 +119,17 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                JSONObject all = JSON.parseObject(response.body().string());
-                if(all != null) {
+                try {
+                    JSONObject all = JSON.parseObject(response.body().string());
+                    if (all != null) {
 //                    JSONObject userInfo = all.getJSONObject("userInfo");
 //                    JSONObject allPlan = all.getJSONObject("allPlan");
-                    JSONObject lastPlan = all.getJSONObject("lastPlan");
-                    String topicId = lastPlan.getString("topicId");
-                    app.setTopicId(topicId);
+                        JSONObject lastPlan = all.getJSONObject("lastPlan");
+                        String topicId = lastPlan.getString("topicId");
+                        app.setTopicId(topicId);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
 
             }
