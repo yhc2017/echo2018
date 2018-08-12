@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
                 IWordsLogDao wordsLogDao = new WordsLogImpl();
                 String str = "";
                 for(Words_Log wordsLog:wordsLogDao.select()){
-                    str += wordsLog.getWord()+"  "+wordsLog.getLeftNum()+"    "+wordsLog.getRightNum()+"topicId"+wordsLog.getTopicId()+"\n";
+//                    str += wordsLog.getWord()+"  "+wordsLog.getLeftNum()+"    "+wordsLog.getRightNum()+"topicId"+wordsLog.getTopicId()+"\n";
                 }
                 textView3.setText(str);
             }
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
                 IWordsStatusDao words = new WordsStatusImpl();
                 String str = "";
                 for(Words_Status word:words.select()){
-                    str += word.getWord()+word.getStatus()+"\n";
+//                    str += word.getWord()+word.getStatus()+"\n";
                 }
                 textView3.setText(str);
             }

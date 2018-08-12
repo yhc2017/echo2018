@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private HighLight mHightLight;
     SharedPreferences sharedPreferences;
-    private TextView tv_way,tv_user_name,tv_from,tv_obtion,im_setting,tv_word_finish,tv_word_obtion,tv_word_over,tv_word_num;
+    private TextView tv_way,tv_user_name,tv_from,tv_obtion,tv_over_day,im_setting,tv_word_finish,tv_word_obtion,tv_word_over,tv_word_num;
     private ProgressBar my_word_plan_progressbar;
     private Button bt_start_study;
     private ImageView im_tor;
@@ -170,6 +170,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         bt_start_study = (Button) findViewById(R.id.bt_start_study);
         im_tor = (ImageView)findViewById(R.id.im_tor);
         tv_way = (TextView)findViewById(R.id.tv_way);
+        tv_over_day = (TextView)findViewById(R.id.tv_over_day);
 
         //绑定监听
         im_setting.setOnClickListener(this);
@@ -193,13 +194,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             im_tor.setImageResource(R.drawable.ic_tor_boy);
         }
         //今日目标单词数默认值
-        try {
-            datenum2 = homePresenter.calMyPlanNmu("2018-12", 0);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.printf("=================每日的目标数："+datenum2);
-        tv_word_obtion.setText(""+datenum2);
+        System.out.printf("=================每日的目标数："+0);
+        tv_word_obtion.setText(""+0);
         //因为
         OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
         onlineWordPresenter.getOnlineSprintType();
@@ -242,7 +238,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             tv_obtion.setText("2018-12");
         }
 
-        //完成单词数
+        //距离结束天数
+        String a = SPUtils.get(App.getContext(), "plan","2018").toString();
+        try {
+            int daynum = homePresenter.calEndNum(a);
+            tv_over_day.setText(""+daynum);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
         //完成单词数
         int overWords = statusDao.selectCountByStatusAndTopicId("grasp", app.getTopicId());
         tv_word_finish.setText(overWords+"");
@@ -345,7 +350,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.im_setting:
                 System.out.println("设置计划点击成功");
-                MyPlanDialog myPlanDialog = new MyPlanDialog(HomeActivity.this);
+                myPlanDialog = new MyPlanDialog(HomeActivity.this);
                 myPlanDialog.show();
                 break;
 
@@ -446,7 +451,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if(!app.getNickName().equals("请登录")){
             tv_user_name.setText(app.getNickName());
         }else {
-            tv_user_name.setText("点击这进行注册登录");
+            tv_user_name.setText("未登录");
         }
     }
 

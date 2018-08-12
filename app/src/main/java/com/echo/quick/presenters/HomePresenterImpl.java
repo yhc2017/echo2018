@@ -212,4 +212,18 @@ public class HomePresenterImpl implements HomeContract.IHomePresenter {
 
         return datenum;
     }
+
+    @Override
+    public int calEndNum(String date) throws ParseException {
+        //相差天数
+        int datenum = 0;
+        String s1=date+"-12";
+        String s2= getYear()+"-"+getMouth()+"-12";
+        @SuppressLint("SimpleDateFormat") DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar=new GregorianCalendar();
+        Date d1=df.parse(s1);
+        Date d2=df.parse(s2);
+        int hh = (int) ((d1.getTime()-d2.getTime())/(60*60*1000*24));
+        return hh;
+    }
 }

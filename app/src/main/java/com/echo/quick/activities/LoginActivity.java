@@ -1,7 +1,9 @@
 package com.echo.quick.activities;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -48,7 +50,7 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener,LoginContract.ILoginView {
 
     private TextView iv_register;
-    private TextView iv_pwdforgive;
+    private TextView iv_pwdforgive,tv_round_sent,tv_round_sent_tra;
     private ImageView login_back;
 
     @Pattern(regex = "^\\d{11}$",messageResId=R.string.re_iphone_number_hint)
@@ -96,6 +98,17 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         ed_loginID = (EditText) findViewById(R.id.login_id);
         ed_loginPwd = (EditText) findViewById(R.id.login_pwd);
         bt_login = (Button) findViewById(R.id.logbtn);
+        tv_round_sent = (TextView) findViewById(R.id.tv_round_sent);
+        tv_round_sent_tra = (TextView) findViewById(R.id.tv_round_sent_tra);
+        //随机设置一个名言
+        String[] arr = getResources().getStringArray(R.array.entities);
+        String[] arr_tra = getResources().getStringArray(R.array.entities_tra);
+        //产生0-(arr.length-1)的整数值,也是数组的索引
+        int index=(int)(Math.random()*arr.length);
+        String rand = arr[index];
+        String rand_tra = arr_tra[index];
+        tv_round_sent.setText(rand);
+        tv_round_sent_tra.setText(rand_tra);
     }
 
     //所有的对按钮的事件进行监听

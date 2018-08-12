@@ -7,10 +7,13 @@
             <corners android:radius="5dip" />
             <gradient
                 android:angle="0"
-                android:centerColor="@color/lightwrite"
+                android:centerColor="@color/bule"
                 android:centerY="0.75"
-                android:endColor="@color/lightwrite"
-                android:startColor="@color/lightwrite" />
+                android:endColor="@color/bule"
+                android:startColor="@color/bule" />
+            <!-- 描边 -->
+            <!--<stroke android:width="2dp"-->
+                <!--android:color="@color/lightwrite" />-->
         </shape>
     </item>
 
@@ -37,9 +40,9 @@
                 <!--渐变 中间、结束、开始-->
                 <gradient
                     android:angle="0"
-                    android:centerColor="@color/blue"
-                    android:endColor="@color/blue"
-                    android:startColor="@color/blue" />
+                    android:centerColor="@color/lightwrite"
+                    android:endColor="@color/lightwrite"
+                    android:startColor="@color/lightwrite" />
             </shape>
         </clip>
     </item>

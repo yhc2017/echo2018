@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="43dp">
 
             <TextView
                 android:layout_marginRight="1dp"
@@ -33,7 +33,7 @@
                 style="@style/MyFont.Home.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="11dp"
                 android:layout_toRightOf="@+id/tv_from"
                 android:text="2018年12月" />
 
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:gravity="right"
             android:text="修改计划 >" />
 
@@ -193,7 +193,7 @@
             android:layout_height="12dp"
             style="?android:attr/progressBarStyleHorizontal"
             android:progressDrawable="@drawable/progressbar_more_color"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="25dp"
             android:layout_marginLeft="25dp"/>
         <RelativeLayout
@@ -223,7 +223,7 @@
             android:id="@+id/bt_start_study"
             android:text="开   始   学   习"
             android:textSize="22dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/button_bg_write"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
