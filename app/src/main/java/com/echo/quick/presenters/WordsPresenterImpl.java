@@ -100,16 +100,14 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
         builder.setNegativeButton("打卡结束喽", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-                onlineWordPresenter.postOnlineWordsLog();
+
                 iWordsView.RefreshPage("");
             }
         });
         builder.setNeutralButton("低调低调", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-                onlineWordPresenter.postOnlineWordsLog();
+
                 iWordsView.RefreshPage("log");
             }
         });

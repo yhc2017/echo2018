@@ -10,6 +10,7 @@ import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.MainContract;
 import com.echo.quick.contracts.OnlineWordContract;
+import com.echo.quick.contracts.WordsContract;
 import com.echo.quick.contracts.WordsShowContract;
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
 import com.echo.quick.model.dao.impl.WordsLogImpl;
@@ -54,6 +55,8 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
     private LoginContract.ILoginView iLoginView;
 
+    private WordsContract.IWordsView iWordsView;
+
     public OnlineWordPresenterImpl(){
 
     }
@@ -68,6 +71,10 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
     public OnlineWordPresenterImpl(LoginContract.ILoginView iLoginView){
         this.iLoginView = iLoginView;
+    }
+
+    public OnlineWordPresenterImpl(WordsContract.IWordsView iWordsView){
+        this.iWordsView = iWordsView;
     }
 
     @Override
@@ -305,6 +312,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
                 if(str.equals("1")){
                     LogUtils.d("logs发送成功");
+                    iWordsView.sendLogResult();
                 }else {
                     LogUtils.d("logs发送失败");
                 }

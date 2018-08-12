@@ -53,7 +53,7 @@ public class InitPlanActivity extends AppCompatActivity implements View.OnClickL
     private void initData(){
         dataset1 = new ArrayList<>();
         try {
-            Object o = SPUtils.get(App.getContext(), "wordsBox", "");
+            Object o = getWordBox();
             JSONArray jsonArray_wordsBox = JSONArray.parseArray(o.toString());
             for(int i = 0; i < jsonArray_wordsBox.size(); i++){
                 JSONObject object = jsonArray_wordsBox.getJSONObject(i);
@@ -142,5 +142,121 @@ public class InitPlanActivity extends AppCompatActivity implements View.OnClickL
         hs.put("plantype", plantype);
 
         return hs;
+    }
+
+    private Object getWordBox(){
+        Object o = SPUtils.get(App.getContext(), "wordsBox", "[\n" +
+                "    {\n" +
+                "        \"topicId\": \"12\",\n" +
+                "        \"topicName\": \"六级必备词汇\",\n" +
+                "        \"tableName\": \"word_12\",\n" +
+                "        \"wordAllCount\": 2087,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"11\",\n" +
+                "        \"topicName\": \"四级必备词汇\",\n" +
+                "        \"tableName\": \"word_11\",\n" +
+                "        \"wordAllCount\": 13527,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"140\",\n" +
+                "        \"topicName\": \"高考大纲词汇\",\n" +
+                "        \"tableName\": \"word_140\",\n" +
+                "        \"wordAllCount\": 3874,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"141\",\n" +
+                "        \"topicName\": \"高考常用短语词汇\",\n" +
+                "        \"tableName\": \"word_141\",\n" +
+                "        \"wordAllCount\": 362,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"13\",\n" +
+                "        \"topicName\": \"考研必备词汇\",\n" +
+                "        \"tableName\": \"word_13\",\n" +
+                "        \"wordAllCount\": 5475,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"14\",\n" +
+                "        \"topicName\": \"TOEFL必备词汇\",\n" +
+                "        \"tableName\": \"word_14\",\n" +
+                "        \"wordAllCount\": 4883,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"16\",\n" +
+                "        \"topicName\": \"GRE考试必备词汇\",\n" +
+                "        \"tableName\": \"word_16\",\n" +
+                "        \"wordAllCount\": 14992,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"15\",\n" +
+                "        \"topicName\": \"雅思必备词汇\",\n" +
+                "        \"tableName\": \"word_15\",\n" +
+                "        \"wordAllCount\": 4541,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"17\",\n" +
+                "        \"topicName\": \"四级高频词汇\",\n" +
+                "        \"tableName\": \"word_cet4_high\",\n" +
+                "        \"wordAllCount\": 685,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"topicId\": \"18\",\n" +
+                "        \"topicName\": \"真题阅读词汇\",\n" +
+                "        \"tableName\": \"word_paper_reading\",\n" +
+                "        \"wordAllCount\": 65,\n" +
+                "        \"preserve1\": null,\n" +
+                "        \"preserve2\": null,\n" +
+                "        \"preserve3\": null,\n" +
+                "        \"preserve4\": null,\n" +
+                "        \"preserve5\": null\n" +
+                "    }\n" +
+                "]");
+        return o;
     }
 }
