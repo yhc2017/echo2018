@@ -7,12 +7,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -34,6 +41,7 @@ import com.echo.quick.presenters.HomePresenterImpl;
 import com.echo.quick.presenters.LoginPresenterImpl;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.utils.App;
+import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.MyPlanDialog;
 import com.echo.quick.utils.NetUtils;
 import com.echo.quick.utils.SPUtils;
@@ -46,6 +54,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import zhy.com.highlight.HighLight;
+import zhy.com.highlight.interfaces.HighLightInterface;
+import zhy.com.highlight.position.OnBottomPosCallback;
+import zhy.com.highlight.position.OnLeftPosCallback;
+import zhy.com.highlight.position.OnRightPosCallback;
+import zhy.com.highlight.position.OnTopPosCallback;
+import zhy.com.highlight.shape.BaseLightShape;
+import zhy.com.highlight.shape.CircleLightShape;
+import zhy.com.highlight.shape.OvalLightShape;
+import zhy.com.highlight.shape.RectLightShape;
+
 /**
  * Class name: HomeActivity
  * Specific description :首页控件重新换血
@@ -57,6 +76,8 @@ import java.util.Objects;
  */
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener,HomeContract.IHomeView{
 
+    private HighLight mHightLight;
+    SharedPreferences sharedPreferences;
     private TextView tv_way,tv_user_name,tv_from,tv_obtion,im_setting,tv_word_finish,tv_word_obtion,tv_word_over,tv_word_num;
     private ProgressBar my_word_plan_progressbar;
     private Button bt_start_study;
@@ -98,6 +119,20 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initData();
         setdate();
+
+        sharedPreferences = getSharedPreferences("is_first_in_data",MODE_PRIVATE);
+        boolean isFirstIn = sharedPreferences.getBoolean("isFirstIn",true);
+        if (isFirstIn) {
+               showNextTipViewOnCreated();
+            // 结束引导页面前，将状态改为false,下次启动的时候，判断不是第一次启动，就跳过引导页面
+            sharedPreferences = getSharedPreferences("is_first_in_data",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isFirstIn", false);
+            editor.commit();
+        }else {
+            LogUtils.d("已非第一次安装");
+        }
+
     }
 
     protected void onResume() {
@@ -133,6 +168,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         //绑定监听
         im_setting.setOnClickListener(this);
         tv_word_finish.setOnClickListener(this);
+        tv_word_over.setOnClickListener(this);
         bt_start_study.setOnClickListener(this);
         im_tor.setOnClickListener(this);
 
@@ -144,12 +180,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
      *@return void
      */
     public void initData(){
-        String sex = app.getSex();
-        if (sex.equals("女")){
-            im_tor.setImageResource(R.drawable.ic_tor_girl);
-        }else {
-            im_tor.setImageResource(R.drawable.ic_tor_boy);
-        }
         //今日目标单词数默认值
         try {
             datenum2 = homePresenter.calMyPlanNmu("2018-12", 0);
@@ -220,11 +250,49 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         return map;
     }
 
+    /**
+     * Method name :showNextKnownTipView
+     * Specific description :用于引导页
+     *    当界面布局完成显示next模式提示布局
+     *    显示方法必须在onLayouted中调用
+     *    适用于Activity及Fragment中使用
+     *    可以直接在onCreated方法中调用
+     * @return void
+     */
+    public  void showNextTipViewOnCreated(){
+
+        mHightLight = new HighLight(HomeActivity.this)//
+                .autoRemove(false)
+                .enableNext()
+                .setOnLayoutCallback(new HighLightInterface.OnLayoutCallback() {
+                    @Override
+                    public void onLayouted() {
+                        //界面布局完成添加tipview
+                        mHightLight.addHighLight(R.id.im_setting,R.layout.info_plan,new OnBottomPosCallback(60),new RectLightShape())
+                                .addHighLight(R.id.tv_word_over,R.layout.info_word_book,new OnBottomPosCallback(5),new CircleLightShape())
+                                .addHighLight(R.id.bt_start_study,R.layout.info_star,new OnTopPosCallback(),new RectLightShape())
+                                .addHighLight(R.id.im_tor,R.layout.info_login,new OnBottomPosCallback(60),new CircleLightShape());
+                        //然后显示高亮布局
+                        mHightLight.show();
+                    }
+                })
+                .setClickCallback(new HighLight.OnClickCallback() {
+                    @Override
+                    public void onClick() {
+//                        Toast.makeText(HomeActivity.this, "go!", Toast.LENGTH_SHORT).show();
+                        mHightLight.next();
+                    }
+                });
+    }
 
     @Override
     public void onClick(View view) {
         Intent intent = null;
         switch (view.getId()){
+            case R.id.tv_word_over:
+                intent = new Intent(HomeActivity.this, StrangeWordsListActivity.class);
+                startActivity(intent);
+                break;
 
             case R.id.tv_word_finish:
                 intent = new Intent(HomeActivity.this, StrangeWordsListActivity.class);
@@ -366,7 +434,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             app.setNickName(object.getString("nickname"));
             app.setSex(object.getString("sex"));
         }else {
-            tv_user_name.setText("点击这进行注册登录");
+            tv_user_name.setText("未登录");
         }
     }
 

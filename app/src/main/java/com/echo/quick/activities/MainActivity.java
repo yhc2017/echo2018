@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.echo.quick.contracts.MainContract;
 import com.echo.quick.contracts.OnlineWordContract;
@@ -35,6 +36,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
+import zhy.com.highlight.HighLight;
+import zhy.com.highlight.interfaces.HighLightInterface;
+import zhy.com.highlight.position.OnBottomPosCallback;
+import zhy.com.highlight.position.OnLeftPosCallback;
+import zhy.com.highlight.position.OnRightPosCallback;
+import zhy.com.highlight.position.OnTopPosCallback;
+import zhy.com.highlight.shape.CircleLightShape;
+import zhy.com.highlight.shape.OvalLightShape;
+import zhy.com.highlight.shape.RectLightShape;
+
+import static android.system.Os.remove;
 
 /**
  * 文件名：MainActivity
@@ -49,6 +61,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends AppCompatActivity implements MainContract.IMainView{
     Button mbt1,mbt2,mbtdialog;
+    private HighLight mHightLight;
 
 
     /**
@@ -91,6 +104,30 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
     };
 
 
+    public  void showNextTipViewOnCreated(){
+        mHightLight = new HighLight(MainActivity.this)//
+//                .anchor(findViewById(R.id.mycon))//如果是Activity上增加引导层，不需要设置anchor
+                .autoRemove(false)
+                .enableNext()
+                .setOnLayoutCallback(new HighLightInterface.OnLayoutCallback() {
+                    @Override
+                    public void onLayouted() {
+                        //界面布局完成添加tipview
+                        mHightLight.addHighLight(R.id.bt_words_dialog,R.layout.info_gravity_left_down,new OnLeftPosCallback(45),new RectLightShape())
+                                .addHighLight(R.id.btn_strange,R.layout.info_gravity_left_down,new OnRightPosCallback(5),new CircleLightShape())
+                                .addHighLight(R.id.btn_re_study,R.layout.info_gravity_left_down,new OnTopPosCallback(),new CircleLightShape());
+                        //然后显示高亮布局
+                        mHightLight.show();
+                    }
+                })
+                .setClickCallback(new HighLight.OnClickCallback() {
+                    @Override
+                    public void onClick() {
+                        Toast.makeText(MainActivity.this, "clicked and show next tip view by yourself", Toast.LENGTH_SHORT).show();
+                        mHightLight.next();
+                    }
+                });
+    }
     /**
      * 方法名称：
      * 方法描述:
@@ -114,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
         btn_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, UserMessageActivity.class));
+                startActivity(new Intent(MainActivity.this, Main2Activity.class));
             }
         });
 
@@ -227,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
                 IWordsLogDao wordsLogDao = new WordsLogImpl();
                 String str = "";
                 for(Words_Log wordsLog:wordsLogDao.select()){
-                    str += wordsLog.getWord()+"  "+wordsLog.getLeftNum()+"    "+wordsLog.getRightNum()+"\n";
+//                    str += wordsLog.getWord()+"  "+wordsLog.getLeftNum()+"    "+wordsLog.getRightNum()+"\n";
                 }
                 textView3.setText(str);
             }
@@ -240,11 +277,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
                 IWordsStatusDao words = new WordsStatusImpl();
                 String str = "";
                 for(Words_Status word:words.select()){
-                    str += word.getWord()+word.getStatus()+"\n";
+//                    str += word.getWord()+word.getStatus()+"\n";
                 }
                 textView3.setText(str);
             }
         });
+
     }
 
     @Override

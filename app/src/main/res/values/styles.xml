@@ -31,15 +31,16 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/myfont_home_content_size</item>
     </style>
+
     <style name="MyFont.Home.Content.Num" parent="Base.TextAppearance.AppCompat">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/myfont_home_content_num_size</item>
     </style>
 
-<!--想改变toolbar的盖度没有作用-->
+    <!--想改变toolbar的盖度没有作用-->
     <!--<style name="ToolbarStyle" parent="Base.Widget.AppCompat.ActionBar">-->
-        <!--<item name="android:text">""</item>-->
-        <!--<item name="android:minHeight">@dimen/toolbar_minHeight</item>-->
+    <!--<item name="android:text">""</item>-->
+    <!--<item name="android:minHeight">@dimen/toolbar_minHeight</item>-->
     <!--</style>-->
 
 </resources>

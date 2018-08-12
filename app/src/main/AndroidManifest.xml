@@ -22,23 +22,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity-->
-            <!--android:name=".Words2Activity"-->
-            <!--android:label="@string/title_activity_words2"-->
-            <!--android:theme="@style/AppTheme" />-->
+        <!-- <activity -->
+        <!-- android:name=".Words2Activity" -->
+        <!-- android:label="@string/title_activity_words2" -->
+        <!-- android:theme="@style/AppTheme" /> -->
         <activity android:name=".WordsActivity" />
         <activity android:name=".UserMessageActivity" />
         <activity android:name=".ModifyPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".StrangeWordsListActivity" />
-        <!--<activity android:name=".ListShowActivity" />-->
+        <!-- <activity android:name=".ListShowActivity" /> -->
         <activity android:name=".ReadActivity" />
         <activity android:name=".ReadingAnswerActivity" />
         <activity android:name=".ReadingTranslateActivity" />
-        <activity android:name=".HomeActivity">
-
-        </activity>
-        <activity android:name=".ReadingMianActivity"></activity>
+        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".ReadingMianActivity" />
     </application>
 
 </manifest>

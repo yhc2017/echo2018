@@ -25,6 +25,7 @@ allprojects {
     }
 }
 
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
@@ -61,5 +62,8 @@ dependencies {
     //lombok
     compileOnly 'org.projectlombok:lombok:1.18.2'
     annotationProcessor 'org.projectlombok:lombok:1.18.2'
+
+    //高亮的引导页
+    implementation "com.isanwenyu.highlight:highlight:1.8.0"
 
 }
