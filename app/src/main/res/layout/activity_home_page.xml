@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homepage"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -10,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="390dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="vertical">
 
@@ -19,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="43dp">
 
             <TextView
                 android:layout_marginRight="1dp"
@@ -35,7 +33,7 @@
                 style="@style/MyFont.Home.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="11dp"
                 android:layout_toRightOf="@+id/tv_from"
                 android:text="2018年12月" />
 
@@ -56,7 +54,7 @@
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="7dp"
-                android:src="@drawable/ic_tor_girl" />
+                android:src="@drawable/ic_tor_boy" />
 
             <TextView
                 android:id="@+id/tv_user_name"
@@ -79,69 +77,94 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:gravity="right"
             android:text="修改计划 >" />
 
         <LinearLayout
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_marginRight="20dp"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_word_finish"
+                    android:id="@+id/tv_over_day"
                     style="@style/MyFont.Home.Content.Num"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/colorSchedule"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="650" />
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="已背" />
+                    android:text="距结束天数" />
+            </LinearLayout>
+            <View
+                android:layout_marginRight="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical|left"
+                android:background="@color/black" />
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_word_obtion"
+                    style="@style/MyFont.Home.Content.Num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="0" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="今日目标" />
             </LinearLayout>
                 <View
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_width="1dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|left"
                     android:background="@color/black" />
 
                 <LinearLayout
-                    android:layout_marginRight="20dp"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_word_obtion"
+                        android:id="@+id/tv_word_over"
                         style="@style/MyFont.Home.Content.Num"
-                        android:textColor="@color/colorOnLineMusicModule"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="hhh" />
+                        android:text="0" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="今日目标" />
+                        android:text="待复习" />
                 </LinearLayout>
 
                 <View
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_width="1dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|right"
@@ -151,18 +174,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tv_word_over"
+                    android:id="@+id/tv_word_finish"
                     style="@style/MyFont.Home.Content.Num"
-                    android:textColor="@color/colorLocalMusicModule"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="10" />
+                    android:text="0" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="超前学习" />
+                    android:text="滚瓜烂熟" />
             </LinearLayout>
             </LinearLayout>
         <ProgressBar
@@ -171,9 +193,9 @@
             android:layout_height="12dp"
             style="?android:attr/progressBarStyleHorizontal"
             android:progressDrawable="@drawable/progressbar_more_color"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -182,7 +204,7 @@
                 android:text="复习优先"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="3dp"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="26dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"/>
@@ -190,8 +212,8 @@
                 android:id="@+id/tv_word_num"
                 android:text="3500"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="3dp"
-                android:layout_marginRight="18dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="26dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"/>
@@ -201,11 +223,49 @@
             android:id="@+id/bt_start_study"
             android:text="开   始   学   习"
             android:textSize="22dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_bg2"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_bg_write"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="55dp" />
     </LinearLayout>
+    <RelativeLayout
+        android:background="@color/lightwrite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerInParent="true"
+                android:id="@+id/tv_yhc"
+                android:visibility="visible"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="© YHC"/>
+            <View
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/tv_yhc"
+                android:layout_centerVertical="true"
+                android:id="@+id/view1"
+                android:background="@color/black"
+                android:layout_width="30dp"
+                android:layout_height="1dp"/>
+            <View
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/view2"
+                android:layout_toRightOf="@+id/tv_yhc"
+                android:background="@color/black"
+                android:layout_width="30dp"
+                android:layout_height="1dp"/>
+        </RelativeLayout>
+    </RelativeLayout>
 </LinearLayout>

@@ -1,6 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">quickly</string>
 
+    <!--名人名言-->
+    <string-array name="entities">
+        <item >Never underestimate your power to change yourself!</item>
+        <item >Every noble work is at first impossible.</item>
+        <item >Whatever is worth doing is worth doing well.</item>
+        <item >Live well, love lots, and laugh often.</item>
+        <item >Great oaks from little acorns grow.</item>
+    </string-array>
+    <string-array name="entities_tra">
+        <item >永远不要低估你转变自我的能力！</item>
+        <item >每一个巨大的工程最初看起来都是不可能做到的！</item>
+        <item >任何值得做的，就把它做好。</item>
+        <item >善待生活，酷爱一切，常常开怀大笑。</item>
+        <item >万丈高楼平川起。</item>
+    </string-array>
+
     <!--title-->
     <string name="user_message">我</string>
     <string name="user_pic">修改头像</string>
@@ -23,6 +39,8 @@
     <string name="next_opr">下一步</string>
     <string name="iphone_number">请输入手机号</string>
     <string name="password">请输入密码</string>
+    <string name="new_password">请输入新密码</string>
+    <string name="new_password_2">请再次输入新密码</string>
     <string name="login">登 录</string>
     <string name="exit">退出账号</string>
     <string name="forgive_pwd">忘记密码？</string>
@@ -79,4 +97,5 @@
     <string name="modle_local_music">本地音乐</string>
     <string name="modle_personal_history">个人音乐历程</string>
     <string name="modle_online_music">在线音乐</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

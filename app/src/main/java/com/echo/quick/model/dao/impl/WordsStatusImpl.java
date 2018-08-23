@@ -29,9 +29,52 @@ public class WordsStatusImpl implements IWordsStatusDao {
     }
 
     @Override
-    public List<Words_Status> selectByStatus(String status) {
+    public List<Words_Status> selectByTopicId(String topicId) {
+        return LitePal.where("topicId = ?", topicId).find(Words_Status.class);
+    }
 
-        return LitePal.where("status = ?", status).find(Words_Status.class);
+    @Override
+    public List<Words_Status> selectByStatus(String status) {
+        switch (status){
+            case "":
+                return LitePal.where("status = ?", "").find(Words_Status.class);
+
+            case "review":
+                return LitePal.where("status = ?", "review").find(Words_Status.class);
+
+            case "learn":
+                return LitePal.where("status = ?", "learn").find(Words_Status.class);
+
+            case "learn_":
+                return LitePal.where("status = ? or status = ?",  "", "review").find(Words_Status.class);
+
+            default:
+                return LitePal.where("status = ?", status).find(Words_Status.class);
+        }
+
+    }
+
+    @Override
+    public List<Words_Status> selectByStatusAndTopicId(String status, String topicId) {
+        switch (status){
+            case "":
+                return LitePal.where("status = ? and topicId = ?", "", topicId).find(Words_Status.class);
+
+            case "review":
+                return LitePal.where("status = ? and topicId = ?", "review", topicId).find(Words_Status.class);
+
+            case "learn":
+                return LitePal.where("status = ? and topicId = ?", "learn", topicId).find(Words_Status.class);
+
+            case "learn_":
+                return LitePal.where("(status = ? or status = ?) and topicId = ?",  "", "learn" , topicId).find(Words_Status.class);
+
+            case "all":
+                return LitePal.where("topicId = ?", topicId).find(Words_Status.class);
+
+            default:
+                return LitePal.where("status = ? and topicId = ?", status, topicId).find(Words_Status.class);
+        }
     }
 
     @Override
@@ -40,6 +83,9 @@ public class WordsStatusImpl implements IWordsStatusDao {
 
             case "":
                 return LitePal.where("status = ?",  "").find(Words_Status.class).size();
+
+            case "learn":
+                return LitePal.where("status = ?",  "learn").find(Words_Status.class).size();
 
             case "review":
                 return LitePal.where("status = ?",  "review").find(Words_Status.class).size();
@@ -53,6 +99,40 @@ public class WordsStatusImpl implements IWordsStatusDao {
             case "review_grasp":
                 return LitePal.where("status = ? or status = ?",  "review", "grasp").find(Words_Status.class).size();
 
+            case "learn_review":
+                return LitePal.where("status = ? or status = ?",  "", "review").find(Words_Status.class).size();
+
+            default:
+                return -1;
+        }
+    }
+
+    @Override
+    public int selectCountByStatusAndTopicId(String request, String topicId) {
+        switch (request){
+            case "":
+                return LitePal.where("status = ? and topicId = ?",  "", topicId).find(Words_Status.class).size();
+
+            case "learn":
+                return LitePal.where("status = ? and topicId = ?",  "learn", topicId).find(Words_Status.class).size();
+
+            case "review":
+                return LitePal.where("status = ? and topicId = ?",  "review", topicId).find(Words_Status.class).size();
+
+            case "grasp":
+                return LitePal.where("status = ? and topicId = ?",  "grasp", topicId).find(Words_Status.class).size();
+
+            case "study":
+                return LitePal.where("status = ? and topicId = ?",  "study", topicId).find(Words_Status.class).size();
+
+            case "review_grasp":
+                return LitePal.where("(status = ? or status = ?) and topicId = ?",  "review", "grasp", topicId).find(Words_Status.class).size();
+
+            case "learn_review":
+                return LitePal.where("(status = ? or status = ?) and topicId = ?",  "learn", "review", topicId).find(Words_Status.class).size();
+
+            case "learn_":
+                return LitePal.where("(status = ? or status = ?) and topicId = ?",  "", "review", topicId).find(Words_Status.class).size();
             default:
                 return -1;
         }
@@ -104,5 +184,10 @@ public class WordsStatusImpl implements IWordsStatusDao {
 
 
         return true;
+    }
+
+    @Override
+    public boolean detectionEmpty() {
+        return LitePal.findAll(Words_Status.class).size() == 0;
     }
 }

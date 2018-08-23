@@ -33,9 +33,7 @@ public class WordsLogImpl implements IWordsLogDao {
     @Override
     public int selectCount() {
 
-        int num = select().size();
-
-        return num;
+        return select().size();
     }
 
     @Override
@@ -125,5 +123,10 @@ public class WordsLogImpl implements IWordsLogDao {
     @Override
     public void delete(String id) {
         LitePal.deleteAll(Words_Log.class, "wordId = ?", id);
+    }
+
+    @Override
+    public boolean detectionEmpty() {
+        return LitePal.findAll(Words_Log.class).size() == 0;
     }
 }

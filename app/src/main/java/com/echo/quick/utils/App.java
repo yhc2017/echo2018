@@ -31,20 +31,17 @@ import java.util.List;
 public class App extends Application{
 
     public List<Words> list;
-
     public List<Words_Status> statusList;
-
     public List<String> pagerList;//真题类型列表
-
     private static Context mContext;
-
     private String content;
-
     private String translation;
 
     private String userId;
     private String nickName;
     private String sex;
+    private String topicId;
+    private String study;
 
     public static final String CTL_ACTION = "com.zjx.action.CTL_ACTION";
     public static final String UPDATE_ACTION = "com.zjx.action.UPDATE_ACTION";
@@ -62,27 +59,25 @@ public class App extends Application{
     public void init(){
         try {
             setUserId("111");
-            Object o2 = "未登录";
-            Object o = SPUtils.get(App.getContext(), "UserInfo", o2);
-            if(o != o2) {
-                JSONObject object = JSON.parseObject(o.toString());
-                setUserId(object.getString("userId"));
-                setNickName(object.getString("nickname"));
-                setSex(object.getString("sex"));
-            }
-            IWordsStatusDao statusDao = new WordsStatusImpl();
-            List<Words_Status> statuses = statusDao.selectByStatus("");
-//            setStatusList(statuses);
+            setTopicId("12");
+            Object topicId = SPUtils.get(getContext(), "topicID", "12");
+            setTopicId(topicId.toString());
             OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-            if(statuses.size() == 5){
-                final HashMap<String, String> map = new HashMap<>();
-                map.put("userId", "111");
-                map.put("topicId", "17");
-                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
-            }
             onlineWordPresenter.getOnlineSprintType();
             onlineWordPresenter.GetAllWordTopicInfo();
+            setUserId(SPUtils.get(getContext(), "userId", "111").toString());
+            setNickName(SPUtils.get(getContext(), "nickname", "请登录").toString());
+            setSex(SPUtils.get(getContext(), "sex", "男").toString());
+            IWordsStatusDao statusDao = new WordsStatusImpl();
+            List<Words_Status> statuses = statusDao.selectByStatusAndTopicId("learn_", getTopicId());
+            if (statuses.size() < 5) {
+                final HashMap<String, String> map = new HashMap<>();
+                map.put("userId", getUserId());
+                map.put("topicId", getTopicId());
+                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
+            }
         }catch (Exception e){
+            e.printStackTrace();
             LogUtils.d("没在服务器获取到数据");
         }
     }
@@ -158,4 +153,21 @@ public class App extends Application{
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+    public String getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(String topicId) {
+        this.topicId = topicId;
+    }
+
+    public String getStudy() {
+        return study;
+    }
+
+    public void setStudy(String study) {
+        this.study = study;
+    }
+
 }

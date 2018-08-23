@@ -25,7 +25,7 @@
     <dimen name="content_margin_hieght">10dp</dimen>
     <dimen name="input_margin_hieght">37dp</dimen>
 
-    <dimen name="content_textsize_small">18dp</dimen>
+    <dimen name="content_textsize_small">19dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="dp_70">70dp</dimen>

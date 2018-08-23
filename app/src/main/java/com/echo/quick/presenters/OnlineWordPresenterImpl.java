@@ -1,9 +1,16 @@
 package com.echo.quick.presenters;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.echo.quick.contracts.HomeContract;
+import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.MainContract;
 import com.echo.quick.contracts.OnlineWordContract;
+import com.echo.quick.contracts.WordsContract;
 import com.echo.quick.contracts.WordsShowContract;
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
 import com.echo.quick.model.dao.impl.WordsLogImpl;
@@ -40,9 +47,15 @@ import okhttp3.Response;
 
 public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWordContract.OnlineWordPresenter {
 
-    App app = (App) App.getContext();
+    private App app = (App) App.getContext();
 
-    MainContract.IMainView iMainView;
+    private MainContract.IMainView iMainView;
+
+    private HomeContract.IHomeView iHomeView;
+
+    private LoginContract.ILoginView iLoginView;
+
+    private WordsContract.IWordsView iWordsView;
 
     public OnlineWordPresenterImpl(){
 
@@ -50,6 +63,18 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
     public OnlineWordPresenterImpl(MainContract.IMainView iMainView){
         this.iMainView = iMainView;
+    }
+
+    public OnlineWordPresenterImpl(HomeContract.IHomeView iHomeView){
+        this.iHomeView = iHomeView;
+    }
+
+    public OnlineWordPresenterImpl(LoginContract.ILoginView iLoginView){
+        this.iLoginView = iLoginView;
+    }
+
+    public OnlineWordPresenterImpl(WordsContract.IWordsView iWordsView){
+        this.iWordsView = iWordsView;
     }
 
     @Override
@@ -63,7 +88,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
             public void onFailure(Call call, IOException e) {
                 LogUtils.d("无法获取OnlineWord");
                 IWordsStatusDao newDao = new WordsStatusImpl();
-                List<Words_Status> news = newDao.select();
+                List<Words_Status> news = newDao.selectByTopicId(app.getTopicId());
                 for(Words_Status word: news){
                     Words wd = new Words();
                     wd.setWordId(word.getWordId());
@@ -91,7 +116,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                 }catch (Exception e){
                     e.printStackTrace();
                     IWordsStatusDao newDao = new WordsStatusImpl();
-                    List<Words_Status> news = newDao.select();
+                    List<Words_Status> news = newDao.selectByTopicId(app.getTopicId());
                     for(Words_Status word: news){
                         Words wd = new Words();
                         wd.setWordId(word.getWordId());
@@ -142,7 +167,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                 }catch (Exception e){
                     e.printStackTrace();
                     IWordsStatusDao newDao = new WordsStatusImpl();
-                    List<Words_Status> news = newDao.select();
+                    List<Words_Status> news = newDao.selectByTopicId(app.getTopicId());
                     for(Words_Status word: news){
                         Words wd = new Words();
                         wd.setWordId(word.getWordId());
@@ -254,39 +279,40 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
     public void postOnlineWordsLog() {
         IWordsLogDao logDao = new WordsLogImpl();
         List<Words_Log> logs = logDao.select();
-        String json = "[";
+        StringBuilder json = new StringBuilder("[");
         for (Words_Log log:logs){
             String body = "{\"wordId\":\""+log.getWordId()
                     +"\",\"word\":\""+log.getWord()
-                    +"\",\"topicId\":\""+"17"
+                    +"\",\"topicId\":\""+log.getTopicId()
                     +"\",\"leftNum\":\""+log.getLeftNum()
                     +"\",\"rightNum\":\""+log.getRightNum()
                     +"\"},";
-            json += body;
+            json.append(body);
         }
         //切割掉最后一个逗号
-        json = json.substring(0, json.length()-1);
-        json += "]";
-        LogUtils.d(json);
+        json = new StringBuilder(json.substring(0, json.length() - 1));
+        json.append("]");
+        LogUtils.d(json.toString());
 
         final HashMap<String, String> map = new HashMap<>();
-        map.put("userId", "111");
-        map.put("logs", json);
+        map.put("userId", app.getUserId());
+        map.put("logs", json.toString());
 
         final IOnlineWord iOnlineWord = new OnlineWordImpl();
         iOnlineWord.postToWord(map, "quick/reviewOrLearn/pushUserAction", new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 LogUtils.d("logs发送失败");
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 
                 String str = response.body().string();
 
                 if(str.equals("1")){
                     LogUtils.d("logs发送成功");
+                    iWordsView.sendLogResult();
                 }else {
                     LogUtils.d("logs发送失败");
                 }
@@ -300,7 +326,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
     public void GetAllWordTopicInfo() {
         IOnlineWord iOnline = new OnlineWordImpl();
 //        iOnline.getToWord("quick/selectAllWordTopicInfo", new Callback() {
-        iOnline.getToWord("quick/selectWordTopic17Info", new Callback() {
+        iOnline.getToWord("/quick/selectAllWordTopicInfo", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtils.d("无法接收单词表信息");
@@ -315,7 +341,51 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
         });
     }
 
-    public void initNewWord(JSONArray jsonArray){
+    @Override
+    public void postToAddWordPlan(HashMap<String, String> map) {
+        IOnlineWord iOnline = new OnlineWordImpl();
+        iOnline.postToWord(map, "quick/addWordPlan", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                iHomeView.addPlanResult(false);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.body().string().equals("0")){
+                    iHomeView.addPlanResult(false);
+                }else {
+                    iHomeView.addPlanResult(true);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void postToGetTopicIdWords(HashMap<String, String> map, final Boolean login) {
+        IOnlineWord iOnline = new OnlineWordImpl();
+        iOnline.postToWord(map, "quick/getUserAllWordInfo", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                try {
+                    SPUtils.put(App.getContext(),"UserAllWordInfo", response.body().string());
+                    if(login)
+                        iLoginView.overWordInfo();
+                    else
+                        iHomeView.overWordInfo();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void initNewWord(JSONArray jsonArray){
         for(int i = 0; i < jsonArray.size(); i++){
             WordsShowContract.IWordsShowPresenter wordsShowPresenter = new WordsShowPresenters();
             JSONObject object = jsonArray.getJSONObject(i);
@@ -354,7 +424,8 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
     }
 
-    public Words objectToWord(JSONObject object){
+
+    private Words objectToWord(JSONObject object){
         //需要特别留意
         Words word = new Words(
                 object.getString("id"),

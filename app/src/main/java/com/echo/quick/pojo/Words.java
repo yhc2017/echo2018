@@ -1,5 +1,8 @@
 package com.echo.quick.pojo;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 /**
  * Class name: Words
  * Specific description :单词对象
@@ -10,7 +13,10 @@ package com.echo.quick.pojo;
  * @since ：[quick|背单词模块]
  */
 
+@EqualsAndHashCode()
+@Data
 public class Words {
+
     private String wordId;
     private String word;
     private String symbol;    //音标
@@ -59,86 +65,6 @@ public class Words {
         this.eg1_chinese = eg1_chinese;
         this.eg2 = eg2;
         this.eg2_chinese = eg2_chinese;
-        this.topicId = topicId;
-    }
-
-    public String getWordId() {
-        return wordId;
-    }
-
-    public void setWordId(String wordId) {
-        this.wordId = wordId;
-    }
-
-    public String getEg1() {
-        return eg1;
-    }
-
-    public void setEg1(String eg1) {
-        this.eg1 = eg1;
-    }
-
-    public String getEg1_chinese() {
-        return eg1_chinese;
-    }
-
-    public void setEg1_chinese(String eg1_chinese) {
-        this.eg1_chinese = eg1_chinese;
-    }
-
-    public String getEg2() {
-        return eg2;
-    }
-
-    public void setEg2(String eg2) {
-        this.eg2 = eg2;
-    }
-
-    public String getEg2_chinese() {
-        return eg2_chinese;
-    }
-
-    public void setEg2_chinese(String eg2_chinese) {
-        this.eg2_chinese = eg2_chinese;
-    }
-
-    public String getPron() {
-        return pron;
-    }
-
-    public void setPron(String pron) {
-        this.pron = pron;
-    }
-
-    public String getWord() {
-        return word;
-    }
-
-    public void setWord(String word) {
-        this.word = word;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
-    public String getExplain() {
-        return explain;
-    }
-
-    public void setExplain(String explain) {
-        this.explain = explain;
-    }
-
-    public String getTopicId() {
-        return topicId;
-    }
-
-    public void setTopicId(String topicId) {
         this.topicId = topicId;
     }
 }

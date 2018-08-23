@@ -91,7 +91,7 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
     }
 
 
-    public void popWindow(final Context context){
+    private void popWindow(final Context context){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("今日份已完成");
 //        final EditText editText;
@@ -100,16 +100,14 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
         builder.setNegativeButton("打卡结束喽", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-                onlineWordPresenter.postOnlineWordsLog();
+
                 iWordsView.RefreshPage("");
             }
         });
-        builder.setNeutralButton("上传数据", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("低调低调", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-                onlineWordPresenter.postOnlineWordsLog();
+
                 iWordsView.RefreshPage("log");
             }
         });

@@ -30,6 +30,12 @@ public class RegisterPresenterImpl extends BasePresenter implements RegisterCont
 
     private User user;
 
+    private App app;
+
+    {
+        app = (App) App.getContext();
+    }
+
     public RegisterPresenterImpl(){}
 
     public RegisterPresenterImpl(RegisterContract.IRegisterView iRegisterView){
@@ -56,11 +62,17 @@ public class RegisterPresenterImpl extends BasePresenter implements RegisterCont
                 int code  = response.code();
                 String res = response.body().string();
 
-                JSONObject jsonObject = JSONObject.parseObject(res);
-
-                if(jsonObject.getString("prepare4").equals("204")){
-                    SPUtils.put(App.getContext(), "UserInfo", res);
+                JSONObject object = JSONObject.parseObject(res);
+                SPUtils.put(App.getContext(), "userId", object.getString("userId"));
+                SPUtils.put(App.getContext(), "nickname", object.getString("nickname"));
+                SPUtils.put(App.getContext(), "sex", object.getString("sex"));
+                app.setUserId(object.getString("userId"));
+                app.setNickName(object.getString("nickname"));
+                app.setSex(object.getString("sex"));
+                if(object.getString("prepare4").equals("204")){
                     iRegisterView.onRegisterResult(true, code);
+                }else {
+                    iRegisterView.onRegisterResult(false, code);
                 }
 
             }

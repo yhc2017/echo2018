@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+        <ImageView
+            android:id="@+id/iv_user_message_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_back" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/user_message"
+            style="@style/MyFont.Home.Content"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right">
+            <TextView
+                android:id="@+id/tv_mod_user_ok"
+                android:text="确定"
+                android:gravity="right"
+                android:layout_marginRight="20dp"
+                style="@style/MyFont.Home.Content"
+                android:textColor="@color/white"
+                android:layout_width="60dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/user_card_text_mar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="@dimen/user_card_center_heigh"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorAccent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <TextView
+                    style="@style/MyFont.Home.Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="账号"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_id"
+                    android:background="@null"
+                    style="@style/MyFont.Home.Content"
+                    android:textColor="@color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="手机号码" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:background="@color/bule"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="@dimen/user_card_center_heigh"
+                    android:background="@color/colorAccent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        style="@style/MyFont.Home.Content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="昵称"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/et_name"
+                        android:background="@null"
+                        style="@style/MyFont.Home.Content"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:gravity="center_vertical|right"
+                        android:layout_height="40dp"
+                        android:textColorLink="@color/white"
+                        android:textColorHint="@color/white"
+                        android:hint="未登录" />
+
+                </LinearLayout>
+                <View
+                    android:background="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="1dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/colorAccent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+                    <RadioGroup
+                        android:id="@+id/rg_sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <RadioButton
+                            android:textColor="@color/white"
+                            android:id="@+id/rb_man"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="男" />
+                        <RadioButton
+                            android:textColor="@color/white"
+                            android:id="@+id/rb_woman"
+                            android:text="女"
+                            android:layout_marginLeft="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tv_sex_rs"
+                        style="@style/MyFont.Home.Content"
+                        android:textColor="@color/white"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:text="少侠" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_modify_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorAccent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    style="@style/MyFont.Home.Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="修改密码"
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/et_password"
+                    android:src="@drawable/ic_go"/>
+            </RelativeLayout>
+
+            <Button
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/exitbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/login_button"
+                android:textAllCaps="false"
+                style="@style/MyFont.Home.Content"
+                android:textColor="@color/colorPrimaryFont"
+                android:text="退 出 登 录"/>
+            <TextView
+                android:visibility="gone"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                style="@style/MyFont.Home.Content"
+                android:textColor="@color/colorPrimaryFont"
+                android:text="退 出 登 录"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

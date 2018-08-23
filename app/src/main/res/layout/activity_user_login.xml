@@ -39,17 +39,26 @@
                 android:id="@+id/login_bag"
                 android:layout_width="170dp"
                 android:layout_height="170dp"
-                android:background="@drawable/boy" />
+                android:background="@mipmap/logo" />
 
             <TextView
+                android:id="@+id/tv_round_sent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/login_bag"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="Quick单词"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:text="一起快背单词吧~"
+                android:textColor="@color/white" />
+            <TextView
+                android:id="@+id/tv_round_sent_tra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_bag"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="一起快背单词吧~"
+                android:textColor="@color/white" />
         </LinearLayout>
 
 
@@ -94,7 +103,7 @@
             android:layout_width="37dp"
             android:layout_height="37dp"
             android:layout_margin="@dimen/content_margin_hieght"
-            android:src="@drawable/ic_password" />
+            android:src="@drawable/ic_pass" />
 
         <EditText
             android:password="true"
@@ -118,7 +127,7 @@
         android:textAllCaps="false"
         android:textSize="@dimen/content_textsize_small"
         android:textColor="@color/white"
-        android:text="登录"/>
+        android:text="登               录"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -134,7 +143,7 @@
             android:gravity="center"
             android:text="立即注册"
             android:textColor="@color/colorAccent"
-            android:textSize="12dp" />
+            android:textSize="15dp" />
         <View
             android:layout_width="1dp"
             android:layout_height="10dp"
@@ -149,7 +158,7 @@
         android:gravity="center"
         android:text="忘记密码"
         android:textColor="@color/colorAccent"
-        android:textSize="12dp" />
+        android:textSize="15dp" />
     </LinearLayout>
 
 </LinearLayout>

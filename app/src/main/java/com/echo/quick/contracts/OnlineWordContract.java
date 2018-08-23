@@ -57,7 +57,17 @@ public interface OnlineWordContract {
          **/
         void GetAllWordTopicInfo();
 
+        /**
+         * 方法名称：postToAddWordPlan
+         * 方法描述: 添加用户的学习计划，一个用户只能对一个词库设置一个学习计划
+         **/
+        void postToAddWordPlan(HashMap<String, String> map);
 
+        /**
+         * 方法名称：postToGetTopicIdWords
+         * 方法描述: 通过用户Id和topicId获取用户该词库的单词信息
+         **/
+        void postToGetTopicIdWords(HashMap<String, String> map, Boolean login);
 
     }
 

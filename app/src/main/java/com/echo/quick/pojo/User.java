@@ -1,6 +1,9 @@
 package com.echo.quick.pojo;
 
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 /**
  * 项目名称：LastOne
  * 类描述：用户信息库
@@ -10,7 +13,7 @@ package com.echo.quick.pojo;
  * 修改时间：2018/7/7 9:49
  * 修改备注：
  */
-
+@Data
 public class User{
 
     private String userId;
@@ -35,67 +38,4 @@ public class User{
         this.code = code;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 }
