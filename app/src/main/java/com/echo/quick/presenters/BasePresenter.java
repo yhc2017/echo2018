@@ -22,10 +22,7 @@ public class BasePresenter {
     //解析来自服务器返回的response字符串成为JsonObject
     JSONObject getJSONObject(Response response){
         try {
-            JSONObject jsonObject =  new JSONObject(response.body().string());
-            if(jsonObject==null) {
-                throw new Error("响应体为空");
-            }return jsonObject;
+            return new JSONObject(response.body().string());
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
