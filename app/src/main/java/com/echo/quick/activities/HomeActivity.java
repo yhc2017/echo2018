@@ -207,6 +207,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
      * Specific description :塞数据
      *@return HashMap 希望不是个错误
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public HashMap<String, String> setdate(){
 
@@ -252,9 +253,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         int overWords = statusDao.selectCountByStatusAndTopicId("grasp", app.getTopicId());
         tv_word_finish.setText(overWords+"");
         tv_word_over.setText(statusDao.selectCountByStatusAndTopicId("review", app.getTopicId())+"");
-
-        //超前学习单词数
-        tv_word_over.setText("0");
+        
         //词库单词数量
         tv_word_num.setText(overWords+"/"+allWords);
         //进度数

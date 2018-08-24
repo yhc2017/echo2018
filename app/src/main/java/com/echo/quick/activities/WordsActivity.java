@@ -12,9 +12,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
+import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.contracts.WordsContract;
 import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Status;
+import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.presenters.WordsPresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
@@ -312,4 +314,11 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(Intent.createChooser(intent, activityTitle));
     }
+
+    protected void onStop() {
+        super.onStop();
+        OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(this);
+        onlineWordPresenter.postOnlineWordsLog();
+    }
+
 }
