@@ -37,6 +37,7 @@
             </intent-filter></activity>
         <activity android:name=".ReadingMianActivity" />
         <activity android:name=".InitPlanActivity"></activity>
+        <activity android:name=".HomeMainActivity"></activity>
     </application>
 
 </manifest>
