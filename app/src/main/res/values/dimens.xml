@@ -34,7 +34,7 @@
     <dimen name="myfont_reading_title_size">18dp</dimen>
     <dimen name="myfont_home_title_size">43dp</dimen>
     <dimen name="myfont_home_content_size">17dp</dimen>
-    <dimen name="myfont_home_content_num_size">20dp</dimen>
+    <dimen name="myfont_home_content_num_size">19dp</dimen>
 
 
     <!--可以删减-->
