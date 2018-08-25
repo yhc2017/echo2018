@@ -312,7 +312,12 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
                 if(str.equals("1")){
                     LogUtils.d("logs发送成功");
-                    iWordsView.sendLogResult();
+                    try {
+                        iWordsView.sendLogResult();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        LogUtils.d("logs发送失败");
+                    }
                 }else {
                     LogUtils.d("logs发送失败");
                 }
@@ -326,7 +331,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
     public void GetAllWordTopicInfo() {
         IOnlineWord iOnline = new OnlineWordImpl();
 //        iOnline.getToWord("quick/selectAllWordTopicInfo", new Callback() {
-        iOnline.getToWord("/quick/selectAllWordTopicInfo", new Callback() {
+        iOnline.getToWord("quick/selectAllWordTopicInfo", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtils.d("无法接收单词表信息");
