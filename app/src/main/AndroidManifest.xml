@@ -25,14 +25,13 @@
         <activity android:name=".ModifyPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".StrangeWordsListActivity" />
-        <!-- <activity android:name=".ListShowActivity" /> -->
+        <!--<activity android:name=".ListShowActivity" />-->
         <activity android:name=".ReadActivity" />
         <activity android:name=".ReadingAnswerActivity" />
         <activity android:name=".ReadingTranslateActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -42,7 +41,10 @@
         <service
             android:name="com.echo.quick.service.AudioPlayerService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true">
+        </service>
+        <activity android:name=".InitPlanActivity"></activity>
+        <activity android:name=".HomeMainActivity"></activity>
     </application>
 
 </manifest>

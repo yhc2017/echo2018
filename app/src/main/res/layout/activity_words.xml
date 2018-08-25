@@ -4,40 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     style="@style/AppTheme.AppBarOverlay"
     tools:context="com.echo.quick.activities.WordsActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/quick_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/colorPrimary">
         <ImageView
             android:id="@+id/quick_back"
+            android:padding="9dp"
             android:layout_width="@dimen/toolbar_content"
             android:layout_height="@dimen/toolbar_content"
             android:layout_margin="@dimen/content_margin_hieght"
             android:src="@drawable/ic_home" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/quick_back"
-            android:layout_marginLeft="100dp"
-            android:gravity="center"
             android:text="自评速记"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/toolbar_content_textsize"
-             />
+            android:textColor="@color/white"
+            android:textSize="@dimen/toolbar_content_textsize" />
     </android.support.v7.widget.Toolbar>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list"
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
         android:layout_height="360dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/quick_toolbar"
         android:scrollbars="vertical"
         tools:listitem="@layout/item_words" />
+
+    <ProgressBar
+        android:id="@+id/pg_word"
+        android:layout_alignParentBottom="true"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="10dp"
+        android:progressDrawable="@drawable/progressbar_style_word" />
 </RelativeLayout>

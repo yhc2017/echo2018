@@ -77,9 +77,8 @@ public class HomePresenterImpl implements HomeContract.IHomePresenter {
         //相差天数
         int datenum = 0;
         String s1=date+"-12";
-        String s2= getYear()+"-"+getMouth()+"-12";
-        @SuppressLint("SimpleDateFormat") DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar=new GregorianCalendar();
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+        String s2 = df.format(System.currentTimeMillis());
         Date d1=df.parse(s1);
         Date d2=df.parse(s2);
         int hh = (int) ((d1.getTime()-d2.getTime())/(60*60*1000*24));
@@ -218,9 +217,8 @@ public class HomePresenterImpl implements HomeContract.IHomePresenter {
         //相差天数
         int datenum = 0;
         String s1=date+"-12";
-        String s2= getYear()+"-"+getMouth()+"-12";
-        @SuppressLint("SimpleDateFormat") DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar=new GregorianCalendar();
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+        String s2 = df.format(System.currentTimeMillis());
         Date d1=df.parse(s1);
         Date d2=df.parse(s2);
         int hh = (int) ((d1.getTime()-d2.getTime())/(60*60*1000*24));

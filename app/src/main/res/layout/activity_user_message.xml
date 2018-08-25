@@ -61,14 +61,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="center"
-                    android:text="账号"
-                    android:textColor="@color/white" />
+                    android:text="账号" />
 
                 <TextView
                     android:id="@+id/tv_id"
                     android:background="@null"
                     style="@style/MyFont.Home.Content"
-                    android:textColor="@color/white"
                     android:layout_alignParentRight="true"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical|right"
@@ -97,14 +95,12 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:gravity="center"
-                        android:text="昵称"
-                        android:textColor="@color/white" />
+                        android:text="昵称" />
 
                     <EditText
                         android:id="@+id/et_name"
                         android:background="@null"
                         style="@style/MyFont.Home.Content"
-                        android:textColor="@color/white"
                         android:layout_marginLeft="10dp"
                         android:layout_width="match_parent"
                         android:gravity="center_vertical|right"
@@ -115,7 +111,7 @@
 
                 </LinearLayout>
                 <View
-                    android:background="@color/white"
+                    android:background="@color/black"
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_marginLeft="10dp"
@@ -134,14 +130,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
+
                         <RadioButton
-                            android:textColor="@color/white"
                             android:id="@+id/rb_man"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="男" />
                         <RadioButton
-                            android:textColor="@color/white"
                             android:id="@+id/rb_woman"
                             android:text="女"
                             android:layout_marginLeft="20dp"
@@ -152,7 +147,6 @@
                     <TextView
                         android:id="@+id/tv_sex_rs"
                         style="@style/MyFont.Home.Content"
-                        android:textColor="@color/white"
                         android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
                         android:gravity="center_vertical"
@@ -176,15 +170,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="center"
-                    android:text="修改密码"
-                    android:textColor="@color/white" />
+                    android:text="修改密码" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:id="@+id/et_password"
-                    android:src="@drawable/ic_go"/>
+                    android:src="@drawable/ic_next"/>
             </RelativeLayout>
 
             <Button
