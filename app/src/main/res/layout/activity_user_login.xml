@@ -85,8 +85,8 @@
             android:textSize="@dimen/content_textsize_small"
             android:background="@drawable/edit_bg"
             android:hint="请输入手机号"
-            android:textColorHint="@color/colorAccent"
-            android:textColor="@color/colorAccent"/>
+            android:textColorHint="@color/font_black_4"
+            android:textColor="@color/font_black_0"/>
     </LinearLayout>
 
     <LinearLayout
@@ -113,8 +113,8 @@
             android:background="@drawable/edit_bg"
             android:hint="请输入密码"
             android:inputType="textPassword"
-            android:textColorHint="@color/colorAccent"
-            android:textColor="@color/colorAccent"/>
+            android:textColorHint="@color/font_black_4"
+            android:textColor="@color/font_black_0"/>
     </LinearLayout>
     <Button
         android:id="@+id/logbtn"
@@ -142,7 +142,7 @@
             android:padding="@dimen/toolbar_content_margin"
             android:gravity="center"
             android:text="立即注册"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/font_black_0"
             android:textSize="15dp" />
         <View
             android:layout_width="1dp"
@@ -157,7 +157,7 @@
         android:padding="@dimen/toolbar_content_margin"
         android:gravity="center"
         android:text="忘记密码"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/font_black_0"
         android:textSize="15dp" />
     </LinearLayout>
 

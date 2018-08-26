@@ -15,29 +15,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
-        </activity>
-        <!--<activity-->
-            <!--android:name=".Words2Activity"-->
-            <!--android:label="@string/title_activity_words2"-->
-            <!--android:theme="@style/AppTheme" />-->
+        <activity android:name=".MainActivity"></activity>
+        <!-- <activity -->
+        <!-- android:name=".Words2Activity" -->
+        <!-- android:label="@string/title_activity_words2" -->
+        <!-- android:theme="@style/AppTheme" /> -->
         <activity android:name=".WordsActivity" />
         <activity android:name=".UserMessageActivity" />
         <activity android:name=".ModifyPasswordActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".StrangeWordsListActivity" />
-        <!--<activity android:name=".ListShowActivity" />-->
+        <!-- <activity android:name=".ListShowActivity" /> -->
         <activity android:name=".ReadActivity" />
         <activity android:name=".ReadingAnswerActivity" />
         <activity android:name=".ReadingTranslateActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+            </intent-filter>
+        </activity>
         <activity android:name=".ReadingMianActivity" />
-        <activity android:name=".InitPlanActivity"></activity>
-        <activity android:name=".HomeMainActivity"></activity>
+        <activity android:name=".InitPlanActivity" />
+        <activity android:name=".HomeMainActivity" />
+        <activity
+            android:name=".RetrievePasswordActivity"
+            android:label="@string/title_activity_retrieve_password"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
