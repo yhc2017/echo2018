@@ -1,5 +1,7 @@
 package com.echo.quick.presenters;
 
+import android.support.annotation.NonNull;
+
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.RegisterContract;
 import com.echo.quick.model.dao.impl.RegisterImpl;
@@ -52,24 +54,24 @@ public class RegisterPresenterImpl extends BasePresenter implements RegisterCont
         IRegisterDao registerDao = new RegisterImpl();
         registerDao.doRegisterPost(tel, pwd, nickname, sex, new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 iRegisterView.onRegisterResult(false, 203);
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 
                 int code  = response.code();
                 String res = response.body().string();
-
                 JSONObject object = JSONObject.parseObject(res);
-                SPUtils.put(App.getContext(), "userId", object.getString("userId"));
-                SPUtils.put(App.getContext(), "nickname", object.getString("nickname"));
-                SPUtils.put(App.getContext(), "sex", object.getString("sex"));
-                app.setUserId(object.getString("userId"));
-                app.setNickName(object.getString("nickname"));
-                app.setSex(object.getString("sex"));
+                //通过判断204，注册成功才进行内容注入
                 if(object.getString("prepare4").equals("204")){
+                    SPUtils.put(App.getContext(), "userId", object.getString("userId"));
+                    SPUtils.put(App.getContext(), "nickname", object.getString("nickname"));
+                    SPUtils.put(App.getContext(), "sex", object.getString("sex"));
+                    app.setUserId(object.getString("userId"));
+                    app.setNickName(object.getString("nickname"));
+                    app.setSex(object.getString("sex"));
                     iRegisterView.onRegisterResult(true, code);
                 }else {
                     iRegisterView.onRegisterResult(false, code);
