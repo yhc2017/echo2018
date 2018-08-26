@@ -44,6 +44,11 @@
             android:enabled="true"
             android:exported="true">
         </service>
+        <activity android:name=".HomeMainActivity" />
+        <activity
+            android:name=".RetrievePasswordActivity"
+            android:label="@string/title_activity_retrieve_password"
+            android:theme="@style/AppTheme"></activity>
         <activity android:name=".InitPlanActivity"
             tools:ignore="DuplicateActivity"></activity>
         <activity android:name=".HomeMainActivity"></activity>

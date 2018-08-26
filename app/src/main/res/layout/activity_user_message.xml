@@ -105,8 +105,8 @@
                         android:layout_width="match_parent"
                         android:gravity="center_vertical|right"
                         android:layout_height="40dp"
-                        android:textColorLink="@color/white"
-                        android:textColorHint="@color/white"
+                        android:textColorLink="@color/font_black_0"
+                        android:textColorHint="@color/font_black_4"
                         android:hint="未登录" />
 
                 </LinearLayout>
