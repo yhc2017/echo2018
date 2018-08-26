@@ -293,7 +293,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                     HashMap<String,Object> phoneMap = (HashMap<String, Object>) data;
                     String country = (String) phoneMap.get("country"); // 国家代码，如“86”
                     String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
-                    startActivity(new Intent(context, MainActivity.class));
+                    startActivity(new Intent(context, RetrievePasswordActivity.class));
                     // 利用国家代码和手机号码进行后续的操作
                 } else{
                     // 处理错误的结果'
