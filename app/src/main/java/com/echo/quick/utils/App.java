@@ -11,6 +11,7 @@ import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
+import com.mob.MobSDK;
 
 import org.litepal.LitePal;
 
@@ -53,6 +54,7 @@ public class App extends Application{
         // 初始化LitePal数据库
         mContext = getApplicationContext();
         LitePal.initialize(this);
+        MobSDK.init(this);
         init();
     }
 

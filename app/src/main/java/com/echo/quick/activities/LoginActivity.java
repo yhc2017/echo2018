@@ -1,9 +1,8 @@
 package com.echo.quick.activities;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -34,6 +33,10 @@ import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.List;
+
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
 
 /**
  * 文件名：LoginActivity
@@ -207,6 +210,11 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                         ToastUtils.showLong(LoginActivity.this, "登录成功");
                         finish();
                         break;
+
+                    case "199":
+                        ToastUtils.showLong(LoginActivity.this, "该用户已经登录。");
+                        break;
+
                     default:
                         ToastUtils.showLong(LoginActivity.this, "error，请检查账号或密码是否正确");
                         break;
@@ -252,7 +260,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                     break;
 
                 case R.id.iv_pwdforgive:
-
+                    sendCode(LoginActivity.this);
                     break;
 
                 // 登录按钮事件处理
@@ -273,6 +281,28 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         }
     }
 
+    public void sendCode(final Context context) {
+        RegisterPage page = new RegisterPage();
+        //如果使用我们的ui，没有申请模板编号的情况下需传null
+        page.setTempCode(null);
+        page.setRegisterCallback(new EventHandler() {
+            @SuppressLint("ShowToast")
+            public void afterEvent(int event, int result, Object data) {
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    // 处理成功的结果
+                    HashMap<String,Object> phoneMap = (HashMap<String, Object>) data;
+                    String country = (String) phoneMap.get("country"); // 国家代码，如“86”
+                    String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
+                    startActivity(new Intent(context, MainActivity.class));
+                    // 利用国家代码和手机号码进行后续的操作
+                } else{
+                    // 处理错误的结果'
+                    LogUtils.d("处理失败。。。。。。。。。。。。。。。。。。");
+                }
+            }
+        });
+        page.show(context);
+    }
 
     protected void onDestroy() {
         super.onDestroy();

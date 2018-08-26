@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.echo.quick.activities">
 
     <!-- 网络权限 -->
@@ -43,7 +44,8 @@
             android:enabled="true"
             android:exported="true">
         </service>
-        <activity android:name=".InitPlanActivity"></activity>
+        <activity android:name=".InitPlanActivity"
+            tools:ignore="DuplicateActivity"></activity>
         <activity android:name=".HomeMainActivity"></activity>
     </application>
 
