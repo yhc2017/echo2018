@@ -8,14 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.echo.quick.utils.App;
 import com.echo.quick.utils.MyPlanDialog;
-import com.echo.quick.utils.NetUtils;
-import com.echo.quick.utils.SPUtils;
-import com.echo.quick.utils.ToastUtils;
-import com.echo.quick.utils.TypefaceUtil;
 
 /**
  * Class name: HomeMainActivity

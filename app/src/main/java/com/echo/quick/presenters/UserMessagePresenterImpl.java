@@ -12,15 +12,23 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
- * Created by Hello周少侠 on 2018/8/9.
- */
+ * 文件名：UserMessagePresenterImpl.java
+ * 创建人：Hello周少侠
+ * 创建时间：2018/8/9
+ * 类描述：
+ *
+ * 修改人：
+ * 修改时间：
+ * 修改内容：
+ *
+**/
+
 
 public class UserMessagePresenterImpl extends BasePresenter implements UserMessageContract.IUserMessagePresenter {
 
@@ -73,6 +81,27 @@ public class UserMessagePresenterImpl extends BasePresenter implements UserMessa
     public void postToUpdatePwd(HashMap<String, String> map) {
         IOnlineWord online = new OnlineWordImpl();
         online.postToWord(map, "quick/userUpdatePwd", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                iUserMessageView.updateInfoResult(false);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String res = response.body().string();
+                if(!res.equals("0")){
+                    iUserMessageView.updateInfoResult(true);
+                }else{
+                    iUserMessageView.updateInfoResult(false);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void postUserForgetPwd(HashMap<String, String> map) {
+        IOnlineWord online = new OnlineWordImpl();
+        online.postToWord(map, "quick/userForgetPwd", new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 iUserMessageView.updateInfoResult(false);

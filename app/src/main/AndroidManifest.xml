@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.echo.quick.activities">
 
     <!-- 网络权限 -->
@@ -15,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <!-- <activity -->
         <!-- android:name=".Words2Activity" -->
         <!-- android:label="@string/title_activity_words2" -->
@@ -45,7 +46,18 @@
         </service>
         <activity android:name=".HomeMainActivity" />
         <activity
-            android:name=".RetrievePasswordActivity"></activity>
+            android:name=".RetrievePasswordActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".InitPlanActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".HomeMainActivity"
+            tools:ignore="DuplicateActivity" />
+        <service
+            android:name="com.echo.quick.service.AudioPlayerService"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedService">
+        </service>
     </application>
 
 </manifest>

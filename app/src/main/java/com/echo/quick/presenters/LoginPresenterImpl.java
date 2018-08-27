@@ -1,28 +1,20 @@
 package com.echo.quick.presenters;
 
-import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.WordsShowContract;
 import com.echo.quick.model.dao.impl.LoginImpl;
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
-import com.echo.quick.model.dao.impl.WordsLogImpl;
-import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.ILoginDao;
 import com.echo.quick.model.dao.interfaces.IOnlineWord;
-import com.echo.quick.model.dao.interfaces.IWordsLogDao;
-import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.SPUtils;
-import com.echo.quick.utils.ToastUtils;
-
 
 import org.json.JSONException;
 
@@ -89,7 +81,6 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
                 JSONObject object = JSON.parseObject(res);
                 String prepare4 = object.getString("prepare4");
-                iLoginView.onLoginResult(true, prepare4);
                 if(prepare4.equals("200")) {
                     String userId = object.getString("userId");
                     String nickname = object.getString("nickname");
@@ -100,6 +91,9 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                     app.setUserId(userId);
                     app.setNickName(nickname);
                     app.setSex(sex);
+                    iLoginView.onLoginResult(true, prepare4);
+                }else if(prepare4.equals("199")){
+                    iLoginView.onLoginResult(true, prepare4);
                 }
             }
         });

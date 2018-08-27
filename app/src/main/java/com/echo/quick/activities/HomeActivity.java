@@ -292,7 +292,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        Intent intent = null;
+        Intent intent;
         MyPlanDialog myPlanDialog = new MyPlanDialog(HomeActivity.this);
         switch (view.getId()){
             case R.id.tv_word_over:
@@ -384,6 +384,24 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 progressDialog.setMessage("正在加载中");
                 progressDialog.show();
                 mHandler = new Handler();
+//                mRunnable = ThreadPoolProxyFactory.getNormalThreadPoolProxy().execute(new Runnable() {
+//                    @Override
+//                    public void run()
+//                    {
+//
+//                        IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
+//                        if(iWordsStatusDao.selectCountByStatusAndTopicId("learn_", app.getTopicId()) != 0){
+//                            progressDialog.dismiss();
+//                            String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
+//                            if(planType.equals("复习优先")) {
+//                                getWordStatus(false);
+//                            } else {
+//                                getWordStatus(true);
+//                            }
+//                        }
+//
+//                    }
+//                });
                 mRunnable = new Runnable() {
                     @Override
                     public void run()
