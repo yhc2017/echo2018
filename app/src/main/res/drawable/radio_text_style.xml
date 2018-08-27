@@ -2,5 +2,5 @@
 <!--radiobutton的text选择器-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true" android:color="@color/blue"></item>
-    <item android:color="@color/black"></item>
+    <item android:color="@color/textColorBlack"></item>
 </selector>

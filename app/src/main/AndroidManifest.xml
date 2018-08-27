@@ -45,9 +45,7 @@
         </service>
         <activity android:name=".HomeMainActivity" />
         <activity
-            android:name=".RetrievePasswordActivity"
-            android:label="@string/title_activity_retrieve_password"
-            android:theme="@style/AppTheme"></activity>
+            android:name=".RetrievePasswordActivity"></activity>
     </application>
 
 </manifest>
