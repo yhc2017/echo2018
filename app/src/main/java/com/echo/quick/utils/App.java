@@ -3,8 +3,6 @@ package com.echo.quick.utils;
 import android.app.Application;
 import android.content.Context;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
@@ -60,8 +58,6 @@ public class App extends Application{
 
     public void init(){
         try {
-            setUserId("111");
-            setTopicId("12");
             Object topicId = SPUtils.get(getContext(), "topicID", "12");
             setTopicId(topicId.toString());
             OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();

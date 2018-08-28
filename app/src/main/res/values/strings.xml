@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">quickly</string>
+    <string name="app_name">快背单词</string>
 
     <!--名人名言-->
     <string-array name="entities">
@@ -99,4 +99,8 @@
     <string name="modle_online_music">在线音乐</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_retrieve_password">找回密码</string>
+
+    <!--写在app内部的文字-->
+    <string name="tv_plan">通过</string>
+    <string name="tv_overtime">计划完成时间：</string>
 </resources>

@@ -63,6 +63,9 @@ public class RetrievePasswordActivity extends AppCompatActivity implements Valid
 
         initView();
 
+        metNewPwd.setText(app.getUserId());
+
+
     }
 
     /**

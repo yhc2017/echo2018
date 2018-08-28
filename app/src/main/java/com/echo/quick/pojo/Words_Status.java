@@ -1,6 +1,5 @@
 package com.echo.quick.pojo;
 
-import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
@@ -33,24 +32,38 @@ public class Words_Status extends LitePalSupport implements Serializable {
     private String eg2Chinese;
     private String status;
     private String topicId;
-//    private int prepare2;
+    private String recordTime;
 
     public Words_Status(){
 
     }
 
-    public Words_Status(String wordId, String pron, String word, String symbol, String explain, String eg1, String eg1_chinese, String eg2, String eg2_chinese,String status, String topicId){
+//    public Words_Status(String wordId, String pron, String word, String symbol, String explain, String eg1, String eg1_chinese, String eg2, String eg2_chinese,String status, String topicId){
+//        this.wordId = wordId;
+//        this.word = word;
+//        this.symbol = symbol;
+//        this.explain = explain;
+//        this.pron = pron;
+//        this.eg1 = eg1;
+//        this.eg1Chinese = eg1_chinese;
+//        this.eg2 = eg2;
+//        this.eg2Chinese = eg2_chinese;
+//        this.status = status;
+//        this.topicId = topicId;
+//    }
+
+    public Words_Status(String wordId, String pron, String symbol, String word, String explain, String eg1, String eg1Chinese, String eg2, String eg2Chinese, String status, String topicId, String recordTime) {
         this.wordId = wordId;
         this.word = word;
         this.symbol = symbol;
         this.explain = explain;
         this.pron = pron;
         this.eg1 = eg1;
-        this.eg1Chinese = eg1_chinese;
+        this.eg1Chinese = eg1Chinese;
         this.eg2 = eg2;
-        this.eg2Chinese = eg2_chinese;
+        this.eg2Chinese = eg2Chinese;
         this.status = status;
         this.topicId = topicId;
+        this.recordTime = recordTime;
     }
-
 }

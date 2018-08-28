@@ -112,7 +112,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             sharedPreferences = getSharedPreferences("is_first_in_data",MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("isFirstIn", false);
-            editor.commit();
+            editor.apply();
         }else {
             LogUtils.d("已非第一次安装");
         }
@@ -476,9 +476,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 try {
-
                     loginPresenter.allWordInfo(false);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -1,9 +1,7 @@
 package com.echo.quick.presenters;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.HomeContract;
@@ -25,6 +23,8 @@ import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.SPUtils;
 import com.echo.quick.utils.ToastUtils;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -390,40 +390,20 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
         });
     }
 
-    private void initNewWord(JSONArray jsonArray){
+    private void initNewWord(JSONArray jsonArray) throws JSONException {
         for(int i = 0; i < jsonArray.size(); i++){
             WordsShowContract.IWordsShowPresenter wordsShowPresenter = new WordsShowPresenters();
             JSONObject object = jsonArray.getJSONObject(i);
-            Words_Status words = new Words_Status(object.getString("id"),
-                    object.getString("pron"),
-                    object.getString("word"),
-                    object.getString("phon"),
-                    object.getString("para"),
-                    object.getString("build"),
-                    object.getString("example"),
-                    "",
-                    "",
-                    "",
-                    object.getString("topicId"));
+            Words_Status words = WordsStatusImpl.getWordsByStatusFastJson("", object);
             wordsShowPresenter.addNewWord(words);
         }
     }
 
-    public void initReviewWord(JSONArray jsonArray){
+    public void initReviewWord(JSONArray jsonArray) throws JSONException {
         WordsShowContract.IWordsShowPresenter wordsShowPresenter = new WordsShowPresenters();
         for(int i = 0; i < jsonArray.size(); i++){
             JSONObject object = jsonArray.getJSONObject(i);
-            Words_Status words = new Words_Status(object.getString("id"),
-                    object.getString("pron"),
-                    object.getString("word"),
-                    object.getString("phon"),
-                    object.getString("para"),
-                    object.getString("build"),
-                    object.getString("example"),
-                    "",
-                    "",
-                    "review",
-                    object.getString("topicId"));
+            Words_Status words = WordsStatusImpl.getWordsByStatusFastJson("review", object);
             wordsShowPresenter.addNewWord(words);
         }
 

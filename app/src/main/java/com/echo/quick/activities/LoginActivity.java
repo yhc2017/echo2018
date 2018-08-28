@@ -255,7 +255,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
                 case R.id.login_back:
                     LogUtils.d("登录页面", "返回主界面 ");
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    startActivity(new Intent(LoginActivity.this, HomeMainActivity.class));
                     finish();
                     break;
 
@@ -293,6 +293,8 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                     HashMap<String,Object> phoneMap = (HashMap<String, Object>) data;
                     String country = (String) phoneMap.get("country"); // 国家代码，如“86”
                     String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
+                    LogUtils.d(phone);
+                    app.setUserId(phone);
                     startActivity(new Intent(context, RetrievePasswordActivity.class));
                     // 利用国家代码和手机号码进行后续的操作
                 } else{

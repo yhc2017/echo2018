@@ -112,12 +112,12 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                 if(mSampleWordsAdapter.getItemCount() == 1){
                     //当左滑单词需要复现的数组中存在单词时，将其加入到当前列表下
                     Words_Status words = mData.get(pos);
-                    if (direction == ItemTouchHelper.RIGHT) {
-                        wordsPresenter.rightSwipe(words);
+                    if (direction == ItemTouchHelper.LEFT) {
+                        wordsPresenter.liefSwipe(words);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     } else {
                         mData.add(words);
-                        wordsPresenter.liefSwipe(words);
+                        wordsPresenter.rightSwipe(words);
                     }
                     mData.remove(pos);
 
@@ -135,9 +135,9 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                 }else {//页面超过1个单词时
                     String text;
                     //判断滑动方向
-                    if (direction == ItemTouchHelper.RIGHT) {
+                    if (direction == ItemTouchHelper.LEFT) {
                         text = "已记住";
-                        wordsPresenter.rightSwipe(mData.get(pos));
+                        wordsPresenter.liefSwipe(mData.get(pos));
                         mData.remove(pos);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
@@ -146,7 +146,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                         Words_Status words = mData.get(pos);
                         mData.remove(pos);
                         mData.add(words);
-                        wordsPresenter.liefSwipe(words);
+                        wordsPresenter.rightSwipe(words);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
                     }
