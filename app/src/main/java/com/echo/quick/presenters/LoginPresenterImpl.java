@@ -9,6 +9,7 @@ import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.WordsShowContract;
 import com.echo.quick.model.dao.impl.LoginImpl;
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
+import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.ILoginDao;
 import com.echo.quick.model.dao.interfaces.IOnlineWord;
 import com.echo.quick.pojo.Words_Status;
@@ -81,19 +82,25 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
                 JSONObject object = JSON.parseObject(res);
                 String prepare4 = object.getString("prepare4");
-                if(prepare4.equals("200")) {
-                    String userId = object.getString("userId");
-                    String nickname = object.getString("nickname");
-                    String sex = object.getString("sex");
-                    SPUtils.put(App.getContext(), "userId", userId);
-                    SPUtils.put(App.getContext(), "nickname", nickname);
-                    SPUtils.put(App.getContext(), "sex", sex);
-                    app.setUserId(userId);
-                    app.setNickName(nickname);
-                    app.setSex(sex);
-                    iLoginView.onLoginResult(true, prepare4);
-                }else if(prepare4.equals("199")){
-                    iLoginView.onLoginResult(true, prepare4);
+                switch (prepare4) {
+                    case "200":
+                        String userId = object.getString("userId");
+                        String nickname = object.getString("nickname");
+                        String sex = object.getString("sex");
+                        SPUtils.put(App.getContext(), "userId", userId);
+                        SPUtils.put(App.getContext(), "nickname", nickname);
+                        SPUtils.put(App.getContext(), "sex", sex);
+                        app.setUserId(userId);
+                        app.setNickName(nickname);
+                        app.setSex(sex);
+                        iLoginView.onLoginResult(true, prepare4);
+                        break;
+                    case "199":
+                        iLoginView.onLoginResult(true, prepare4);
+                        break;
+                    default:
+                        iLoginView.onLoginResult(false, prepare4);
+                        break;
                 }
             }
         });
@@ -145,6 +152,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
             else
                 iHomeView.setdate();
         }catch (Exception e) {
+            LogUtils.d("object.toString.............");
             e.printStackTrace();
         }
     }
@@ -153,7 +161,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
         WordsShowContract.IWordsShowPresenter wordsShowPresenter = new WordsShowPresenters();
         for(int i = 0; i < jsonArray.length(); i++){
             org.json.JSONObject object = jsonArray.getJSONObject(i);
-            String status = "";
+            String status = "learn";
             switch (object.getString("status")){
                 case "207":
                     status = "learn";
@@ -167,17 +175,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                 default:
                     break;
             }
-            Words_Status words = new Words_Status(object.getString("id"),
-                    object.getString("pron"),
-                    object.getString("word"),
-                    object.getString("phon"),
-                    object.getString("para"),
-                    object.getString("build"),
-                    object.getString("example"),
-                    "",
-                    "",
-                    status,
-                    object.getString("topicId"));
+            Words_Status words = WordsStatusImpl.getWordsByStatus(status, object);
             wordsShowPresenter.addNewWord(words);
         }
 

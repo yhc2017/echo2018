@@ -3,6 +3,7 @@ package com.echo.quick.model.dao.impl;
 import com.echo.quick.model.dao.interfaces.IWordsLogDao;
 import com.echo.quick.pojo.Words_Log;
 import com.echo.quick.pojo.Words_Status;
+import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 
 import org.litepal.LitePal;
@@ -23,11 +24,12 @@ public class WordsLogImpl implements IWordsLogDao {
 
     private Words_Log words;
 
+    private App app = (App)App.getContext();
 
     @Override
     public List<Words_Log> select() {
 
-        return LitePal.findAll(Words_Log.class);
+        return LitePal.where("topicId = ?", app.getTopicId()).find(Words_Log.class);
     }
 
     @Override

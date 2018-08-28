@@ -54,17 +54,7 @@ public class WordsShowPresenters implements WordsShowContract.IWordsShowPresente
 
     @Override
     public boolean addWordToStatus(Words words) {
-        Words_Status wordsNew = new Words_Status(words.getWordId(),
-                words.getPron(),
-                words.getWord(),
-                words.getSymbol(),
-                words.getExplain(),
-                words.getEg1(),
-                words.getEg1_chinese(),
-                words.getEg2(),
-                words.getEg2_chinese(),
-                "new",
-                words.getTopicId());
+        Words_Status wordsNew = WordsStatusImpl.getWordsByStatusWord(words);
         IWordsStatusDao newDao = new WordsStatusImpl();
 
         return newDao.update(wordsNew);

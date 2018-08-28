@@ -63,6 +63,9 @@ public class RetrievePasswordActivity extends AppCompatActivity implements Valid
 
         initView();
 
+        metIphone.setText(app.getUserId());
+
+
     }
 
     /**
@@ -96,7 +99,7 @@ public class RetrievePasswordActivity extends AppCompatActivity implements Valid
     public void onValidationSucceeded() {
 //检验通过
         final HashMap<String, String> map = new HashMap<>();
-        map.put("userId", app.getUserId());
+        map.put("userId", metIphone.getText().toString());
         map.put("newPwd", metNewPwd.getText().toString());
         presenter.postUserForgetPwd(map);
     }

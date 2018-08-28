@@ -31,27 +31,23 @@
         <activity android:name=".ReadingAnswerActivity" />
         <activity android:name=".ReadingTranslateActivity" />
         <activity android:name=".HomeActivity">
+        </activity>
+        <activity android:name=".ReadingMianActivity" />
+        <activity android:name=".InitPlanActivity" />
+        <!--<activity android:name=".HomeMainActivity" />-->
+        <activity
+            android:name=".RetrievePasswordActivity"
+            android:label="@string/title_activity_retrieve_password"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".InitPlanActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".HomeMainActivity"
+            tools:ignore="DuplicateActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReadingMianActivity" />
-        <activity android:name=".InitPlanActivity" />
-
-        <service
-            android:name="com.echo.quick.service.AudioPlayerService"
-            android:enabled="true"
-            android:exported="true">
-        </service>
-        <activity android:name=".HomeMainActivity" />
-        <activity
-            android:name=".RetrievePasswordActivity"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".InitPlanActivity"
-            tools:ignore="DuplicateActivity" />
-        <activity android:name=".HomeMainActivity"
-            tools:ignore="DuplicateActivity" />
         <service
             android:name="com.echo.quick.service.AudioPlayerService"
             android:enabled="true"

@@ -1,10 +1,9 @@
 package com.echo.quick.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
@@ -34,6 +33,7 @@ public class App extends Application{
     public List<Words> list;
     public List<Words_Status> statusList;
     public List<String> pagerList;//真题类型列表
+    @SuppressLint("StaticFieldLeak")
     private static Context mContext;
     private String content;
     private String translation;
@@ -60,8 +60,6 @@ public class App extends Application{
 
     public void init(){
         try {
-            setUserId("111");
-            setTopicId("12");
             Object topicId = SPUtils.get(getContext(), "topicID", "12");
             setTopicId(topicId.toString());
             OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
@@ -76,7 +74,8 @@ public class App extends Application{
                 final HashMap<String, String> map = new HashMap<>();
                 map.put("userId", getUserId());
                 map.put("topicId", getTopicId());
-                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
+                map.put("needNum", SPUtils.get(App.getContext(), "dateNum", 0).toString());
+                onlineWordPresenter.getDynamicWordInfo(map);
             }
         }catch (Exception e){
             e.printStackTrace();
