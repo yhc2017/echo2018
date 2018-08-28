@@ -255,7 +255,6 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
                 case R.id.login_back:
                     LogUtils.d("登录页面", "返回主界面 ");
-                    startActivity(new Intent(LoginActivity.this, HomeMainActivity.class));
                     finish();
                     break;
 

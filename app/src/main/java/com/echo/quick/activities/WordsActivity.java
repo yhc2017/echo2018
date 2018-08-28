@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
@@ -18,8 +17,10 @@ import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.presenters.WordsPresenterImpl;
+import com.echo.quick.service.AudioPlayerService;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.MyGridLayoutManager;
 import com.echo.quick.utils.ToastUtils;
 import com.echo.quick.utils.WordsShowDialog;
 
@@ -74,9 +75,13 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
      */
     private void initView() {
         rvList = (RecyclerView) findViewById(R.id.rv_list);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvList.setLayoutManager(linearLayoutManager);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        //使用网上一个人的代码，MyGridLayoutManager为自定义的方法
+        MyGridLayoutManager gridLayoutManager=new MyGridLayoutManager(this,1);
+        gridLayoutManager.setScrollEnabled(false);
+        rvList.setLayoutManager(gridLayoutManager);
         mSampleWordsAdapter = new SampleWordsAdapter(this, mData,1);
         //获取数据重新回到列表
         mSampleWordsAdapter = new SampleWordsAdapter(this, getData(),1);
@@ -230,7 +235,19 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                 LogUtils.d("数字为：" + i);
                 switch (view.getId()) {
                     case R.id.iv_play:
-                        LogUtils.d("这里播放音频" + position);
+                        String url = mData.get(position).getPron();
+                        if(url != null && !url.equals("")){
+                            try{
+                                Intent intent = new Intent(WordsActivity.this, AudioPlayerService.class);
+                                intent.putExtra("path", url);
+                                startService(intent);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                                ToastUtils.showLong(WordsActivity.this, "音频播放失败");
+                            }
+                        }else {
+                            ToastUtils.showLong(WordsActivity.this, "暂无该音频");
+                        }
                         break;
                     default:
                         //                ToastUtils.showShort(WordsActivity.this, "点击事件！");

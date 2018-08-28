@@ -193,7 +193,7 @@ public class WordsStatusImpl implements IWordsStatusDao {
                 return LitePal.where("(status = ? or status = ?) and topicId = ? and recordTime = ?",  "", "review", topicId, time).find(Words_Status.class).size();
 
             case "All":
-                return LitePal.where("recordTime = ?",  time).find(Words_Status.class).size();
+                return LitePal.where("recordTime = ? and topicId = ?",  time, topicId).find(Words_Status.class).size();
 
             default:
                 return -1;

@@ -24,6 +24,7 @@ public class Words_Log extends LitePalSupport{
     private int leftNum;
     private int rightNum;
     private String topicId;
+    private String recordTime;
 
     public Words_Log(){}
 
