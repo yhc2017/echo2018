@@ -6,15 +6,15 @@
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="@dimen/view_home_top_height"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@color/colorPrimary">
         <ImageView
             android:id="@+id/im_tor"
-            android:layout_marginLeft="35dp"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_marginLeft="@dimen/view_home_icon_margin_horizontal"
+            android:layout_width="@dimen/view_home_icon_size"
+            android:layout_height="@dimen/view_home_icon_size"
             android:src="@drawable/ic_tor_boy"/>
         <LinearLayout
             android:id="@+id/tv_msg"
@@ -22,40 +22,41 @@
             android:layout_marginLeft="20dp"
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="70dp">
+            android:layout_height="@dimen/view_home_icon_size">
+
             <TextView
                 android:id="@+id/tv_user_name"
-                android:textColor="@color/colorAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TanzJ"
-                android:textSize="19dp"/>
+                android:text="@string/tv_user_name"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/myfont_home_19" />
             <TextView
                 android:id="@+id/tv_user_plan"
-                android:textColor="@color/colorAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="通过英语六级"
-                android:textSize="19dp"/>
+                android:text="@string/tv_user_plan"
+                android:textSize="@dimen/myfont_home_19"
+                android:textColor="@color/textColorPrimary"/>
             <TextView
                 android:id="@+id/tv_user_plan_time"
-                android:textColor="@color/colorAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="计划完成时间：12月3日"
-                android:layout_marginTop="2dp"
-                android:textSize="8dp"/>
+                android:layout_marginTop="4dp"
+                android:textSize="@dimen/myfont_home_10"
+                android:textColor="@color/textColorPrimary"/>
         </LinearLayout>
 
         <ImageView
             android:id="@+id/im_user_setting"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="@dimen/view_home_icon_margin_horizontal"
             android:paddingTop="25dp"
             android:paddingLeft="25dp"
             android:paddingBottom="25dp"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="@dimen/view_home_icon_size"
+            android:layout_height="@dimen/view_home_icon_size"
             android:src="@drawable/ic_go"/>
     </RelativeLayout>
     <LinearLayout
@@ -72,8 +73,8 @@
                 android:id="@+id/tv_wordbox"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="大学英语六级词库"
-                android:textSize="13dp"/>
+                android:text="@string/tv_wordbox"
+                android:textSize="@dimen/myfont_home_13"/>
             <TextView
                 android:id="@+id/tv_plan_way"
                 android:gravity="center_vertical"
@@ -81,8 +82,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="8dp"
-                android:text="(学习优先)"/>
+                android:textSize="@dimen/myfont_home_8"
+                android:text="@string/tv_plan_way"/>
             <TextView
                 android:id="@+id/tv_setting_plan"
                 android:layout_width="wrap_content"
@@ -91,8 +92,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
-                android:text="修改 >"
-                android:textSize="10dp" />
+                android:text="@string/tv_setting_plan"
+                android:textSize="@dimen/myfont_home_10" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_marginTop="18dp"
@@ -102,8 +103,8 @@
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="总体进度"
-                android:textSize="10dp"/>
+                android:text="@string/tv_home01"
+                android:textSize="@dimen/myfont_home_10"/>
             <TextView
                 android:id="@+id/tv_all_words"
                 android:layout_width="wrap_content"
@@ -112,8 +113,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
-                android:text="555/2500"
-                android:textSize="10dp" />
+                android:text="@string/tv_all_words"
+                android:textSize="@dimen/myfont_home_10" />
         </RelativeLayout>
         <ProgressBar
             android:id="@+id/pg_all_word"
@@ -129,8 +130,8 @@
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="今日进度"
-                android:textSize="10dp"/>
+                android:text="@string/tv_home02"
+                android:textSize="@dimen/myfont_home_10"/>
             <TextView
                 android:id="@+id/tv_today_word"
                 android:layout_width="wrap_content"
@@ -139,8 +140,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
-                android:text="0/30"
-                android:textSize="10dp" />
+                android:text="@string/tv_all_words"
+                android:textSize="@dimen/myfont_home_10" />
         </RelativeLayout>
         <ProgressBar
             android:id="@+id/pg_word"
@@ -152,7 +153,7 @@
             android:layout_marginTop="35dp"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -162,18 +163,18 @@
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="20dp"
                     android:gravity="center"
-                    android:text="距离考试"
-                    android:textSize="12dp"/>
+                    android:text="@string/tv_home1_1"
+                    android:textSize="@dimen/myfont_home_12"/>
                 <TextView
                     android:id="@+id/tv_over_day"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="3dp"
                     style="@style/MyFont.Home.Content.Num"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="122天" />
+                    android:text="@string/tv_num" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_new_word_enter"
@@ -182,11 +183,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:textSize="12dp"
+                    android:textSize="@dimen/myfont_home_12"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="20dp"
                     android:gravity="center"
-                    android:text="新学单词" />
+                    android:text="@string/tv_home1_2" />
                 <TextView
                     android:id="@+id/tv_new_words_num"
                     android:layout_marginTop="2dp"
@@ -194,7 +195,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="16" />
+                    android:text="@string/tv_num" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_review_words_enter"
@@ -203,11 +204,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:textSize="12dp"
+                    android:textSize="@dimen/myfont_home_12"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="20dp"
                     android:gravity="center"
-                    android:text="复习单词" />
+                    android:text="@string/tv_home1_3"/>
                 <TextView
                     android:id="@+id/tv_review_words_num"
                     android:layout_marginTop="2dp"
@@ -215,7 +216,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="9" />
+                    android:text="@string/tv_num" />
             </LinearLayout>
 
             <LinearLayout
@@ -225,11 +226,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:textSize="12dp"
+                    android:textSize="@dimen/myfont_home_12"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="20dp"
                     android:gravity="center"
-                    android:text="生词本" />
+                    android:text="@string/tv_home1_4" />
                 <TextView
                     android:id="@+id/tv_unfamiliar_word"
                     android:layout_marginTop="2dp"
@@ -237,7 +238,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="121" />
+                    android:text="@string/tv_num" />
 
             </LinearLayout>
         </LinearLayout>
@@ -246,9 +247,8 @@
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-            android:textSize="19dp"
-            android:text="快背单词!"
+            style="@style/MyFont.Button"
+            android:text="@string/bt_start_study"
             android:background="@drawable/button_green_star_words"/>
     </LinearLayout>
 

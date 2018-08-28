@@ -18,8 +18,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/user_message"
-            style="@style/MyFont.Home.Content"
+            android:text="@string/tv_user_message_toolbar"
+            style="@style/MyFont.ToolBar"
             android:textColor="@color/white"
             android:textStyle="bold" />
         <LinearLayout
@@ -28,7 +28,7 @@
             android:gravity="right">
             <TextView
                 android:id="@+id/tv_mod_user_ok"
-                android:text="确定"
+                android:text="@string/tv_mod_user_ok"
                 android:gravity="right"
                 android:layout_marginRight="20dp"
                 style="@style/MyFont.Home.Content"
@@ -62,8 +62,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="center"
-                    android:text="账号"
-                    android:textColor="@color/black" />
+                    android:text="@string/tv_user_message_1"
+                    android:textColor="@color/textColorBlack" />
 
                 <TextView
                     android:id="@+id/tv_id"
@@ -74,7 +74,7 @@
                     android:gravity="center_vertical|right"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
-                    android:text="手机号码" />
+                    android:text="@string/tv_iphone" />
 
             </LinearLayout>
             <LinearLayout
@@ -99,8 +99,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:gravity="center"
-                        android:text="昵称"
-                        android:textColor="@color/black" />
+                        android:text="@string/tv_user_message_2"
+                        android:textColor="@color/textColorBlack" />
 
                     <EditText
                         android:singleLine="true"
@@ -113,7 +113,7 @@
                         android:gravity="center_vertical|right"
                         android:layout_height="40dp"
                         android:textColorHint="@color/font_black_4"
-                        android:hint="未登录" />
+                        android:hint="@string/tv_user_message_3" />
 
                 </LinearLayout>
                 <View
@@ -136,15 +136,15 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
                         <RadioButton
-                            android:textColor="@color/black"
+                            android:textColor="@color/textColorBlack"
                             android:id="@+id/rb_man"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="男" />
+                            android:text="@string/tv_user_man" />
                         <RadioButton
-                            android:textColor="@color/black"
+                            android:textColor="@color/textColorBlack"
                             android:id="@+id/rb_woman"
-                            android:text="女"
+                            android:text="@string/tv_user_women"
                             android:layout_marginLeft="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" />
@@ -158,7 +158,7 @@
                         android:layout_width="wrap_content"
                         android:gravity="center_vertical"
                         android:layout_height="match_parent"
-                        android:text="少侠" />
+                        android:text="@string/tv_user_sex" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -177,8 +177,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="center"
-                    android:text="修改密码"
-                    android:textColor="@color/black" />
+                    android:text="@string/tv_mod_user_password"
+                    android:textColor="@color/textColorBlack" />
 
                 <ImageView
                     android:layout_width="25dp"
@@ -197,9 +197,8 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/login_button"
                 android:textAllCaps="false"
-                style="@style/MyFont.Home.Content"
-                android:textColor="@color/white"
-                android:text="退 出 登 录"/>
+                style="@style/MyFont.Button"
+                android:text="@string/bt_user_message"/>
             <TextView
                 android:visibility="gone"
                 android:background="@color/colorAccent"
@@ -208,7 +207,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 style="@style/MyFont.Home.Content"
-                android:textColor="@color/colorPrimaryFont"
+                android:textColor="@color/colorAccent"
                 android:text="退 出 登 录"/>
         </LinearLayout>
     </ScrollView>

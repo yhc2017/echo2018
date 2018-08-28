@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/answer_A"
             android:textColor="@color/font_black_4"
-            android:textColorHighlight="@color/black"/>
+            android:textColorHighlight="@color/textColorBlack"/>
         <RadioButton
             android:layout_weight="1"
             android:id="@+id/answer_B"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text="@string/answer_B"
             android:textColor="@color/font_black_4"
-            android:textColorHighlight="@color/black"/>
+            android:textColorHighlight="@color/textColorBlack"/>
         <RadioButton
             android:id="@+id/answer_C"
             android:layout_weight="1"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="@string/answer_C"
             android:textColor="@color/font_black_4"
-            android:textColorHighlight="@color/black"/>
+            android:textColorHighlight="@color/textColorBlack"/>
         <RadioButton
             android:id="@+id/answer_D"
             android:layout_weight="1"
@@ -44,6 +44,6 @@
             android:layout_height="wrap_content"
             android:text="@string/answer_D"
             android:textColor="@color/font_black_4"
-            android:textColorHighlight="@color/black"/>
+            android:textColorHighlight="@color/textColorBlack"/>
     </RadioGroup>
 </RelativeLayout>

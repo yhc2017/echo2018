@@ -27,6 +27,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:textSize="15dp"
+                android:singleLine="true"
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,15 +40,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="-15dp"
             android:src="@drawable/ic_falut" />
-        <!--<TextView-->
-            <!--android:id="@+id/iv_schedule"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:gravity="center"-->
-            <!--android:textSize="15dp"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="adv. 迅速地"/>-->
     </RelativeLayout>
     <!--这是子项的布局-->
     <LinearLayout
