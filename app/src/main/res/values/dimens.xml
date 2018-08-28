@@ -13,10 +13,10 @@
     <dimen name="myfont_home_content_size">17dp</dimen>
     <dimen name="myfont_home_content_num_size">19dp</dimen>
     <dimen name="myfont_home_19">19dp</dimen>
-    <dimen name="myfont_home_13">13dp</dimen>
-    <dimen name="myfont_home_12">12dp</dimen>
-    <dimen name="myfont_home_10">10dp</dimen>
-    <dimen name="myfont_home_8">8dp</dimen>
+    <dimen name="myfont_home_13">16dp</dimen>
+    <dimen name="myfont_home_12">15dp</dimen>
+    <dimen name="myfont_home_10">13dp</dimen>
+    <dimen name="myfont_home_8">11dp</dimen>
     <dimen name="myfont_init_plan_question">18dp</dimen>
     <dimen name="myfont_content_textsize_small">19dp</dimen>
 

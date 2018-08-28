@@ -194,16 +194,16 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                 // 默认是操作ViewHolder的itemView，这里调用ItemTouchUIUtil的clearView方法传入指定的view
                 getDefaultUIUtil().onDraw(c, recyclerView, ((SampleWordsAdapter.ItemViewHolder) viewHolder).vItem, dX, dY, actionState, isCurrentlyActive);
                 if (dX > 0) { // 向左滑动是的提示
-                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundResource(R.drawable.item_left);
-                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).tvExplain.setVisibility(View.GONE);
-                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivDone.setVisibility(View.VISIBLE);
-                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivSchedule.setVisibility(View.GONE);
-                }
-                if (dX < 0) { // 向右滑动时的提示
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundResource(R.drawable.item_right);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivSchedule.setVisibility(View.VISIBLE);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).tvExplain.setVisibility(View.VISIBLE);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivDone.setVisibility(View.GONE);
+                }
+                if (dX < 0) { // 向右滑动时的提示
+                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundResource(R.drawable.item_left);
+                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).tvExplain.setVisibility(View.GONE);
+                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivDone.setVisibility(View.VISIBLE);
+                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivSchedule.setVisibility(View.GONE);
                 }
             }
 
@@ -225,17 +225,26 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
     private SampleWordsAdapter.OnItemClickListener getListen() {
         listener = new SampleWordsAdapter.OnItemClickListener(){
             @Override
-            public void onItemClick(View view , int position){
-//                ToastUtils.showShort(WordsActivity.this, "点击事件！");
-                LogUtils.d("数字为："+ position);
-                Words words = new Words(mData.get(position).getWordId(),mData.get(position).getPron(),mData.get(position).getWord(),mData.get(position).getSymbol(),mData.get(position).getExplain()+"\n"
-                        ,mData.get(position).getEg1(),mData.get(position).getEg1Chinese(),"","", mData.get(position).getTopicId());
-                LogUtils.d("==============="+mData.get(position).getEg1Chinese());
-                WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this, mData.get(position));
-                customDialog.show();
+            public void onItemClick(View view , int position) {
+                int i = position;
+                LogUtils.d("数字为：" + i);
+                switch (view.getId()) {
+                    case R.id.iv_play:
+                        LogUtils.d("这里播放音频" + position);
+                        break;
+                    default:
+                        //                ToastUtils.showShort(WordsActivity.this, "点击事件！");
+                        LogUtils.d("数字为：" + position);
+                        Words words = new Words(mData.get(position).getWordId(), mData.get(position).getPron(), mData.get(position).getWord(), mData.get(position).getSymbol(), mData.get(position).getExplain() + "\n"
+                                , mData.get(position).getEg1(), mData.get(position).getEg1Chinese(), "", "", mData.get(position).getTopicId());
+                        LogUtils.d("===============" + mData.get(position).getEg1Chinese());
+                        WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this, mData.get(position));
+                        customDialog.show();
+                        break;
+                }
+
             }
         };
-
         return listener;
     }
 
