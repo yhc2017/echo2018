@@ -295,9 +295,9 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         IWordsStatusDao statusDao = new WordsStatusImpl();
         int allWords = 3500;
         String topicId = "12";
-        String plan = SPUtils.get(App.getContext(), "box", "四级").toString();
-        String time = SPUtils.get(App.getContext(), "plan","2018").toString();
-        String way = SPUtils.get(App.getContext(), "planType","复习优先").toString();
+        String plan = SPUtils.get(App.getContext(), "box", "未选择词库").toString();
+        String time = SPUtils.get(App.getContext(), "plan","2019-06-25").toString();
+        String way = SPUtils.get(App.getContext(), "planType","学习优先").toString();
         try{
             //设置单词词库
             mtvUser_plan.setText(plan);
@@ -316,7 +316,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             //存储当前选择的topicId
             SPUtils.put(App.getContext(), "topicId", topicId);
             //今日目标单词数
-            mtvTodayWord.setText(SPUtils.get(App.getContext(), "dateNum", 0).toString());
+
         }catch (Exception e){
             e.printStackTrace();
             mtvUser_plan.setText("四级");
@@ -328,7 +328,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             int daynum = homePresenter.calEndNum(a);
             mtvOverDay.setText(daynum+"天");
             mtvWordbox.setText(plan);
-            mtvNewWordsNum.setText(statusDao.selectCountByStatusAndTopicId("learn_review", app.getTopicId())+"");
+            mtvNewWordsNum.setText(statusDao.selectCountByStatusAndTopicIdToday("All", app.getTopicId())+"");
             mtvReviewWordsNum.setText(statusDao.selectCountByStatusAndTopicId("review", app.getTopicId())+"");
             mtvUnfamiliarWord.setText(statusDao.selectCountByStatusAndTopicId("new", app.getTopicId())+"");
         } catch (ParseException e) {
@@ -338,11 +338,14 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
         //完成单词数
         int overWords = statusDao.selectCountByStatusAndTopicId("grasp", app.getTopicId());
-//        tv_word_finish.setText(overWords+"");
+        int todayOverWords = statusDao.selectCountByStatusAndTopicIdToday("grasp", app.getTopicId());
+        String today = SPUtils.get(App.getContext(), "dateNum", 0).toString();
+        //        tv_word_finish.setText(overWords+"");
 //        tv_word_over.setText(statusDao.selectCountByStatusAndTopicId("review", app.getTopicId())+"");
 
         //词库单词数量
         mtvAllWords.setText(overWords+"/"+allWords);
+        mtvTodayWord.setText(todayOverWords+"/"+ today);
         //进度数
 //        my_word_plan_progressbar.setMax(allWords);
 //        my_word_plan_progressbar.setProgress(overWords);
@@ -367,7 +370,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(HomeMainActivity.this);
             onlineWordPresenter.postToAddWordPlan(map);
             IWordsStatusDao wordsStatusDao = new WordsStatusImpl();
-            if(wordsStatusDao.selectCountByStatusAndTopicId("all", app.getTopicId()) == 0) {
+            if(wordsStatusDao.selectCountByStatusAndTopicId("review", app.getTopicId()) == 0) {
                 HashMap<String, String> map2 = new HashMap<>();
                 map2.put("userId", app.getUserId());
                 map2.put("topicId", app.getTopicId());
@@ -412,15 +415,20 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+//                final HashMap<String, String> map = new HashMap<>();
+//                map.put("userId", app.getUserId());
+//                map.put("topicId", app.getTopicId());
+//                String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
+//                if(planType.equals("复习优先")) {
+//                    onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
+//                } else {
+//                    onlineWordPresenter.getOnlineWordReviewOrLearn(map, "learn");
+//                }
                 final HashMap<String, String> map = new HashMap<>();
                 map.put("userId", app.getUserId());
                 map.put("topicId", app.getTopicId());
-                String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
-                if(planType.equals("复习优先")) {
-                    onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
-                } else {
-                    onlineWordPresenter.getOnlineWordReviewOrLearn(map, "learn");
-                }
+                map.put("needNum", SPUtils.get(App.getContext(), "dateNum", 0).toString());
+                onlineWordPresenter.getDynamicWordInfo(map);
                 final ProgressDialog progressDialog = new ProgressDialog(HomeMainActivity.this);
                 progressDialog.setIcon(R.drawable.boy);
                 progressDialog.setTitle("请稍等");

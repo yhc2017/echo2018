@@ -129,6 +129,8 @@ public class WordsStatusImpl implements IWordsStatusDao {
         switch (request){
             case "":
                 return LitePal.where("status = ? and topicId = ?",  "", topicId).find(Words_Status.class).size();
+            case "new":
+                return LitePal.where("status = ? and topicId = ?",  "new", topicId).find(Words_Status.class).size();
 
             case "learn":
                 return LitePal.where("status = ? and topicId = ?",  "learn", topicId).find(Words_Status.class).size();
@@ -150,6 +152,49 @@ public class WordsStatusImpl implements IWordsStatusDao {
 
             case "learn_":
                 return LitePal.where("(status = ? or status = ?) and topicId = ?",  "", "review", topicId).find(Words_Status.class).size();
+
+            case "all":
+                return LitePal.where("topicId = ?",  topicId).find(Words_Status.class).size();
+
+            default:
+                return -1;
+        }
+    }
+
+    @Override
+    public int selectCountByStatusAndTopicIdToday(String request, String topicId) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df=new SimpleDateFormat("yyyyMMdd");
+        String time = df.format(System.currentTimeMillis());
+        switch (request){
+            case "":
+                return LitePal.where("status = ? and topicId = ? and recordTime = ?",  "", topicId, time).find(Words_Status.class).size();
+            case "new":
+                return LitePal.where("status = ? and topicId = ? and recordTime = ?",  "new", topicId, time).find(Words_Status.class).size();
+
+            case "learn":
+                return LitePal.where("status = ? and topicId = ? and recordTime = ?",  "learn", topicId, time).find(Words_Status.class).size();
+
+            case "review":
+                return LitePal.where("status = ? and topicId = ? and recordTime = ?",  "review", topicId, time).find(Words_Status.class).size();
+
+            case "grasp":
+                return LitePal.where("status = ? and topicId = ? and recordTime = ?",  "grasp", topicId, time).find(Words_Status.class).size();
+
+            case "study":
+                return LitePal.where("status = ? and topicId = ? and recordTime = ?",  "study", topicId, time).find(Words_Status.class).size();
+
+            case "review_grasp":
+                return LitePal.where("(status = ? or status = ?) and topicId = ? and recordTime = ?",  "review", "grasp", topicId, time).find(Words_Status.class).size();
+
+            case "learn_review":
+                return LitePal.where("(status = ? or status = ?) and topicId = ? and recordTime = ?",  "learn", "review", topicId, time).find(Words_Status.class).size();
+
+            case "learn_":
+                return LitePal.where("(status = ? or status = ?) and topicId = ? and recordTime = ?",  "", "review", topicId, time).find(Words_Status.class).size();
+
+            case "All":
+                return LitePal.where("recordTime = ?",  time).find(Words_Status.class).size();
+
             default:
                 return -1;
         }
@@ -176,10 +221,7 @@ public class WordsStatusImpl implements IWordsStatusDao {
         wordsNew = new Words_Status();
         wordsNew.setStatus(words.getStatus());
 
-        if(wordsNew.updateAll("word = ?", words.getWord()) > 0){
-            return true;
-        }
-        return false;
+        return wordsNew.updateAll("word = ?", words.getWord()) > 0;
     }
 
     @Override

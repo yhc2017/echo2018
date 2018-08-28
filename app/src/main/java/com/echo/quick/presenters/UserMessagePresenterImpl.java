@@ -101,7 +101,7 @@ public class UserMessagePresenterImpl extends BasePresenter implements UserMessa
     @Override
     public void postUserForgetPwd(HashMap<String, String> map) {
         IOnlineWord online = new OnlineWordImpl();
-        online.postToWord(map, "quick/userForgetPwd", new Callback() {
+        online.postToWord(map, "quick/forgetPwd", new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 iUserMessageView.updateInfoResult(false);

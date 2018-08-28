@@ -1,5 +1,6 @@
 package com.echo.quick.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
@@ -32,6 +33,7 @@ public class App extends Application{
     public List<Words> list;
     public List<Words_Status> statusList;
     public List<String> pagerList;//真题类型列表
+    @SuppressLint("StaticFieldLeak")
     private static Context mContext;
     private String content;
     private String translation;
@@ -72,7 +74,8 @@ public class App extends Application{
                 final HashMap<String, String> map = new HashMap<>();
                 map.put("userId", getUserId());
                 map.put("topicId", getTopicId());
-                onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
+                map.put("needNum", SPUtils.get(App.getContext(), "dateNum", 0).toString());
+                onlineWordPresenter.getDynamicWordInfo(map);
             }
         }catch (Exception e){
             e.printStackTrace();

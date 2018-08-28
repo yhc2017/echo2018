@@ -2,6 +2,7 @@ package com.echo.quick.presenters;
 
 import android.support.annotation.NonNull;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.HomeContract;
@@ -188,6 +189,33 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
             }
         });
 
+    }
+
+    @Override
+    public void getDynamicWordInfo(HashMap<String, String> map) {
+        final List<Words> data = new ArrayList<>();
+
+        IOnlineWord IOnlineWord = new OnlineWordImpl();
+        IOnlineWord.postToWord(map, "quick/selectDynamicWordInfo", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String res = response.body().string();
+                LogUtils.d(res);
+                JSONArray newWords = JSON.parseArray(res);
+                if(newWords != null) {
+                    try {
+                        initNewWord(newWords);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     @Override

@@ -35,6 +35,8 @@ public interface OnlineWordContract {
          **/
         void getOnlineWordReviewOrLearn(HashMap<String, String> map, String rele);
 
+        void getDynamicWordInfo(HashMap<String, String> map);
+
         /**
          * 方法名称：getOnlineSprint
          * 方法描述: 获取真题冲刺的单词和真题文章、翻译
