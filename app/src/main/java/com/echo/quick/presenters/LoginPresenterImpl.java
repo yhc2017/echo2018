@@ -77,9 +77,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
                 //code指的是http状态码，可以判断操作的状态；
                 int code  = response.code();
-
                 String res = response.body().string();
-
                 JSONObject object = JSON.parseObject(res);
                 String prepare4 = object.getString("prepare4");
                 switch (prepare4) {
@@ -105,6 +103,44 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
             }
         });
 
+    }
+
+    @Override
+    public void doLoginForTel(String tel) {
+        ILoginDao loginDao = new LoginImpl();
+        loginDao.doLoginTel(tel, "quick/doLoginForTel", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                iLoginView.onLoginResult(false, "203");
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String res = response.body().string();
+                JSONObject object = JSON.parseObject(res);
+                String prepare4 = object.getString("prepare4");
+                switch (prepare4) {
+                    case "200":
+                        String userId = object.getString("userId");
+                        String nickname = object.getString("nickname");
+                        String sex = object.getString("sex");
+                        SPUtils.put(App.getContext(), "userId", userId);
+                        SPUtils.put(App.getContext(), "nickname", nickname);
+                        SPUtils.put(App.getContext(), "sex", sex);
+                        app.setUserId(userId);
+                        app.setNickName(nickname);
+                        app.setSex(sex);
+                        iLoginView.onLoginResult(true, prepare4);
+                        break;
+                    case "199":
+                        iLoginView.onLoginResult(true, prepare4);
+                        break;
+                    default:
+                        iLoginView.onLoginResult(false, prepare4);
+                        break;
+                }
+            }
+        });
     }
 
     @Override

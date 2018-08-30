@@ -1,7 +1,5 @@
 package com.echo.quick.contracts;
 
-import android.app.ProgressDialog;
-
 import org.json.JSONException;
 
 /**
@@ -28,6 +26,8 @@ public interface LoginContract {
         void clear();
         //登录
         void doLogin(String name, String passwd);
+
+        void doLoginForTel(String tel);
         //
         void detectionAndRestoration(String userId);
         //恢复数据

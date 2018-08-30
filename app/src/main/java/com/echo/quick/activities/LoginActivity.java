@@ -66,6 +66,8 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
     private Button bt_login;
 
+    private Button bt_login_tel;
+
     protected Validator validator;
     private LoginContract.ILoginPresenter loginPresenter;
     private OnlineWordContract.OnlineWordPresenter onlineWordPresenter;
@@ -101,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         ed_loginID = (EditText) findViewById(R.id.login_id);
         ed_loginPwd = (EditText) findViewById(R.id.login_pwd);
         bt_login = (Button) findViewById(R.id.logbtn);
+        bt_login_tel = (Button) findViewById(R.id.logbtnBytel);
         tv_round_sent = (TextView) findViewById(R.id.tv_round_sent);
         tv_round_sent_tra = (TextView) findViewById(R.id.tv_round_sent_tra);
         //随机设置一个名言
@@ -122,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         iv_pwdforgive.setOnClickListener(listener);
         login_back.setOnClickListener(listener);
         bt_login.setOnClickListener(listener);
+        bt_login_tel.setOnClickListener(listener);
         ed_loginID.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -185,39 +189,43 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
 
     @Override
-    public void onLoginResult(Boolean result, final String code) {
+    public void onLoginResult(final Boolean result, final String code) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                switch (code) {
-                    case "200":
+                if (result) {
+                    switch (code) {
+                        case "200":
 //                    loginPresenter.detectionAndRestoration(app.getUserId());
-                        ToastUtils.showLong(LoginActivity.this, app.getTopicId() + app.getUserId());
-                        IWordsLogDao iWordsLogDao = new WordsLogImpl();
-                        IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
-                        if (iWordsLogDao.detectionEmpty() && iWordsStatusDao.detectionEmpty()) {
-                            HashMap<String, String> map = new HashMap<>();
-                            map.put("userId", app.getUserId());
-                            map.put("topicId", app.getTopicId());
-                            onlineWordPresenter.postToGetTopicIdWords(map, true);
-                        } else {
+                            ToastUtils.showLong(LoginActivity.this, app.getTopicId() + app.getUserId());
+                            IWordsLogDao iWordsLogDao = new WordsLogImpl();
+                            IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
+                            if (iWordsLogDao.detectionEmpty() && iWordsStatusDao.detectionEmpty()) {
+                                HashMap<String, String> map = new HashMap<>();
+                                map.put("userId", app.getUserId());
+                                map.put("topicId", app.getTopicId());
+                                onlineWordPresenter.postToGetTopicIdWords(map, true);
+                            } else {
+                                ToastUtils.showLong(LoginActivity.this, "登录成功");
+                                finish();
+                            }
+                            break;
+                        //成功获取
+                        case "500":
                             ToastUtils.showLong(LoginActivity.this, "登录成功");
                             finish();
-                        }
-                        break;
-                    //成功获取
-                    case "500":
-                        ToastUtils.showLong(LoginActivity.this, "登录成功");
-                        finish();
-                        break;
+                            break;
 
-                    case "199":
-                        ToastUtils.showLong(LoginActivity.this, "该用户已经登录。");
-                        break;
+                        case "199":
+                            ToastUtils.showLong(LoginActivity.this, "该用户已经登录。");
+                            break;
 
-                    default:
-                        ToastUtils.showLong(LoginActivity.this, "error，请检查账号或密码是否正确");
-                        break;
+                        default:
+                            ToastUtils.showLong(LoginActivity.this, "error，请检查账号或密码是否正确");
+                            break;
+                    }
+                }else {
+                    ToastUtils.showLong(LoginActivity.this, "登录失败");
                 }
             }
         });
@@ -274,6 +282,10 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 //                    progressDialog.show();
                     break;
 
+                case R.id.logbtnBytel:
+                    sendCodeForLogin(LoginActivity.this);
+                    break;
+
                 default:
                     break;
             }
@@ -290,11 +302,11 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     // 处理成功的结果
                     HashMap<String,Object> phoneMap = (HashMap<String, Object>) data;
-                    String country = (String) phoneMap.get("country"); // 国家代码，如“86”
+                    String country = (String) phoneMap.get("cuntry"); // 国家代码，如“86”
                     String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
                     LogUtils.d(phone);
                     app.setUserId(phone);
-                    startActivity(new Intent(context, RetrievePasswordActivity.class));
+                    
                     // 利用国家代码和手机号码进行后续的操作
                 } else{
                     // 处理错误的结果'
@@ -304,6 +316,34 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         });
         page.show(context);
     }
+
+    public void sendCodeForLogin(final Context context) {
+        RegisterPage page = new RegisterPage();
+        //如果使用我们的ui，没有申请模板编号的情况下需传null
+        page.setTempCode(null);
+        page.setRegisterCallback(new EventHandler() {
+            @SuppressLint("ShowToast")
+            public void afterEvent(int event, int result, Object data) {
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    // 处理成功的结果
+                    HashMap<String,Object> phoneMap = (HashMap<String, Object>) data;
+                    String country = (String) phoneMap.get("country"); // 国家代码，如“86”
+                    String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
+                    LogUtils.d(phone);
+                    app.setUserId(phone);
+                    // 利用国家代码和手机号码进行后续的操作
+                    loginPresenter.doLoginForTel(phone);
+                    //获取服务器的库
+                    onlineWordPresenter.GetAllWordTopicInfo();
+                } else{
+                    // 处理错误的结果'
+                    LogUtils.d("处理失败。。。。。。。。。。。。。。。。。。");
+                }
+            }
+        });
+        page.show(context);
+    }
+
 
     protected void onDestroy() {
         super.onDestroy();

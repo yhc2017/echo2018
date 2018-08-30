@@ -64,6 +64,7 @@
     <string name="tv_login_hint1">请输入手机号</string>
     <string name="tv_login_hint2">请输入密码</string>
     <string name="bt_login">登\t\t\t\t\t\t\t\t录</string>
+    <string name="bt_login_tel">短\t\t信\t\t验\t\t证\t\t登\t\t录</string>
     <string name="tv_login_register">立即注册</string>
     <string name="tv_login_find_password">找回密码</string>
 
