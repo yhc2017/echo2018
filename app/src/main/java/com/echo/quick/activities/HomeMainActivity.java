@@ -121,7 +121,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         try {
             if(mHandler != null)
                 mHandler.removeCallbacks(mRunnable);
-            setdate();
+            updatePlan();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -238,7 +238,17 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void updatePlan() {
-
+//刷新界面,从这个方法获取HashMap貌似可以，但不知会不会是个错误
+        HashMap<String, String> map = setdate();
+        OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(HomeMainActivity.this);
+        onlineWordPresenter.postToAddWordPlan(map);
+        IWordsStatusDao wordsStatusDao = new WordsStatusImpl();
+        if(wordsStatusDao.selectCountByStatusAndTopicId("review", app.getTopicId()) == 0) {
+            HashMap<String, String> map2 = new HashMap<>();
+            map2.put("userId", app.getUserId());
+            map2.put("topicId", app.getTopicId());
+            onlineWordPresenter.postToGetTopicIdWords(map2, false);
+        }
     }
 
     @Override
