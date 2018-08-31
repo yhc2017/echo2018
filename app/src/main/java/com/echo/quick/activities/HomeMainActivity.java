@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import com.echo.quick.presenters.HomePresenterImpl;
 import com.echo.quick.presenters.LoginPresenterImpl;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.utils.App;
+import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.MyPlanDialog;
 import com.echo.quick.utils.NetUtils;
 import com.echo.quick.utils.SPUtils;
@@ -39,6 +42,13 @@ import org.json.JSONException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
+
+import zhy.com.highlight.HighLight;
+import zhy.com.highlight.interfaces.HighLightInterface;
+import zhy.com.highlight.position.OnBottomPosCallback;
+import zhy.com.highlight.position.OnTopPosCallback;
+import zhy.com.highlight.shape.CircleLightShape;
+import zhy.com.highlight.shape.RectLightShape;
 
 /**
  * Class name: HomeMainActivity
@@ -51,6 +61,8 @@ import java.util.List;
  */
 
 public class HomeMainActivity extends AppCompatActivity implements View.OnClickListener,HomeContract.IHomeView{
+    private HighLight mHightLight;
+    SharedPreferences sharedPreferences;
     private ImageView mimUserSetting,mimTor;
     private TextView mtvSettingPlan,mtvUserName,mtvUser_plan,mtvUserPlanTime;
     private TextView mtvWordbox,mtvPlanWay,mtvAllWords,mtvTodayWord;
@@ -92,11 +104,23 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         homePresenter = new HomePresenterImpl(this);
         loginPresenter = new LoginPresenterImpl(this);
 
-
         setinitView();
         initData();
         setEvent();
         setdate();
+
+        sharedPreferences = getSharedPreferences("is_first_in_data",MODE_PRIVATE);
+        boolean isFirstIn = sharedPreferences.getBoolean("isFirstIn",true);
+        if (isFirstIn) {
+            showNextTipViewOnCreated();
+            // 结束引导页面前，将状态改为false,下次启动的时候，判断不是第一次启动，就跳过引导页面
+            sharedPreferences = getSharedPreferences("is_first_in_data",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isFirstIn", false);
+            editor.apply();
+        }else {
+            LogUtils.d("已非第一次安装");
+        }
     }
 
 
@@ -128,6 +152,43 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
 
     }
+
+
+    /**
+     * Method name :showNextKnownTipView
+     * Specific description :用于引导页
+     *    当界面布局完成显示next模式提示布局
+     *    显示方法必须在onLayouted中调用
+     *    适用于Activity及Fragment中使用
+     *    可以直接在onCreated方法中调用
+     * @return void
+     */
+    public  void showNextTipViewOnCreated(){
+
+        mHightLight = new HighLight(HomeMainActivity.this)//
+                .autoRemove(false)
+                .enableNext()
+                .setOnLayoutCallback(new HighLightInterface.OnLayoutCallback() {
+                    @Override
+                    public void onLayouted() {
+                        //界面布局完成添加tipview
+                        mHightLight.addHighLight(R.id.tv_setting_plan,R.layout.info_plan,new OnBottomPosCallback(60),new CircleLightShape())
+                                .addHighLight(R.id.ll_unfamiliar_word_enter,R.layout.info_word_book,new OnBottomPosCallback(5),new CircleLightShape())
+                                .addHighLight(R.id.bt_start_study,R.layout.info_star,new OnTopPosCallback(),new RectLightShape())
+                                .addHighLight(R.id.im_user_setting,R.layout.info_login,new OnBottomPosCallback(60),new CircleLightShape());
+                        //然后显示高亮布局
+                        mHightLight.show();
+                    }
+                })
+                .setClickCallback(new HighLight.OnClickCallback() {
+                    @Override
+                    public void onClick() {
+//                        Toast.makeText(HomeActivity.this, "go!", Toast.LENGTH_SHORT).show();
+                        mHightLight.next();
+                    }
+                });
+    }
+
 
     /**
      * Method name : setinitView
@@ -165,6 +226,8 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         mllUnfamiliarWordEnter.setOnClickListener(listener);
         mbtStartStudy.setOnClickListener(listener);
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -312,7 +375,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             //设置单词词库
             mtvUser_plan.setText(plan);
             //设置单词完成计划时间
-            mtvUserPlanTime.setText(time);
+            mtvUserPlanTime.setText("计划完成时间："+time+"-12");
             //设置单词练习的计划，复习优先或学习优先
             mtvPlanWay.setText(way);
             Object o = SPUtils.get(App.getContext(), "wordsBox", "");

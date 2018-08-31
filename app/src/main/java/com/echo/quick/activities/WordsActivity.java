@@ -1,6 +1,8 @@
 package com.echo.quick.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
@@ -9,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
 import com.echo.quick.contracts.OnlineWordContract;
@@ -38,7 +41,10 @@ import java.util.List;
  * @since ：[quick|背单词模块]
  */
 public class WordsActivity extends AppCompatActivity implements WordsContract.IWordsView{
+    SharedPreferences sharedPreferences;
+    boolean isPlay;
     private RecyclerView rvList;
+    private ImageView mimOkPlay,mimQuickBack;
     private SampleWordsAdapter mSampleWordsAdapter;
     private SampleWordsAdapter.OnItemClickListener listener;
     private ItemTouchHelper itemTouchHelper;
@@ -63,10 +69,15 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
 
         mData = app.getStatusList();
 
+        //初始化默认是false
+        sharedPreferences = getSharedPreferences("isPlay", Context.MODE_PRIVATE);
         initView();
+        setMianEvent();
         wordsPresenter = new WordsPresenterImpl(this);
 
     }
+
+
 
     /**
      * Method name : initView()
@@ -77,6 +88,14 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
         rvList = (RecyclerView) findViewById(R.id.rv_list);
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 //        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mimOkPlay = (ImageView) findViewById(R.id.im_ok_play);
+        mimQuickBack = (ImageView) findViewById(R.id.im_quick_back);
+        isPlay = sharedPreferences.getBoolean("isPlay",false);
+        if (isPlay) {
+            mimOkPlay.setImageResource(R.drawable.ic_play);
+        }else {
+            mimOkPlay.setImageResource(R.drawable.ic_play_no);
+        }
 
         //使用网上一个人的代码，MyGridLayoutManager为自定义的方法
         MyGridLayoutManager gridLayoutManager=new MyGridLayoutManager(this,1);
@@ -92,6 +111,57 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
         itemTouchHelper = new ItemTouchHelper(getEvent());
         itemTouchHelper.attachToRecyclerView(rvList);
     }
+
+
+    /**
+     * Method name : setMianEvent
+     * Specific description :本界面的组件的事件处理
+     *@return void
+     */
+    private void setMianEvent() {
+        MyListener listener = new MyListener();
+        mimOkPlay.setOnClickListener(listener);
+        mimQuickBack.setOnClickListener(listener);
+    }
+
+    /**
+     * Class name : MyListener
+     * Specific description :内部类实现事件处理
+     */
+    private class MyListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = null;
+            switch (view.getId()) {
+                case R.id.im_ok_play:
+                    //获取editor对象
+                    isPlay = sharedPreferences.getBoolean("isPlay",false);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();//获取编辑器
+                        if (isPlay) {
+                            mimOkPlay.setImageResource(R.drawable.ic_play_no);
+                            editor.putBoolean("isPlay",false);
+                            editor.commit();//提交修改
+                            ToastUtils.showShort(WordsActivity.this,"已关闭单词自动播放");
+                        }else {
+                            mimOkPlay.setImageResource(R.drawable.ic_play);
+                            editor.putBoolean("isPlay",true);
+                            editor.commit();//提交修改
+                            ToastUtils.showShort(WordsActivity.this,"已打开播放");
+                        }
+
+
+                    break;
+                case R.id.im_quick_back:
+                    //回到主界面
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+
 
 
     /**

@@ -34,8 +34,8 @@
     <string name="tv_user_name">TanzJ</string>
     <string name="tv_user_plan">通过英语六级</string>
     <string name="tv_user_plan_time">计划完成时间：12月3日</string>
-    <string name="tv_wordbox">大学英语六级词库</string>
-    <string name="tv_plan_way">(学习优先)</string>
+    <string name="tv_wordbox">未选择词库</string>
+    <string name="tv_plan_way"> </string>
     <string name="tv_setting_plan">修改 ></string>
     <string name="tv_home01">总体进度</string>
     <string name="tv_all_words">555/2500</string>
