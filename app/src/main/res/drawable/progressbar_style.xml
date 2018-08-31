@@ -26,9 +26,9 @@
                 <!--渐变 中间、结束、开始-->
                 <gradient
                     android:angle="0"
-                    android:centerColor="@color/colorPrimary"
-                    android:endColor="@color/colorPrimary"
-                    android:startColor="@color/colorPrimary" />
+                    android:centerColor="@color/bule"
+                    android:endColor="@color/bule"
+                    android:startColor="@color/bule" />
             </shape>
         </clip>
     </item>
