@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,8 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
     private TextView mtvOverDay,mtvNewWordsNum,mtvReviewWordsNum,mtvUnfamiliarWord;
     private LinearLayout mllUnfamiliarWordEnter;
     private Button mbtStartStudy;
+    private ProgressBar pgAllWords;
+    private ProgressBar pgWords;
 
     private App app;
 
@@ -121,7 +124,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         try {
             if(mHandler != null)
                 mHandler.removeCallbacks(mRunnable);
-            updatePlan();
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -151,6 +154,8 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         mtvSettingPlan = (TextView) findViewById(R.id.tv_setting_plan);
         mllUnfamiliarWordEnter = (LinearLayout)findViewById(R.id.ll_unfamiliar_word_enter);
         mbtStartStudy = (Button)findViewById(R.id.bt_start_study);
+        pgAllWords = (ProgressBar)findViewById(R.id.pg_all_word);
+        pgWords = (ProgressBar)findViewById(R.id.pg_word);
     }
 
     /**
@@ -356,6 +361,11 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         //词库单词数量
         mtvAllWords.setText(overWords+"/"+allWords);
         mtvTodayWord.setText(todayOverWords+"/"+ today);
+        //进度条添加数据
+        pgAllWords.setMax(allWords);
+        pgAllWords.setProgress(overWords);
+        pgWords.setMax(Integer.parseInt(today));
+        pgWords.setProgress(todayOverWords);
         //进度数
 //        my_word_plan_progressbar.setMax(allWords);
 //        my_word_plan_progressbar.setProgress(overWords);
