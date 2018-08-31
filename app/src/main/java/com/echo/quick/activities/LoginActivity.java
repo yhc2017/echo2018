@@ -213,6 +213,9 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                         //成功获取
                         case "500":
                             ToastUtils.showLong(LoginActivity.this, "登录成功");
+                            Intent intent = new Intent();
+                            intent.setAction("com.zjx.action.UPDATE_ACTION");
+                            sendBroadcast(intent);
                             finish();
                             break;
 

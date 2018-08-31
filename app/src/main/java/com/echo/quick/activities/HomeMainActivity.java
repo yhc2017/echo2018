@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -17,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +30,6 @@ import com.echo.quick.presenters.HomePresenterImpl;
 import com.echo.quick.presenters.LoginPresenterImpl;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.utils.App;
-import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.MyPlanDialog;
 import com.echo.quick.utils.NetUtils;
 import com.echo.quick.utils.SPUtils;
@@ -43,13 +40,6 @@ import org.json.JSONException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
-
-import zhy.com.highlight.HighLight;
-import zhy.com.highlight.interfaces.HighLightInterface;
-import zhy.com.highlight.position.OnBottomPosCallback;
-import zhy.com.highlight.position.OnTopPosCallback;
-import zhy.com.highlight.shape.CircleLightShape;
-import zhy.com.highlight.shape.RectLightShape;
 
 /**
  * Class name: HomeMainActivity
@@ -105,6 +95,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
         homePresenter = new HomePresenterImpl(this);
         loginPresenter = new LoginPresenterImpl(this);
+
 
         setinitView();
         initData();
@@ -231,8 +222,6 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         mllUnfamiliarWordEnter.setOnClickListener(listener);
         mbtStartStudy.setOnClickListener(listener);
     }
-
-
 
     @Override
     public void onClick(View view) {
@@ -424,6 +413,11 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         //词库单词数量
         mtvAllWords.setText(overWords+"/"+allWords);
         mtvTodayWord.setText(todayOverWords+"/"+ today);
+        //进度条添加数据
+        mpgAllWord.setMax(allWords);
+        mpgAllWord.setProgress(overWords);
+        mpgWord.setMax(Integer.parseInt(today));
+        mpgWord.setProgress(todayOverWords);
         //进度数
 //        my_word_plan_progressbar.setMax(allWords);
 //        my_word_plan_progressbar.setProgress(overWords);
