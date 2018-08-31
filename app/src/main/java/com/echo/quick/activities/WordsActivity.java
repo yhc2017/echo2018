@@ -17,8 +17,6 @@ import android.widget.ProgressBar;
 import com.echo.quick.adapter.SampleWordsAdapter;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.contracts.WordsContract;
-import com.echo.quick.model.dao.impl.WordsStatusImpl;
-import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
@@ -59,6 +57,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
     String CTE = "no";
     WordsContract.IWordsPresenter wordsPresenter;
     private ProgressBar mpgWord;
+    private int sum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +77,8 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
         initView();
         setMianEvent();
         wordsPresenter = new WordsPresenterImpl(this);
-
+        sum = mData.size();
+        mpgWord.setMax(sum);
     }
 
 
@@ -234,9 +234,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                     //解决闪屏问题
                     mSampleWordsAdapter.notifyDataSetChanged();
 
-                    IWordsStatusDao wordsStatusDao = new WordsStatusImpl();
-                    mpgWord.setMax(app.getList().size());
-                    mpgWord.setProgress(wordsStatusDao.selectCountByStatusAndTopicIdToday("learn_", app.getTopicId()));
+
 //                    /**
 //                     * 撤销上一个单词的操作
 //                     * @param  View 视图,  CharSequence 字符串, int 出现时间
@@ -249,6 +247,23 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
 //                                    mSampleWordsAdapter.notifyItemInserted(pos);
 //                                }
 //                            }).show();
+                }
+                mpgWord.setProgress(sum - mData.size());
+                isPlay = sharedPreferences.getBoolean("isPlay",false);
+                if(isPlay){
+                    String url = mData.get(direction).getPron();
+                    if(url != null && !url.equals("")){
+                        try{
+                            Intent intent = new Intent(WordsActivity.this, AudioPlayerService.class);
+                            intent.putExtra("path", url);
+                            startService(intent);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            ToastUtils.showLong(WordsActivity.this, "音频播放失败");
+                        }
+                    }else {
+                        ToastUtils.showLong(WordsActivity.this, "暂无该音频");
+                    }
                 }
             }
 
