@@ -17,7 +17,7 @@
     <!--第二字色-->
     <color name="textColorBlack">#000000</color>
     <!--进度条背景色-->
-    <color name="pg_gray">#9e9e9e</color>
+    <color name="pg_gray">#b6b6b6</color>
 
     <!-- divider color-->
     <color name="divider_1">#e2e2e2</color>

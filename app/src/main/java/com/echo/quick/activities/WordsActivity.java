@@ -274,7 +274,6 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                 getDefaultUIUtil().onDraw(c, recyclerView, ((SampleWordsAdapter.ItemViewHolder) viewHolder).vItem, dX, dY, actionState, isCurrentlyActive);
                 if (dX > 0) { // 向左滑动是的提示
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).vBackground.setBackgroundResource(R.drawable.item_right);
-                    ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivSchedule.setVisibility(View.VISIBLE);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).tvExplain.setVisibility(View.VISIBLE);
                     ((SampleWordsAdapter.ItemViewHolder) viewHolder).ivDone.setVisibility(View.GONE);
                 }
