@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.echo.quick.adapter.SampleWordsAdapter;
 import com.echo.quick.contracts.OnlineWordContract;
@@ -55,6 +56,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
     private App app;
     String CTE = "no";
     WordsContract.IWordsPresenter wordsPresenter;
+    private ProgressBar mpgWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,8 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
      */
     private void initView() {
         rvList = (RecyclerView) findViewById(R.id.rv_list);
+        //进度条
+        mpgWord = (ProgressBar) findViewById(R.id.pg_word);
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 //        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mimOkPlay = (ImageView) findViewById(R.id.im_ok_play);

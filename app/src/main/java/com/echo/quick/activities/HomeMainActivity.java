@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,6 +70,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
     private TextView mtvOverDay,mtvNewWordsNum,mtvReviewWordsNum,mtvUnfamiliarWord;
     private LinearLayout mllUnfamiliarWordEnter;
     private Button mbtStartStudy;
+    private ProgressBar mpgAllWord,mpgWord;
 
     private App app;
 
@@ -212,6 +214,9 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         mtvSettingPlan = (TextView) findViewById(R.id.tv_setting_plan);
         mllUnfamiliarWordEnter = (LinearLayout)findViewById(R.id.ll_unfamiliar_word_enter);
         mbtStartStudy = (Button)findViewById(R.id.bt_start_study);
+        //进度条
+        mpgAllWord = (ProgressBar) findViewById(R.id.pg_all_word);
+        mpgWord = (ProgressBar) findViewById(R.id.pg_word);
     }
 
     /**
