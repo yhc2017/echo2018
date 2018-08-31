@@ -2,6 +2,7 @@ package com.echo.quick.presenters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
@@ -12,7 +13,9 @@ import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsLogDao;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.Words_Status;
+import com.echo.quick.service.AudioPlayerService;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.ToastUtils;
 
 /**
  * 项目名称：echo2018
@@ -87,6 +90,22 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
 
         popWindow(context);
 
+    }
+
+    @Override
+    public void play(Context context, String url) {
+        if(url != null && !url.equals("")){
+            try{
+                Intent intent = new Intent(context, AudioPlayerService.class);
+                intent.putExtra("path", url);
+                context.startService(intent);
+            }catch (Exception e){
+                e.printStackTrace();
+                ToastUtils.showLong(context, "音频播放失败");
+            }
+        }else {
+            ToastUtils.showLong(context, "暂无该音频");
+        }
     }
 
 

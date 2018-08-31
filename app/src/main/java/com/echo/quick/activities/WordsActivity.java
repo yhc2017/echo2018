@@ -21,7 +21,6 @@ import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.presenters.WordsPresenterImpl;
-import com.echo.quick.service.AudioPlayerService;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.MyGridLayoutManager;
@@ -186,9 +185,16 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+
                 // 处理滑动事件回调
                 final int pos = viewHolder.getAdapterPosition();//页面中子项的位置
                 final Words_Status item = mData.get(pos);//数据子项的位置
+                //滑动
+                isPlay = sharedPreferences.getBoolean("isPlay",false);
+                if(isPlay) {
+                    wordsPresenter.play(WordsActivity.this, item.getPron());
+                }
                     //当页面还剩一条单词时，进行特殊处理
                 if(mSampleWordsAdapter.getItemCount() == 1){
                     //当左滑单词需要复现的数组中存在单词时，将其加入到当前列表下
@@ -249,22 +255,6 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
 //                            }).show();
                 }
                 mpgWord.setProgress(sum - mData.size());
-                isPlay = sharedPreferences.getBoolean("isPlay",false);
-                if(isPlay){
-                    String url = mData.get(direction).getPron();
-                    if(url != null && !url.equals("")){
-                        try{
-                            Intent intent = new Intent(WordsActivity.this, AudioPlayerService.class);
-                            intent.putExtra("path", url);
-                            startService(intent);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            ToastUtils.showLong(WordsActivity.this, "音频播放失败");
-                        }
-                    }else {
-                        ToastUtils.showLong(WordsActivity.this, "暂无该音频");
-                    }
-                }
             }
 
             @Override
@@ -330,18 +320,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                 switch (view.getId()) {
                     case R.id.iv_play:
                         String url = mData.get(position).getPron();
-                        if(url != null && !url.equals("")){
-                            try{
-                                Intent intent = new Intent(WordsActivity.this, AudioPlayerService.class);
-                                intent.putExtra("path", url);
-                                startService(intent);
-                            }catch (Exception e){
-                                e.printStackTrace();
-                                ToastUtils.showLong(WordsActivity.this, "音频播放失败");
-                            }
-                        }else {
-                            ToastUtils.showLong(WordsActivity.this, "暂无该音频");
-                        }
+                        wordsPresenter.play(WordsActivity.this, url);
                         break;
                     default:
                         //                ToastUtils.showShort(WordsActivity.this, "点击事件！");
