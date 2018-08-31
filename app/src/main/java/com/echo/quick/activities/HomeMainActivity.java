@@ -52,14 +52,15 @@ import java.util.List;
  */
 
 public class HomeMainActivity extends AppCompatActivity implements View.OnClickListener,HomeContract.IHomeView{
+    private HighLight mHightLight;
+    SharedPreferences sharedPreferences;
     private ImageView mimUserSetting,mimTor;
     private TextView mtvSettingPlan,mtvUserName,mtvUser_plan,mtvUserPlanTime;
     private TextView mtvWordbox,mtvPlanWay,mtvAllWords,mtvTodayWord;
     private TextView mtvOverDay,mtvNewWordsNum,mtvReviewWordsNum,mtvUnfamiliarWord;
     private LinearLayout mllUnfamiliarWordEnter;
     private Button mbtStartStudy;
-    private ProgressBar pgAllWords;
-    private ProgressBar pgWords;
+    private ProgressBar mpgAllWord,mpgWord;
 
     private App app;
 
@@ -100,6 +101,19 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         initData();
         setEvent();
         setdate();
+
+        sharedPreferences = getSharedPreferences("is_first_in_data",MODE_PRIVATE);
+        boolean isFirstIn = sharedPreferences.getBoolean("isFirstIn",true);
+        if (isFirstIn) {
+            showNextTipViewOnCreated();
+            // 结束引导页面前，将状态改为false,下次启动的时候，判断不是第一次启动，就跳过引导页面
+            sharedPreferences = getSharedPreferences("is_first_in_data",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isFirstIn", false);
+            editor.apply();
+        }else {
+            LogUtils.d("已非第一次安装");
+        }
     }
 
 
@@ -124,13 +138,50 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         try {
             if(mHandler != null)
                 mHandler.removeCallbacks(mRunnable);
-
+            updatePlan();
         }catch (Exception e){
             e.printStackTrace();
         }
 
 
     }
+
+
+    /**
+     * Method name :showNextKnownTipView
+     * Specific description :用于引导页
+     *    当界面布局完成显示next模式提示布局
+     *    显示方法必须在onLayouted中调用
+     *    适用于Activity及Fragment中使用
+     *    可以直接在onCreated方法中调用
+     * @return void
+     */
+    public  void showNextTipViewOnCreated(){
+
+        mHightLight = new HighLight(HomeMainActivity.this)//
+                .autoRemove(false)
+                .enableNext()
+                .setOnLayoutCallback(new HighLightInterface.OnLayoutCallback() {
+                    @Override
+                    public void onLayouted() {
+                        //界面布局完成添加tipview
+                        mHightLight.addHighLight(R.id.tv_setting_plan,R.layout.info_plan,new OnBottomPosCallback(60),new CircleLightShape())
+                                .addHighLight(R.id.ll_unfamiliar_word_enter,R.layout.info_word_book,new OnBottomPosCallback(5),new CircleLightShape())
+                                .addHighLight(R.id.bt_start_study,R.layout.info_star,new OnTopPosCallback(),new RectLightShape())
+                                .addHighLight(R.id.im_user_setting,R.layout.info_login,new OnBottomPosCallback(60),new CircleLightShape());
+                        //然后显示高亮布局
+                        mHightLight.show();
+                    }
+                })
+                .setClickCallback(new HighLight.OnClickCallback() {
+                    @Override
+                    public void onClick() {
+//                        Toast.makeText(HomeActivity.this, "go!", Toast.LENGTH_SHORT).show();
+                        mHightLight.next();
+                    }
+                });
+    }
+
 
     /**
      * Method name : setinitView
@@ -154,8 +205,9 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         mtvSettingPlan = (TextView) findViewById(R.id.tv_setting_plan);
         mllUnfamiliarWordEnter = (LinearLayout)findViewById(R.id.ll_unfamiliar_word_enter);
         mbtStartStudy = (Button)findViewById(R.id.bt_start_study);
-        pgAllWords = (ProgressBar)findViewById(R.id.pg_all_word);
-        pgWords = (ProgressBar)findViewById(R.id.pg_word);
+        //进度条
+        mpgAllWord = (ProgressBar) findViewById(R.id.pg_all_word);
+        mpgWord = (ProgressBar) findViewById(R.id.pg_word);
     }
 
     /**
@@ -317,7 +369,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             //设置单词词库
             mtvUser_plan.setText(plan);
             //设置单词完成计划时间
-            mtvUserPlanTime.setText(time);
+            mtvUserPlanTime.setText("计划完成时间："+time+"-12");
             //设置单词练习的计划，复习优先或学习优先
             mtvPlanWay.setText(way);
             Object o = SPUtils.get(App.getContext(), "wordsBox", "");
@@ -362,10 +414,10 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         mtvAllWords.setText(overWords+"/"+allWords);
         mtvTodayWord.setText(todayOverWords+"/"+ today);
         //进度条添加数据
-        pgAllWords.setMax(allWords);
-        pgAllWords.setProgress(overWords);
-        pgWords.setMax(Integer.parseInt(today));
-        pgWords.setProgress(todayOverWords);
+        mpgAllWord.setMax(allWords);
+        mpgAllWord.setProgress(overWords);
+        mpgWord.setMax(Integer.parseInt(today));
+        mpgWord.setProgress(todayOverWords);
         //进度数
 //        my_word_plan_progressbar.setMax(allWords);
 //        my_word_plan_progressbar.setProgress(overWords);

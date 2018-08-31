@@ -7,10 +7,9 @@
             <corners android:radius="5dip" />
             <gradient
                 android:angle="0"
-                android:centerColor="@color/white"
-                android:centerY="0.75"
-                android:endColor="@color/white"
-                android:startColor="@color/white" />
+                android:centerColor="@color/pg_gray"
+                android:endColor="@color/pg_gray"
+                android:startColor="@color/pg_gray" />
             <!-- 描边 -->
             <!--<stroke android:width="2dp"-->
                 <!--android:color="@color/lightwrite" />-->
