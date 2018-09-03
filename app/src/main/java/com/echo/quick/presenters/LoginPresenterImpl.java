@@ -1,28 +1,21 @@
 package com.echo.quick.presenters;
 
-import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.WordsShowContract;
 import com.echo.quick.model.dao.impl.LoginImpl;
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
-import com.echo.quick.model.dao.impl.WordsLogImpl;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.ILoginDao;
 import com.echo.quick.model.dao.interfaces.IOnlineWord;
-import com.echo.quick.model.dao.interfaces.IWordsLogDao;
-import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.SPUtils;
-import com.echo.quick.utils.ToastUtils;
-
 
 import org.json.JSONException;
 
@@ -84,26 +77,70 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
                 //code指的是http状态码，可以判断操作的状态；
                 int code  = response.code();
-
                 String res = response.body().string();
-
                 JSONObject object = JSON.parseObject(res);
                 String prepare4 = object.getString("prepare4");
-                iLoginView.onLoginResult(true, prepare4);
-                if(prepare4.equals("200")) {
-                    String userId = object.getString("userId");
-                    String nickname = object.getString("nickname");
-                    String sex = object.getString("sex");
-                    SPUtils.put(App.getContext(), "userId", userId);
-                    SPUtils.put(App.getContext(), "nickname", nickname);
-                    SPUtils.put(App.getContext(), "sex", sex);
-                    app.setUserId(userId);
-                    app.setNickName(nickname);
-                    app.setSex(sex);
+                switch (prepare4) {
+                    case "200":
+                        String userId = object.getString("userId");
+                        String nickname = object.getString("nickname");
+                        String sex = object.getString("sex");
+                        SPUtils.put(App.getContext(), "userId", userId);
+                        SPUtils.put(App.getContext(), "nickname", nickname);
+                        SPUtils.put(App.getContext(), "sex", sex);
+                        app.setUserId(userId);
+                        app.setNickName(nickname);
+                        app.setSex(sex);
+                        iLoginView.onLoginResult(true, prepare4);
+                        break;
+                    case "199":
+                        iLoginView.onLoginResult(true, prepare4);
+                        break;
+                    default:
+                        iLoginView.onLoginResult(false, prepare4);
+                        break;
                 }
             }
         });
 
+    }
+
+    @Override
+    public void doLoginForTel(String tel) {
+        ILoginDao loginDao = new LoginImpl();
+        loginDao.doLoginTel(tel, "quick/doLoginForTel", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                iLoginView.onLoginResult(false, "203");
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String res = response.body().string();
+                JSONObject object = JSON.parseObject(res);
+                String prepare4 = object.getString("prepare4");
+                switch (prepare4) {
+                    case "200":
+                        String userId = object.getString("userId");
+                        String nickname = object.getString("nickname");
+                        String sex = object.getString("sex");
+                        SPUtils.put(App.getContext(), "userId", userId);
+                        SPUtils.put(App.getContext(), "nickname", nickname);
+                        SPUtils.put(App.getContext(), "sex", sex);
+                        app.setUserId(userId);
+                        app.setNickName(nickname);
+                        app.setSex(sex);
+                        iLoginView.onLoginResult(true, prepare4);
+                        break;
+                    case "199":
+                        iLoginView.onLoginResult(true, prepare4);
+                        break;
+                    default:
+                        iLoginView.onLoginResult(false, prepare4);
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -151,6 +188,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
             else
                 iHomeView.setdate();
         }catch (Exception e) {
+            LogUtils.d("object.toString.............");
             e.printStackTrace();
         }
     }
@@ -159,7 +197,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
         WordsShowContract.IWordsShowPresenter wordsShowPresenter = new WordsShowPresenters();
         for(int i = 0; i < jsonArray.length(); i++){
             org.json.JSONObject object = jsonArray.getJSONObject(i);
-            String status = "";
+            String status = "learn";
             switch (object.getString("status")){
                 case "207":
                     status = "learn";
@@ -173,17 +211,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                 default:
                     break;
             }
-            Words_Status words = new Words_Status(object.getString("id"),
-                    object.getString("pron"),
-                    object.getString("word"),
-                    object.getString("phon"),
-                    object.getString("para"),
-                    object.getString("build"),
-                    object.getString("example"),
-                    "",
-                    "",
-                    status,
-                    object.getString("topicId"));
+            Words_Status words = WordsStatusImpl.getWordsByStatus(status, object);
             wordsShowPresenter.addNewWord(words);
         }
 

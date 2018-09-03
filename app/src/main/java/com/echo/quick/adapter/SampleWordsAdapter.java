@@ -166,9 +166,8 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             iv_play = (ImageView)itemView.findViewById(R.id.iv_play);
 
             //事件监听设置
-//            ll_word.setOnClickListener(this);
-//            iv_play.setOnClickListener(this);
-            itemView.setOnClickListener(this);
+            ll_word.setOnClickListener(this);
+            iv_play.setOnClickListener(this);
         }
 
         //绑定数据
@@ -182,7 +181,8 @@ public class SampleWordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public void onClick(View view) {
             if (mOnItemClickListener != null) {
                 //注意这里使用getTag方法获取position
-                mOnItemClickListener.onItemClick(view,(int)view.getTag());
+//                mOnItemClickListener.onItemClick(view,(int)view.getTag());
+                mOnItemClickListener.onItemClick(view,getAdapterPosition());
             }
         }
     }

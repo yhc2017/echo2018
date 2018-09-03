@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.echo.quick.contracts.RegisterContract;
 import com.echo.quick.presenters.RegisterPresenterImpl;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.SensitiveWordsUtils;
 import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -25,7 +26,9 @@ import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Pattern;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 文件名：RegisterActivity
@@ -33,9 +36,9 @@ import java.util.List;
  * 创建时间：2018/7/17 15:15
  * 类描述：
  *
- * 修改人：
- * 修改时间：
- * 修改内容：
+ * 修改人：周建旋
+ * 修改时间：8-25 11：14
+ * 修改内容：229行 检查敏感词汇
  *
 **/
 
@@ -223,10 +226,16 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
                         String surePwd = ed_sure_pwd.getText().toString();
                         String name = ed_name.getText().toString();
 
+                        //检查敏感词汇
+                        Set<String> set = new HashSet<String>();
+                        String str1 = "习近平";
+                        set.add(str1);
+                        SensitiveWordsUtils.init(set);
                         if (tel.equals("") || pwd.equals("") || surePwd.equals("") || name.equals("")) {
                             ToastUtils.showShort(RegisterActivity.this, R.string.RegInfoNotFull);
+                        }else if(SensitiveWordsUtils.contains(name)){
+                            ToastUtils.showShort(RegisterActivity.this, "使用了敏感词汇");
                         } else {
-
                             validator.validate();
                             register.doRegister(tel, pwd, name, sex);
 

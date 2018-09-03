@@ -38,4 +38,10 @@ public class LoginImpl implements ILoginDao {
 
         return null;
     }
+
+    @Override
+    public void doLoginTel(String tel, String address, Callback callback) {
+        String requestContent = "tel="+tel;
+        postHelper.doPost(requestContent, _NetHelper.DOMAIN+address, callback);
+    }
 }

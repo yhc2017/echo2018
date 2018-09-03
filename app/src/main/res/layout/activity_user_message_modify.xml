@@ -17,8 +17,8 @@
             android:id="@+id/tv_toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="修改密码"
-            style="@style/MyFont.Home.Content"
+            android:text="@string/tv_mod_user_password"
+            style="@style/MyFont.ToolBar"
             android:textColor="@color/white"
             android:textStyle="bold" />
         <LinearLayout
@@ -33,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
                 android:gravity="right"
-                android:text="确定"
+                android:text="@string/tv_mod_user_ok"
                 android:textColor="@color/white" />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
@@ -57,12 +57,12 @@
                 android:layout_width="100dp"
                 android:layout_marginRight="5dp"
                 android:layout_height="match_parent"
-                android:text="原始密码：" />
+                android:text="@string/tv_old_password" />
             <EditText
                 android:gravity="center_vertical"
-                android:hint="Please enter"
+                android:hint="@string/et_hint"
                 android:textColorHint="@color/font_black_4"
-                android:textColor="@color/font_black_4"
+                android:textColor="@color/font_black_0"
                 android:background="@null"
                 android:id="@+id/et_before_pwd"
                 android:inputType="numberPassword"
@@ -92,13 +92,13 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="5dp"
-                android:text="新密码：" />
+                android:text="@string/tv_new_password1" />
             <EditText
                 android:id="@+id/et_new_pwd"
                 android:background="@null"
-                android:hint="Please enter"
+                android:hint="@string/et_hint"
                 android:textColorHint="@color/font_black_4"
-                android:textColor="@color/font_black_4"
+                android:textColor="@color/font_black_0"
                 android:inputType="numberPassword"
                 android:textColorLink="@color/bule"
                 android:layout_width="match_parent"
@@ -124,14 +124,14 @@
                 android:layout_width="100dp"
                 android:layout_marginRight="5dp"
                 android:layout_height="match_parent"
-                android:text="确认密码：" />
+                android:text="@string/tv_new_password2"/>
             <EditText
                 android:background="@null"
-                android:hint="Please enter"
+                android:hint="@string/et_hint"
                 android:id="@+id/et_confirm_pwd"
                 android:inputType="numberPassword"
                 android:textColorHint="@color/font_black_4"
-                android:textColor="@color/font_black_4"
+                android:textColor="@color/font_black_0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"

@@ -1,4 +1,14 @@
 apply plugin: 'com.android.application'
+// 添加插件
+apply plugin: 'com.mob.sdk'
+
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+MobSDK {
+    appKey "278e27729c828"
+    appSecret "a80dc4ff878b1ba0eef8b4a6bd2a59db"
+
+    SMSSDK {}
+}
 
 android {
     compileSdkVersion 27
@@ -7,7 +17,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
-        versionName "1.2"
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -24,6 +34,7 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 }
+
 
 
 dependencies {

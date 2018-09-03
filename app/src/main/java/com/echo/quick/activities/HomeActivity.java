@@ -8,29 +8,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BlurMaskFilter;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.OnlineWordContract;
@@ -52,17 +41,12 @@ import org.json.JSONException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import zhy.com.highlight.HighLight;
 import zhy.com.highlight.interfaces.HighLightInterface;
 import zhy.com.highlight.position.OnBottomPosCallback;
-import zhy.com.highlight.position.OnLeftPosCallback;
-import zhy.com.highlight.position.OnRightPosCallback;
 import zhy.com.highlight.position.OnTopPosCallback;
-import zhy.com.highlight.shape.BaseLightShape;
 import zhy.com.highlight.shape.CircleLightShape;
-import zhy.com.highlight.shape.OvalLightShape;
 import zhy.com.highlight.shape.RectLightShape;
 
 /**
@@ -128,7 +112,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             sharedPreferences = getSharedPreferences("is_first_in_data",MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("isFirstIn", false);
-            editor.commit();
+            editor.apply();
         }else {
             LogUtils.d("已非第一次安装");
         }
@@ -308,7 +292,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        Intent intent = null;
+        Intent intent;
         MyPlanDialog myPlanDialog = new MyPlanDialog(HomeActivity.this);
         switch (view.getId()){
             case R.id.tv_word_over:
@@ -400,6 +384,24 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 progressDialog.setMessage("正在加载中");
                 progressDialog.show();
                 mHandler = new Handler();
+//                mRunnable = ThreadPoolProxyFactory.getNormalThreadPoolProxy().execute(new Runnable() {
+//                    @Override
+//                    public void run()
+//                    {
+//
+//                        IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
+//                        if(iWordsStatusDao.selectCountByStatusAndTopicId("learn_", app.getTopicId()) != 0){
+//                            progressDialog.dismiss();
+//                            String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
+//                            if(planType.equals("复习优先")) {
+//                                getWordStatus(false);
+//                            } else {
+//                                getWordStatus(true);
+//                            }
+//                        }
+//
+//                    }
+//                });
                 mRunnable = new Runnable() {
                     @Override
                     public void run()
@@ -474,9 +476,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 try {
-
                     loginPresenter.allWordInfo(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -496,6 +496,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }catch (Exception e){
             e.printStackTrace();
         }
+
 
     }
 

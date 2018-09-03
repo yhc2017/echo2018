@@ -2,18 +2,20 @@ package com.echo.quick.presenters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.echo.quick.activities.R;
-import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.contracts.WordsContract;
 import com.echo.quick.model.dao.impl.WordsLogImpl;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsLogDao;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.Words_Status;
+import com.echo.quick.service.AudioPlayerService;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.ToastUtils;
 
 /**
  * 项目名称：echo2018
@@ -43,23 +45,6 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
     public void liefSwipe(Words_Status word) {
         int num;
         IWordsLogDao = new WordsLogImpl();
-        num = IWordsLogDao.selectLeftNum(word);
-        IWordsLogDao.updateLeftNum(word.getWord(), num+1);
-        if(num == 0){
-            Words_Status wordsNew = new Words_Status();
-            wordsNew.setStatus("study");
-            wordsNew.setWord(word.getWord());
-            IWordsStatusDao newDao = new WordsStatusImpl();
-            if(newDao.updateByWord(wordsNew)){
-                LogUtils.d("添加成功。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
-            }
-        }
-    }
-
-    @Override
-    public void rightSwipe(Words_Status word) {
-        int num;
-        IWordsLogDao = new WordsLogImpl();
         num = IWordsLogDao.selectRightNum(word);
         Log.d("right num    =    ", "   "+num);
         IWordsLogDao.updateRightNum(word.getWord(), num+1);
@@ -84,10 +69,43 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
     }
 
     @Override
+    public void rightSwipe(Words_Status word) {
+        int num;
+        IWordsLogDao = new WordsLogImpl();
+        num = IWordsLogDao.selectLeftNum(word);
+        IWordsLogDao.updateLeftNum(word.getWord(), num+1);
+        if(num == 0){
+            Words_Status wordsNew = new Words_Status();
+            wordsNew.setStatus("study");
+            wordsNew.setWord(word.getWord());
+            IWordsStatusDao newDao = new WordsStatusImpl();
+            if(newDao.updateByWord(wordsNew)){
+                LogUtils.d("添加成功。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
+            }
+        }
+    }
+
+    @Override
     public void endOnce(Context context) {
 
         popWindow(context);
 
+    }
+
+    @Override
+    public void play(Context context, String url) {
+        if(url != null && !url.equals("")){
+            try{
+                Intent intent = new Intent(context, AudioPlayerService.class);
+                intent.putExtra("path", url);
+                context.startService(intent);
+            }catch (Exception e){
+                e.printStackTrace();
+                ToastUtils.showLong(context, "音频播放失败");
+            }
+        }else {
+            ToastUtils.showLong(context, "暂无该音频");
+        }
     }
 
 

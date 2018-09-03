@@ -2,7 +2,7 @@ package com.echo.quick.utils;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.media.Image;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,8 +16,7 @@ import com.echo.quick.activities.R;
 import com.echo.quick.contracts.WordsShowContract;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.WordsShowPresenters;
-
-import java.util.Objects;
+import com.echo.quick.service.AudioPlayerService;
 
 /**
  * 文件名：WordsShowDialog
@@ -152,10 +151,9 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
                     String url = words.getPron();
                     if(url != null && !url.equals("")){
                         try{
-                            mediaPlayer.reset();
-                            mediaPlayer.setDataSource(url);
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
+                            Intent intent = new Intent(getContext(), AudioPlayerService.class);
+                            intent.putExtra("path", url);
+                            getContext().startService(intent);
                         }catch (Exception e){
                             e.printStackTrace();
                             ToastUtils.showLong(getContext(), "音频播放失败");

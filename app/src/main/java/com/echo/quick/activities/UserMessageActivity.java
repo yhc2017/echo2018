@@ -1,12 +1,9 @@
 package com.echo.quick.activities;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.camera2.params.RggbChannelVector;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,8 +18,6 @@ import android.widget.Toast;
 
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.contracts.UserMessageContract;
-import com.echo.quick.model.dao.impl.WordsStatusImpl;
-import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.Words_Log;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
@@ -37,7 +32,6 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 
 import org.litepal.LitePal;
-import org.litepal.crud.LitePalSupport;
 
 import java.util.HashMap;
 import java.util.List;
@@ -174,7 +168,6 @@ public class UserMessageActivity extends AppCompatActivity implements UserMessag
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.iv_user_message_back:
-                    startActivity(new Intent(UserMessageActivity.this,HomeActivity.class));
                     finish();
                     break;
                 case R.id.exitbtn:

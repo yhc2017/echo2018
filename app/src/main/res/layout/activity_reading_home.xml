@@ -19,8 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/content_margin_hieght"
             android:text="四级阅读真题"
-            android:textSize="@dimen/toolbar_content_textsize"
-            android:textStyle="bold"
+            style="@style/MyFont.ToolBar"
             android:textColor="@color/colorAccent"/>
 
     </RelativeLayout>

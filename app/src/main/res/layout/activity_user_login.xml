@@ -18,15 +18,14 @@
             android:src="@drawable/ic_toolbar_back" />
 
         <TextView
-            android:layout_width="@dimen/toolbar_content"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/toolbar_content"
             android:layout_alignTop="@+id/login_back"
             android:layout_toEndOf="@+id/login_back"
             android:layout_toRightOf="@+id/login_back"
             android:gravity="center"
-            android:text="登录"
-            android:textColor="@color/white"
-            android:textSize="@dimen/toolbar_content_textsize" />
+            android:text="@string/tv_login_toolbar"
+            style="@style/MyFont.ToolBar"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +47,6 @@
                 android:layout_below="@+id/login_bag"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="一起快背单词吧~"
                 android:textColor="@color/white" />
             <TextView
                 android:id="@+id/tv_round_sent_tra"
@@ -57,7 +55,6 @@
                 android:layout_below="@+id/login_bag"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="一起快背单词吧~"
                 android:textColor="@color/white" />
         </LinearLayout>
 
@@ -76,17 +73,17 @@
             android:layout_width="@dimen/content"
             android:layout_height="@dimen/content"
             android:layout_margin="@dimen/content_margin_hieght"
+            android:padding="3dp"
             android:src="@drawable/ic_iphone" />
         <EditText
             android:phoneNumber="true"
             android:id="@+id/login_id"
             android:layout_width="match_parent"
             android:layout_height="@dimen/input_margin_hieght"
-            android:textSize="@dimen/content_textsize_small"
             android:background="@drawable/edit_bg"
-            android:hint="请输入手机号"
-            android:textColorHint="@color/colorAccent"
-            android:textColor="@color/colorAccent"/>
+            android:hint="@string/tv_login_hint1"
+            android:textColorHint="@color/font_black_4"
+            android:textColor="@color/font_black_0"/>
     </LinearLayout>
 
     <LinearLayout
@@ -103,6 +100,7 @@
             android:layout_width="37dp"
             android:layout_height="37dp"
             android:layout_margin="@dimen/content_margin_hieght"
+            android:padding="5dp"
             android:src="@drawable/ic_pass" />
 
         <EditText
@@ -111,23 +109,34 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/input_margin_hieght"
             android:background="@drawable/edit_bg"
-            android:hint="请输入密码"
+            android:hint="@string/tv_login_hint2"
             android:inputType="textPassword"
-            android:textColorHint="@color/colorAccent"
-            android:textColor="@color/colorAccent"/>
+            android:textColorHint="@color/font_black_4"
+            android:textColor="@color/font_black_0"/>
     </LinearLayout>
+
     <Button
-        android:id="@+id/logbtn"
+    android:id="@+id/logbtn"
+    style="@style/MyFont.Button"
+    android:layout_width="match_parent"
+    android:layout_height="37dp"
+    android:layout_marginLeft="@dimen/input_margin_hieght"
+    android:layout_marginRight="@dimen/input_margin_hieght"
+    android:layout_marginTop="@dimen/input_margin_hieght"
+    android:background="@drawable/button_main_style"
+    android:text="@string/bt_login"
+    android:textAllCaps="false" />
+    <Button
+        android:id="@+id/logbtnBytel"
+        style="@style/MyFont.Button"
         android:layout_width="match_parent"
         android:layout_height="37dp"
-        android:layout_marginTop="@dimen/input_margin_hieght"
-        android:layout_marginRight="@dimen/input_margin_hieght"
         android:layout_marginLeft="@dimen/input_margin_hieght"
-        android:background="@color/colorPrimary"
-        android:textAllCaps="false"
-        android:textSize="@dimen/content_textsize_small"
-        android:textColor="@color/white"
-        android:text="登               录"/>
+        android:layout_marginRight="@dimen/input_margin_hieght"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_main_style"
+        android:text="@string/bt_login_tel"
+        android:textAllCaps="false" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -141,8 +150,8 @@
             android:layout_marginHorizontal="@dimen/toolbar_content_margin"
             android:padding="@dimen/toolbar_content_margin"
             android:gravity="center"
-            android:text="立即注册"
-            android:textColor="@color/colorAccent"
+            android:text="@string/tv_login_register"
+            android:textColor="@color/font_black_0"
             android:textSize="15dp" />
         <View
             android:layout_width="1dp"
@@ -156,8 +165,8 @@
         android:layout_marginHorizontal="@dimen/toolbar_content_margin"
         android:padding="@dimen/toolbar_content_margin"
         android:gravity="center"
-        android:text="忘记密码"
-        android:textColor="@color/colorAccent"
+        android:text="@string/tv_login_find_password"
+        android:textColor="@color/font_black_0"
         android:textSize="15dp" />
     </LinearLayout>
 

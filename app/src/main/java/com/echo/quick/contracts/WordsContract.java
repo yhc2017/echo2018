@@ -43,6 +43,8 @@ public interface WordsContract {
 
         void endOnce(Context context);
 
+        void play(Context context, String url);
+
     }
 
 }

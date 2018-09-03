@@ -1,7 +1,6 @@
 package com.echo.quick.presenters;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -25,6 +24,8 @@ import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.SPUtils;
 import com.echo.quick.utils.ToastUtils;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -191,6 +192,33 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
     }
 
     @Override
+    public void getDynamicWordInfo(HashMap<String, String> map) {
+        final List<Words> data = new ArrayList<>();
+
+        IOnlineWord IOnlineWord = new OnlineWordImpl();
+        IOnlineWord.postToWord(map, "quick/selectDynamicWordInfo", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String res = response.body().string();
+                LogUtils.d(res);
+                JSONArray newWords = JSON.parseArray(res);
+                if(newWords != null) {
+                    try {
+                        initNewWord(newWords);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
     public List<Words> getOnlineSprint(HashMap<String, String> map) {
 
         final List<Words> data = new ArrayList<>();
@@ -312,7 +340,12 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
                 if(str.equals("1")){
                     LogUtils.d("logs发送成功");
-                    iWordsView.sendLogResult();
+                    try {
+                        iWordsView.sendLogResult();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        LogUtils.d("logs发送失败");
+                    }
                 }else {
                     LogUtils.d("logs发送失败");
                 }
@@ -326,7 +359,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
     public void GetAllWordTopicInfo() {
         IOnlineWord iOnline = new OnlineWordImpl();
 //        iOnline.getToWord("quick/selectAllWordTopicInfo", new Callback() {
-        iOnline.getToWord("/quick/selectAllWordTopicInfo", new Callback() {
+        iOnline.getToWord("quick/selectAllWordTopicInfo", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtils.d("无法接收单词表信息");
@@ -385,40 +418,20 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
         });
     }
 
-    private void initNewWord(JSONArray jsonArray){
+    private void initNewWord(JSONArray jsonArray) throws JSONException {
         for(int i = 0; i < jsonArray.size(); i++){
             WordsShowContract.IWordsShowPresenter wordsShowPresenter = new WordsShowPresenters();
             JSONObject object = jsonArray.getJSONObject(i);
-            Words_Status words = new Words_Status(object.getString("id"),
-                    object.getString("pron"),
-                    object.getString("word"),
-                    object.getString("phon"),
-                    object.getString("para"),
-                    object.getString("build"),
-                    object.getString("example"),
-                    "",
-                    "",
-                    "",
-                    object.getString("topicId"));
+            Words_Status words = WordsStatusImpl.getWordsByStatusFastJson("", object);
             wordsShowPresenter.addNewWord(words);
         }
     }
 
-    public void initReviewWord(JSONArray jsonArray){
+    public void initReviewWord(JSONArray jsonArray) throws JSONException {
         WordsShowContract.IWordsShowPresenter wordsShowPresenter = new WordsShowPresenters();
         for(int i = 0; i < jsonArray.size(); i++){
             JSONObject object = jsonArray.getJSONObject(i);
-            Words_Status words = new Words_Status(object.getString("id"),
-                    object.getString("pron"),
-                    object.getString("word"),
-                    object.getString("phon"),
-                    object.getString("para"),
-                    object.getString("build"),
-                    object.getString("example"),
-                    "",
-                    "",
-                    "review",
-                    object.getString("topicId"));
+            Words_Status words = WordsStatusImpl.getWordsByStatusFastJson("review", object);
             wordsShowPresenter.addNewWord(words);
         }
 

@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--APP.style-->
+    <!--主题色-->
+    <color name="colorPrimary">#01a89e</color>
+    <color name="colorPrimary_dark">#018981</color>
+    <!--控件高亮色-->
+    <color name="colorAccent">#01a89e</color>
+    <!--状态栏色-->
+    <color name="colorPrimaryDark">#01a89e</color>
+    <!--窗口背景色-->
+    <color name="colorBackground">#eef4f7</color>
+    <!--底部状态栏色-->
+    <color name="navigationBarColor">#000</color>
+    <!--字色-->
+    <color name="textColorPrimary">#fff</color>
+    <!--第二字色-->
+    <color name="textColorBlack">#000000</color>
+    <!--进度条背景色-->
+    <color name="pg_gray">#dfdfdf</color>
 
-    <color name="colorPrimary">#89cff0</color>
-    <color name="colorPrimaryDark">#89cff0</color>
-    <color name="colorAccent">#55b6e4</color>
+    <!-- divider color-->
+    <color name="divider_1">#e2e2e2</color>
+    <color name="divider_2">#e6e6e6</color>
 
-    <!-- common -->
+    <!-- other color -->
+    <!-- 提示色 -->
+    <color name="colorLocalMusicModule">#ffc670</color>
+    <!-- 警告色 -->
+    <color name="colorAnRed">#ba0900</color>
+    <color name="colorSchedule">#ef2c00</color>
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="half_transparent">#8f000000</color>
     <color name="bule">#f2679ee7</color>
     <color name="bule2">#f298bef1</color>
     <color name="yellow">#f1c823</color>
 
-    <!-- background -->
-    <color name="bg">#FFF5F5F5</color>
-    <color name="bg_pressed">#FFF2F2F2</color>
+
 
     <!-- material design black font color -->
     <color name="font_black_0">#212121</color>
@@ -27,28 +47,16 @@
     <color name="font_black_5">#bdbdbd</color>
     <color name="font_black_6">#e0e0e0</color>
 
-    <!-- divider -->
-    <color name="divider_1">#e2e2e2</color>
-    <color name="divider_2">#e6e6e6</color>
+
 
     <color name="dialog_colorAnRed">#fcfcf5</color>
-    <color name="colorAnRed">#ba0900</color>
+
     <color name="colorDone">#0F9D58</color>
-    <color name="colorSchedule">#ef2c00</color>
     <color name="green_normal">#37C000</color>
     <color name="green_pressed">#30A070</color>
     <color name="blue">#4a74c2</color>
     <color name="green">#04bc0a</color>
-
     <color name="lightwrite">#e9e9e9</color>
 
 
-    <!--这里可以删-->
-    <color name="colorBackground">#eef4f7</color>
-    <!--ModuleColor-->
-    <color name="colorPersonalTailoModule">#8ab869</color>
-    <color name="colorLocalMusicModule">#ffc670</color>
-    <color name="colorPersonalHistoryModule">#f86670</color>
-    <color name="colorOnLineMusicModule">#48a69e</color>
-    <color name="colorPrimaryFont">#fff</color>
 </resources>

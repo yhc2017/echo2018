@@ -18,4 +18,6 @@ public interface ILoginDao {
 
     User doLoginPost(String tel, String pwd, Callback callback);
 
+    void doLoginTel(String tel, String address,Callback callback);
+
 }

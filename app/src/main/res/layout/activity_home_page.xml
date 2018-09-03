@@ -66,7 +66,7 @@
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
                 android:text="未登录"
-                android:textColor="@color/black" />
+                android:textColor="@color/textColorBlack" />
         </RelativeLayout>
 
         <TextView
@@ -96,7 +96,6 @@
                 <TextView
                     android:id="@+id/tv_over_day"
                     style="@style/MyFont.Home.Content.Num"
-                    android:textColor="@color/colorSchedule"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -114,7 +113,7 @@
                 android:layout_width="1dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical|left"
-                android:background="@color/black" />
+                android:background="@color/textColorBlack" />
             <LinearLayout
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
@@ -140,7 +139,7 @@
                     android:layout_width="1dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|left"
-                    android:background="@color/black" />
+                    android:background="@color/textColorBlack" />
 
                 <LinearLayout
                     android:layout_width="80dp"
@@ -168,7 +167,7 @@
                     android:layout_width="1dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|right"
-                    android:background="@color/black" />
+                    android:background="@color/textColorBlack" />
             <LinearLayout
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
@@ -221,8 +220,7 @@
 
         <Button
             android:id="@+id/bt_start_study"
-            android:text="开   始   学   习"
-            android:textSize="22dp"
+            style="@style/MyFont.Button"
             android:layout_marginTop="30dp"
             android:background="@drawable/button_bg_write"
             android:layout_marginLeft="60dp"
@@ -246,7 +244,7 @@
                 android:layout_centerInParent="true"
                 android:id="@+id/tv_yhc"
                 android:visibility="visible"
-                android:textColor="@color/black"
+                android:textColor="@color/textColorBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="© YHC"/>
@@ -255,7 +253,7 @@
                 android:layout_toLeftOf="@+id/tv_yhc"
                 android:layout_centerVertical="true"
                 android:id="@+id/view1"
-                android:background="@color/black"
+                android:background="@color/textColorBlack"
                 android:layout_width="30dp"
                 android:layout_height="1dp"/>
             <View
@@ -263,7 +261,7 @@
                 android:layout_centerVertical="true"
                 android:id="@+id/view2"
                 android:layout_toRightOf="@+id/tv_yhc"
-                android:background="@color/black"
+                android:background="@color/textColorBlack"
                 android:layout_width="30dp"
                 android:layout_height="1dp"/>
         </RelativeLayout>
