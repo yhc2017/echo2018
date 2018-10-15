@@ -256,7 +256,8 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
                     myPlanDialog.show();
                     break;
                 case R.id.ll_unfamiliar_word_enter:
-
+                    intent = new Intent(HomeMainActivity.this, StrangeWordsListActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.bt_start_study:
                     //开始背单词
