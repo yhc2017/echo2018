@@ -82,7 +82,7 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
-
+        ActivityManager.getInstance().addActivity(this);
 
         validator = new Validator(this);
         validator.setValidationListener(this);

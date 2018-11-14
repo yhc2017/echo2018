@@ -16,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.echo.quick.common.PreferenceConstants;
+import com.echo.quick.common.PreferenceManager;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.contracts.UserMessageContract;
 import com.echo.quick.pojo.Words_Log;
@@ -193,6 +195,7 @@ public class UserMessageActivity extends AppCompatActivity implements UserMessag
                             LitePal.deleteAll(Words_Log.class);
                             app.setUserId("111");
                             app.setNickName("请登录");
+                            PreferenceManager.getInstance().put(PreferenceConstants.USERLOGIN,"false");
                             startActivity(new Intent(UserMessageActivity.this, LoginActivity.class));
                             finish();
                         }

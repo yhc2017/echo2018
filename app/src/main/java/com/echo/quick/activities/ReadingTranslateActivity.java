@@ -45,6 +45,7 @@ public class ReadingTranslateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_translate);
+        ActivityManager.getInstance().addActivity(this);
         initView();
         initball();
         viewPager = (ViewPager)findViewById(R.id.vp_coupon);

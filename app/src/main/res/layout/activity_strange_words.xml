@@ -14,13 +14,13 @@
             android:layout_width="@dimen/toolbar_content"
             android:layout_height="@dimen/toolbar_content"
             android:layout_margin="@dimen/content_margin_hieght"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:src="@drawable/ic_home_pripary_color" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tl_coupon"
-            android:layout_width="260dp"
-            android:layout_height="100px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="@color/white"

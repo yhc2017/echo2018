@@ -37,6 +37,7 @@ public class InitPlanActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init_plan);
+        ActivityManager.getInstance().addActivity(this);
         homePresenter = new HomePresenterImpl();
         initView();
         initData();

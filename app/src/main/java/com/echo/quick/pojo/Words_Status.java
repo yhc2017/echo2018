@@ -66,4 +66,100 @@ public class Words_Status extends LitePalSupport implements Serializable {
         this.topicId = topicId;
         this.recordTime = recordTime;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public String getWordId() {
+        return wordId;
+    }
+
+    public void setWordId(String wordId) {
+        this.wordId = wordId;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public String getExplain() {
+        return explain;
+    }
+
+    public void setExplain(String explain) {
+        this.explain = explain;
+    }
+
+    public String getEg1() {
+        return eg1;
+    }
+
+    public void setEg1(String eg1) {
+        this.eg1 = eg1;
+    }
+
+    public String getPron() {
+        return pron;
+    }
+
+    public void setPron(String pron) {
+        this.pron = pron;
+    }
+
+    public String getEg1Chinese() {
+        return eg1Chinese;
+    }
+
+    public void setEg1Chinese(String eg1Chinese) {
+        this.eg1Chinese = eg1Chinese;
+    }
+
+    public String getEg2() {
+        return eg2;
+    }
+
+    public void setEg2(String eg2) {
+        this.eg2 = eg2;
+    }
+
+    public String getEg2Chinese() {
+        return eg2Chinese;
+    }
+
+    public void setEg2Chinese(String eg2Chinese) {
+        this.eg2Chinese = eg2Chinese;
+    }
+
+    public String getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(String topicId) {
+        this.topicId = topicId;
+    }
+
+    public String getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(String recordTime) {
+        this.recordTime = recordTime;
+    }
 }

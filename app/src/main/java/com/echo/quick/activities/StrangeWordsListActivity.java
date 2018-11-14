@@ -43,6 +43,7 @@ public class StrangeWordsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_strange_words);
+        ActivityManager.getInstance().addActivity(this);
         app = (App)App.getContext();
         initView();
         // 创建BroadcastReceiver

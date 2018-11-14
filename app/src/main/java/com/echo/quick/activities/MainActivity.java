@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.IMai
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ActivityManager.getInstance().addActivity(this);
         app = (App)getApplication();
 
         onlineWordPresenter = new OnlineWordPresenterImpl(this);

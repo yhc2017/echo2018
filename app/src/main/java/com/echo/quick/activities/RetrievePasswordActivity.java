@@ -53,7 +53,7 @@ public class RetrievePasswordActivity extends AppCompatActivity implements Valid
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retrieve_password);
-
+        ActivityManager.getInstance().addActivity(this);
         validator = new Validator(this);
         validator.setValidationListener(this);
 

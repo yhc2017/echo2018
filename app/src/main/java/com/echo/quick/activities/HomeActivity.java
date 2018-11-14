@@ -81,6 +81,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        ActivityManager.getInstance().addActivity(this);
         app = (App)getApplication();
 
         // 创建BroadcastReceiver
@@ -453,6 +454,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             tv_user_name.setText(app.getNickName());
         }else {
             tv_user_name.setText("未登录");
+
         }
     }
 

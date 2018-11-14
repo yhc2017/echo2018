@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.echo.quick.common.PreferenceConstants;
+import com.echo.quick.common.PreferenceManager;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.WordsLogImpl;
@@ -75,12 +77,13 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
         app = (App)getApplicationContext();
         initViews();
         setEvents();
+        ed_loginID.setText((PreferenceManager.getInstance().get(PreferenceConstants.USERPHONE, "")).toString());
+        ed_loginPwd.setText((PreferenceManager.getInstance().get(PreferenceConstants.USERPASSWORD, "")).toString());
 
         validator = new Validator(this);
         validator.setValidationListener(this);
@@ -206,7 +209,9 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                                 map.put("topicId", app.getTopicId());
                                 onlineWordPresenter.postToGetTopicIdWords(map, true);
                             } else {
-                                ToastUtils.showLong(LoginActivity.this, "登录成功");
+//                                ToastUtils.showLong(LoginActivity.this, "登录成功");
+//                                ActivityManager.getInstance().exit();
+                                startActivity(new Intent(LoginActivity.this, HomeMainActivity.class));
                                 finish();
                             }
                             break;
@@ -266,6 +271,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
                 case R.id.login_back:
                     LogUtils.d("登录页面", "返回主界面 ");
+
                     finish();
                     break;
 

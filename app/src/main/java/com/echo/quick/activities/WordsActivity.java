@@ -62,6 +62,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words);
+        ActivityManager.getInstance().addActivity(this);
         app = (App)getApplication();
 
         Intent intent = getIntent();
@@ -419,10 +420,36 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
         startActivity(Intent.createChooser(intent, activityTitle));
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        updateUserAllWord();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        updateUserAllWord();
+    }
+
+
+    @Override
     protected void onStop() {
         super.onStop();
+        updateUserAllWord();
+       System.out.println("调用了用户更新接口的方法");
+    }
+
+    /**
+     * Method name :updateUserAllWord()
+     * Specific description :更新用户所学的所有的那次
+     *@return
+     */
+    public void updateUserAllWord(){
         OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(this);
         onlineWordPresenter.postOnlineWordsLog();
     }
+
 
 }
