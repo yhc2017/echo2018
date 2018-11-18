@@ -4,12 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/mycon"
     tools:context="com.echo.quick.activities.MainActivity">
     <Button
         android:id="@+id/bt_words"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="背单词界面"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/bt_words_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="背单词界面2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/bt_words_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="测试阅读界面"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -17,12 +37,84 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="测试" />
+    <Button
+        android:id="@+id/btn_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="界面测试" />
+
+    <Button
+        android:id="@+id/btn_strange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="生词" />
+
+    <Button
+        android:id="@+id/btn_quick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_study"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学习优先" />
+
+        <Button
+            android:id="@+id/btn_re_study"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="复习优先" />
+
+        <Button
+            android:id="@+id/btn_test_db"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试log" />
+
+        <Button
+            android:id="@+id/btn_test_db2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试status" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/PB_words"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </ScrollView>
+
+
 
 </LinearLayout>

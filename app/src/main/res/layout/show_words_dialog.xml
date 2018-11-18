@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:background="@drawable/dialog_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:background="@drawable/item_bg"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="185dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        tools:text="Quick" />
+
+                    <TextView
+                        android:id="@+id/tv_symbol"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/tv_item"
+                        android:text="/kwlk/"
+                        android:textSize="14dp"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:visibility="gone"
+                    android:background="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/iv_audio"
+                    android:layout_width="106dp"
+                    android:layout_height="23dp"
+                    android:layout_marginLeft="12dp"
+                    android:baselineAligned="false"
+                    android:visibility="gone"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_play2" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:background="@drawable/item_bg"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_margin="10dp"
+                android:id="@+id/tv_explain"
+                android:textSize="15dp"
+                android:layout_width="match_parent"
+                android:lineSpacingMultiplier="1.6"
+                android:layout_height="wrap_content"
+                android:text="adj.快的; 迅速的; 很快的adv.  迅速地"/>
+        </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/item_bg"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="例句："
+            android:textSize="16dp"
+            android:textColor="@color/colorAnRed"
+            android:fontFamily="monospace"/>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_eg1"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="She gave him a quick glance."/>
+            <TextView
+                android:id="@+id/tv_eg1_chinese"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.4"
+                android:text="她迅速地扫了他一眼。"/>
+        </LinearLayout>
+        <View
+            android:id="@+id/v1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/half_transparent"/>
+        <LinearLayout
+            android:id="@+id/l1"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_eg2"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="She gave him a quick glance."/>
+            <TextView
+                android:id="@+id/tv_eg2_chinese"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.4"
+                android:text="她迅速地扫了他一眼。"/>
+        </LinearLayout>
+    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/L_1"
+            android:gravity="right"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_add_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加入到生词本"
+                android:textColor="@color/colorSchedule" />
+            <ImageView
+                android:padding="3dp"
+                android:src="@drawable/ic_add"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/L_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="right">
+
+            <TextView
+                android:id="@+id/tv_del_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已加入到生词本"
+                android:textColor="@color/colorDone" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:padding="3dp"
+                android:src="@drawable/ic_add_ok" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

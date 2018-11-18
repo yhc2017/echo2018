@@ -2,10 +2,34 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_toolbar_heigh">50dp</dimen>
+
+    <!--all font size-->
+    <!--toolbar的字体大小-->
+    <dimen name="myfont_button_size">18dp</dimen>
+    <dimen name="myfont_toolbar_title_size">18dp</dimen>
+    <dimen name="myfont_reading_title_size">18dp</dimen>
+    <dimen name="myfont_home_title_size">43dp</dimen>
+    <dimen name="myfont_home_content_size">17dp</dimen>
+    <dimen name="myfont_home_content_num_size">19dp</dimen>
+    <dimen name="myfont_home_19">19dp</dimen>
+    <dimen name="myfont_home_13">16dp</dimen>
+    <dimen name="myfont_home_12">15dp</dimen>
+    <dimen name="myfont_home_10">13dp</dimen>
+    <dimen name="myfont_home_8">11dp</dimen>
+    <dimen name="myfont_init_plan_question">18dp</dimen>
+    <dimen name="myfont_content_textsize_small">19dp</dimen>
+
+    <!--all view margin/height/width-->
+    <!--首页 activity_home.xml-->
+    <dimen name="view_home_top_height">120dp</dimen>
+    <dimen name="view_home_icon_size">70dp</dimen>
+    <dimen name="view_home_icon_margin_horizontal">35dp</dimen>
 
     <!--背单词界面-item_words.xml-->
-    <dimen name="item_word_height">64dp</dimen>
+    <dimen name="item_word_height">54dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
+
     <!--login.xml-->
     <dimen name="toolbar_heigh">230dp</dimen>
     <dimen name="toolbar_content">37dp</dimen>
@@ -25,5 +49,33 @@
     <dimen name="content_margin_hieght">10dp</dimen>
     <dimen name="input_margin_hieght">37dp</dimen>
 
-    <dimen name="content_textsize_small">18dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="dp_70">70dp</dimen>
+    <dimen name="toolbar_minHeight">35dp</dimen>
+
+
+
+
+    <!--可以删减-->
+    <dimen name="user_card_text_mar">5dp</dimen>
+    <dimen name="user_card_width">20dp</dimen>
+    <dimen name="user_card_heigh">55dp</dimen>
+    <dimen name="user_card_center_heigh">1dp</dimen>
+    <dimen name="user_card_text_s">10dp</dimen>
+    <dimen name="user_card_text_m">11dp</dimen>
+    <!--playmusic.xml-->
+    <dimen name="play_music_img_song_word">35dp</dimen>
+    <dimen name="play_music_img_size">300dp</dimen>
+    <!--onliemusictext-->
+    <dimen name="text_onlineleft_modle">7dp</dimen>
+    <dimen name="text_onlineright_modle">2dp</dimen>
+    <dimen name="text_online_modle">15dp</dimen>
+    <dimen name="text_online_songwidth_modle">75dp</dimen>
+    <dimen name="text_online_singerwidth_modle">30dp</dimen>
+    <dimen name="text_online_song_modle">5pt</dimen>
+    <dimen name="text_online_singer_modle">4pt</dimen>
+    <!--home_page_modle_mine-->
+    <dimen name="modle_mine_top">10dp</dimen>
 </resources>

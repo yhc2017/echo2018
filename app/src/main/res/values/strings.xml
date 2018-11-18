@@ -1,5 +1,87 @@
-<resources>
-    <string name="app_name">quickly</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">快背单词</string>
+
+    <!--名人名言-->
+    <string-array name="entities">
+        <item>Never underestimate your power to change yourself!</item>
+        <item>Every noble work is at first impossible.</item>
+        <item>Whatever is worth doing is worth doing well.</item>
+        <item>Live well, love lots, and laugh often.</item>
+        <item>Great oaks from little acorns grow.</item>
+    </string-array>
+    <string-array name="entities_tra">
+        <item>永远不要低估你转变自我的能力！</item>
+        <item>每一个巨大的工程最初看起来都是不可能做到的！</item>
+        <item>任何值得做的，就把它做好。</item>
+        <item>善待生活，酷爱一切，常常开怀大笑。</item>
+        <item>万丈高楼平川起。</item>
+    </string-array>
+
+    <!--公共 表单用到的-->
+    <string name="et_myiphone">15521060697</string>
+    <string name="tv_new_password1">新密码：</string>
+    <string name="tv_new_password2">确认密码：</string>
+    <string name="tv_old_password">原始密码:</string>
+    <string name="et_hint">Please enter</string>
+    <string name="tv_mod_user_ok">确定</string>
+    <string name="tv_mod_user_password">修改密码</string>
+    <string name="tv_iphone">手机号</string>
+    <string name="tv_user_sex">少侠</string>
+    <string name="tv_user_man">男</string>
+    <string name="tv_user_women">女</string>
+
+    <!--首页 activity_home.xml-->
+    <string name="tv_user_name">TanzJ</string>
+    <string name="tv_user_plan">通过英语六级</string>
+    <string name="tv_user_plan_time">计划完成时间：12月3日</string>
+    <string name="tv_wordbox">未选择词库</string>
+    <string name="tv_plan_way"> </string>
+    <string name="tv_setting_plan">修改 ></string>
+    <string name="tv_home01">总体进度</string>
+    <string name="tv_all_words">555/2500</string>
+    <string name="tv_home02">今日进度</string>
+    <string name="tv_home1_1">距离考试</string>
+    <string name="tv_home1_2">新学单词</string>
+    <string name="tv_home1_3">复习单词</string>
+    <string name="tv_home1_4">生词本</string>
+    <string name="bt_start_study">快 背 单 词!</string>
+    <string name="tv_num">0</string>
+
+    <!--初始化界面 activity_init_plan.xml-->
+    <string name="tv_init_plan_question1">1.请选择一个目标词库</string>
+    <string name="tv_init_plan_question2">2.请选择目标结束时间</string>
+    <string name="tv_init_plan_question3">3.请选择背单词的模式</string>
+    <string name="rb_myfont_init_plan_way_study">\t\t学习优先</string>
+    <string name="rb_myfont_init_plan_way_review">\t\t复习优先</string>
+
+    <!--找回密码界面 activity_retreve_password.xml-->
+    <string name="tv_retreve_password_toolbar">找回密码</string>
+    <string name="tv_retreve_password_1">账号：</string>
+    <string name="bt_ok_login">确定并登录</string>
+
+    <!--登录界面 activity_user_login.xml-->
+    <string name="tv_login_toolbar">登录</string>
+    <string name="tv_login_hint1">请输入手机号</string>
+    <string name="tv_login_hint2">请输入密码</string>
+    <string name="bt_login">登\t\t\t\t\t\t\t\t录</string>
+    <string name="bt_login_tel">短\t\t信\t\t验\t\t证\t\t登\t\t录</string>
+    <string name="tv_login_register">立即注册</string>
+    <string name="tv_login_find_password">找回密码</string>
+
+    <!--用户信息界面 activity_user_message2.xml-->
+    <string name="tv_user_message_toolbar">我</string>
+    <string name="tv_user_message_1">账号</string>
+    <string name="tv_user_message_2">昵称</string>
+    <string name="tv_user_message_3">未登录</string>
+    <string name="bt_user_message">退\t出\t登\t录</string>
+
+    <!--注册界面 activity_user_register.xml-->
+    <string name="tv_register">注册</string>
+    <string name="bt_register">注\t\t\t\t册</string>
+
+    <!--背单词界面 activity_words.xml-->
+    <string name="tv_words_toolbar">自评速记</string>
+
 
     <!--title-->
     <string name="user_message">我</string>
@@ -23,6 +105,8 @@
     <string name="next_opr">下一步</string>
     <string name="iphone_number">请输入手机号</string>
     <string name="password">请输入密码</string>
+    <string name="new_password">请输入新密码</string>
+    <string name="new_password_2">请再次输入新密码</string>
     <string name="login">登 录</string>
     <string name="exit">退出账号</string>
     <string name="forgive_pwd">忘记密码？</string>
@@ -44,5 +128,45 @@
     <string name="re_real_idcard">身份证号码</string>
     <string name="re_real_name_tip">请输入真实姓名</string>
     <string name="re_real_idcard_tip">请输入身份证号码</string>
+    <string name="title_activity_words2">Words2Activity</string>
 
+    <string name="reading_example">
+        \n\t\tNobody really knows how big Lagos is. What\'s indisputable is that it\'s growing very quickly. Between now and 2050, the urban population of Africa could triple. Yet cities in sub-Saharan Africa are not getting richer the way cities in the rest of the world have. Most urban Africans live in slums （贫民窟）; migrants are often not much better off than they were in the countryside. Why?
+        \n\n\t\tThe immediate problem is poverty. Most of Africa is urbanising at a lower level of income than other regions of the world did. That means there\'s little money around for investment that would make cities liveable and more productive. Without upgrades and new capacity, bridges, roads and power systems are unable to cope with expanding populations. With the exception of South Africa, the only light rail metro system in sub-Saharan Africa is in Addis Ababa, Ethiopia. Traffic jam leads to expense and unpredictability, things that keep investors away.
+        \n\n\t\tIn other parts of the world, increasing agricultural productivity and industrialisation went together. More productive farmers meant there was a surplus that could feed cities; in turn, that created a pool of labour for factories. But African cities are different. They are too often built around consuming natural resources. Government is concentrated in capitals, so is the money. Most urban Africans work for a small minority of the rich, who tend to be involved in either cronyish （有裙带关系的） businesses or politics. Since African agriculture is still broadly unproductive, food is imported, consuming a portion of revenue.
+         \n\n\t\tSo what can be done? Though African countries are poor, not all African cities are. In Lagos, foreign oil workers can pay as much as 65,000 dollars per year in rent for a modest apartment in a safe part of town. If that income were better taxed, it might provide the revenue for better infrastructure. If city leaders were more accountable to their residents, they might favour projects designed to help them more. Yet even as new roads are built, new people arrive. When a city\'s population grows by 5\% a year, it is difficult to keep up.</string>
+    <string name="reading_example_chinese">
+        \n\t\t没有人真正知道拉各斯有多大。无可争辩的是，它的发展非常迅速。从现在到2050年间，非洲的城市人口可以翻三倍。然而撒哈拉以南非洲的城市并不像世界其他城市那样富裕。大多数城市非洲人住在贫民窟里，移民往往比农村人好得多。为什么？    \n\n\t\t眼前的问题是贫穷。非洲大部分城市的收入水平低于世界其他地区。这意味着没有多少资金用于投资，使城市更具生产力和生产力。没有升级和新的容量，桥梁、道路和电力系统无法应对不断扩大的人口。除南非外，撒哈拉以南非洲唯一的轻轨地铁系统在埃塞俄比亚的亚的斯亚贝巴。交通堵塞会导致费用和不可预测性，这会让投资者望而却步。    \n\n\t\t在世界其他地区，农业生产率和工业化程度不断提高。更有生产力的农民意味着有剩余的东西可以养活城市，反过来，这也为工厂创造了大量的劳动力。但是非洲城市是不同的。它们往往是在消耗自然资源的基础上建造起来的。政府集中在资金上，资金也是如此。绝大多数城市非洲人为少数富人工作，他们往往参与任人唯亲的商业或政治。由于非洲农业仍然没有生产能力，粮食是进口的，消耗了部分收入。
+\n\n\t\t那么，我们能做些什么呢？尽管非洲国家贫穷，但并非所有非洲城市都如此。在拉各斯，外国石油工人每年可以在镇上一个安全的公寓里支付65000美元的租金。如果收入更好的征税，它可能会提供更好的基础设施的收入。如果城市领导人对他们的居民更负责任，他们可能会赞成旨在帮助他们更多的项目。然而，即使新的道路被修建，新的人们也会到达。当一个城市的人口每年增长5%时，很难跟上。</string>
+
+    <string name="answer_A">They have more slums than other cities in the world.</string>
+    <string name="answer_B">They are growing fast without becoming richer.</string>
+    <string name="answer_C">They are as modernised as many cities elsewhere.</string>
+    <string name="answer_D">They attract migrants who want to be better off.</string>
+
+
+    <string name="soso_mo">词库打卡\t\t生词本</string>
+    <string name="sp_mo">高频\t\t真题阅读单词</string>
+
+    <string name="words_ct4">大学英语四级</string>
+    <string name="words_ct6">大学英语六级</string>
+    <string name="words_ct4_2">四级高频</string>
+    <string name="words_for1">考研词汇</string>
+    <string name="words_for2">出国考试(G)</string>
+    <string name="words_for3">出国考试(GM)</string>
+    <string name="words_for4">出国考试(T)</string>
+    <string name="words_for5">高考词汇</string>
+
+
+    <!--这里是可以删的-->
+    <string name="modle_personal_design">私人定制</string>
+    <string name="modle_local_music">本地音乐</string>
+    <string name="modle_personal_history">个人音乐历程</string>
+    <string name="modle_online_music">在线音乐</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_retrieve_password">找回密码</string>
+
+    <!--写在app内部的文字-->
+    <string name="tv_plan">通过</string>
+    <string name="tv_overtime">计划完成时间：</string>
 </resources>

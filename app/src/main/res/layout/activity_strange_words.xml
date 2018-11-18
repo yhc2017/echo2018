@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/strage_words_back"
+            android:layout_width="@dimen/toolbar_content"
+            android:layout_height="@dimen/toolbar_content"
+            android:layout_margin="@dimen/content_margin_hieght"
+            android:visibility="gone"
+            android:src="@drawable/ic_home_pripary_color" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_coupon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@color/white"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/textColorBlack"></android.support.design.widget.TabLayout>
+    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

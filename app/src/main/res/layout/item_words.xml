@@ -2,74 +2,111 @@
 <!--背景view，用于提示用户操作结果-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_background"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/iv_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:src="@mipmap/bt_ic_done_white_24" />
-    <View
-        android:layout_width="140dp"
-        android:layout_height="@dimen/item_word_height"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@color/colorPrimary">
-    </View>
-    <View
-        android:layout_width="70dp"
-        android:layout_height="@dimen/item_word_height"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@color/colorSchedule">
-    </View>
-    <ImageView
-        android:id="@+id/iv_schedule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:src="@mipmap/bt_ic_schedule_white_24" />
-
-    <ImageView
-        android:id="@+id/iv_b"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/iv_schedule"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:src="@mipmap/bt_ic_schedule_white_24" />
-    <!--滑动操作的view-->
-    <LinearLayout
-        android:id="@+id/ll_item"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="35dp"
+    android:paddingRight="35dp">
+    <RelativeLayout
+        android:id="@+id/rl_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_word_height"
-        android:background="@android:color/white"
+        android:background="@drawable/item_left"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
-
-        <TextView
-            android:id="@+id/tv_item"
+        <ImageView
+            android:id="@+id/iv_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            tools:text="Item" />
-
-    </LinearLayout>
-
-    <View
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/bt_ic_done_white_24" />
+            <TextView
+                android:id="@+id/tv_explain"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="15dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="adj. 快的；adv. 迅速地"/>
+        <ImageView
+            android:id="@+id/iv_schedule"
+            android:visibility="gone"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="-15dp"
+            android:src="@drawable/ic_falut" />
+    </RelativeLayout>
+    <!--这是子项的布局-->
+    <LinearLayout
+        android:id="@+id/ll_item"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/ll_item"
-        android:background="#B2B2b2" />
+        android:layout_height="@dimen/item_word_height"
+        android:background="@drawable/item_bg_word"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/ll_word"
+                android:layout_width="205dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    tools:text="Quick"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    android:fontFamily="monospace" />
+                <TextView
+                    android:id="@+id/tv_symbol"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/textColorPrimary"
+                    android:layout_toRightOf="@+id/tv_item"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:text="/kwlk/"
+                    android:textStyle="italic"/>
+            </LinearLayout>
+
+            <View
+                android:layout_marginLeft="5dp"
+                android:layout_width="1dp"
+                android:background="@color/white"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:id="@+id/iv_play"
+                android:padding="2dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/ic_play2"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

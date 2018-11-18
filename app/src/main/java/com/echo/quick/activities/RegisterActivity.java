@@ -9,10 +9,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.echo.quick.utils.L;
-import com.echo.quick.utils.T;
+import com.echo.quick.contracts.RegisterContract;
+import com.echo.quick.presenters.RegisterPresenterImpl;
+import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.SensitiveWordsUtils;
+import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
@@ -22,7 +26,9 @@ import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Pattern;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 文件名：RegisterActivity
@@ -30,13 +36,13 @@ import java.util.List;
  * 创建时间：2018/7/17 15:15
  * 类描述：
  *
- * 修改人：
- * 修改时间：
- * 修改内容：
+ * 修改人：周建旋
+ * 修改时间：8-25 11：14
+ * 修改内容：229行 检查敏感词汇
  *
 **/
 
-public class RegisterActivity  extends AppCompatActivity implements Validator.ValidationListener {
+public class RegisterActivity  extends AppCompatActivity implements Validator.ValidationListener,RegisterContract.IRegisterView {
 
     private ImageView iv_register_back;
 
@@ -62,8 +68,11 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
     private Button btn_regidter;
     private RadioGroup register_sex_group;
     private RadioButton man,nv;
+    private TextView register_sex_name;
 
     protected Validator validator;
+    private RegisterContract.IRegister register;
+
 
     //当表单信息验证通过后设为true
     private Boolean isOk = false;
@@ -73,10 +82,12 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_register);
-
+        ActivityManager.getInstance().addActivity(this);
 
         validator = new Validator(this);
         validator.setValidationListener(this);
+        register = new RegisterPresenterImpl(this);
+
 
         initViews();
         setEvents();
@@ -95,7 +106,7 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
         ed_pwd = (EditText) findViewById(R.id.register_password);
         ed_sure_pwd = (EditText) findViewById(R.id.register_repassword);
         ed_name = (EditText) findViewById(R.id.register_uname);
-
+        register_sex_name = (TextView)findViewById(R.id.register_sex_name);
         btn_regidter = (Button) findViewById(R.id.register_next_btn);
 
         register_sex_group = (RadioGroup)findViewById(R.id.register_sex_group);
@@ -128,13 +139,16 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
         register_sex_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                validator.validate();
                 switch (i){
                     case R.id.register_sex_nan:
                         sex = "男";
+                        register_sex_name.setText("少侠");
                         break;
 
                     case R.id.register_sex_nv:
                         sex = "女";
+                        register_sex_name.setText("女侠");
                         break;
 
                     default:
@@ -168,6 +182,27 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
 
     }
 
+    @Override
+    public void onClearText() {
+
+    }
+
+    @Override
+    public void onRegisterResult(final Boolean result, int code) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(result) {
+                    ToastUtils.showLong(RegisterActivity.this, "注册成功");
+                    startActivity(new Intent(RegisterActivity.this, InitPlanActivity.class));
+                    finish();
+                }else {
+                    ToastUtils.showLong(RegisterActivity.this, "同一个号码只能注册一次");
+                }
+            }
+        });
+    }
+
     //选择触发的事件
     public class MyListener implements  View.OnClickListener { /*用接口的方式*/
         public void onClick(View v) {
@@ -176,9 +211,9 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
             switch (id) {
                 //返回按钮
                 case R.id.register_back:
-                    intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    L.d("注册页面跳转首页");
+//                    intent = new Intent(RegisterActivity.this, MainActivity.class);
+//                    startActivity(intent);
+                    LogUtils.d("注册页面跳转首页");
                     finish();
                     break;
 
@@ -191,12 +226,20 @@ public class RegisterActivity  extends AppCompatActivity implements Validator.Va
                         String surePwd = ed_sure_pwd.getText().toString();
                         String name = ed_name.getText().toString();
 
+                        //检查敏感词汇
+                        Set<String> set = new HashSet<String>();
+                        String str1 = "习近平";
+                        set.add(str1);
+                        SensitiveWordsUtils.init(set);
                         if (tel.equals("") || pwd.equals("") || surePwd.equals("") || name.equals("")) {
-                            T.showShort(RegisterActivity.this, R.string.RegInfoNotFull);
+                            ToastUtils.showShort(RegisterActivity.this, R.string.RegInfoNotFull);
+                        }else if(SensitiveWordsUtils.contains(name)){
+                            ToastUtils.showShort(RegisterActivity.this, "使用了敏感词汇");
                         } else {
-                            // 发起网络请求进行注册
-                            T.showShort(RegisterActivity.this, tel+pwd+surePwd+name+sex);
-                        }
+                            validator.validate();
+                            register.doRegister(tel, pwd, name, sex);
+
+                      }
                     }
                     break;
 

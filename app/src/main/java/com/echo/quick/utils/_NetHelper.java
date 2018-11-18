@@ -23,19 +23,21 @@ import okhttp3.Response;
 
 public class _NetHelper {
 
-    //改成服务器地址
-    private static String IP = "127.0.0.1";
+//    private static String IP = Config.getNetConfigProperties().getProperty("ip");
+    private static String IP = "120.79.230.71";
+//    private static String IP = "172.16.4.19";
+//    private static String PORT = Config.getNetConfigProperties().getProperty("port");
 
+    private static String PORT = "8080";
 
-    private static String DOMAIN = "http://"+IP+'/';
-
-    public static String POST_URL = DOMAIN+"post";
+    public static String DOMAIN = "http://"+IP+':'+PORT + '/';
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private static final MediaType FORM = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
 
     private static OkHttpClient okHttpClient = new OkHttpClient();
+
 
     static public class PostHelper {
 
@@ -60,13 +62,13 @@ public class _NetHelper {
         public void doPost(String content, String url, Callback callback) {
 
             RequestBody requestBody = RequestBody.create(FORM,content);
+            LogUtils.d(requestBody.toString()+"    "+content);
             Request request;
             request = (builder!=null?builder:new Request.Builder())
                     .url(url)
                     .post(requestBody)
                     .build();
             Call call = okHttpClient.newCall(request);
-            requestBody.toString();
             call.enqueue(callback);
             builder = null;
         }
@@ -131,7 +133,7 @@ public class _NetHelper {
         private Request.Builder builder;
 
         //执行发送PATCH HTTP请求的方法
-        public void doPatch(String accessToken, JSONObject body, String url, Callback callback) {
+        public void doPatch(String accessToken,JSONObject body,String url,Callback callback) {
 
             RequestBody requestBody = RequestBody.create(JSON, body.toJSONString());
             Request request = (builder!=null?builder:new Request.Builder())
@@ -188,7 +190,7 @@ public class _NetHelper {
         }
     }
 
-    //文件上传Helper
+    //上传文件的方法先注释
 //    static public class UploadFileHelper {
 //        private Request.Builder builder;
 //
@@ -231,7 +233,7 @@ public class _NetHelper {
         private Request.Builder builder;
 
         //执行发送PATCH HTTP请求的方法
-        public void doDelete(String accessToken, JSONObject body, String url, Callback callback) {
+        public void doDelete(String accessToken,JSONObject body,String url,Callback callback) {
 
             RequestBody requestBody = null;
             if (body!=null)

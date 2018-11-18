@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.echo.quick.activities">
 
     <!-- 网络权限 -->
@@ -7,24 +8,52 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="org.litepal.LitePalApplication"
+        android:name="com.echo.quick.utils.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.echo.quick.activities.MainActivity">
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity" />
+        <!-- <activity -->
+        <!-- android:name=".Words2Activity" -->
+        <!-- android:label="@string/title_activity_words2" -->
+        <!-- android:theme="@style/AppTheme" /> -->
+        <activity android:name=".WordsActivity" />
+        <activity android:name=".UserMessageActivity" />
+        <activity android:name=".ModifyPasswordActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".StrangeWordsListActivity" />
+        <!--<activity android:name=".ListShowActivity" />-->
+        <activity android:name=".ReadActivity" />
+        <activity android:name=".ReadingAnswerActivity" />
+        <activity android:name=".ReadingTranslateActivity" />
+        <activity android:name=".HomeActivity">
+        </activity>
+        <activity android:name=".ReadingMianActivity" />
+        <activity android:name=".InitPlanActivity" />
+        <!--<activity android:name=".HomeMainActivity" />-->
+        <activity
+            android:name=".RetrievePasswordActivity"
+            android:label="@string/title_activity_retrieve_password"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".InitPlanActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".HomeMainActivity"
+            tools:ignore="DuplicateActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.echo.quick.activities.WordsActivity" />
-        <activity android:name="com.echo.quick.activities.LoginActivity" />
-        <activity android:name="com.echo.quick.activities.RegisterActivity" />
-        <activity android:name="com.echo.quick.activities.UserMsgActivity" />
+        <service
+            android:name="com.echo.quick.service.AudioPlayerService"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedService">
+        </service>
     </application>
 
 </manifest>

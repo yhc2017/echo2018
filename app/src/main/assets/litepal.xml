@@ -28,7 +28,7 @@
         例如：
     	<version value="1" />
     -->
-    <version value="1" />
+    <version value="12" />
 
     <!--
     	Define your models in the list with mapping tag, LitePal will
@@ -45,6 +45,10 @@
     -->
     <list>
         <!--需要做一个离线的单词库-->
+        <!--生词表-->
+        <mapping class="com.echo.quick.pojo.Words_Status" />
+        <!--单词日志表-->
+        <mapping class="com.echo.quick.pojo.Words_Log" />
     </list>
 
     <!--

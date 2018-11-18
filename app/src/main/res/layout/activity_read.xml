@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.echo.quick.activities.ReadActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.echo.quick.activities.ReadActivity"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolvar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_minHeight"
+        android:orientation="horizontal"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/strage_words_back"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_margin="@dimen/content_margin_hieght"
+            android:src="@drawable/ic_back" />
+    </android.support.v7.widget.Toolbar>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_2"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+    </LinearLayout>
+    <!--<com.echo.quick.utils.ToucherActionIcon-->
+        <!--android:id="@+id/action_icon"-->
+        <!--android:layout_width="55dp"-->
+        <!--android:layout_height="55dp"-->
+        <!--android:src="@drawable/ic_english"/>-->
+
+    <ImageView
+    android:id="@+id/action_icon"
+    android:layout_width="55dp"
+    android:layout_height="55dp"
+    android:src="@drawable/ic_tras"/>
+</RelativeLayout>
+

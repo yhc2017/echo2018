@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+        <ImageView
+            android:id="@+id/iv_user_message_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_back" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/tv_user_message_toolbar"
+            style="@style/MyFont.ToolBar"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right">
+            <TextView
+                android:id="@+id/tv_mod_user_ok"
+                android:text="@string/tv_mod_user_ok"
+                android:gravity="right"
+                android:layout_marginRight="20dp"
+                style="@style/MyFont.Home.Content"
+                android:textColor="@color/white"
+                android:layout_width="60dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/user_card_text_mar">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="@dimen/user_card_center_heigh"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <TextView
+                    style="@style/MyFont.Home.Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/tv_user_message_1"
+                    android:textColor="@color/textColorBlack" />
+
+                <TextView
+                    android:id="@+id/tv_id"
+                    style="@style/MyFont.Home.Content"
+                    android:textColor="@color/font_black_4"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/tv_iphone" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="@dimen/user_card_center_heigh"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        style="@style/MyFont.Home.Content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="@string/tv_user_message_2"
+                        android:textColor="@color/textColorBlack" />
+
+                    <EditText
+                        android:singleLine="true"
+                        android:id="@+id/et_name"
+                        android:background="@null"
+                        style="@style/MyFont.Home.Content"
+                        android:textColor="@color/font_black_4"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:gravity="center_vertical|right"
+                        android:layout_height="40dp"
+                        android:textColorHint="@color/font_black_4"
+                        android:hint="@string/tv_user_message_3" />
+
+                </LinearLayout>
+                <View
+                    android:background="@color/divider_2"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_height="1dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+                    <RadioGroup
+                        android:id="@+id/rg_sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <RadioButton
+                            android:textColor="@color/textColorBlack"
+                            android:id="@+id/rb_man"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/tv_user_man" />
+                        <RadioButton
+                            android:textColor="@color/textColorBlack"
+                            android:id="@+id/rb_woman"
+                            android:text="@string/tv_user_women"
+                            android:layout_marginLeft="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tv_sex_rs"
+                        style="@style/MyFont.Home.Content"
+                        android:textColor="@color/font_black_4"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:text="@string/tv_user_sex" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_modify_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    style="@style/MyFont.Home.Content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="@string/tv_mod_user_password"
+                    android:textColor="@color/textColorBlack" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/et_password"
+                    android:src="@drawable/ic_back2"/>
+            </RelativeLayout>
+
+            <Button
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/exitbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/login_button"
+                android:textAllCaps="false"
+                style="@style/MyFont.Button"
+                android:text="@string/bt_user_message"/>
+            <TextView
+                android:visibility="gone"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                style="@style/MyFont.Home.Content"
+                android:textColor="@color/colorAccent"
+                android:text="退 出 登 录"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

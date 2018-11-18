@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/rl_background"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:gravity="center_vertical"
+    android:minHeight="20dp">
+
+    <RelativeLayout
+        android:id="@+id/rl_reading_home"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@drawable/card_bg2">
+
+        <TextView
+            android:id="@+id/tv_reading_title"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            style="@style/MyFont.Home.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="阶段冲刺一" />
+
+        <TextView
+            android:id="@+id/bule_num"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/num_bg_blue"
+            android:padding="5dp"
+            android:text=" 0 "
+            android:textColor="@color/white"
+            android:textSize="12dp" />
+        <TextView
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:textSize="12dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/bule_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 4 "
+            android:textColor="@color/white"
+            android:background="@drawable/num_bg_green"
+            android:id="@+id/textView2" />
+
+    </RelativeLayout>
+</LinearLayout>

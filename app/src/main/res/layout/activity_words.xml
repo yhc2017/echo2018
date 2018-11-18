@@ -1,15 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/AppTheme.AppBarOverlay"
     tools:context="com.echo.quick.activities.WordsActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/quick_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+        <ImageView
+            android:id="@+id/im_quick_back"
+            android:padding="9dp"
+            android:layout_width="@dimen/toolbar_content"
+            android:layout_height="@dimen/toolbar_content"
+            android:layout_margin="@dimen/content_margin_hieght"
+            android:src="@drawable/ic_home" />
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/quick_back"
+            android:text="@string/tv_words_toolbar"
+            style="@style/MyFont.ToolBar"/>
+        <ImageView
+            android:id="@+id/im_ok_play"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_play_no" />
+    </android.support.v7.widget.Toolbar>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_height="370dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/quick_toolbar"
         android:scrollbars="vertical"
-        tools:listitem="@layout/item_words"/>
+        tools:listitem="@layout/item_words" />
+
+    <ProgressBar
+        android:id="@+id/pg_word"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="30dp"
+        android:progressDrawable="@drawable/progressbar_style_word" />
 </RelativeLayout>

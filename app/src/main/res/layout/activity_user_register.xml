@@ -19,13 +19,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/content_margin_hieght"
-            android:text="注册"
-            android:textSize="@dimen/toolbar_content_textsize"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:text= "@string/tv_register"
+            style="@style/MyFont.ToolBar"/>
 
     </android.support.v7.widget.Toolbar>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,8 +45,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="@string/re_iphone_number"
-                android:fontFamily="楷体"
+                android:text="@string/tv_iphone"
                 android:textSize="@dimen/re_title_textsize" />
 
             <EditText
@@ -56,7 +57,7 @@
                 android:hint="@string/iphone_number"
                 android:inputType="phone"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/content_textsize_small" />
+                android:textSize="@dimen/myfont_content_textsize_small" />
 
             <ImageView
                 android:id="@+id/register_tip1"
@@ -75,7 +76,6 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:fontFamily="楷体"
                 android:text="@string/resigter_user_name"
                 android:textSize="@dimen/re_title_textsize" />
 
@@ -87,7 +87,7 @@
                 android:background="@null"
                 android:hint="@string/resigter_user_name_hint"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/content_textsize_small" />
+                android:textSize="@dimen/myfont_content_textsize_small" />
 
         </LinearLayout>
         <LinearLayout
@@ -102,7 +102,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:text="@string/user_card_pwd"
-                android:fontFamily="楷体"
                 android:textSize="@dimen/re_title_textsize" />
 
             <EditText
@@ -115,7 +114,7 @@
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/content_textsize_small" />
+                android:textSize="@dimen/myfont_content_textsize_small" />
 
             <ImageView
                 android:id="@+id/isvisiable"
@@ -136,7 +135,6 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:fontFamily="楷体"
                 android:text="@string/second_password"
                 android:textSize="@dimen/re_title_textsize" />
 
@@ -149,7 +147,7 @@
                 android:hint="@string/second_password"
                 android:inputType="textPassword"
                 android:textColor="@color/colorAccent"
-                android:textSize="@dimen/content_textsize_small" />
+                android:textSize="@dimen/myfont_content_textsize_small" />
 
             <ImageView
                 android:id="@+id/register_tip2"
@@ -159,7 +157,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginTop="1dp"
             android:orientation="horizontal">
@@ -175,132 +173,74 @@
                     android:id="@+id/register_sex_nan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="男" />
+                    android:text="@string/tv_user_man" />
 
                 <RadioButton
                     android:id="@+id/register_sex_nv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="女" />
+                    android:text="@string/tv_user_women" />
+
+                <TextView
+                    android:id="@+id/register_sex_name"
+                    android:paddingLeft="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
             </RadioGroup>
-
-
-
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/content_margin_hieght"
-            android:text="@string/re_toolbar_real_name"
-            android:textColor="@color/colorPrimary"/>
-
-        <LinearLayout
+    </LinearLayout>
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-               android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/re_real_name"
-                    android:textSize="@dimen/re_title_textsize" />
-
-                <EditText
-                    android:id="@+id/register_realname"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/re_margin"
-                    android:background="@null"
-                    android:hint="@string/re_real_name_tip"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/content_textsize_small" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/re_real_idcard"
-                    android:textSize="@dimen/re_title_textsize" />
-
-                <EditText
-                    android:id="@+id/register_idcard"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/re_margin"
-                    android:background="@null"
-                    android:hint="@string/re_real_idcard_tip"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/content_textsize_small" />
-            </LinearLayout>
+            android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/register_next_btn"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/login_button"
-                android:text="@string/register"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/tip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="170dp"
-                android:text="---  注册  ---"
-                android:textAlignment="center" />
+                android:text= "@string/bt_register"
+                style="@style/MyFont.Button" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="注册代表你同意"
-                    android:textSize="10sp" />
+                    android:textSize="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="最后一哩服务"
+                    android:text="quick服务"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="10sp" />
+                    android:textSize="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="和"
-                    android:textSize="10sp" />
+                    android:textSize="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="隐私条款"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="10sp" />
+                    android:textSize="10dp" />
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
