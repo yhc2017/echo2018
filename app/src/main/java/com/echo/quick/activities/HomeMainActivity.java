@@ -113,6 +113,9 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         setEvent();
         setdate();
 
+        /**
+         * 这是起始动画的部分，判断是不是第一次安装，是的话就演示引导页，否则不出现
+         */
         sharedPreferences = getSharedPreferences("is_first_in_data",MODE_PRIVATE);
         boolean isFirstIn = sharedPreferences.getBoolean("isFirstIn",true);
         if (isFirstIn) {
@@ -273,7 +276,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
                             Toast.makeText(HomeMainActivity.this, "请注册登录，以便于我们更好的为您服务（暂不支持未登录操作）", Toast.LENGTH_SHORT).show();
                         }else {
                             String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
-                            ToastUtils.showLong(HomeMainActivity.this, planType);
+//                            ToastUtils.showLong(HomeMainActivity.this, planType);
                             if(planType.equals("复习优先")) {
                                 getWordStatus(false);
                             } else {
@@ -343,10 +346,10 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             public void run() {
                 if(PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"").equals("true")){
                     if(result){
-                        ToastUtils.showLong(HomeMainActivity.this, "计划制定完成");
+                        ToastUtils.showShort(HomeMainActivity.this, "计划制定完成");
                         setdate();
                     }else {
-                        ToastUtils.showLong(HomeMainActivity.this, "计划制定出现小问题，请留意网络状态");
+                        ToastUtils.showShort(HomeMainActivity.this, "计划制定出现小问题，请留意网络状态");
                     }
                 }
             }
@@ -369,24 +372,30 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
     }
 
     /**
-     * Method name : setdate
-     * Specific description :塞数据
-     *@return HashMap 希望不是个错误
+     * Method name : setdate（）
+     * Specific description :塞数据 传输到服务器
+     *@return HashMap
      */
     @SuppressLint("SetTextI18n")
     @Override
     public HashMap<String, String> setdate(){
-
         //需要上传到服务器的数据
         final HashMap<String, String> map = new HashMap<>();
-
+        //这里也需要存到数据库
         IWordsStatusDao statusDao = new WordsStatusImpl();
+        //为什么这里需要初始化的这些数据，其实应该是用户自己进来注册账号后，应该有就要有，然后直接的使用就可以了
         int allWords = 3500;
         String topicId = "12";
-        String plan = SPUtils.get(App.getContext(), "box", "四级必备词汇").toString();
-        String time = SPUtils.get(App.getContext(), "plan","2019-06-25").toString();
-        String way = SPUtils.get(App.getContext(), "planType","学习优先").toString();
+        //这里从这个轻量级数据库中获取用户的当前计划信息
+        String plan = SPUtils.get(App.getContext(), "box", "").toString();
+        String time = SPUtils.get(App.getContext(), "plan","").toString();
+        String way = SPUtils.get(App.getContext(), "planType","").toString();
+        System.out.println("HomeMainAcitivity类=======计划词库-时间-模式："+plan+"-"+time+"-"+way);
+        //判断用户是否登录，如果登录就设置页面的信息
+        Boolean  b = (Boolean)(PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"").equals("")) ;
+        System.out.println("HomeMainAcitivity类======="+b);
         try{
+            //判断用户是否登录，如果登录就设置页面的信息
             if((PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"")).equals("true")){
                 //设置单词词库
                 mtvUser_plan.setText(plan);
@@ -401,6 +410,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
             //设置单词练习的计划，复习优先或学习优先
             mtvPlanWay.setText(way);
+            //获取词库的信息
             Object o = SPUtils.get(App.getContext(), "wordsBox", "");
             assert o != null;
             JSONArray jsonArray = JSONArray.parseArray(o.toString());
@@ -418,7 +428,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             if((PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"")).equals("false")){
                 mtvUser_plan.setText("");
             }else{
-                mtvUser_plan.setText("四级");
+                mtvUser_plan.setText(plan);
             }
         }
 
@@ -466,7 +476,10 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
         map.put("userId", app.getUserId());
         map.put("topicId", topicId);
+        //结束时间这里为什么写死？
         map.put("endTime", "2018-12-25");
+
+        //判断应该学习模式的状态码应该是哪个
         if(mtvPlanWay.getText().toString().equals("复习优先")){
             map.put("model", "211");
         }else {
@@ -475,6 +488,12 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         return map;
     }
 
+    /**
+     * Class name: ActivityReceiver
+     * Specific description :用于处理背完单词以后的界面刷新
+     * 创建人: HUAHUA
+     * @Time :1.0 , 2018/11/26 20:19
+     */
     public class ActivityReceiver extends BroadcastReceiver {
 
         @Override
@@ -491,8 +510,13 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
                 onlineWordPresenter.postToGetTopicIdWords(map2, false);
             }
         }
-    }
+      }
 
+
+    /**
+     * Method name : getWordStatus
+     * Specific description :用于判断单词的状态
+     */
     public void getWordStatus(Boolean learn){
 
         IWordsStatusDao statusDao = new WordsStatusImpl();
@@ -513,6 +537,10 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * Method name : popWindow
+     * Specific description :开始背单词的按钮
+     */
     public void popWindow(final Context context, final Boolean learn){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("获取单词进行练习");
@@ -591,6 +619,10 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         builder.show();
     }
 
+    /**
+     * Method name : toUser（）
+     * Specific description :用于判断用户是否登录，如果有登录就跳转到用户的信息界面
+     */
     public void toUser(Context context){
 
         if(app.getUserId().equals("111") || app.getUserId() == null) {
@@ -601,10 +633,15 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    /**
+     * Method name : onDestroy（）
+     * Specific description :退出这个页面的时候，所要做的一些操作
+     */
     protected void onDestroy(){
         super.onDestroy();
         //注销广播
         unregisterReceiver(activityReceiver);
+        //保存用户界面的信息
         SPUtils.put(App.getContext(), "userId", app.getUserId());
         SPUtils.put(App.getContext(), "nickname", app.getNickName());
         SPUtils.put(App.getContext(), "sex", app.getSex());

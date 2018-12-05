@@ -1,7 +1,7 @@
 package com.echo.quick.common;
 
 /**
- * Created by lemon on 20187/11/3.
+ * Created by lemon on 2018/11/3.
  * preference 存储常量池
  */
 

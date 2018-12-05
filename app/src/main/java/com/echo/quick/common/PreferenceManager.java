@@ -7,6 +7,12 @@ import android.content.SharedPreferences;
 import com.echo.quick.utils.App;
 
 
+/**
+ * Class name: PreferenceManager
+ * Specific description :轻量级的数据存储，采用key-value的形式存储，这是工具类
+ * 创建人: HUAHUA
+ * @Time :1.0 , 2018/11/26 19:43
+ */
 public class PreferenceManager {
     private static SharedPreferences.Editor editor;
     private static SharedPreferences mSharedPreferences;
@@ -18,13 +24,16 @@ public class PreferenceManager {
         editor = mSharedPreferences.edit();
     }
     private static PreferenceManager instance;
-    
+
+    /**
+     * Method name : getInstance()
+     * Specific description :获取实例
+     */
     public synchronized static PreferenceManager getInstance(){
         if(instance == null){
             instance = new PreferenceManager();
         }
         return instance;
-        
     }
 
     /**
@@ -76,7 +85,6 @@ public class PreferenceManager {
 
     /**
      * 移除某个key值已经对应的值
-     *
      * @param key
      */
     public void remove(String key) {
@@ -94,7 +102,6 @@ public class PreferenceManager {
 
     /**
      * 查询某个key是否存在
-     *
      * @param key
      * @return
      */

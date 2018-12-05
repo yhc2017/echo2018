@@ -82,8 +82,8 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         app = (App)getApplicationContext();
         initViews();
         setEvents();
-        ed_loginID.setText((PreferenceManager.getInstance().get(PreferenceConstants.USERPHONE, "")).toString());
-        ed_loginPwd.setText((PreferenceManager.getInstance().get(PreferenceConstants.USERPASSWORD, "")).toString());
+//        ed_loginID.setText((PreferenceManager.getInstance().get(PreferenceConstants.USERPHONE, "")).toString());
+//        ed_loginPwd.setText((PreferenceManager.getInstance().get(PreferenceConstants.USERPASSWORD, "")).toString());
 
         validator = new Validator(this);
         validator.setValidationListener(this);
@@ -93,6 +93,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
         if(!app.getUserId().equals("111")){
             ed_loginID.setText(app.getUserId());
+            LogUtils.d("LoginActivity--登录的活动类："+"用户的电话="+app.getUserId()+"词库ID="+app.getTopicId());
         }
         
     }
@@ -159,8 +160,10 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
             public void run() {
                 try {
                     loginPresenter.doLogin(loginTel, loginPwd);
+                    LogUtils.d("onValidationSucceeded（）-验证成功后调用登录的方法");
                     //获取服务器的库
                     onlineWordPresenter.GetAllWordTopicInfo();
+                    LogUtils.d("onValidationSucceeded（）-获取服务器的词库的单词信息");
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -199,8 +202,8 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                 if (result) {
                     switch (code) {
                         case "200":
-//                    loginPresenter.detectionAndRestoration(app.getUserId());
-                            ToastUtils.showLong(LoginActivity.this, app.getTopicId() + app.getUserId());
+                    loginPresenter.detectionAndRestoration(app.getUserId());
+                            LogUtils.d(app.getTopicId() + app.getUserId());
                             IWordsLogDao iWordsLogDao = new WordsLogImpl();
                             IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
                             if (iWordsLogDao.detectionEmpty() && iWordsStatusDao.detectionEmpty()) {
@@ -217,7 +220,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                             break;
                         //成功获取
                         case "500":
-                            ToastUtils.showLong(LoginActivity.this, "登录成功");
+                            LogUtils.d("登录成功");
                             Intent intent = new Intent();
                             intent.setAction("com.zjx.action.UPDATE_ACTION");
                             sendBroadcast(intent);
@@ -225,15 +228,15 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                             break;
 
                         case "199":
-                            ToastUtils.showLong(LoginActivity.this, "该用户已经登录。");
+                            ToastUtils.showShort(LoginActivity.this, "该用户已经登录。");
                             break;
 
                         default:
-                            ToastUtils.showLong(LoginActivity.this, "error，请检查账号或密码是否正确");
+                            ToastUtils.showShort(LoginActivity.this, "error，请检查账号或密码是否正确");
                             break;
                     }
                 }else {
-                    ToastUtils.showLong(LoginActivity.this, "登录失败");
+                    ToastUtils.showShort(LoginActivity.this, "登录失败");
                 }
             }
         });
