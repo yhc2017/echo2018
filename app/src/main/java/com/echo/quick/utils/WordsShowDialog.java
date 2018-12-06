@@ -36,9 +36,9 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
     LinearLayout L_1,L_2;
 
     private TextView tv_item,tv_symbol,tv_explain,tv_eg1,tv_eg1_chinese,tv_eg2,tv_eg2_chinese,tv_add_new,tv_del_new;
-
+    private LinearLayout l1;
     private ImageView iv_audio;
-
+    private View v1;
     WordsShowContract.IWordsShowPresenter wordsShowPresenter;
 
     private MediaPlayer mediaPlayer;
@@ -89,18 +89,32 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
         L_1 = (LinearLayout) findViewById(R.id.L_1);
         L_2 = (LinearLayout) findViewById(R.id.L_2);
         iv_audio = (ImageView) findViewById(R.id.iv_audio);
+        l1=(LinearLayout)findViewById(R.id.l1);
+        v1=(View)findViewById(R.id.v1);
     }
     /**
      * 初始化界面控件的显示数据
      */
     private void refreshView() {
+        if(words.getEg1().equals("")){
+            tv_eg1.setText("此单词暂无例句！");
+            tv_eg1_chinese.setText("");
+            v1.setVisibility(View.GONE);
+            l1.setVisibility(View.GONE);
+        }
+        if(words.getEg2().equals("")){
+            v1.setVisibility(View.GONE);
+            l1.setVisibility(View.GONE);
+        } else{
+            tv_eg1.setText(words.getEg1());
+            tv_eg1_chinese.setText(words.getEg1Chinese());
+            tv_eg2.setText(words.getEg2());
+            tv_eg2_chinese.setText(words.getEg2Chinese());
+        }
         tv_item.setText(words.getWord());
         tv_symbol.setText(words.getSymbol());
         tv_explain.setText(words.getExplain());
-        tv_eg1.setText(words.getEg1());
-        tv_eg1_chinese.setText(words.getEg1Chinese());
-        tv_eg2.setText(words.getEg2());
-        tv_eg2_chinese.setText(words.getEg2Chinese());
+
     }
 
     /**

@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 public class App extends Application{
-
+    public static App app;
     public List<Words> list;
     public List<Words_Status> statusList;
     public List<String> pagerList;//真题类型列表
@@ -49,6 +49,7 @@ public class App extends Application{
 
     public void onCreate() {
         super.onCreate();
+        app = (App) getApplicationContext();
         list = new ArrayList<>();
         statusList = new ArrayList<>();
         // 初始化LitePal数据库

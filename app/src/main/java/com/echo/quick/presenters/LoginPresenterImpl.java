@@ -1,9 +1,12 @@
 package com.echo.quick.presenters;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.echo.quick.common.PreferenceConstants;
+import com.echo.quick.common.PreferenceManager;
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.WordsShowContract;
@@ -62,7 +65,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
     }
 
     @Override
-    public void doLogin(String name, final String passwd) {
+    public void doLogin(final String name, final String passwd) {
 
 
         ILoginDao loginDao = new LoginImpl();
@@ -78,6 +81,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                 //code指的是http状态码，可以判断操作的状态；
                 int code  = response.code();
                 String res = response.body().string();
+                Log.e("logindata",res);
                 JSONObject object = JSON.parseObject(res);
                 String prepare4 = object.getString("prepare4");
                 switch (prepare4) {
@@ -92,8 +96,14 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                         app.setNickName(nickname);
                         app.setSex(sex);
                         iLoginView.onLoginResult(true, prepare4);
+                        PreferenceManager.getInstance().put(PreferenceConstants.USERPHONE,name);
+                        PreferenceManager.getInstance().put(PreferenceConstants.USERPASSWORD,passwd);
+                        PreferenceManager.getInstance().put(PreferenceConstants.USERLOGIN,"true");
                         break;
                     case "199":
+                        iLoginView.onLoginResult(true, prepare4);
+                        break;
+                    case "202":
                         iLoginView.onLoginResult(true, prepare4);
                         break;
                     default:

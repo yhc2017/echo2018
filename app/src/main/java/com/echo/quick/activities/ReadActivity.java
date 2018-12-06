@@ -44,6 +44,7 @@ public class ReadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
+        ActivityManager.getInstance().addActivity(this);
         initView();
         initball();
         viewPager = (ViewPager)findViewById(R.id.vp_coupon);

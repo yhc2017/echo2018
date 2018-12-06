@@ -9,5 +9,6 @@ public class ReadingAnswerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_answer);
+        ActivityManager.getInstance().addActivity(this);
     }
 }

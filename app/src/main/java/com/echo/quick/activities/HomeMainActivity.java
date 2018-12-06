@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
+import com.echo.quick.common.PreferenceConstants;
+import com.echo.quick.common.PreferenceManager;
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.OnlineWordContract;
@@ -86,7 +88,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        ActivityManager.getInstance().addActivity(this);
         app = (App)getApplicationContext();
 
         // 创建BroadcastReceiver
@@ -252,11 +254,17 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
                     toUser(HomeMainActivity.this);
                     break;
                 case R.id.tv_setting_plan:
-                    myPlanDialog = new MyPlanDialog(HomeMainActivity.this);
-                    myPlanDialog.show();
+                    if(PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"").equals("false")){
+                        Toast.makeText(HomeMainActivity.this, "请注册登录，以便于我们更好的为您服务（暂不支持未登录操作）", Toast.LENGTH_SHORT).show();
+                    }else{
+                        myPlanDialog = new MyPlanDialog(HomeMainActivity.this);
+                        myPlanDialog.show();
+                    }
+
                     break;
                 case R.id.ll_unfamiliar_word_enter:
-
+                    intent = new Intent(HomeMainActivity.this, StrangeWordsListActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.bt_start_study:
                     //开始背单词
@@ -323,6 +331,8 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             mtvUserName.setText(app.getNickName());
         }else {
             mtvUserName.setText("未登录");
+            mtvUser_plan.setText("");
+            mtvUserPlanTime.setText("");
         }
     }
 
@@ -331,11 +341,13 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(result){
-                    ToastUtils.showLong(HomeMainActivity.this, "计划制定完成");
-                    setdate();
-                }else {
-                    ToastUtils.showLong(HomeMainActivity.this, "计划制定出现小问题，请留意网络状态");
+                if(PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"").equals("true")){
+                    if(result){
+                        ToastUtils.showLong(HomeMainActivity.this, "计划制定完成");
+                        setdate();
+                    }else {
+                        ToastUtils.showLong(HomeMainActivity.this, "计划制定出现小问题，请留意网络状态");
+                    }
                 }
             }
         });
@@ -371,14 +383,22 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         IWordsStatusDao statusDao = new WordsStatusImpl();
         int allWords = 3500;
         String topicId = "12";
-        String plan = SPUtils.get(App.getContext(), "box", "未选择词库").toString();
+        String plan = SPUtils.get(App.getContext(), "box", "四级必备词汇").toString();
         String time = SPUtils.get(App.getContext(), "plan","2019-06-25").toString();
         String way = SPUtils.get(App.getContext(), "planType","学习优先").toString();
         try{
-            //设置单词词库
-            mtvUser_plan.setText(plan);
-            //设置单词完成计划时间
-            mtvUserPlanTime.setText("计划完成时间："+time+"-12");
+            if((PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"")).equals("true")){
+                //设置单词词库
+                mtvUser_plan.setText(plan);
+                //设置单词完成计划时间
+                mtvUserPlanTime.setText("计划完成时间："+time+"-12");
+            }else{
+                //设置单词词库
+                mtvUser_plan.setText("");
+                //设置单词完成计划时间
+                mtvUserPlanTime.setText("");
+            }
+
             //设置单词练习的计划，复习优先或学习优先
             mtvPlanWay.setText(way);
             Object o = SPUtils.get(App.getContext(), "wordsBox", "");
@@ -395,7 +415,11 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
         }catch (Exception e){
             e.printStackTrace();
-            mtvUser_plan.setText("四级");
+            if((PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"")).equals("false")){
+                mtvUser_plan.setText("");
+            }else{
+                mtvUser_plan.setText("四级");
+            }
         }
 
         //距离结束天数
@@ -418,14 +442,23 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         String today = SPUtils.get(App.getContext(), "dateNum", 0).toString();
         //        tv_word_finish.setText(overWords+"");
 //        tv_word_over.setText(statusDao.selectCountByStatusAndTopicId("review", app.getTopicId())+"");
-
+        int itoday=Integer.parseInt(today);
+        if(itoday>=todayOverWords){
+            mtvTodayWord.setText(todayOverWords+"/"+ today);
+        }else{
+            mtvTodayWord.setText(todayOverWords+"/"+ todayOverWords);
+        }
         //词库单词数量
         mtvAllWords.setText(overWords+"/"+allWords);
-        mtvTodayWord.setText(todayOverWords+"/"+ today);
+//        mtvTodayWord.setText(todayOverWords+"/"+ today);
         //进度条添加数据
         mpgAllWord.setMax(allWords);
         mpgAllWord.setProgress(overWords);
-        mpgWord.setMax(Integer.parseInt(today));
+        if(todayOverWords>=Integer.parseInt(today)){
+            mpgWord.setMax(todayOverWords);
+        }else{
+            mpgWord.setMax(Integer.parseInt(today));
+        }
         mpgWord.setProgress(todayOverWords);
         //进度数
 //        my_word_plan_progressbar.setMax(allWords);

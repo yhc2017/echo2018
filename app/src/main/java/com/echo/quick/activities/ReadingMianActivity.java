@@ -34,6 +34,7 @@ public class ReadingMianActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_home);
+        ActivityManager.getInstance().addActivity(this);
         app = (App)getApplication();
         readMainPresenter = new ReadMainPresenterImpl();
         listView = (RecyclerView)findViewById(R.id.recycler_view);

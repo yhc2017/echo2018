@@ -37,6 +37,7 @@ public class InitPlanActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init_plan);
+        ActivityManager.getInstance().addActivity(this);
         homePresenter = new HomePresenterImpl();
         initView();
         initData();
@@ -110,7 +111,7 @@ public class InitPlanActivity extends AppCompatActivity implements View.OnClickL
                 Intent intent = new Intent();
                 intent.setAction("com.zjx.action.UPDATE_ACTION");
                 sendBroadcast(intent);
-                startActivity(new Intent(InitPlanActivity.this, HomeActivity.class));
+                startActivity(new Intent(InitPlanActivity.this, HomeMainActivity.class));
                 finish();
                 break;
 

@@ -1,6 +1,7 @@
 package com.echo.quick.presenters;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -77,6 +78,8 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
     public OnlineWordPresenterImpl(WordsContract.IWordsView iWordsView){
         this.iWordsView = iWordsView;
     }
+
+
 
     @Override
     public List<Words> getOnlineWord(HashMap<String, String> map) {
@@ -368,6 +371,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String res = response.body().string();
+                Log.e("selectAllWord",res.toString());
                 //保存到shareP。。。中
                 SPUtils.put(App.getContext(), "wordsBox", res);
             }
@@ -407,6 +411,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 try {
                     SPUtils.put(App.getContext(),"UserAllWordInfo", response.body().string());
+//                    Log.e("UserAllWordInfo",response.body().string().toString());
                     if(login)
                         iLoginView.overWordInfo();
                     else

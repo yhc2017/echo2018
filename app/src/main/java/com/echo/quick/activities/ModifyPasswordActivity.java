@@ -63,6 +63,7 @@ public class ModifyPasswordActivity extends AppCompatActivity implements Validat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_message_modify);
+        ActivityManager.getInstance().addActivity(this);
         app = (App)getApplicationContext();
         validator = new Validator(this);
         validator.setValidationListener(this);

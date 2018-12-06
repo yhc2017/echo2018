@@ -20,6 +20,7 @@ public class Words_Log extends LitePalSupport{
 
 
     private String wordId;
+
     private String word;
     private int leftNum;
     private int rightNum;
@@ -37,4 +38,51 @@ public class Words_Log extends LitePalSupport{
     }
 
 
+    public String getWordId() {
+        return wordId;
+    }
+
+    public void setWordId(String wordId) {
+        this.wordId = wordId;
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public int getLeftNum() {
+        return leftNum;
+    }
+
+    public void setLeftNum(int leftNum) {
+        this.leftNum = leftNum;
+    }
+
+    public int getRightNum() {
+        return rightNum;
+    }
+
+    public void setRightNum(int rightNum) {
+        this.rightNum = rightNum;
+    }
+
+    public String getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(String topicId) {
+        this.topicId = topicId;
+    }
+
+    public String getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(String recordTime) {
+        this.recordTime = recordTime;
+    }
 }
