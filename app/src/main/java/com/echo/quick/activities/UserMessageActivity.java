@@ -25,6 +25,7 @@ import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.presenters.UserMessagePresenterImpl;
 import com.echo.quick.utils.App;
+import com.echo.quick.utils.LogUtils;
 import com.echo.quick.utils.SPUtils;
 import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -180,13 +181,18 @@ public class UserMessageActivity extends AppCompatActivity implements UserMessag
                     builder.setNeutralButton("返回", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ToastUtils.showLong(UserMessageActivity.this, "点击返回按钮");
+                           LogUtils.d("点击返回按钮");
                         }
                     });
+
                     builder.setPositiveButton("确认退出", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ToastUtils.showLong(UserMessageActivity.this, "清除数据");
+                            LogUtils.d( "清除数据");
+                            PreferenceManager.getInstance().put(PreferenceConstants.USERLOGIN,"false");
+                            String a = (String) PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"");
+                            System.out.printf("UserMessageAcitity类："+a);
+
                             OnlineWordContract.OnlineWordPresenter online = new OnlineWordPresenterImpl();
                             //发送数据
                             online.postOnlineWordsLog();
@@ -195,7 +201,7 @@ public class UserMessageActivity extends AppCompatActivity implements UserMessag
                             LitePal.deleteAll(Words_Log.class);
                             app.setUserId("111");
                             app.setNickName("请登录");
-                            PreferenceManager.getInstance().put(PreferenceConstants.USERLOGIN,"false");
+
                             startActivity(new Intent(UserMessageActivity.this, LoginActivity.class));
                             finish();
                         }

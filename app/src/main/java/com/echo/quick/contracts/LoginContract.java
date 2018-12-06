@@ -26,9 +26,9 @@ public interface LoginContract {
         void clear();
         //登录
         void doLogin(String name, String passwd);
-
+        //手机短信验证登录
         void doLoginForTel(String tel);
-        //
+        //修复和检测
         void detectionAndRestoration(String userId);
         //恢复数据
         void allWordInfo(Boolean login) throws JSONException;

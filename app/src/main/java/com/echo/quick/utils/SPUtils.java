@@ -14,7 +14,6 @@ import java.util.Map;
  * 创建时间：2018/7/18 15:10
  * 类描述：SharedPreferences封装类SPUtils
  * 对外公布出put，get，remove，clear等等方法
- * 
  * 修改人：
  * 修改时间：
  * 修改内容：

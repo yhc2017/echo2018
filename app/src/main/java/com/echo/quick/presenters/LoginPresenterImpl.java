@@ -64,9 +64,12 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
         iLoginView.onClearText();
     }
 
+    /**
+     * Method name : doLogin
+     * Specific description :登录
+     */
     @Override
     public void doLogin(final String name, final String passwd) {
-
 
         ILoginDao loginDao = new LoginImpl();
         loginDao.doLoginPost(name, passwd,  new Callback() {
@@ -84,21 +87,34 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                 Log.e("logindata",res);
                 JSONObject object = JSON.parseObject(res);
                 String prepare4 = object.getString("prepare4");
+                System.out.println("HomeMainAcitivity类======="+name);
+                System.out.println("HomeMainAcitivity类======="+name);
+                System.out.println("HomeMainAcitivity类======="+name);
+                System.out.println("HomeMainAcitivity类======="+name);
+                System.out.println("HomeMainAcitivity类======="+name);
+                System.out.println("HomeMainAcitivity类======="+name);
+
+
+
+                PreferenceManager.getInstance().put(PreferenceConstants.USERPHONE,name);
+                PreferenceManager.getInstance().put(PreferenceConstants.USERPASSWORD,passwd);
+                PreferenceManager.getInstance().put(PreferenceConstants.USERLOGIN,"true");
+
                 switch (prepare4) {
                     case "200":
                         String userId = object.getString("userId");
                         String nickname = object.getString("nickname");
                         String sex = object.getString("sex");
+
                         SPUtils.put(App.getContext(), "userId", userId);
                         SPUtils.put(App.getContext(), "nickname", nickname);
                         SPUtils.put(App.getContext(), "sex", sex);
+
                         app.setUserId(userId);
                         app.setNickName(nickname);
                         app.setSex(sex);
+
                         iLoginView.onLoginResult(true, prepare4);
-                        PreferenceManager.getInstance().put(PreferenceConstants.USERPHONE,name);
-                        PreferenceManager.getInstance().put(PreferenceConstants.USERPASSWORD,passwd);
-                        PreferenceManager.getInstance().put(PreferenceConstants.USERLOGIN,"true");
                         break;
                     case "199":
                         iLoginView.onLoginResult(true, prepare4);
