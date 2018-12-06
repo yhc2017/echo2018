@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 项目名称：LastOne
- * 类描述：用户信息库
+ * 类描述：用户pojo
  * 创建人：zhou-jx
  * 创建时间：2018/7/7 9:49
  * 修改人：zhou-jx
