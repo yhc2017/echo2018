@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.echo.quick.common.Constants;
 import com.echo.quick.common.PreferenceConstants;
 import com.echo.quick.common.PreferenceManager;
 import com.echo.quick.contracts.HomeContract;
@@ -52,6 +55,8 @@ import zhy.com.highlight.position.OnTopPosCallback;
 import zhy.com.highlight.shape.CircleLightShape;
 import zhy.com.highlight.shape.RectLightShape;
 
+import static com.echo.quick.common.PreferenceConstants.USERLOGIN;
+
 /**
  * Class name: HomeMainActivity
  * Specific description :新首页界面
@@ -61,8 +66,8 @@ import zhy.com.highlight.shape.RectLightShape;
  * @Time :
  * @since ：[quick|home]
  */
-
 public class HomeMainActivity extends AppCompatActivity implements View.OnClickListener,HomeContract.IHomeView{
+    private static final String TAG = HomeMainActivity.class.getName();
     private HighLight mHightLight;
     SharedPreferences sharedPreferences;
     private ImageView mimUserSetting,mimTor;
@@ -72,7 +77,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
     private LinearLayout mllUnfamiliarWordEnter;
     private Button mbtStartStudy;
     private ProgressBar mpgAllWord,mpgWord;
-
+    OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(HomeMainActivity.this);
     private App app;
 
     HomeContract.IHomePresenter homePresenter;
@@ -111,7 +116,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         setinitView();
         initData();
         setEvent();
-        setdate();
+        setData();
 
         /**
          * 这是起始动画的部分，判断是不是第一次安装，是的话就演示引导页，否则不出现
@@ -141,7 +146,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
                 mimTor.setImageResource(R.drawable.ic_tor_boy);
             }
             updateUserName();
-            setdate();
+            setData();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -257,18 +262,19 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
                     toUser(HomeMainActivity.this);
                     break;
                 case R.id.tv_setting_plan:
-                    if(PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"").equals("false")){
+                    if(PreferenceManager.getInstance().get(USERLOGIN,"").equals("false")){
                         Toast.makeText(HomeMainActivity.this, "请注册登录，以便于我们更好的为您服务（暂不支持未登录操作）", Toast.LENGTH_SHORT).show();
                     }else{
                         myPlanDialog = new MyPlanDialog(HomeMainActivity.this);
                         myPlanDialog.show();
                     }
-
                     break;
+
                 case R.id.ll_unfamiliar_word_enter:
                     intent = new Intent(HomeMainActivity.this, StrangeWordsListActivity.class);
                     startActivity(intent);
                     break;
+
                 case R.id.bt_start_study:
                     //开始背单词
                     if(NetUtils.isConnected(HomeMainActivity.this)){
@@ -315,16 +321,14 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void updatePlan() {
-//刷新界面,从这个方法获取HashMap貌似可以，但不知会不会是个错误
-        HashMap<String, String> map = setdate();
-        OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(HomeMainActivity.this);
-        onlineWordPresenter.postToAddWordPlan(map);
+        //刷新界面,从这个方法获取HashMap貌似可以，但不知会不会是个错误
+        onlineWordPresenter.postToAddWordPlan(setData());
         IWordsStatusDao wordsStatusDao = new WordsStatusImpl();
         if(wordsStatusDao.selectCountByStatusAndTopicId("review", app.getTopicId()) == 0) {
-            HashMap<String, String> map2 = new HashMap<>();
-            map2.put("userId", app.getUserId());
-            map2.put("topicId", app.getTopicId());
-            onlineWordPresenter.postToGetTopicIdWords(map2, false);
+            HashMap<String, String> map = new HashMap<>();
+            map.put("userId", app.getUserId());
+            map.put("topicId", app.getTopicId());
+            onlineWordPresenter.postToGetTopicIdWords(map, false);
         }
     }
 
@@ -344,10 +348,10 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"").equals("true")){
+                if(PreferenceManager.getInstance().get(USERLOGIN,"").equals("true")){
                     if(result){
                         ToastUtils.showShort(HomeMainActivity.this, "计划制定完成");
-                        setdate();
+                        setData();
                     }else {
                         ToastUtils.showShort(HomeMainActivity.this, "计划制定出现小问题，请留意网络状态");
                     }
@@ -371,61 +375,65 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    /**
-     * Method name : setdate（）
-     * Specific description :塞数据 传输到服务器
-     *@return HashMap
-     */
+
     @SuppressLint("SetTextI18n")
     @Override
-    public HashMap<String, String> setdate(){
+    public HashMap<String, String> setData(){
         //需要上传到服务器的数据
         final HashMap<String, String> map = new HashMap<>();
         //这里也需要存到数据库
         IWordsStatusDao statusDao = new WordsStatusImpl();
-        //为什么这里需要初始化的这些数据，其实应该是用户自己进来注册账号后，应该有就要有，然后直接的使用就可以了
-        int allWords = 3500;
+        //todo 为什么这里需要初始化的这些数据，其实应该是用户自己进来注册账号后，应该有就要有，然后直接的使用就可以了 HUAHUA TanzJ 2018-12-06
+        int allWordsCount = 3500;
         String topicId = "12";
-        //这里从这个轻量级数据库中获取用户的当前计划信息
-        String plan = SPUtils.get(App.getContext(), "box", "").toString();
-        String time = SPUtils.get(App.getContext(), "plan","").toString();
-        String way = SPUtils.get(App.getContext(), "planType","").toString();
-        System.out.println("HomeMainAcitivity类=======计划词库-时间-模式："+plan+"-"+time+"-"+way);
+
+        //从这个轻量级数据库中获取用户的当前计划信息
+        String plan = SPUtils.get(App.getContext(), PreferenceConstants.CURRENT_PLAN_LEXICON, "").toString();
+        String time = SPUtils.get(App.getContext(), PreferenceConstants.PLAN_TIME,"").toString();
+        String planType = SPUtils.get(App.getContext(), PreferenceConstants.PLAN_TYPE,"").toString();
+
+        Log.d(TAG, "HomeMainAcitivity->计划词库-时间-模式-> "+plan+"-"+time+"-"+planType);
         //判断用户是否登录，如果登录就设置页面的信息
-        Boolean  b = (Boolean)(PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"").equals("")) ;
-        System.out.println("HomeMainAcitivity类======="+b);
+        Boolean isLogin = PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"").equals("true") ;
+        Log.d(TAG, "setData: isLogin:"+isLogin);
+
         try{
             //判断用户是否登录，如果登录就设置页面的信息
-            if((PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"")).equals("true")){
+            if(isLogin){
                 //设置单词词库
                 mtvUser_plan.setText(plan);
                 //设置单词完成计划时间
                 mtvUserPlanTime.setText("计划完成时间："+time+"-12");
             }else{
-                //设置单词词库
+                //将词库和计划时间设置为空
                 mtvUser_plan.setText("");
-                //设置单词完成计划时间
                 mtvUserPlanTime.setText("");
             }
 
             //设置单词练习的计划，复习优先或学习优先
-            mtvPlanWay.setText(way);
+            mtvPlanWay.setText(planType);
             //获取词库的信息
-            Object o = SPUtils.get(App.getContext(), "wordsBox", "");
-            assert o != null;
-            JSONArray jsonArray = JSONArray.parseArray(o.toString());
-            int i = Integer.valueOf(SPUtils.get(App.getContext(), "boxPosition", "1").toString());
-            com.alibaba.fastjson.JSONObject object = jsonArray.getJSONObject(i);
-            allWords = Integer.valueOf(object.getString("wordAllCount"));
-            topicId = object.getString("topicId");
+            Object lexicon = SPUtils.get(App.getContext(), PreferenceConstants.LEXICON, "");
+            assert lexicon != null;
+            //将词库转化为Json数组
+            JSONArray jsonArray = JSONArray.parseArray(lexicon.toString());
+
+            int boxPosition = Integer.valueOf(SPUtils.get(App.getContext(), PreferenceConstants.LEXICON_POSITION, "1").toString());
+
+            JSONObject jsonObject = jsonArray.getJSONObject(boxPosition);
+            allWordsCount = Integer.valueOf(jsonObject.getString("wordAllCount"));
+            topicId = jsonObject.getString("topicId");
             app.setTopicId(topicId);
+
+            Log.d(TAG, "setData: wordsBox:"+lexicon+" boxPosition:"+boxPosition+" wordAllCount"+allWordsCount+" topicId:"+topicId);
+
             //存储当前选择的topicId
-            SPUtils.put(App.getContext(), "topicId", topicId);
-            //今日目标单词数
+            SPUtils.put(App.getContext(), PreferenceConstants.LEXICON_ID, topicId);
+            //todo 今日目标单词数 2018-12-08 TanzJ 没有增加？
 
         }catch (Exception e){
             e.printStackTrace();
-            if((PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"")).equals("false")){
+            if((PreferenceManager.getInstance().get(USERLOGIN,"")).equals("false")){
                 mtvUser_plan.setText("");
             }else{
                 mtvUser_plan.setText(plan);
@@ -433,57 +441,65 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         }
 
         //距离结束天数
-        String a = SPUtils.get(App.getContext(), "plan","2018").toString();
+        String planDate = SPUtils.get(App.getContext(), PreferenceConstants.PLAN_TIME,"2018").toString();
         try {
-            int daynum = homePresenter.calEndNum(a);
-            mtvOverDay.setText(daynum+"天");
+            int dayNum = homePresenter.calculateEndNum(planDate);
+            mtvOverDay.setText(dayNum+"天");
             mtvWordbox.setText(plan);
+            Log.d(TAG, "setData: mtvNewWordsNum:"+statusDao.selectCountByStatusAndTopicIdToday("All", app.getTopicId())+" topicId"+app.getTopicId());
+            //新学习单词数量
             mtvNewWordsNum.setText(statusDao.selectCountByStatusAndTopicIdToday("All", app.getTopicId())+"");
+            //今日复习
             mtvReviewWordsNum.setText(statusDao.selectCountByStatusAndTopicId("review", app.getTopicId())+"");
+            //不熟悉的单词
             mtvUnfamiliarWord.setText(statusDao.selectCountByStatusAndTopicId("new", app.getTopicId())+"");
+
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.d(TAG, "setData------->: "+e);
         }
 
 
+        //todo 完成单词数这里的逻辑可能需要改一下 2018-12-08 TanzJ
         //完成单词数
-        int overWords = statusDao.selectCountByStatusAndTopicId("grasp", app.getTopicId());
-        int todayOverWords = statusDao.selectCountByStatusAndTopicIdToday("grasp", app.getTopicId());
-        String today = SPUtils.get(App.getContext(), "dateNum", 0).toString();
+        int finishWords = statusDao.selectCountByStatusAndTopicId(PreferenceConstants.GRASPWORDNUMBER, app.getTopicId());
+        int todayFinishWords = statusDao.selectCountByStatusAndTopicIdToday(PreferenceConstants.GRASPWORDNUMBER, app.getTopicId());
+        //每日目标数
+        String todayPlanNumber = SPUtils.get(App.getContext(), PreferenceConstants.DATEPLANNUM, 0).toString();
         //        tv_word_finish.setText(overWords+"");
 //        tv_word_over.setText(statusDao.selectCountByStatusAndTopicId("review", app.getTopicId())+"");
-        int itoday=Integer.parseInt(today);
-        if(itoday>=todayOverWords){
-            mtvTodayWord.setText(todayOverWords+"/"+ today);
+        int todayInt =Integer.parseInt(todayPlanNumber);
+        if(todayInt>=todayFinishWords){
+            mtvTodayWord.setText(todayFinishWords+"/"+ todayPlanNumber);
         }else{
-            mtvTodayWord.setText(todayOverWords+"/"+ todayOverWords);
+            mtvTodayWord.setText(todayFinishWords+"/"+ todayFinishWords);
         }
         //词库单词数量
-        mtvAllWords.setText(overWords+"/"+allWords);
+        mtvAllWords.setText(finishWords+"/"+allWordsCount);
 //        mtvTodayWord.setText(todayOverWords+"/"+ today);
+
         //进度条添加数据
-        mpgAllWord.setMax(allWords);
-        mpgAllWord.setProgress(overWords);
-        if(todayOverWords>=Integer.parseInt(today)){
-            mpgWord.setMax(todayOverWords);
+        mpgAllWord.setMax(allWordsCount);
+        mpgAllWord.setProgress(finishWords);
+        if(todayFinishWords>=Integer.parseInt(todayPlanNumber)){
+            mpgWord.setMax(todayFinishWords);
         }else{
-            mpgWord.setMax(Integer.parseInt(today));
+            mpgWord.setMax(Integer.parseInt(todayPlanNumber));
         }
-        mpgWord.setProgress(todayOverWords);
+        mpgWord.setProgress(todayFinishWords);
         //进度数
 //        my_word_plan_progressbar.setMax(allWords);
 //        my_word_plan_progressbar.setProgress(overWords);
 
         map.put("userId", app.getUserId());
         map.put("topicId", topicId);
-        //结束时间这里为什么写死？
+        //fixme 结束时间这里为什么写死？ HUAHUA 2018-12-06
         map.put("endTime", "2018-12-25");
 
         //判断应该学习模式的状态码应该是哪个
-        if(mtvPlanWay.getText().toString().equals("复习优先")){
-            map.put("model", "211");
+        if("复习优先".equals(mtvPlanWay.getText().toString())){
+            map.put("model", Constants.REVIEW_FIRST);
         }else {
-            map.put("model", "210");
+            map.put("model", Constants.LEARN_FIRST);
         }
         return map;
     }
@@ -499,8 +515,8 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public void onReceive(Context context, Intent intent) {
             //刷新界面,从这个方法获取HashMap貌似可以，但不知会不会是个错误
-            HashMap<String, String> map = setdate();
-            OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(HomeMainActivity.this);
+            HashMap<String, String> map = setData();
+
             onlineWordPresenter.postToAddWordPlan(map);
             IWordsStatusDao wordsStatusDao = new WordsStatusImpl();
             if(wordsStatusDao.selectCountByStatusAndTopicId("review", app.getTopicId()) == 0) {
@@ -557,15 +573,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
-//                final HashMap<String, String> map = new HashMap<>();
-//                map.put("userId", app.getUserId());
-//                map.put("topicId", app.getTopicId());
-//                String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
-//                if(planType.equals("复习优先")) {
-//                    onlineWordPresenter.getOnlineWordReviewOrLearn(map, "review");
-//                } else {
-//                    onlineWordPresenter.getOnlineWordReviewOrLearn(map, "learn");
-//                }
+
                 final HashMap<String, String> map = new HashMap<>();
                 map.put("userId", app.getUserId());
                 map.put("topicId", app.getTopicId());
@@ -577,40 +585,21 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
                 progressDialog.setMessage("正在加载中");
                 progressDialog.show();
                 mHandler = new Handler();
-//                mRunnable = ThreadPoolProxyFactory.getNormalThreadPoolProxy().execute(new Runnable() {
-//                    @Override
-//                    public void run()
-//                    {
-//
-//                        IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
-//                        if(iWordsStatusDao.selectCountByStatusAndTopicId("learn_", app.getTopicId()) != 0){
-//                            progressDialog.dismiss();
-//                            String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
-//                            if(planType.equals("复习优先")) {
-//                                getWordStatus(false);
-//                            } else {
-//                                getWordStatus(true);
-//                            }
-//                        }
-//
-//                    }
-//                });
+
+                //@author:@TanzJ
                 mRunnable = new Runnable() {
                     @Override
-                    public void run()
-                    {
-
+                    public void run() {
                         IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
                         if(iWordsStatusDao.selectCountByStatusAndTopicId("learn_", app.getTopicId()) != 0){
                             progressDialog.dismiss();
                             String planType = SPUtils.get(App.getContext(), "planType", "复习优先").toString();
-                            if(planType.equals("复习优先")) {
+                            if("复习优先".equals(planType)) {
                                 getWordStatus(false);
                             } else {
                                 getWordStatus(true);
                             }
                         }
-
                     }
                 };
                 mHandler.postDelayed(mRunnable, 2000);

@@ -212,7 +212,7 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
             if(login)
                 iLoginView.onLoginResult(true, "500");
             else
-                iHomeView.setdate();
+                iHomeView.setData();
         }catch (Exception e) {
             LogUtils.d("object.toString.............");
             e.printStackTrace();

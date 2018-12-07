@@ -1,7 +1,6 @@
 package com.echo.quick.presenters;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -11,12 +10,9 @@ import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.SPUtils;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Class name: echo2018
@@ -213,15 +209,16 @@ public class HomePresenterImpl implements HomeContract.IHomePresenter {
     }
 
     @Override
-    public int calEndNum(String date) throws ParseException {
+    public int calculateEndNum(String date) throws ParseException {
         //相差天数
-        int datenum = 0;
-        String s1=date+"-12";
+        int dateNum = 0;
         SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-        String s2 = df.format(System.currentTimeMillis());
-        Date d1=df.parse(s1);
-        Date d2=df.parse(s2);
-        int hh = (int) ((d1.getTime()-d2.getTime())/(60*60*1000*24));
+
+        Date planDate = df.parse( date+"-12");
+        Date currentDate = df.parse(df.format(System.currentTimeMillis()));
+
+        int hh = (int) ((planDate.getTime()-currentDate.getTime())/(60*60*1000*24));
+
         return hh;
     }
 }

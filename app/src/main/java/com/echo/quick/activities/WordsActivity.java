@@ -60,6 +60,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words);
         ActivityManager.getInstance().addActivity(this);
@@ -74,8 +75,10 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
 
         //初始化默认是false
         sharedPreferences = getSharedPreferences("isPlay", Context.MODE_PRIVATE);
+        //初始化图片资源
         initView();
-        setMianEvent();
+        //设置监听器
+        setMainEvent();
         wordsPresenter = new WordsPresenterImpl(this);
         sum = mData.size();
         mpgWord.setMax(sum);
@@ -94,6 +97,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
         mpgWord = (ProgressBar) findViewById(R.id.pg_word);
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 //        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        //图片
         mimOkPlay = (ImageView) findViewById(R.id.im_ok_play);
         mimQuickBack = (ImageView) findViewById(R.id.im_quick_back);
         isPlay = sharedPreferences.getBoolean("isPlay",false);
@@ -124,7 +128,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
      * Specific description :本界面的组件的事件处理
      *@return void
      */
-    private void setMianEvent() {
+    private void setMainEvent() {
         MyListener listener = new MyListener();
         mimOkPlay.setOnClickListener(listener);
         mimQuickBack.setOnClickListener(listener);
@@ -140,6 +144,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
         public void onClick(View view) {
             Intent intent = null;
             switch (view.getId()) {
+                //音频播放按钮
                 case R.id.im_ok_play:
                     //获取editor对象
                     isPlay = sharedPreferences.getBoolean("isPlay",false);
@@ -155,8 +160,6 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                             editor.commit();//提交修改
                             ToastUtils.showShort(WordsActivity.this,"已打开播放");
                         }
-
-
                     break;
                 case R.id.im_quick_back:
                     //回到主界面
@@ -201,7 +204,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                     //当左滑单词需要复现的数组中存在单词时，将其加入到当前列表下
                     Words_Status words = mData.get(pos);
                     if (direction == ItemTouchHelper.LEFT) {
-                        wordsPresenter.liefSwipe(words);
+                        wordsPresenter.leftSwipe(words);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     } else {
                         mData.add(words);
@@ -225,7 +228,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                     //判断滑动方向
                     if (direction == ItemTouchHelper.LEFT) {
                         text = "已记住";
-                        wordsPresenter.liefSwipe(mData.get(pos));
+                        wordsPresenter.leftSwipe(mData.get(pos));
                         mData.remove(pos);
                         mSampleWordsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
@@ -443,7 +446,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
 
     /**
      * Method name :updateUserAllWord()
-     * Specific description :更新用户所学的所有的那次
+     * Specific description :更新用户所学的所有的单词
      *@return
      */
     public void updateUserAllWord(){

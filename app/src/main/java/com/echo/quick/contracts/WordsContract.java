@@ -31,7 +31,7 @@ public interface WordsContract {
          * 参数1： 参数说明
          *
          **/
-        void liefSwipe(Words_Status w);
+        void leftSwipe(Words_Status w);
 
         /**
          * 方法名称：rightSwipe

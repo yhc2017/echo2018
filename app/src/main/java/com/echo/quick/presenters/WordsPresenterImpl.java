@@ -42,11 +42,12 @@ public class WordsPresenterImpl implements WordsContract.IWordsPresenter {
     }
 
     @Override
-    public void liefSwipe(Words_Status word) {
+    public void leftSwipe(Words_Status word) {
         int num;
         IWordsLogDao = new WordsLogImpl();
         num = IWordsLogDao.selectRightNum(word);
         Log.d("right num    =    ", "   "+num);
+        //设置滑动+1
         IWordsLogDao.updateRightNum(word.getWord(), num+1);
         if(num == 0){
             Words_Status wordsNew = new Words_Status();

@@ -66,8 +66,8 @@ public interface IWordsLogDao {
     boolean updateLeftNum(String word, int num);
 
     /**
-     * 方法名称：通过id更新右滑num
-     * 方法描述: 传入单词对应的单词更新对应的num
+     * <b>方法名称：</b>通过id更新右滑num <br>
+     * 方法描述: 传入单词对应的单词更新对应的num <br>
      * 参数1： String word， int num
      * @return Boolean
      **/

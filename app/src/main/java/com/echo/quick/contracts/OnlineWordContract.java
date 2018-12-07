@@ -47,7 +47,9 @@ public interface OnlineWordContract {
 
 
 
-        //茹韶燕，新增加获取真题分类列表
+        /**
+         * 茹韶燕，新增加获取真题分类列表
+         * */
         List<String> getOnlineSprintType();
 
         //词库id写死为17
@@ -60,8 +62,8 @@ public interface OnlineWordContract {
         void GetAllWordTopicInfo();
 
         /**
-         * 方法名称：postToAddWordPlan
-         * 方法描述: 添加用户的学习计划，一个用户只能对一个词库设置一个学习计划
+         * <b>方法名称：</b>postToAddWordPlan<br/>
+         * <b>方法描述:</b> 添加用户的学习计划，一个用户只能对一个词库设置一个学习计划
          **/
         void postToAddWordPlan(HashMap<String, String> map);
 

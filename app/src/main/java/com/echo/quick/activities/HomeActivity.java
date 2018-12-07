@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         //初始化
         initView();
         initData();
-        setdate();
+        setData();
 
         sharedPreferences = getSharedPreferences("is_first_in_data",MODE_PRIVATE);
         boolean isFirstIn = sharedPreferences.getBoolean("isFirstIn",true);
@@ -130,7 +130,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 im_tor.setImageResource(R.drawable.ic_tor_boy);
             }
             updateUserName();
-            setdate();
+           setData();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -194,7 +194,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
      */
     @SuppressLint("SetTextI18n")
     @Override
-    public HashMap<String, String> setdate(){
+    public HashMap<String, String> setData(){
 
         //需要上传到服务器的数据
         final HashMap<String, String> map = new HashMap<>();
@@ -227,7 +227,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         //距离结束天数
         String a = SPUtils.get(App.getContext(), "plan","2018").toString();
         try {
-            int daynum = homePresenter.calEndNum(a);
+            int daynum = homePresenter.calculateEndNum(a);
             tv_over_day.setText(""+daynum);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -465,7 +465,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 if(result){
                     ToastUtils.showLong(HomeActivity.this, "计划制定完成");
-                    setdate();
+                    setData();
                 }else {
                     ToastUtils.showLong(HomeActivity.this, "计划制定出现小问题，请留意网络状态");
                 }
@@ -494,7 +494,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         try {
             if(mHandler != null)
             mHandler.removeCallbacks(mRunnable);
-            setdate();
+            setData();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -520,7 +520,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onReceive(Context context, Intent intent) {
             //刷新界面,从这个方法获取HashMap貌似可以，但不知会不会是个错误
-            HashMap<String, String> map = setdate();
+            HashMap<String, String> map = setData();
             OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl(HomeActivity.this);
             onlineWordPresenter.postToAddWordPlan(map);
             IWordsStatusDao wordsStatusDao = new WordsStatusImpl();
