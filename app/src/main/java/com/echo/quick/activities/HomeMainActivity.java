@@ -392,13 +392,13 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         String time = SPUtils.get(App.getContext(), PreferenceConstants.PLAN_TIME,"").toString();
         String planType = SPUtils.get(App.getContext(), PreferenceConstants.PLAN_TYPE,"").toString();
 
-        Log.d(TAG, "HomeMainAcitivity->计划词库-时间-模式-> "+plan+"-"+time+"-"+planType);
+        Log.d(TAG, "HomeMainActivity->计划词库-时间-模式-> "+plan+"-"+time+"-"+planType);
         //判断用户是否登录，如果登录就设置页面的信息
         Boolean isLogin = PreferenceManager.getInstance().get(PreferenceConstants.USERLOGIN,"").equals("true") ;
         Log.d(TAG, "setData: isLogin:"+isLogin);
 
+        //判断用户是否登录，如果登录就设置页面的信息
         try{
-            //判断用户是否登录，如果登录就设置页面的信息
             if(isLogin){
                 //设置单词词库
                 mtvUser_plan.setText(plan);
@@ -442,6 +442,8 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
         //距离结束天数
         String planDate = SPUtils.get(App.getContext(), PreferenceConstants.PLAN_TIME,"2018").toString();
+
+        //新学习单词数量，复习单词数量，不熟悉单词数量的数据绑定
         try {
             int dayNum = homePresenter.calculateEndNum(planDate);
             mtvOverDay.setText(dayNum+"天");
@@ -505,7 +507,6 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
     }
 
     /**
-     * Class name: ActivityReceiver
      * Specific description :用于处理背完单词以后的界面刷新
      * 创建人: HUAHUA
      * @Time :1.0 , 2018/11/26 20:19
@@ -516,8 +517,9 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         public void onReceive(Context context, Intent intent) {
             //刷新界面,从这个方法获取HashMap貌似可以，但不知会不会是个错误
             HashMap<String, String> map = setData();
-
+            //添加单词计划
             onlineWordPresenter.postToAddWordPlan(map);
+            Log.d(TAG, "IntentAction: "+intent.getAction());
             IWordsStatusDao wordsStatusDao = new WordsStatusImpl();
             if(wordsStatusDao.selectCountByStatusAndTopicId("review", app.getTopicId()) == 0) {
                 HashMap<String, String> map2 = new HashMap<>();
@@ -533,13 +535,13 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
      * Method name : getWordStatus
      * Specific description :用于判断单词的状态
      */
-    public void getWordStatus(Boolean learn){
+    public void getWordStatus(Boolean isLearn){
 
         IWordsStatusDao statusDao = new WordsStatusImpl();
         List<Words_Status> wordLearn = statusDao.selectByStatusAndTopicId("learn_", app.getTopicId());
         List<Words_Status> wordReview = statusDao.selectByStatusAndTopicId("review", app.getTopicId());
         if(wordLearn.size() != 0){
-            if(learn){
+            if(isLearn){
                 wordLearn.addAll(wordReview);
                 app.setStatusList(wordLearn);
             }else {
@@ -549,7 +551,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             Intent intent = new Intent(HomeMainActivity.this, WordsActivity.class);
             startActivity(intent);
         }else {
-            popWindow(HomeMainActivity.this, learn);
+            popWindow(HomeMainActivity.this, isLearn);
         }
     }
 
@@ -579,6 +581,8 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
                 map.put("topicId", app.getTopicId());
                 map.put("needNum", SPUtils.get(App.getContext(), "dateNum", 0).toString());
                 onlineWordPresenter.getDynamicWordInfo(map);
+
+                //封装的Dialog
                 final ProgressDialog progressDialog = new ProgressDialog(HomeMainActivity.this);
                 progressDialog.setIcon(R.drawable.boy);
                 progressDialog.setTitle("请稍等");

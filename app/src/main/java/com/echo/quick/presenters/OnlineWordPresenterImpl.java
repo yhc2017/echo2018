@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.echo.quick.common.PreferenceConstants;
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.MainContract;
@@ -36,6 +37,8 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+import static com.echo.quick.activities.ReadingTranslateActivity.TAG;
 
 /**
  * 项目名称：echo2018
@@ -373,7 +376,7 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                 String res = response.body().string();
                 Log.e("selectAllWord",res.toString());
                 //保存到shareP。。。中
-                SPUtils.put(App.getContext(), "wordsBox", res);
+                SPUtils.put(App.getContext(), PreferenceConstants.LEXICON, res);
             }
         });
     }
@@ -410,8 +413,9 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 try {
-                    SPUtils.put(App.getContext(),"UserAllWordInfo", response.body().string());
-//                    Log.e("UserAllWordInfo",response.body().string().toString());
+                    String userAllWordInfo = response.body().string();
+                    SPUtils.put(App.getContext(),PreferenceConstants.USER_ALL_WORD_INFO, userAllWordInfo);
+                    Log.d(TAG, "UserAllWordInfo: "+userAllWordInfo);
                     if(login)
                         iLoginView.overWordInfo();
                     else

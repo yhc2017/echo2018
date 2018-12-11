@@ -64,6 +64,10 @@ public class PreferenceConstants {
      * */
     public static final String LEXICON_ID = "topicId";
 
+    /**
+     * 用户所有单词信息
+     * */
+    public static final String USER_ALL_WORD_INFO = "UserAllWordInfo";
 
 
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.echo.quick.common.PreferenceConstants;
-import com.echo.quick.common.PreferenceManager;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.WordsLogImpl;
@@ -57,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     private TextView iv_register;
     private TextView iv_pwdforgive,tv_round_sent,tv_round_sent_tra;
     private ImageView login_back;
+    private final static String TAG = "LoginActivity";
 
     @Pattern(regex = "^\\d{11}$",messageResId=R.string.re_iphone_number_hint)
     @Order(1)
@@ -161,9 +161,10 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                 try {
                     loginPresenter.doLogin(loginTel, loginPwd);
                     LogUtils.d("onValidationSucceeded（）-验证成功后调用登录的方法");
-                    //获取服务器的库
+                    //获取服务器中所有的词库
                     onlineWordPresenter.GetAllWordTopicInfo();
                     LogUtils.d("onValidationSucceeded（）-获取服务器的词库的单词信息");
+                    //todo 登录之后为什么不获取当前计划信息? TanzJ 20181211
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -202,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                 if (result) {
                     switch (code) {
                         case "200":
-                    loginPresenter.detectionAndRestoration(app.getUserId());
+                            loginPresenter.detectionAndRestoration(app.getUserId());
                             LogUtils.d(app.getTopicId() + app.getUserId());
                             IWordsLogDao iWordsLogDao = new WordsLogImpl();
                             IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
@@ -212,8 +213,6 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                                 map.put("topicId", app.getTopicId());
                                 onlineWordPresenter.postToGetTopicIdWords(map, true);
                             } else {
-//                                ToastUtils.showLong(LoginActivity.this, "登录成功");
-//                                ActivityManager.getInstance().exit();
                                 startActivity(new Intent(LoginActivity.this, HomeMainActivity.class));
                                 finish();
                             }
@@ -223,6 +222,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                             LogUtils.d("登录成功");
                             Intent intent = new Intent();
                             intent.setAction("com.zjx.action.UPDATE_ACTION");
+                            Log.d(TAG, "run:  intent.setAction(\"com.zjx.action.UPDATE_ACTION\");");
                             sendBroadcast(intent);
                             finish();
                             break;
@@ -329,6 +329,11 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         page.show(context);
     }
 
+
+    /**
+     * 验证码登录
+     * @param context
+     */
     public void sendCodeForLogin(final Context context) {
         RegisterPage page = new RegisterPage();
         //如果使用我们的ui，没有申请模板编号的情况下需传null

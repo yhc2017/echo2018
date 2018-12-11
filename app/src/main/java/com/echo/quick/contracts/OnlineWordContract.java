@@ -35,6 +35,11 @@ public interface OnlineWordContract {
          **/
         void getOnlineWordReviewOrLearn(HashMap<String, String> map, String rele);
 
+        /**
+         * 动态获取单词信息
+         *
+         * @param map 请求参数
+         * */
         void getDynamicWordInfo(HashMap<String, String> map);
 
         /**
@@ -64,14 +69,17 @@ public interface OnlineWordContract {
         /**
          * <b>方法名称：</b>postToAddWordPlan<br/>
          * <b>方法描述:</b> 添加用户的学习计划，一个用户只能对一个词库设置一个学习计划
+         * @param map 请求参数
          **/
         void postToAddWordPlan(HashMap<String, String> map);
 
         /**
-         * 方法名称：postToGetTopicIdWords
-         * 方法描述: 通过用户Id和topicId获取用户该词库的单词信息
+         * <b>方法名称</b>：postToGetTopicIdWords<br/>
+         * <b>方法描述:</b> 通过用户Id和topicId获取用户该词库的单词信息和计划情况
+         * @param map 请求参数
+         * @param isLogin 是否登录
          **/
-        void postToGetTopicIdWords(HashMap<String, String> map, Boolean login);
+        void postToGetTopicIdWords(HashMap<String, String> map, Boolean isLogin);
 
     }
 

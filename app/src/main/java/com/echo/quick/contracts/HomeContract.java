@@ -22,11 +22,18 @@ public interface HomeContract {
          * */
         void updatePlan();
         void updateUserName();
+
+        /**
+         * 制定计划
+         * @param result 结果
+         */
         void addPlanResult(Boolean result);
+
         void overWordInfo();
 
         /**
-         * <b>描述 :</b>界面数据绑定与数据传输到服务器方法<br/>
+         * <b>描述 :</b>界面数据绑定：单词数量规划，计划词库，时间，模式等与数据传输到服务器方法<br/>
+         *
          *@return HashMap
          */
         HashMap<String, String> setData();

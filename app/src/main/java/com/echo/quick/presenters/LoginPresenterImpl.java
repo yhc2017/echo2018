@@ -29,6 +29,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static com.echo.quick.activities.ReadActivity.TAG;
+
 /**
  * 项目名称：echo2018
  * 类描述：
@@ -185,11 +187,10 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                 try {
                     JSONObject all = JSON.parseObject(response.body().string());
                     if (all != null) {
-//                    JSONObject userInfo = all.getJSONObject("userInfo");
-//                    JSONObject allPlan = all.getJSONObject("allPlan");
                         JSONObject lastPlan = all.getJSONObject("lastPlan");
                         String topicId = lastPlan.getString("topicId");
                         app.setTopicId(topicId);
+                        Log.d(TAG, "onResponse: "+"lastPlan:"+lastPlan+" topicPlan:"+topicId);
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -200,16 +201,16 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
     }
 
     @Override
-    public void allWordInfo(Boolean login) throws JSONException {
-        Object object = SPUtils.get(App.getContext(), "UserAllWordInfo", "");
+    public void allWordInfo(Boolean isLogin) throws JSONException {
+        Object object = SPUtils.get(App.getContext(), PreferenceConstants.USER_ALL_WORD_INFO, "");
         try {
             if (object != "") {
-                LogUtils.d("object.toString............."+object.toString());
+                LogUtils.d("object.toString............."+object.toString()+" isLogin:"+isLogin);
                 org.json.JSONObject object1 = new org.json.JSONObject(object.toString());
                 org.json.JSONArray array = object1.getJSONArray("wordInfo");
                 initOldWord(array);
             }
-            if(login)
+            if(isLogin)
                 iLoginView.onLoginResult(true, "500");
             else
                 iHomeView.setData();

@@ -17,7 +17,15 @@ public interface LoginContract {
     interface ILoginView{
 
         void onClearText();
+
+        /**
+         *  将userId,topicId,计划情况等信息存到sharePreference中
+         *
+         * @param result 登录结果
+         * @param code 代码
+         */
         void onLoginResult(Boolean result, String code);
+
         void overWordInfo();
 
     }
@@ -28,7 +36,10 @@ public interface LoginContract {
         void doLogin(String name, String passwd);
         //手机短信验证登录
         void doLoginForTel(String tel);
-        //修复和检测
+        /**
+         *
+         * 修复和检测
+         */
         void detectionAndRestoration(String userId);
         //恢复数据
         void allWordInfo(Boolean login) throws JSONException;
