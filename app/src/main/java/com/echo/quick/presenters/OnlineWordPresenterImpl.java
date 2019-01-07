@@ -19,6 +19,7 @@ import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IOnlineWord;
 import com.echo.quick.model.dao.interfaces.IWordsLogDao;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
+import com.echo.quick.pojo.Lexicon;
 import com.echo.quick.pojo.Words;
 import com.echo.quick.pojo.Words_Log;
 import com.echo.quick.pojo.Words_Status;
@@ -33,6 +34,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -373,10 +375,32 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String res = response.body().string();
-                Log.e("selectAllWord",res.toString());
-                //保存到shareP。。。中
-                SPUtils.put(App.getContext(), PreferenceConstants.LEXICON, res);
+                JSONArray lexiconArrary = JSON.parseArray(response.body().string());
+                LogUtils.d("GetAllWordTopicInfo()=selectAllWord",lexiconArrary.toString());
+                /**
+                 * 一开始就获得所有的词库信息
+                 * 用一个hashmap 存起来所有的词库表
+                 * 然后存到数据库中
+                 */
+
+                Map<String,Lexicon> lexiconListByName = new HashMap();
+                Map<String,Lexicon> lexiconListById = new HashMap();
+                List<String> lexiconNameList = new ArrayList<>();
+
+                for(int i=0;i<lexiconArrary.size();i++){
+                    System.out.println("---------------");
+                    JSONObject lexicon= lexiconArrary.getJSONObject(i);
+                    lexiconListByName.put(lexicon.getString("topicName"),new Lexicon(lexicon.getString("topicId"),lexicon.getString("topicName"),lexicon.getString("tableName"),lexicon.getString("wordAllCount")));
+                    lexiconListById.put(lexicon.getString("topicId"),new Lexicon(lexicon.getString("topicId"),lexicon.getString("topicName"),lexicon.getString("tableName"),lexicon.getString("wordAllCount")));
+                    lexiconNameList.add(lexicon.getString("topicName"));
+                    LogUtils.d("GetAllWordTopicInfo()=是不是空的词库:"+lexicon.getString("topicName"));
+                }
+                //存词库信息map<String,Lexicon> 通过名字找
+                SPUtils.setMap(App.getContext(), PreferenceConstants.LEXICON, lexiconListByName);
+                //存词库信息map<String,Lexicon> 通过id找
+                SPUtils.setMap(App.getContext(), PreferenceConstants.LEXICON_BYID, lexiconListById);
+                //存词库名list
+                SPUtils.setDataList(App.getContext(), PreferenceConstants.LEXICONNAME, lexiconNameList);
             }
         });
     }

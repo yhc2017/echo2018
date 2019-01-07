@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.echo.quick.common.PreferenceConstants;
 import com.echo.quick.contracts.LoginContract;
 import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.WordsLogImpl;
@@ -23,6 +24,7 @@ import com.echo.quick.presenters.LoginPresenterImpl;
 import com.echo.quick.presenters.OnlineWordPresenterImpl;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
+import com.echo.quick.utils.SPUtils;
 import com.echo.quick.utils.ToastUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -203,15 +205,19 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                 if (result) {
                     switch (code) {
                         case "200":
-                            loginPresenter.detectionAndRestoration(app.getUserId());
-                            LogUtils.d(app.getTopicId() + app.getUserId());
+                            String userId = (String) SPUtils.get(App.getContext(), PreferenceConstants.USERPHONE,"");
+                            String tpoicId = (String) SPUtils.get(App.getContext(), PreferenceConstants.LEXICON_ID,"");
+                            loginPresenter.detectionAndRestoration(userId);
+                            LogUtils.d(tpoicId + userId);
                             IWordsLogDao iWordsLogDao = new WordsLogImpl();
                             IWordsStatusDao iWordsStatusDao = new WordsStatusImpl();
                             if (iWordsLogDao.detectionEmpty() && iWordsStatusDao.detectionEmpty()) {
                                 HashMap<String, String> map = new HashMap<>();
-                                map.put("userId", app.getUserId());
-                                map.put("topicId", app.getTopicId());
+                                map.put("userId", userId);
+                                map.put("topicId", tpoicId);
                                 onlineWordPresenter.postToGetTopicIdWords(map, true);
+                                startActivity(new Intent(LoginActivity.this, HomeMainActivity.class));
+                                finish();
                             } else {
                                 startActivity(new Intent(LoginActivity.this, HomeMainActivity.class));
                                 finish();

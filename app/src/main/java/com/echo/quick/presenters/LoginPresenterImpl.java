@@ -5,16 +5,19 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.echo.quick.common.Constants;
 import com.echo.quick.common.PreferenceConstants;
 import com.echo.quick.common.PreferenceManager;
 import com.echo.quick.contracts.HomeContract;
 import com.echo.quick.contracts.LoginContract;
+import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.contracts.WordsShowContract;
 import com.echo.quick.model.dao.impl.LoginImpl;
 import com.echo.quick.model.dao.impl.OnlineWordImpl;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.ILoginDao;
 import com.echo.quick.model.dao.interfaces.IOnlineWord;
+import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
 import com.echo.quick.pojo.Words_Status;
 import com.echo.quick.utils.App;
 import com.echo.quick.utils.LogUtils;
@@ -23,7 +26,11 @@ import com.echo.quick.utils.SPUtils;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -98,8 +105,8 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
 
 
-                PreferenceManager.getInstance().put(PreferenceConstants.USERPHONE,name);
-                PreferenceManager.getInstance().put(PreferenceConstants.USERPASSWORD,passwd);
+//                PreferenceManager.getInstance().put(PreferenceConstants.USERPHONE,name);
+//                PreferenceManager.getInstance().put(PreferenceConstants.USERPASSWORD,passwd);
                 PreferenceManager.getInstance().put(PreferenceConstants.USERLOGIN,"true");
 
                 switch (prepare4) {
@@ -108,9 +115,9 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                         String nickname = object.getString("nickname");
                         String sex = object.getString("sex");
 
-                        SPUtils.put(App.getContext(), "userId", userId);
-                        SPUtils.put(App.getContext(), "nickname", nickname);
-                        SPUtils.put(App.getContext(), "sex", sex);
+                        SPUtils.put(App.getContext(), PreferenceConstants.USERPHONE, userId);
+                        SPUtils.put(App.getContext(), PreferenceConstants.USERNAME, nickname);
+                        SPUtils.put(App.getContext(), PreferenceConstants.USERSEX, sex);
 
                         app.setUserId(userId);
                         app.setNickName(nickname);
@@ -189,8 +196,38 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
                     if (all != null) {
                         JSONObject lastPlan = all.getJSONObject("lastPlan");
                         String topicId = lastPlan.getString("topicId");
+                        String topicName = getTopicName(topicId);
+                        String planTime = lastPlan.getString("planEndTime").substring(0,7);
+                        String planTypeNum = lastPlan.getString("prepare4");
+                        Integer wordAllCount = Integer.valueOf(lastPlan.getString("wordAllCount"));
+                        try {
+                            //存入目标数
+                            Integer dataNum = calMyPlanNmu(planTime, wordAllCount);
+                            System.out.printf("登录计算=================每日的目标数："+dataNum);
+                            //每日单词数量
+                            SPUtils.put(App.getContext(), PreferenceConstants.DATEPLANNUM, dataNum);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
                         app.setTopicId(topicId);
-                        Log.d(TAG, "onResponse: "+"lastPlan:"+lastPlan+" topicPlan:"+topicId);
+                        //词库ID
+                        SPUtils.put(App.getContext(), PreferenceConstants.LEXICON_ID, topicId);
+                        //词库名
+                        SPUtils.put(App.getContext(), PreferenceConstants.CURRENT_PLAN_LEXICON, topicName);
+                        //计划时间
+                        SPUtils.put(App.getContext(), PreferenceConstants.PLAN_TIME, planTime);
+
+                        String planType = "复习优先";
+                        if (Constants.LEARN_FIRST.equals(planTypeNum)){
+                             planType = "学习优先";
+                        }
+                        //计划模式
+                        SPUtils.put(App.getContext(), PreferenceConstants.PLAN_TYPE, planType);
+                        //词库总词量
+                        SPUtils.put(App.getContext(), PreferenceConstants.LEXICON_ALLCOUNT, wordAllCount);
+
+                        LogUtils.d(TAG, "onResponse: "+"lastPlan:"+lastPlan+" topicPlan:"+topicId+" topicName:"+topicName+" planTime:"+planTime+" planType:"+planType+" wordAllCount:"+wordAllCount);
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -198,6 +235,25 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
 
             }
         });
+    }
+
+    /**
+     * 用于通过id查找词库的名称
+     * @param topicId
+     * @return
+     */
+    @Override
+    public String getTopicName(String topicId) {
+        Map lexiconListById = new HashMap<>();
+        lexiconListById = SPUtils.getMap(App.getContext(), PreferenceConstants.LEXICON_BYID);
+        if (lexiconListById.isEmpty()){
+            OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+            onlineWordPresenter.GetAllWordTopicInfo();
+            lexiconListById = SPUtils.getMap(App.getContext(), PreferenceConstants.LEXICON_BYID);
+        }
+        Map lexiconMapById = (Map) lexiconListById.get(topicId);
+        String topicName = (String) lexiconMapById.get("topicName");
+        return topicName;
     }
 
     @Override
@@ -218,6 +274,51 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
             LogUtils.d("object.toString.............");
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * Method name : calMyPlanNmu
+     * Specific description :用于计算每天的单词目标数
+     * 创建人：茹韶燕
+     *@param   date String
+     *@param   wordcount int
+     *@return datenum int
+     */
+    @Override
+    public int calMyPlanNmu(String date, int wordcount) throws ParseException {
+        //相差天数
+        int datenum = 0;
+        String s1=date+"-12";
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+        String s2 = df.format(System.currentTimeMillis());
+        Date d1=df.parse(s1);
+        Date d2=df.parse(s2);
+        int hh = (int) ((d1.getTime()-d2.getTime())/(60*60*1000*24));
+
+        //已背单词数量
+        IWordsStatusDao statusDao = new WordsStatusImpl();
+        int overWords = statusDao.selectCountByStatusAndTopicId("review_grasp", app.getTopicId());
+
+        //四舍五入取整得到每日目标数
+        datenum = Math.round((wordcount - overWords)/hh);
+        System.out.printf("--------------每日的目标数："+"("+wordcount+"-"+overWords+")/"+hh+"="+datenum);
+
+        return datenum;
+    }
+
+    @Override
+    public int calculateEndNum(String date) throws ParseException {
+        //相差天数
+        int dateNum = 0;
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+
+        Date planDate = df.parse( date+"-12");
+        Date currentDate = df.parse(df.format(System.currentTimeMillis()));
+
+        int hh = (int) ((planDate.getTime()-currentDate.getTime())/(60*60*1000*24));
+
+        return hh;
     }
 
     private void initOldWord(org.json.JSONArray jsonArray) throws JSONException {

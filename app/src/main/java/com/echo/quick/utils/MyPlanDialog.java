@@ -17,10 +17,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.echo.quick.activities.R;
+import com.echo.quick.common.PreferenceConstants;
 import com.echo.quick.contracts.HomeContract;
+import com.echo.quick.contracts.OnlineWordContract;
 import com.echo.quick.model.dao.impl.WordsStatusImpl;
 import com.echo.quick.model.dao.interfaces.IWordsStatusDao;
+import com.echo.quick.pojo.Lexicon;
 import com.echo.quick.presenters.HomePresenterImpl;
+import com.echo.quick.presenters.OnlineWordPresenterImpl;
 
 import org.angmarch.views.NiceSpinner;
 
@@ -35,6 +39,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class name: MyPlanDialog
@@ -91,22 +96,7 @@ public class MyPlanDialog extends Dialog{
 
         mbt2.setChecked(true);//默认复习优先、
 
-        List<String> wordsBox = new ArrayList<>();
-        dataset1 = new ArrayList<>();
-        try {
-            o = SPUtils.get(App.getContext(), "wordsBox", "");
-            LogUtils.d(o.toString());
-            assert o != null;
-            JSONArray jsonArray_wordsBox = JSONArray.parseArray(o.toString());
-            for(int i = 0; i < jsonArray_wordsBox.size(); i++){
-                JSONObject object = jsonArray_wordsBox.getJSONObject(i);
-                dataset1.add(object.getString("topicName"));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-
+        dataset1 = getLexiconName();
         mniceSpinner1.attachDataSource(dataset1);
 //        mniceSpinner1.setEnabled(false);
         int year = homePresenter.getYear();
@@ -116,15 +106,15 @@ public class MyPlanDialog extends Dialog{
         String str3="";
         String str4="";
         if (mouth < 6){
-            str1 = year+"-"+6;
+            str1 = year+"-"+06;
             str2 = year+"-"+12;
-            str3 = (year+1)+"-"+6;
+            str3 = (year+1)+"-"+06;
             str4 = (year+1)+"-"+12;
         }else {
             str1 = year+"-"+12;
-            str2 = (year+1)+"-"+6;
+            str2 = (year+1)+"-"+06;
             str3 = (year+1)+"-"+12;
-            str4 = (year+2)+"-"+6;
+            str4 = (year+2)+"-"+06;
         }
         dataset2 = new LinkedList<>(Arrays.asList(str1, str2, str3, str4));
         mniceSpinner2.attachDataSource(dataset2);
@@ -148,17 +138,21 @@ public class MyPlanDialog extends Dialog{
                 case R.id.bt_ok :
                     HashMap hs = getMyValue();
                     LogUtils.d("我的计划====词库:"+hs.get("wordbox")+",目标时间:"+hs.get("plan") + ",选中框的值:"+hs.get("plantype"));
-                    //选择的词库
-                    SPUtils.put(App.getContext(), "box", hs.get("wordbox"));
-                    SPUtils.put(App.getContext(), "boxPosition", hs.get("position")+"");
+                    //选中词库
+                    SPUtils.put(App.getContext(), PreferenceConstants.CURRENT_PLAN_LEXICON, hs.get("box"));
                     //选择的计划完成日期
-                    SPUtils.put(App.getContext(), "plan", hs.get("plan"));
+                    SPUtils.put(App.getContext(), PreferenceConstants.PLAN_TIME, hs.get("plan"));
                     //选择的背单词模式
-                    SPUtils.put(App.getContext(), "planType", hs.get("plantype"));
+                    SPUtils.put(App.getContext(), PreferenceConstants.PLAN_TYPE, hs.get("planType"));
+                    //存词库的id
+                    SPUtils.put(App.getContext(), PreferenceConstants.LEXICON_ID, hs.get("topicId"));
+                    //存词库的数量
+                    SPUtils.put(App.getContext(), PreferenceConstants.LEXICON_ALLCOUNT, hs.get("allWords"));
+
 
                     try {
                         //存入目标数
-                        int datenum = homePresenter.calMyPlanNmu(hs.get("plan").toString(), (Integer) hs.get("position"));
+                        int datenum = homePresenter.calMyPlanNmu(hs.get("plan").toString(), (Integer)hs.get("allWords"));
                         System.out.printf("=================每日的目标数："+datenum);
                         SPUtils.put(App.getContext(), "dateNum", datenum);
                     } catch (ParseException e) {
@@ -189,8 +183,10 @@ public class MyPlanDialog extends Dialog{
         //词库类型
         int selectedIndex1 = mniceSpinner1.getSelectedIndex();
         String datapick1 = dataset1.get(selectedIndex1);
-        hs.put("wordbox", datapick1);
-        hs.put("position", selectedIndex1);
+        hs.put("box", datapick1);
+        hs.put("topicId", getLexiconMessage(datapick1).topicId);
+        Integer allWords = Integer.valueOf(getLexiconMessage(datapick1).wordAllCount);
+        hs.put("allWords",allWords );
 
         //目标时间
         int selectedIndex2 = mniceSpinner2.getSelectedIndex();
@@ -200,10 +196,44 @@ public class MyPlanDialog extends Dialog{
         //选中框的值
         int checkedRadioButtonId = mradioGroup.getCheckedRadioButtonId();
         RadioButton radioButton = (RadioButton)findViewById(checkedRadioButtonId);
-        String plantype = radioButton.getText().toString();
-        hs.put("plantype", plantype);
+        String planType = radioButton.getText().toString();
+        hs.put("planType", planType);
 
         return hs;
+    }
+
+
+    /**
+     * 用于查找词库的信息
+     * @param topicName
+     * @return
+     */
+    private Lexicon getLexiconMessage(String topicName){
+        Map lexiconList = new HashMap<>();
+        lexiconList = SPUtils.getMap(App.getContext(), PreferenceConstants.LEXICON);
+        Map lexiconMap = (Map) lexiconList.get(topicName);
+        String topicId = (String) lexiconMap.get("topicId");
+        String topicName2 = (String) lexiconMap.get("topicName");
+        String tableName = (String) lexiconMap.get("tableName");
+        String wordAllCount = (String) lexiconMap.get("wordAllCount");
+        Lexicon lexicon = new Lexicon(topicId,topicName2,tableName,wordAllCount);
+        return lexicon;
+    }
+
+    /**
+     * 得到所有的词库名称列表
+     */
+    private  List getLexiconName(){
+        List lexiconNameList = new ArrayList<>();
+        lexiconNameList = SPUtils.getDataList(App.getContext(), PreferenceConstants.LEXICONNAME);
+        if (0==lexiconNameList.size()){
+            OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
+            onlineWordPresenter.GetAllWordTopicInfo();
+            lexiconNameList = SPUtils.getDataList(App.getContext(), PreferenceConstants.LEXICONNAME);
+        }else {
+            lexiconNameList.add("空词库");
+        }
+        return lexiconNameList;
     }
 
 

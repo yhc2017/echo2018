@@ -44,7 +44,7 @@ public interface HomeContract {
         int getYear();
         int getMouth();
         void updatePlan();
-        int calMyPlanNmu(String date,int wordindex) throws ParseException;
+        int calMyPlanNmu(String date,int wordcount) throws ParseException;
 
 
         /**

@@ -7,9 +7,23 @@ package com.echo.quick.common;
 
 public class PreferenceConstants {
     /**
+     * 是否登录
+     */
+    public static final String ISLOGIN = "isLogin";
+
+    /**
+     * 用户昵称
+     */
+    public static final String USERNAME = "nickname";
+    /**
+     * 用户性别
+     */
+    public static final String USERSEX = "sex";
+
+    /**
      * 用户手机
      * */
-    public static final String USERPHONE = "user_phone";
+    public static final String USERPHONE = "userId";
 
     /**
      * 用户密码
@@ -35,8 +49,12 @@ public class PreferenceConstants {
      * */
     public static final String LEXICON = "wordsBox";
 
+    public static final String LEXICON_BYID = "wordsBox_byId";
+
+    public static final String LEXICONNAME = "wordsBoxName";
+
     /**
-     * 用户选择的计划词库
+     * 用户选择的计划词库名称
      * */
     public static final String CURRENT_PLAN_LEXICON = "box";
 
@@ -65,9 +83,17 @@ public class PreferenceConstants {
     public static final String LEXICON_ID = "topicId";
 
     /**
+     * 词库总数
+     * */
+    public static final String LEXICON_ALLCOUNT = "allWords";
+
+
+    /**
      * 用户所有单词信息
      * */
     public static final String USER_ALL_WORD_INFO = "UserAllWordInfo";
+
+
 
 
 }

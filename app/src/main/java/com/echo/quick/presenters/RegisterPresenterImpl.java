@@ -3,6 +3,7 @@ package com.echo.quick.presenters;
 import android.support.annotation.NonNull;
 
 import com.alibaba.fastjson.JSONObject;
+import com.echo.quick.common.PreferenceConstants;
 import com.echo.quick.contracts.RegisterContract;
 import com.echo.quick.model.dao.impl.RegisterImpl;
 import com.echo.quick.model.dao.interfaces.IRegisterDao;
@@ -66,12 +67,14 @@ public class RegisterPresenterImpl extends BasePresenter implements RegisterCont
                 JSONObject object = JSONObject.parseObject(res);
                 //通过判断204，注册成功才进行内容注入
                 if(object.getString("prepare4").equals("204")){
-                    SPUtils.put(App.getContext(), "userId", object.getString("userId"));
-                    SPUtils.put(App.getContext(), "nickname", object.getString("nickname"));
-                    SPUtils.put(App.getContext(), "sex", object.getString("sex"));
+                    SPUtils.put(App.getContext(), PreferenceConstants.USERPHONE, object.getString("userId"));
+                    SPUtils.put(App.getContext(), PreferenceConstants.USERNAME, object.getString("nickname"));
+                    SPUtils.put(App.getContext(), PreferenceConstants.USERSEX, object.getString("sex"));
+
                     app.setUserId(object.getString("userId"));
                     app.setNickName(object.getString("nickname"));
                     app.setSex(object.getString("sex"));
+
                     iRegisterView.onRegisterResult(true, code);
                 }else {
                     iRegisterView.onRegisterResult(false, code);
