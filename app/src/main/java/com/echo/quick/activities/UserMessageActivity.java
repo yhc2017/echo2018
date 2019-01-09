@@ -109,9 +109,12 @@ public class UserMessageActivity extends AppCompatActivity implements UserMessag
      *@return 
      */
     public void initData(){
-        tv_id.setText(app.getUserId());//手机账号
-        et_name.setText(app.getNickName());//昵称
-        if(app.getSex().equals("男")){
+        String userId = (String) SPUtils.get(App.getContext(),PreferenceConstants.USERPHONE,"");
+        String userName = (String) SPUtils.get(App.getContext(),PreferenceConstants.USERNAME,"");
+        String userSex = (String) SPUtils.get(App.getContext(),PreferenceConstants.USERSEX,"男");
+        tv_id.setText(userId);//手机账号
+        et_name.setText(userName);//昵称
+        if("男".equals(userSex)){
             rb_man.setChecked(true);
         }else {
             rb_woman.setChecked(true);
@@ -137,14 +140,26 @@ public class UserMessageActivity extends AppCompatActivity implements UserMessag
     @Override
     public void onValidationSucceeded() {
         final HashMap<String, String> map = new HashMap<>();
-        map.put("userId", app.getUserId());
+        //获取用户的电话
+        String userId = (String) SPUtils.get(App.getContext(),PreferenceConstants.USERPHONE,"");
+
+        map.put("userId", userId);
         map.put("nickname", et_name.getText().toString());
+        //修改数据库用户姓名
+        SPUtils.put(App.getContext(),PreferenceConstants.USERNAME,et_name.getText().toString());
+        app.setNickName(et_name.getText().toString());
+        String sex = "男";
         if(tv_sex_rs.getText().toString().equals("少侠")) {
             map.put("sex", "男");
+            sex = "男";
         }
         else {
             map.put("sex", "女");
+            sex = "女";
         }
+        //修改数据库用户性别
+        SPUtils.put(App.getContext(),PreferenceConstants.USERSEX,sex);
+        app.setNickName(sex);
         presenter.postToUpdate(map);
     }
 
@@ -171,6 +186,7 @@ public class UserMessageActivity extends AppCompatActivity implements UserMessag
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.iv_user_message_back:
+                    startActivity(new Intent(UserMessageActivity.this,HomeMainActivity.class));
                     finish();
                     break;
                 case R.id.exitbtn:
