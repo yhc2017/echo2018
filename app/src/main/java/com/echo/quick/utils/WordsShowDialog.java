@@ -35,8 +35,8 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
     Words_Status words;
     LinearLayout L_1,L_2;
 
-    private TextView tv_item,tv_symbol,tv_explain,tv_eg1,tv_eg1_chinese,tv_eg2,tv_eg2_chinese,tv_add_new,tv_del_new;
-    private LinearLayout l1;
+    private TextView tv_eg,tv_item,tv_symbol,tv_explain,tv_eg1,tv_eg1_chinese,tv_eg2,tv_eg2_chinese,tv_add_new,tv_del_new;
+    private LinearLayout l1,l2;
     private ImageView iv_audio;
     private View v1;
     WordsShowContract.IWordsShowPresenter wordsShowPresenter;
@@ -80,6 +80,7 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
         tv_item = (TextView) findViewById(R.id.tv_item);
         tv_symbol = (TextView) findViewById(R.id.tv_symbol);
         tv_explain = (TextView) findViewById(R.id.tv_explain);
+        tv_eg = (TextView) findViewById(R.id.eg);
         tv_eg1 = (TextView) findViewById(R.id.tv_eg1);
         tv_eg1_chinese = (TextView) findViewById(R.id.tv_eg1_chinese);
         tv_eg2 = (TextView) findViewById(R.id.tv_eg2);
@@ -90,21 +91,23 @@ public class WordsShowDialog extends Dialog implements WordsShowContract.IWordsS
         L_2 = (LinearLayout) findViewById(R.id.L_2);
         iv_audio = (ImageView) findViewById(R.id.iv_audio);
         l1=(LinearLayout)findViewById(R.id.l1);
+        l2=(LinearLayout)findViewById(R.id.l2);
         v1=(View)findViewById(R.id.v1);
     }
     /**
      * 初始化界面控件的显示数据
      */
     private void refreshView() {
-        if(words.getEg1().equals("")){
-            tv_eg1.setText("此单词暂无例句！");
-            tv_eg1_chinese.setText("");
+        if( "".equals(words.getEg1())){
+            tv_eg.setVisibility(View.GONE);
             v1.setVisibility(View.GONE);
             l1.setVisibility(View.GONE);
+            l2.setVisibility(View.GONE);
         }
-        if(words.getEg2().equals("")){
+        if("".equals(words.getEg2())){
             v1.setVisibility(View.GONE);
-            l1.setVisibility(View.GONE);
+            l2.setVisibility(View.GONE);
+            tv_eg1.setText(words.getEg1());
         } else{
             tv_eg1.setText(words.getEg1());
             tv_eg1_chinese.setText(words.getEg1Chinese());

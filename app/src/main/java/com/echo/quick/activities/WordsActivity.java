@@ -163,6 +163,8 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                     break;
                 case R.id.im_quick_back:
                     //回到主界面
+                    startActivity(new Intent(WordsActivity.this,HomeMainActivity.class));
+                    finish();
                     break;
                 default:
                     break;
@@ -320,7 +322,7 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
             @Override
             public void onItemClick(View view , int position) {
                 int i = position;
-                LogUtils.d("数字为：" + i);
+                LogUtils.d("点击数字为：" + i);
                 switch (view.getId()) {
                     case R.id.iv_play:
                         String url = mData.get(position).getPron();
@@ -328,10 +330,12 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
                         break;
                     default:
                         //                ToastUtils.showShort(WordsActivity.this, "点击事件！");
-                        LogUtils.d("数字为：" + position);
+                        LogUtils.d("例句数字为：" + position);
                         Words words = new Words(mData.get(position).getWordId(), mData.get(position).getPron(), mData.get(position).getWord(), mData.get(position).getSymbol(), mData.get(position).getExplain() + "\n"
-                                , mData.get(position).getEg1(), mData.get(position).getEg1Chinese(), "", "", mData.get(position).getTopicId());
-                        LogUtils.d("===============" + mData.get(position).getEg1Chinese());
+                                , mData.get(position).getEg1(), mData.get(position).getEg1Chinese(), mData.get(position).getEg2(),  mData.get(position).getEg2Chinese(), mData.get(position).getTopicId());
+                        LogUtils.d("例句1中文===============" + mData.get(position).getEg1Chinese());
+                        LogUtils.d("例句2中文===============" + mData.get(position).getEg2Chinese());
+
                         WordsShowDialog customDialog = new WordsShowDialog(WordsActivity.this, mData.get(position));
                         customDialog.show();
                         break;
@@ -427,13 +431,13 @@ public class WordsActivity extends AppCompatActivity implements WordsContract.IW
     @Override
     protected void onPause() {
         super.onPause();
-        updateUserAllWord();
+       // updateUserAllWord();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        updateUserAllWord();
+       // updateUserAllWord();
     }
 
 

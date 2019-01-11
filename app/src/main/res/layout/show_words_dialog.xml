@@ -24,6 +24,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="185dp"
                     android:layout_height="wrap_content">
 
@@ -94,6 +95,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/eg"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,6 +104,7 @@
             android:textColor="@color/colorAnRed"
             android:fontFamily="monospace"/>
         <LinearLayout
+            android:id="@+id/l1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
@@ -130,7 +133,7 @@
             android:layout_height="1dp"
             android:background="@color/half_transparent"/>
         <LinearLayout
-            android:id="@+id/l1"
+            android:id="@+id/l2"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
