@@ -68,7 +68,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView im_tor;
     private App app;
     int datenum2 = 0;
-//线程
+    //线程
     Handler mHandler = null;
     Runnable mRunnable = null;
 

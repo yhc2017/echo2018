@@ -261,17 +261,20 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
         Object object = SPUtils.get(App.getContext(), PreferenceConstants.USER_ALL_WORD_INFO, "");
         try {
             if (object != "") {
-                LogUtils.d("object.toString............."+object.toString()+" isLogin:"+isLogin);
+                LogUtils.d("获取所有单词的信息"+object.toString()+" 有无登录:"+isLogin);
                 org.json.JSONObject object1 = new org.json.JSONObject(object.toString());
                 org.json.JSONArray array = object1.getJSONArray("wordInfo");
                 initOldWord(array);
             }
-            if(isLogin)
-                iLoginView.onLoginResult(true, "500");
-            else
+            if(isLogin) {
+                //如果已经登录
                 iHomeView.setData();
+            }else {
+                //如果没有登录
+                iLoginView.onLoginResult(true, "500");
+            }
         }catch (Exception e) {
-            LogUtils.d("object.toString.............");
+            LogUtils.e("该词库的所有单词的信息获取出异常");
             e.printStackTrace();
         }
     }
@@ -321,19 +324,24 @@ public class LoginPresenterImpl extends BasePresenter implements LoginContract.I
         return hh;
     }
 
+    /**
+     * 获取用户所有的单词后，存进数据库
+     * @param jsonArray
+     * @throws JSONException
+     */
     private void initOldWord(org.json.JSONArray jsonArray) throws JSONException {
         WordsShowContract.IWordsShowPresenter wordsShowPresenter = new WordsShowPresenters();
         for(int i = 0; i < jsonArray.length(); i++){
             org.json.JSONObject object = jsonArray.getJSONObject(i);
             String status = "learn";
             switch (object.getString("status")){
-                case "207":
+                case Constants.WORD_LEARN:
                     status = "learn";
                     break;
-                case "208":
+                case Constants.WORD_REVIEW:
                     status = "review";
                     break;
-                case "209":
+                case Constants.WORD_GRASP:
                     status = "grasp";
                     break;
                 default:

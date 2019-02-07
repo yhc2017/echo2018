@@ -312,8 +312,6 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         }else {
             mimTor.setImageResource(R.drawable.ic_tor_boy);
         }
-        //今日目标单词数默认值
-        mtvTodayWord.setText(0+"/"+0);
         //因为
         OnlineWordContract.OnlineWordPresenter onlineWordPresenter = new OnlineWordPresenterImpl();
         onlineWordPresenter.getOnlineSprintType();
@@ -368,7 +366,8 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void run() {
                 try {
-                    loginPresenter.allWordInfo(false);
+                    boolean isLogin = "true".equals(SPUtils.get(App.getContext(),PreferenceConstants.USERLOGIN,"false"));
+                    loginPresenter.allWordInfo(isLogin);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     finish();
@@ -415,9 +414,6 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
             LogUtils.d(TAG, "2.HomeMainActivity->电话-计划词库-时间-模式-词库id> "+userPhone+"-"+planName+"-"+planTime+"-"+planType+"-"+topicId);
 
-
-            //存储当前选择的topicId
-            SPUtils.put(App.getContext(), PreferenceConstants.LEXICON_ID, topicId);
             //todo 今日目标单词数 2018-12-08 TanzJ 没有增加？
 
         }catch (Exception e){
@@ -452,8 +448,6 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             Log.d(TAG, "setData------->: "+e);
         }
 
-
-        //todo 完成单词数这里的逻辑可能需要改一下 2018-12-08 TanzJ
         //完成单词数
         int finishWords = statusDao.selectCountByStatusAndTopicId(PreferenceConstants.GRASPWORDNUMBER, topicId);
         int todayFinishWords = statusDao.selectCountByStatusAndTopicIdToday(PreferenceConstants.GRASPWORDNUMBER, topicId);
@@ -467,7 +461,7 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
         }else{
             mtvTodayWord.setText(todayFinishWords+"/"+ todayFinishWords);
         }
-        //词库单词数量
+        //总体进度的数字显示
         mtvAllWords.setText(finishWords+"/"+wordAllCount);
 //        mtvTodayWord.setText(todayOverWords+"/"+ today);
 
@@ -486,10 +480,11 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
 
         map.put("userId", userPhone);
         map.put("topicId", topicId);
+        //一定要日期形式，不然添加不了计划时间
         map.put("endTime", planTime+"-12");
 
-        //判断应该学习模式的状态码应该是哪个
-        if("复习优先".equals(mtvPlanWay.getText().toString())){
+        //判断应该学习模式的状态码应该是哪个,注意一定要去字符串空格trim()
+        if("复习优先".equals(mtvPlanWay.getText().toString().trim())){
             map.put("model", Constants.REVIEW_FIRST);
         }else {
             map.put("model", Constants.LEARN_FIRST);
@@ -514,11 +509,13 @@ public class HomeMainActivity extends AppCompatActivity implements View.OnClickL
             IWordsStatusDao wordsStatusDao = new WordsStatusImpl();
             String userId = (String) SPUtils.get(App.getContext(),PreferenceConstants.USERPHONE,"");
             String topicId = (String) SPUtils.get(App.getContext(),PreferenceConstants.LEXICON_ID,"");
+            //刷新界面的同时，如果本地词库待复习的单词数量为0，则发送请求去获取单词
             if(wordsStatusDao.selectCountByStatusAndTopicId("review", topicId) == 0) {
                 HashMap<String, String> map2 = new HashMap<>();
                 map2.put("userId", userId);
                 map2.put("topicId", topicId);
-                onlineWordPresenter.postToGetTopicIdWords(map2, false);
+                boolean isLogin = "true".equals(SPUtils.get(App.getContext(),PreferenceConstants.USERLOGIN,"false"));
+                onlineWordPresenter.postToGetTopicIdWords(map2, isLogin);
             }
         }
       }

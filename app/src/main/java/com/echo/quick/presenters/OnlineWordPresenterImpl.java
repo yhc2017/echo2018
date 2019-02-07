@@ -317,11 +317,13 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
         List<Words_Log> logs = logDao.select();
         StringBuilder json = new StringBuilder("[");
         for (Words_Log log:logs){
+            //改变记录的操作左右的问题
+            //本地数据库的左边代表云服的右边，本地数据库的右边代表云服的左边
             String body = "{\"wordId\":\""+log.getWordId()
                     +"\",\"word\":\""+log.getWord()
                     +"\",\"topicId\":\""+log.getTopicId()
-                    +"\",\"leftNum\":\""+log.getLeftNum()
-                    +"\",\"rightNum\":\""+log.getRightNum()
+                    +"\",\"leftNum\":\""+log.getRightNum()
+                    +"\",\"rightNum\":\""+log.getLeftNum()
                     +"\"},";
             json.append(body);
         }
@@ -441,9 +443,11 @@ public class OnlineWordPresenterImpl extends BasePresenter implements OnlineWord
                     SPUtils.put(App.getContext(),PreferenceConstants.USER_ALL_WORD_INFO, userAllWordInfo);
                     Log.d(TAG, "UserAllWordInfo: "+userAllWordInfo);
                     if(login)
-                        iLoginView.overWordInfo();
-                    else
+                        //如果已经登录就主页操作
                         iHomeView.overWordInfo();
+                    else
+                        //如果没有登录就登录页面的操作
+                        iLoginView.overWordInfo();
                 }catch (Exception e){
                     e.printStackTrace();
                 }
