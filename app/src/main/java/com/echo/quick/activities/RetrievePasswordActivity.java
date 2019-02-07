@@ -126,7 +126,6 @@ public class RetrievePasswordActivity extends AppCompatActivity implements Valid
                 case R.id.bt_login:
                     validator.validate();
                     break;
-
                 default:
                     break;
             }
